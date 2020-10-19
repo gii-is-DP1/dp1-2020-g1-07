@@ -80,11 +80,10 @@
 			<roles>
  		    	<role>leader</role>
  			</roles>
- 			<properties>	
+ 			<properties>
  			</properties>
  		</developer>
  <!-- More developers ...-->
-
 		 <developer>
 		 	<id>beatrizbeltranalvarez</id>
 			 <name>Beatriz</name>
@@ -98,12 +97,6 @@
 		 </developer>
  <!-- More developers ...-->
 	</developers>
-
-
-
-
-
-
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
