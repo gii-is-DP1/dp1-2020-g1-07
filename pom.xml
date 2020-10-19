@@ -31,7 +31,22 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
+	<developers>
+		<developer>
+			<id>Gonza</id>
+			<name>Antonio</name>
+			<email>antgongom4@us.es</email>
+			<url>https://github.com/Antonio-Gonzalez-Gomez</url>
+			<roles>
+			<role>leader</role>
+			</roles>
+			<properties>
+			<picUrl>
+				https://cdn1.dotesports.com/wp-content/uploads/2020/10/07211109/Surfer-Singed-1024x576.jpg
+			</picUrl>
+			</properties>
+		</developer>
+	</developers>
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
