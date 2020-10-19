@@ -31,7 +31,24 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
+<developers>
+ <developer>
+ <id>davbarsal1</id>
+ <name>David</name>
+ <email>davbarsal1@alum.us.es</email>
+ <url>https://github.com/davbarsal1</url>
+ <roles>
+ <role>leader</role>
+ </roles>
+ <properties>
+ <picUrl>
 
+</picUrl>
+ </properties>
+ </developer>
+
+ <!-- More developers ...-->
+</developers>
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
