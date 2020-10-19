@@ -41,11 +41,9 @@
  				<role>leader</role>
  			</roles>
  			<properties>
-				
  			</properties>
  		</developer>
  <!-- More developers ...-->
-
 		 <developer>
 		 <id>beatrizbeltranalvarez</id>
 		 <name>Beatriz</name>
@@ -58,7 +56,6 @@
 		 </properties>
 		 </developer>
 	</developers>
-
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
