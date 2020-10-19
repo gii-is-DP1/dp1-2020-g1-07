@@ -33,17 +33,32 @@
     </properties>
     
  	<developers>
- <developer>
- <id>davbarsal1</id>
- <name>David</name>
- <email>davbarsal1@alum.us.es</email>
- <url>https://github.com/davbarsal1</url>
- <roles>
- <role>leader</role>
- </roles>
- <properties>
- </properties>
- </developer>
+ 	
+ 	
+		 <developer>
+		    <id>Dani</id>
+		 	<name>Daniel</name>
+		 	<email>danmuaher@alum.us.es</email>
+		 	<url>https://github.com/NoSoyDani</url>
+		 	<roles>
+		 		<role>leader</role>
+		 	</roles>
+			<properties>
+			</properties>
+		 </developer>
+ 
+ 
+		 <developer>
+		 	<id>davbarsal1</id>
+		 	<name>David</name>
+		 	<email>davbarsal1@alum.us.es</email>
+		 	<url>https://github.com/davbarsal1</url>
+		 	<roles>
+				<role>leader</role>
+		 	</roles>
+		 	<properties>
+		 	</properties>
+		 </developer>
 
 
 	
@@ -53,24 +68,23 @@
  			<email>visorvaz@gmail.com</email>
  			<url>https://github.com/vicsorvaz</url>
 			<roles>
- 				<role>leader</role>
+ 		    	<role>leader</role>
  			</roles>
- 			<properties>
-				
+ 			<properties>	
  			</properties>
  		</developer>
  <!-- More developers ...-->
 
 		 <developer>
-		 <id>beatrizbeltranalvarez</id>
-		 <name>Beatriz</name>
-		 <email>beltranalvarezbeatriz@gmail.com</email>
-		 <url>https://github.com/beatrizbeltranalvarez</url>
-		 <roles>
-		 <role>developer</role>
-		 </roles>
-		 <properties>
-		 </properties>
+		 	<id>beatrizbeltranalvarez</id>
+			 <name>Beatriz</name>
+			 <email>beltranalvarezbeatriz@gmail.com</email>
+			 <url>https://github.com/beatrizbeltranalvarez</url>
+			 <roles>
+				 <role>developer</role>
+			 </roles>
+			 <properties>
+			 </properties>
 		 </developer>
  <!-- More developers ...-->
 	</developers>
