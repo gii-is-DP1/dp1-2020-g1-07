@@ -31,7 +31,21 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
+	<developers>
+	 <developer>
+	 <id>Dani</id>
+	 <name>Daniel</name>
+	 <email>dsgpolaris55@gmail.com</email>
+	 <url>https://github.com/NoSoyDani</url>
+	 <roles>
+		 <role>leader</role>
+	 </roles>
+	 <properties>
+		 <picUrl>
+		 https://avatars2.githubusercontent.com/u/61089532?s=460&u=8aa1e10fe5426cc4fb673cc337a17dadc3c96dae&v=4
+		 </picUrl>
+	 </properties>
+	</developer>
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
