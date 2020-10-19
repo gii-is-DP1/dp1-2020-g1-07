@@ -31,7 +31,19 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
+	<developers>
+		 <developer>
+		 <id>beatrizbeltranalvarez</id>
+		 <name>Beatriz</name>
+		 <email>beltranalvarezbeatriz@gmail.com</email>
+		 <url>https://github.com/beatrizbeltranalvarez</url>
+		 <roles>
+		 <role>developer</role>
+		 </roles>
+		 <properties>
+		 </properties>
+		 </developer>
+	</developers>
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
