@@ -31,7 +31,8 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-<developers>
+    
+ 	<developers>
  <developer>
  <id>davbarsal1</id>
  <name>David</name>
@@ -41,14 +42,46 @@
  <role>leader</role>
  </roles>
  <properties>
- <picUrl>
-
-</picUrl>
  </properties>
  </developer>
 
+
+	
+		 <developer>
+ 			<id>vicsorvaz</id>
+ 			<name>Vicente</name>
+ 			<email>visorvaz@gmail.com</email>
+ 			<url>https://github.com/vicsorvaz</url>
+			<roles>
+ 				<role>leader</role>
+ 			</roles>
+ 			<properties>
+				
+ 			</properties>
+ 		</developer>
  <!-- More developers ...-->
-</developers>
+
+		 <developer>
+		 <id>beatrizbeltranalvarez</id>
+		 <name>Beatriz</name>
+		 <email>beltranalvarezbeatriz@gmail.com</email>
+		 <url>https://github.com/beatrizbeltranalvarez</url>
+		 <roles>
+		 <role>developer</role>
+		 </roles>
+		 <properties>
+		 </properties>
+		 </developer>
+ <!-- More developers ...-->
+	</developers>
+
+
+
+
+
+
+
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
