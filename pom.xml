@@ -96,7 +96,20 @@
 			 <properties>
 			 </properties>
 		 </developer>
- <!-- More developers ...-->
+		 <developer>
+            <id>Gonza</id>
+            <name>Antonio</name>
+            <email>antgongom4@us.es</email>
+            <url>https://github.com/Antonio-Gonzalez-Gomez</url>
+            <roles>
+            <role>leader</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    https://cdn1.dotesports.com/wp-content/uploads/2020/10/07211109/Surfer-Singed-1024x576.jpg
+                </picUrl>
+            </properties>
+        </developer>
 	</developers>
 
 
@@ -326,7 +339,4 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
-
-
-
 </project>
