@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -44,18 +45,18 @@ public class CasinotableController {
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/editCasinotable";
 		}else {
-			CasinotableService.save(casinotable);
+			castableService.save(casinotable);
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
 		}
 		return view;
 	}
 	
 	@GetMapping(path="/delete/{casinotableId}")
-	public String borrarCasinotable(@PathParam("casinotableId") int casinotableId, ModelMap modelMap) {
+	public String borrarCasinotable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
 		String view="casinotables/listadoMesascasino";
-		Optional<Casinotable> casinotable = CasinotableService.findCasinotableById(casinotableId);
+		Optional<Casinotable> casinotable = castableService.findCasinotableById(casinotableId);
 		if(casinotable.isPresent()) {
-			CasinotableService.delete(casinotable.get());
+			castableService.delete(casinotable.get());
 			modelMap.addAttribute("message", "Casinotable successfully deleted!");
 		}else {
 			modelMap.addAttribute("message", "Casinotable not found!");

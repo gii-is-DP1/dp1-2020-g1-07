@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CasinotableService {
 	@Autowired
-	private CasinotableRepository castabRepo; ///Cambiado a static aunque no viene en el video
+	private  CasinotableRepository castabRepo; ///Cambiado a static aunque no viene en el video
 	
 	@Transactional
 	public int casinoTableCount() {
@@ -24,16 +24,16 @@ public class CasinotableService {
 	}
 	
 	@Transactional(readOnly=true)
-	public Optional<Casinotable> findCasinotableById(int id){ ///Cambiado a static aunque no viene en el video
+	public  Optional<Casinotable> findCasinotableById(int id){ ///Cambiado a static aunque no viene en el video
 		return castabRepo.findById(id);
 	}
 
 	@Transactional
-	public void save(Casinotable casinotable) {   ///Cambiado a static aunque no viene en el video
+	public  void save(Casinotable casinotable) {   ///Cambiado a static aunque no viene en el video
 		castabRepo.save(casinotable);
 	}
 
-	public void delete(Casinotable casinotable) { ///Cambiado a static aunque no viene en el video
+	public  void delete(Casinotable casinotable) { ///Cambiado a static aunque no viene en el video
 		castabRepo.delete(casinotable);
 	}
 }
