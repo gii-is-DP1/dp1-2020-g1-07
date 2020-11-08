@@ -8,8 +8,14 @@
     <h2><fmt:message key="welcome"/></h2>
     <div class="row">
         <div class="col-md-12">
-            <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
+            <spring:url value="/resources/images/casino.jpg" htmlEscape="true" var="petsImage"/>
             <img class="img-responsive" src="${petsImage}"/>
         </div>
+        
+    </div>
+    <div class = "row">
+    
+    	<a style="font-size:50px;" class = "enlace" href = "/casinotables" > Delete table Link</a><br>
+   		<a style="font-size:50px;" class = "enlace" href = "/casinotables/new" > Add table link</a>
     </div>
 </petclinic:layout>

@@ -33,7 +33,7 @@ public class CasinotableController {
 	
 	@GetMapping(path="/new")
 	public String crearMesacasino(ModelMap modelMap) {
-		String view="casinotables/editCasinotable";
+		String view="casinotables/addCasinotable";
 		modelMap.addAttribute("casinotable", new Casinotable());
 		return view;
 	}
@@ -44,9 +44,13 @@ public class CasinotableController {
 		if(result.hasErrors()) {
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/editCasinotable";
+			
 		}else {
+			
 			castableService.save(casinotable);
+			
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
+			view=listadoMesasCasino(modelMap);
 		}
 		return view;
 	}
@@ -58,8 +62,10 @@ public class CasinotableController {
 		if(casinotable.isPresent()) {
 			castableService.delete(casinotable.get());
 			modelMap.addAttribute("message", "Casinotable successfully deleted!");
+			view=listadoMesasCasino(modelMap);
 		}else {
 			modelMap.addAttribute("message", "Casinotable not found!");
+			view=listadoMesasCasino(modelMap);
 		}
 		return view;
 	}
