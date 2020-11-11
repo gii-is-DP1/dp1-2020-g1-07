@@ -10,7 +10,7 @@ INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
 INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
 
-INSERT INTO DISH(id,name,dishCourse,shift) VALUES (1,'Serranito','SECOND', 'AFTERNOON');
+INSERT INTO DISH(id,name,dish_course,shift) VALUES (1,'Serranito',1, 1);
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');

@@ -3,8 +3,7 @@ package org.springframework.samples.petclinic.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Casinotable;
-import org.springframework.samples.petclinic.repository.CasinotableRepository;
+import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.repository.DishRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,7 @@ public class DishService {
 	private  DishRepository dishRepo; ///Cambiado a static aunque no viene en el video
 	
 	@Transactional
-	public int casinoTableCount() {
+	public int dishCount() {
 		return (int)dishRepo.count();
 	}
 	
@@ -25,7 +24,7 @@ public class DishService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Dish> findCasinotableById(int id){ ///Cambiado a static aunque no viene en el video
+	public  Optional<Dish> findDishById(int id){ ///Cambiado a static aunque no viene en el video
 		return dishRepo.findById(id);
 	}
 

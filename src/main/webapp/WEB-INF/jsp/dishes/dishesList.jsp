@@ -10,7 +10,7 @@
 <petclinic:layout pageName="dishes">
     <h2>Dishes</h2>
 
-    <table id="DishesTable" class="table table-striped">
+    <table id="dishesTable" class="table table-striped">
         <thead>
         <tr>
             <th style="width: 150px;">Name</th>
