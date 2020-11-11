@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 @Entity
 
-public class Casinotable extends NamedEntity{
-
+public class Game extends NamedEntity {
+	
 	private String name;
+	private Integer maxPlayers;
 	private GameType typeGame;
-	private SkillLevel skill;
 	
 }

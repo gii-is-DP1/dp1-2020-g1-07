@@ -9,6 +9,7 @@ INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
 INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
+INSERT INTO GAME(name, maxPlayers, typeGame) VALUES ('Poker',8,'Cards');
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
