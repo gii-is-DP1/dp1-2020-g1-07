@@ -3,7 +3,6 @@ package org.springframework.samples.petclinic.web;
 import java.util.Optional;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;

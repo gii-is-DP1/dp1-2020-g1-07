@@ -17,7 +17,7 @@ public class CasinoTableServiceTest {
 	@Test
 	public void testCountWithInitialData() {
 		int count= casTabService.casinoTableCount();
-		assertEquals(count,0);
+		assertEquals(count,1);
 	}
 }
 
