@@ -13,6 +13,7 @@
     <table id="gamesTable" class="table table-striped">
         <thead>
         <tr>
+        	<th style="width: 150px;">Id</th>
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">MaxPlayers</th>
             <th style="width: 200px;">GameType</th>
@@ -20,8 +21,11 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${games}" var="games">
+        <c:forEach items="${games}" var="game">
             <tr>
+            	<td>
+            		<c:out value="${game.id}"/>
+            	</td>
                 <td>
                     <c:out value="${game.name}"/>
                 </td>
@@ -29,11 +33,11 @@
                     <c:out value="${game.maxPlayers}"/>
                 </td>
                 <td>
-                    <c:out value="${game.type_game_ID.name}"/>
+                    <c:out value="${game.gametype.name}"/>
                 </td>
             <td>
                 	<spring:url value="/games/delete/{gameId}" var="gameUrl">
-                        <spring:param name="gameID" value="${game.id}"/>
+                        <spring:param name="gameId" value="${game.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(gameUrl)}">Delete</a>
                 </td> 

@@ -17,7 +17,7 @@
                 	<petclinic:inputField label="Max Players" name="maxPlayers"/>
                 </div>
                 <div class="control-group">
-                	<petclinic:selectField label="Game Type" name="gameType" names="${GAMETYPES}" size="1"/>
+                	<petclinic:selectField label="Game Type" name="gametype" names="${gametypes}" size="1"/>
                 </div>
             </div>
 

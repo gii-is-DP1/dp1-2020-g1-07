@@ -15,11 +15,11 @@ INSERT INTO GAMETYPES VALUES(2, 'Cards');
 INSERT INTO GAMETYPES VALUES(3,'Dices');
 INSERT INTO SKILLS VALUES(1,'AMATEUR');
 INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
-INSERT INTO GAME(id,name, max_players, type_game_id) VALUES (1,'Poker',8,2);
+INSERT INTO GAME(id,name, max_players, gametype_id) VALUES (1,'Poker',8,2);
 
 
 
-INSERT INTO CASINOTABLE(id,game_id,type_game_id,skill_id) VALUES(1,1,2,1);
+INSERT INTO CASINOTABLE(id,game_id,gametype_id,skill_id) VALUES(1,1,2,1);
 
 
 

@@ -16,8 +16,8 @@ public class Casinotable extends NamedEntity{
     @JoinColumn(name = "game_id")
 	private Game game;
 	@ManyToOne
-    @JoinColumn(name = "type_game_id")
-	private GameType typeGame;
+    @JoinColumn(name = "gametype_id")
+	private GameType gameType;
 	@ManyToOne
     @JoinColumn(name = "skill_id")
 	private SkillLevel skill;

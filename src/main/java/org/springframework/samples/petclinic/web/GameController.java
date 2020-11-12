@@ -46,7 +46,7 @@ public class GameController {
 		String view="games/gamesList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("game", game);
-			return "games/editGame";
+			return "games/addGame";
 			
 		}else {
 			
@@ -72,7 +72,7 @@ public class GameController {
 		}
 		return view;
 	}
-	@ModelAttribute("game_types")
+	@ModelAttribute("gametypes")
     public Collection<GameType> populateGameTypes() {
         return this.gameService.findGameTypes();
     }

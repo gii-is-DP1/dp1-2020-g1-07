@@ -17,8 +17,8 @@ public class Game extends NamedEntity {
 	public String name;
 	private Integer maxPlayers;
 	@ManyToOne
-    @JoinColumn(name = "type_game_id")
-	private GameType typeGame;
+    @JoinColumn(name = "gametype_id")
+	private GameType gametype;
 	
 	
 }

@@ -13,6 +13,7 @@
     <table id="dishesTable" class="table table-striped">
         <thead>
         <tr>
+        	
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">DishCourse</th>
             <th style="width: 200px;">Shift</th>
