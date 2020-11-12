@@ -1,5 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
-public enum Shift {
-	DAY, AFTERNOON, NIGHT, FREE
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "shifts")
+public class Shift extends NamedEntity{
+	
 }

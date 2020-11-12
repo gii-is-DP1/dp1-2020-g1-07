@@ -10,7 +10,16 @@ INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
 INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
 
-INSERT INTO DISH(id,name,dish_course,shift) VALUES (1,'Serranito',1, 1);
+INSERT INTO dish_courses VALUES (1, 'First');
+INSERT INTO dish_courses VALUES (2, 'Second');
+INSERT INTO dish_courses VALUES (3, 'Dessert');
+
+INSERT INTO shifts VALUES (1, 'Day');
+INSERT INTO shifts VALUES (2, 'Afternoon');
+INSERT INTO shifts VALUES (3, 'Night');
+INSERT INTO shifts VALUES (4, 'Free');
+
+INSERT INTO DISH(id,name,dish_course_id,shift_id) VALUES (1,'Serranito',2, 2);
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');

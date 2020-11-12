@@ -1,7 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
-public enum DishCourse {
-	
-	FIRST, SECOND, DESSERT
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "dish_courses")
+public class DishCourse extends NamedEntity{
 
 }

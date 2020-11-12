@@ -1,16 +1,20 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Dish;
+import org.springframework.samples.petclinic.model.DishCourse;
+import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.DishService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +34,20 @@ public class DishController {
 		return vista;
 	}
 	
+	@ModelAttribute("dish_courses")
+	public Collection<DishCourse> populateDishCourses() {
+		return this.dishService.findDishCourses();
+	}
+	
+	@ModelAttribute("shifts")
+	public Collection<Shift> populateShifts() {
+		return this.dishService.findShifts();
+	}
+	
 	@GetMapping(path="/new")
 	public String crearDish(ModelMap modelMap) {
 		String view="dishes/addDish";
-		modelMap.addAttribute("Dish", new Dish());
+		modelMap.addAttribute("dish", new Dish());
 		return view;
 	}
 	
@@ -42,12 +56,10 @@ public class DishController {
 		String view="dishes/dishesList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("dish", dish);
-			return "dishes/editDish";
+			return "dishes/addDish";
 			
 		}else {
-			
 			dishService.save(dish);
-			
 			modelMap.addAttribute("message", "Dish successfully saved!");
 			view=dishesList(modelMap);
 		}

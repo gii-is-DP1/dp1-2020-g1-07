@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -9,7 +11,14 @@ import lombok.Data;
 public class Dish extends NamedEntity{
 
 	private String name;
-	private DishCourse dishCourse;
+
+	@ManyToOne
+	@JoinColumn(name = "dish_course_id")
+	private DishCourse dish_course;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "shift_id")
 	private Shift shift;
 	
 }

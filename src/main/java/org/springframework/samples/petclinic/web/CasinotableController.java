@@ -30,6 +30,7 @@ public class CasinotableController {
 		return vista;
 	}
 	
+	
 	@GetMapping(path="/new")
 	public String crearMesacasino(ModelMap modelMap) {
 		String view="casinotables/addCasinotable";

@@ -26,10 +26,10 @@
                     <c:out value="${dish.name}"/>
                 </td>
                 <td>
-                    <c:out value="${dish.dishCourse}"/>
+                    <c:out value="${dish.dish_course.name}"/>
                 </td>
                 <td>
-                    <c:out value="${dish.shift}"/>
+                    <c:out value="${dish.shift.name}"/>
                 </td>
             <td>
                 	<spring:url value="/dishes/delete/{dishId}" var="dishUrl">
