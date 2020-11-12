@@ -23,23 +23,23 @@ public class CasinotableController {
 	private CasinotableService castableService;
 	
 	@GetMapping()
-	public String listadoMesasCasino(ModelMap modelMap) {
-		String vista= "casinotables/listadoMesascasino";
+	public String casinotablesListed(ModelMap modelMap) {
+		String view = "casinotables/listCasinotable";
 		Iterable<Casinotable> casinotables=castableService.findAll();
 		modelMap.addAttribute("casinotables", casinotables);
-		return vista;
+		return view;
 	}
 	
 	@GetMapping(path="/new")
-	public String crearMesacasino(ModelMap modelMap) {
+	public String createCasinotable(ModelMap modelMap) {
 		String view="casinotables/addCasinotable";
 		modelMap.addAttribute("casinotable", new Casinotable());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String salvarMesacasino(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) {
-		String view="casinotables/listadoMesascasino";
+	public String saveCasinotable(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) {
+		String view="casinotables/listCasinotable";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/editCasinotable";
@@ -49,22 +49,22 @@ public class CasinotableController {
 			castableService.save(casinotable);
 			
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
-			view=listadoMesasCasino(modelMap);
+			view=casinotablesListed(modelMap);
 		}
 		return view;
 	}
 	
 	@GetMapping(path="/delete/{casinotableId}")
 	public String borrarCasinotable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
-		String view="casinotables/listadoMesascasino";
+		String view="casinotables/listCasinotable";
 		Optional<Casinotable> casinotable = castableService.findCasinotableById(casinotableId);
 		if(casinotable.isPresent()) {
 			castableService.delete(casinotable.get());
 			modelMap.addAttribute("message", "Casinotable successfully deleted!");
-			view=listadoMesasCasino(modelMap);
+			view=casinotablesListed(modelMap);
 		}else {
 			modelMap.addAttribute("message", "Casinotable not found!");
-			view=listadoMesasCasino(modelMap);
+			view=casinotablesListed(modelMap);
 		}
 		return view;
 	}
