@@ -7,7 +7,7 @@
 
 <petclinic:layout pageName="games">
     <jsp:body>
-        <h2>Game</h2>
+        <h2>New game</h2>
 
 
         <form:form modelAttribute="game" class="form-horizontal" action="/games/save">

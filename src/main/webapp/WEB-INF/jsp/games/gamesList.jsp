@@ -8,7 +8,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="games">
-    <h2>Dishes</h2>
+    <h2>Games</h2>
 
     <table id="gamesTable" class="table table-striped">
         <thead>
@@ -45,5 +45,10 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="form-group">
+    	<form method="get" action="/games/new">
+    		<button class="btn btn-default" type="submit">Add new game</button>
+		</form>
+	</div>
     
 </petclinic:layout>

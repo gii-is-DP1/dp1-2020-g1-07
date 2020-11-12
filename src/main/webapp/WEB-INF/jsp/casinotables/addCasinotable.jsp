@@ -7,13 +7,18 @@
 
 <petclinic:layout pageName="casinotables">
     <jsp:body>
-        <h2>Casino Table</h2>
+        <h2>New table</h2>
 
 
         <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="Game" name="game"/>
+                <div class="control-group">
+                	<petclinic:selectField label="Game" name="game" names="${games}" size="1"/>
+                </div>
+                <petclinic:inputField label="Game Type" name="gametype"/>
+                <div class="control-group">
+                	<petclinic:selectField label="Skill Level" name="skills" names="${skills}" size="1"/>
+                </div>
             </div>
 
             <div class="form-group">
