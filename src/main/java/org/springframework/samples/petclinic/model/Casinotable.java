@@ -12,6 +12,8 @@ import lombok.Data;
 public class Casinotable extends NamedEntity{
 
 	private Integer id;
+	@ManyToOne
+    @JoinColumn(name = "game_id")
 	private Game game;
 	@ManyToOne
     @JoinColumn(name = "type_game_id")
