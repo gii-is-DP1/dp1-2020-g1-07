@@ -42,4 +42,5 @@ public class GameService {
         // TODO Auto-generated method stub
         return gameRepo.findGameTypes();
     }
+	
 }

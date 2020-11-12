@@ -1,9 +1,13 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.GameType;
+import org.springframework.samples.petclinic.model.SkillLevel;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,4 +40,8 @@ public class CasinotableService {
 	public  void delete(Casinotable casinotable) {
 		castabRepo.delete(casinotable);
 	}
+	public Collection<SkillLevel> findSkillLevels() throws DataAccessException{
+        // TODO Auto-generated method stub
+        return castabRepo.findSkillLevels();
+    }
 }

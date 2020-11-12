@@ -8,13 +8,16 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
-INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
+
 
 INSERT INTO GAMETYPES VALUES(1,'Roullete');
 INSERT INTO GAMETYPES VALUES(2, 'Cards');
 INSERT INTO GAMETYPES VALUES(3,'Dices');
+INSERT INTO SKILLS VALUES(1,'AMATEUR');
+INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
+INSERT INTO GAME(name, max_players, type_game_id) VALUES ('Poker',8,2);
 
-INSERT INTO GAME(name, maxPlayers, type_game_ID) VALUES ('Poker',8,2);
+INSERT INTO CASINOTABLE(id,game,type_game_id,skill_id) VALUES(1,'Poker',2,1);
 
 
 
