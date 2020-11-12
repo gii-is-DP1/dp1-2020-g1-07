@@ -19,7 +19,7 @@ INSERT INTO shifts VALUES (2, 'Afternoon');
 INSERT INTO shifts VALUES (3, 'Night');
 INSERT INTO shifts VALUES (4, 'Free');
 
-INSERT INTO DISH(id,name,dish_course_id,shift_id) VALUES (1,'Serranito',2, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Serranito',2, 2);
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');

@@ -7,18 +7,14 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.service.DishService;
 import org.springframework.samples.petclinic.service.MenuService;
-import org.springframework.stereotype.Component;
 
-@Component
-public class ShiftFormatter implements Formatter<Shift>  {
-	
-	private final DishService dishService;
+public class ShiftFormatter2 implements Formatter<Shift>{
+	private final MenuService menuService;
 	
 	@Autowired
-	public ShiftFormatter(DishService dishService) {
-		this.dishService = dishService;
+	public ShiftFormatter2(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 	@Override
@@ -28,7 +24,7 @@ public class ShiftFormatter implements Formatter<Shift>  {
 
 	@Override
 	public Shift parse(String text, Locale locale) throws ParseException {
-		Collection<Shift> findShifts = this.dishService.findShifts();
+		Collection<Shift> findShifts = this.menuService.findShifts();
 		for (Shift shift : findShifts) {
 			if (shift.getName().equals(text)) {
 				return shift;
@@ -36,5 +32,4 @@ public class ShiftFormatter implements Formatter<Shift>  {
 		}
 		throw new ParseException("type not found: " + text, 0);
 	}
-
 }
