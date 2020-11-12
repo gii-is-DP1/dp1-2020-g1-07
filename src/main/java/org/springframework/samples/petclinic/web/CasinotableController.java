@@ -55,7 +55,7 @@ public class CasinotableController {
 	}
 	
 	@GetMapping(path="/delete/{casinotableId}")
-	public String borrarCasinotable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
+	public String deleteCasinoTable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
 		String view="casinotables/listCasinotable";
 		Optional<Casinotable> casinotable = castableService.findCasinotableById(casinotableId);
 		if(casinotable.isPresent()) {

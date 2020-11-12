@@ -1,10 +1,12 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.repository.GameRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,4 +38,8 @@ public class GameService {
 	public  void delete(Game game) {
 		gameRepo.delete(game);
 	}
+	public Collection<GameType> findGameTypes() throws DataAccessException{
+        // TODO Auto-generated method stub
+        return gameRepo.findGameTypes();
+    }
 }
