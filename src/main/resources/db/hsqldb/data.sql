@@ -17,9 +17,15 @@ INSERT INTO SKILLS VALUES(1,'AMATEUR');
 INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
 INSERT INTO GAME(name, max_players, type_game_id) VALUES ('Poker',8,2);
 
+<<<<<<< Updated upstream
 INSERT INTO CASINOTABLE(id,game,type_game_id,skill_id) VALUES(1,'Poker',2,1);
+=======
+INSERT INTO 
+>>>>>>> Stashed changes
 
+INSERT INTO GAME(name, max_players, type_game_id) VALUES ('Poker', 8 ,2);
 
+INSERT INTO CASINOTABLE(id,game,type_game_id, skill_id) VALUES (1,'Mesa1', 'Blackjack');
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
