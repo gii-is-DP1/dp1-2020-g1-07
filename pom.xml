@@ -31,21 +31,75 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-	<developers>
-	 <developer>
-	 <id>Dani</id>
-	 <name>Daniel</name>
-	 <email>dsgpolaris55@gmail.com</email>
-	 <url>https://github.com/NoSoyDani</url>
-	 <roles>
-		 <role>leader</role>
-	 </roles>
-	 <properties>
-		 <picUrl>
-		    https://avatars2.githubusercontent.com/u/61089532?s=460&u=8aa1e10fe5426cc4fb673cc337a17dadc3c96dae&v=4
-		 </picUrl>
-	 </properties>
-	</developer>
+
+    
+ 	<developers>
+ 	
+ 		<developer>
+			<id>dancarolm</id>
+			<name>Daniel</name>
+			<email>danielcaroolmedo2@gmail.com</email>
+			<url></url>
+			<roles>
+				<role>leader</role>
+			</roles>
+		</developer>
+ 	
+ 	
+		 <developer>
+		    <id>Dani</id>
+		 	<name>Daniel</name>
+		 	<email>danmuaher@alum.us.es</email>
+		 	<url>https://github.com/NoSoyDani</url>
+		 	<roles>
+		 		<role>leader</role>
+		 	</roles>
+			<properties>
+			</properties>
+		 </developer>
+ 
+ 
+		 <developer>
+		 	<id>davbarsal1</id>
+		 	<name>David</name>
+		 	<email>davbarsal1@alum.us.es</email>
+		 	<url>https://github.com/davbarsal1</url>
+		 	<roles>
+				<role>leader</role>
+		 	</roles>
+		 	<properties>
+		 	</properties>
+		 </developer>
+
+
+	
+		 <developer>
+ 			<id>vicsorvaz</id>
+ 			<name>Vicente</name>
+ 			<email>visorvaz@gmail.com</email>
+ 			<url>https://github.com/vicsorvaz</url>
+			<roles>
+ 		    	<role>leader</role>
+ 			</roles>
+ 			<properties>	
+ 			</properties>
+ 		</developer>
+ <!-- More developers ...-->
+
+		 <developer>
+		 	<id>beatrizbeltranalvarez</id>
+			 <name>Beatriz</name>
+			 <email>beltranalvarezbeatriz@gmail.com</email>
+			 <url>https://github.com/beatrizbeltranalvarez</url>
+			 <roles>
+				 <role>developer</role>
+			 </roles>
+			 <properties>
+			 </properties>
+		 </developer>
+ <!-- More developers ...-->
+ 	</developers>
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>

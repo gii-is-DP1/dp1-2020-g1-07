@@ -10,6 +10,7 @@ INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
 INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
 
+
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets VALUES (3, 'Linda', 'Douglas');
@@ -64,3 +65,4 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO EMPLOYEE(dni,name,phoneNumber,shift_id) VALUES ('232334423S','Paco', '8734437032','DINNER');
