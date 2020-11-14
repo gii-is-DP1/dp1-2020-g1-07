@@ -34,7 +34,7 @@
                     <c:out value="${menu.second_dish.name}"/>
                 </td>
                 <td>
-                    <c:out value="${menu.third_dish.name}"/>
+                    <c:out value="${menu.dessert.name}"/>
                 </td>
                  <td>
                     <c:out value="${menu.shift.name}"/>

@@ -22,15 +22,15 @@
                 <petclinic:inputField label="Date" name="date"/>
             	 <!--  PRIMER PLATO  -->
                 <div class="control-group">
-                	<petclinic:selectField label="First dish" name="first_dish" names="${dishes}" size="1"/>
+                	<petclinic:selectField label="First dish" name="first_dish" names="${first_dishes}" size="1"/>
                 </div>
                 <!--  SEGUNDO PLATO  -->
                 <div class="control-group">
-                	<petclinic:selectField label="Second dish" name="second_dish" names="${dishes}" size="1"/>
+                	<petclinic:selectField label="Second dish" name="second_dish" names="${second_dishes}" size="1"/>
                 </div>
 				<!--  POSTRE  -->
                 <div class="control-group">
-                	<petclinic:selectField label="Dessert" name="third_dish" names="${dishes}" size="1"/>
+                	<petclinic:selectField label="Dessert" name="dessert" names="${desserts}" size="1"/>
                 </div>
                 <div class="control-group">
                 	<petclinic:selectField label="Shift" name="shift" names="${shifts}" size="1"/>

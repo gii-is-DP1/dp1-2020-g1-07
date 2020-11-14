@@ -24,8 +24,8 @@ public class Menu extends NamedEntity {
     @JoinColumn(name = "second_dish_id")
 	private Dish second_dish;
 	@ManyToOne
-    @JoinColumn(name = "third_dish_id")
-	private Dish third_dish;
+    @JoinColumn(name = "dessert_id")
+	private Dish dessert;
 	@ManyToOne
     @JoinColumn(name = "shift_id")
 	private Shift shift;

@@ -22,7 +22,10 @@ INSERT INTO shifts VALUES (2, 'Afternoon');
 INSERT INTO shifts VALUES (3, 'Night');
 INSERT INTO shifts VALUES (4, 'Free');
 
-INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Serranito',2, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Ensalada Cesar',1, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (2,'Serranito',2, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (3,'Flan Potax',3, 2);
+
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
