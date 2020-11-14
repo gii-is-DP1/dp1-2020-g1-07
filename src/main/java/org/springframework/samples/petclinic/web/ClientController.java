@@ -10,7 +10,9 @@ import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,11 @@ public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	@InitBinder("client")
+	public void initClientBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(new ClientValidator());
+	}
 	
 	@GetMapping()
 	public String clientsList(ModelMap modelMap) {
@@ -66,5 +73,6 @@ public class ClientController {
 		}
 		return view;
 	}
+	
 
 }

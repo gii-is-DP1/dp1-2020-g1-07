@@ -14,7 +14,7 @@
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Dni" name="dni"/>
                 <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="phone_number" name="phone_number"/>
+                <petclinic:inputField label="Phone Number" name="phone_number"/>
             </div>
 
             <div class="form-group">
