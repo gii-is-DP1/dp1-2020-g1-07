@@ -10,6 +10,9 @@ INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
 INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
 
+INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'12345678A', 'Paco Perez','123456789');
+
+
 INSERT INTO dish_courses VALUES (1, 'First');
 INSERT INTO dish_courses VALUES (2, 'Second');
 INSERT INTO dish_courses VALUES (3, 'Dessert');
