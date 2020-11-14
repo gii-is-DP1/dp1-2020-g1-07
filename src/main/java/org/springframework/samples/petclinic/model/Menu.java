@@ -30,4 +30,7 @@ public class Menu extends NamedEntity {
     @JoinColumn(name = "shift_id")
 	private Shift shift;
 	
+	
+	
+	
 }

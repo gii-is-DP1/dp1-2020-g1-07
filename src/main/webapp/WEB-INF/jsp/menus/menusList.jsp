@@ -13,6 +13,7 @@
     <table id="menusTable" class="table table-striped">
         <thead>
         <tr>
+        	<th style="width: 200px;">Date</th>
             <th style="width: 200px;">First Dish</th>
             <th style="width: 200px;">Second Dish</th>
             <th style="width: 200px;">Dessert</th>
@@ -24,7 +25,7 @@
         <c:forEach items="${menus}" var="menu">
             <tr>
                 <td>
-                
+                	<c:out value="${menu.date}"/>
                 </td>
                 <td>
                     <c:out value="${menu.first_dish.name}"/>

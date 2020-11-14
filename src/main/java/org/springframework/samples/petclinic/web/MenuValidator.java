@@ -1,20 +1,23 @@
 package org.springframework.samples.petclinic.web;
 
-import org.springframework.samples.petclinic.model.Dish;
+
+import java.time.LocalDate;
+
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-public class DishValidator implements Validator {
+public class MenuValidator implements Validator {
 
 	private static final String REQUIRED = "required";
 
 	@Override
 	public void validate(Object obj, Errors errors) {
-		Dish dish = (Dish) obj;
-		String name = dish.getName();
-		// name validation
-		if (name == null || name.trim().equals("")) {
-			errors.rejectValue("name", REQUIRED, REQUIRED);
+		Menu menu = (Menu) obj;
+		LocalDate date = menu.getDate();
+		// Date validation
+		if (date == null) {
+			errors.rejectValue("date", REQUIRED, REQUIRED);
 		}
 	}
 
@@ -23,7 +26,7 @@ public class DishValidator implements Validator {
 	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Dish.class.isAssignableFrom(clazz);
+		return Menu.class.isAssignableFrom(clazz);
 	}
 
 }

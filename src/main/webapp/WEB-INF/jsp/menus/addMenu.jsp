@@ -6,12 +6,20 @@
 
 
 <petclinic:layout pageName="menus">
+	<jsp:attribute name="customScript">
+		<script>
+			$(function () {
+				$("#date").datepicker({dateFormat: 'yy/mm/dd'});
+			});
+		</script>
+	</jsp:attribute>
     <jsp:body>
         <h2>Menu</h2>
 
 
         <form:form modelAttribute="menu" class="form-horizontal" action="/menus/save">
             <div class="form-group has-feedback">
+                <petclinic:inputField label="Date" name="date"/>
             	 <!--  PRIMER PLATO  -->
                 <div class="control-group">
                 	<petclinic:selectField label="First dish" name="first_dish" names="${dishes}" size="1"/>
