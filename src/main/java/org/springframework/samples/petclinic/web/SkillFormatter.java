@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.service.CasinotableService;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class SkillFormatter implements Formatter<Skill> {
 	private final CasinotableService casinotableService;
 	   

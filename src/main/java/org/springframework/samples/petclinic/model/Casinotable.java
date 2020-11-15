@@ -8,10 +8,9 @@ import lombok.Data;
 
 @Data
 @Entity
-
 public class Casinotable extends NamedEntity{
 
-	private Integer id;
+	private String name;
 	@ManyToOne
     @JoinColumn(name = "game_id")
 	private Game game;

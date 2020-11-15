@@ -13,6 +13,7 @@ import org.springframework.samples.petclinic.model.GameType;
 
 import org.springframework.stereotype.Component;
 
+@Component
 public class GameFormatter implements Formatter<Game>{
 	private final CasinotableService casinotableService;
 	   
