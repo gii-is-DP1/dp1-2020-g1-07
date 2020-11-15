@@ -15,7 +15,7 @@
         <tr>
             <th style="width: 200px;">Dni</th>
             <th style="width: 200px;">Name</th>
-            <th style="width: 200px;">PhoneNumber</th>
+            <th style="width: 200px;">Phone Number</th>
             <th style="width: 200px;">Shift</th>
             <th>Actions</th>
         </tr>
@@ -30,7 +30,7 @@
                     <c:out value="${employee.name}"/>
                 </td>
                 <td>
-                    <c:out value="${employee.phoneNumber}"/>
+                    <c:out value="${employee.phone_number}"/>
                 </td>
                 <td>
                     <c:out value="${employee.shift}"/>
