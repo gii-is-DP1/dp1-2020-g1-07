@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
-import org.springframework.samples.petclinic.model.SkillLevel;
+import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +41,17 @@ public class CasinotableService {
 	public  void delete(Casinotable casinotable) {
 		castabRepo.delete(casinotable);
 	}
-	public Collection<SkillLevel> findSkillLevels() throws DataAccessException{
+	public Collection<Skill> findSkills() throws DataAccessException{
         // TODO Auto-generated method stub
-        return castabRepo.findSkillLevels();
+        return castabRepo.findSkills();
     }
+	public Collection<GameType> findGameTypes() throws DataAccessException{
+        // TODO Auto-generated method stub
+        return castabRepo.findGameTypes();
+    }
+
+	public Collection<Game> findGames() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return castabRepo.findGames();
+	}
 }

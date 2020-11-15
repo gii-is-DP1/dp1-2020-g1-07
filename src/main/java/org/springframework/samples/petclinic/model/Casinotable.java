@@ -14,12 +14,12 @@ public class Casinotable extends NamedEntity{
 	private Integer id;
 	@ManyToOne
     @JoinColumn(name = "game_id")
-	private Game game_id;
+	private Game game;
 	@ManyToOne
     @JoinColumn(name = "gametype_id")
-	private GameType gametype_id;
+	private GameType gametype;
 	@ManyToOne
     @JoinColumn(name = "skill_id")
-	private SkillLevel skill_id;
+	private Skill skill;
 	
 }

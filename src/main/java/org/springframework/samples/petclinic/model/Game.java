@@ -13,8 +13,7 @@ import lombok.Data;
 
 public class Game extends NamedEntity {
 	
-	private Integer id;
-	public String name;
+	private String name;
 	private Integer maxPlayers;
 	@ManyToOne
     @JoinColumn(name = "gametype_id")

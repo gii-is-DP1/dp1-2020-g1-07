@@ -5,6 +5,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "skills")
-public class SkillLevel extends NamedEntity{
+public class Skill extends NamedEntity{
     
 }

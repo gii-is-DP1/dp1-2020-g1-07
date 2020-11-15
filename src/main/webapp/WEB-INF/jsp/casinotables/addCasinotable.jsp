@@ -12,12 +12,14 @@
 
         <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
             <div class="form-group has-feedback">
+            	<div class="control-group">
+                	<petclinic:selectField label="Game Type" name="gametype" names="${gametypes}" size="1"/>
+                </div>
                 <div class="control-group">
                 	<petclinic:selectField label="Game" name="game" names="${games}" size="1"/>
                 </div>
-                <petclinic:inputField label="Game Type" name="gametype"/>
                 <div class="control-group">
-                	<petclinic:selectField label="Skill Level" name="skills" names="${skills}" size="1"/>
+                	<petclinic:selectField label="Skill Level" name="skill" names="${skills}" size="1"/>
                 </div>
             </div>
 

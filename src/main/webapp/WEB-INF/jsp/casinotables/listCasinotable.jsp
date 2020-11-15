@@ -27,13 +27,13 @@
                     <c:out value="${casinotable.id}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.game_id}"/>
+                    <c:out value="${casinotable.game.name}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.gametype_id}"/>
+                    <c:out value="${casinotable.gametype}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.skill_id}"/>
+                    <c:out value="${casinotable.skill}"/>
                 </td>
                 <td>
                 	<spring:url value="/casinotables/delete/{casinotableId}" var="casinotableUrl">
@@ -47,7 +47,7 @@
     </table>
     <div class="form-group">
     	<form method="get" action="/casinotables/new">
-    		<button class="btn btn-default" type="submit">Add new game</button>
+    		<button class="btn btn-default" type="submit">Add new table</button>
 		</form>
 	</div>
     

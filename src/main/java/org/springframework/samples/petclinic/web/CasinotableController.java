@@ -1,16 +1,21 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.GameType;
+import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.service.CasinotableService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +47,7 @@ public class CasinotableController {
 		String view="casinotables/listCasinotable";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("casinotable", casinotable);
-			return "casinotables/editCasinotable";
+			return "casinotables/addCasinotable";
 			
 		}else {
 			
@@ -68,4 +73,20 @@ public class CasinotableController {
 		}
 		return view;
 	}
+	
+	
+
+	@ModelAttribute("gametypes")
+    public Collection<GameType> populateGameTypes() {
+        return this.castableService.findGameTypes();
+    }
+	
+	@ModelAttribute("skills")
+    public Collection<Skill> populateSkills() {
+        return this.castableService.findSkills();
+    }
+	@ModelAttribute("games")
+    public Collection<Game> populateGames() {
+        return this.castableService.findGames();
+    }
 }
