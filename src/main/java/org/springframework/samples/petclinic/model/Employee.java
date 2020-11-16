@@ -1,4 +1,6 @@
 package org.springframework.samples.petclinic.model;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,7 +19,6 @@ import lombok.Data;
 
 public class Employee extends NamedEntity{
 
-	@Id
 	@NotEmpty
 	@Pattern(regexp="^[0-9]{8}[a-z]$",message="DNI must contain 8 digits and a single lower-case letter")  
 	private String dni;

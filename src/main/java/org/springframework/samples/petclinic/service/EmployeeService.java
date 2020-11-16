@@ -24,7 +24,7 @@ public class EmployeeService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Employee> findEmployeeById(String id){ 
+	public  Optional<Employee> findEmployeeById(int id){ 
 		return employeeRep.findById(id);
 	}
 

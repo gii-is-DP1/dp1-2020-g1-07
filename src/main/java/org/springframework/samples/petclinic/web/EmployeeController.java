@@ -55,7 +55,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping(path="/delete/{employeeId}")
-	public String deleteEmployee(@PathVariable("employeeId") String employeeId, ModelMap modelMap) {
+	public String deleteEmployee(@PathVariable("employeeId") int employeeId, ModelMap modelMap) {
 		String view="employee/listEmployee";
 		Optional<Employee> employee = employeeService.findEmployeeById(employeeId);
 		if(employee.isPresent()) {
