@@ -10,6 +10,15 @@ INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
 INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
 
+INSERT INTO shifts VALUES (1, 'Day');
+INSERT INTO shifts VALUES (2, 'Afternoon');
+INSERT INTO shifts VALUES (3, 'Night');
+INSERT INTO shifts VALUES (4, 'Free');
+
+
+INSERT INTO employees(id,dni,name,phone_number,shift_id) VALUES (1,'12345678A','Manuel Rodríguez','987654321', 3);
+INSERT INTO employees(id,dni,name,phone_number,shift_id) VALUES (2,'98765432Z','Rosa García','123456789', 2);
+INSERT INTO employees(id,dni,name,phone_number,shift_id) VALUES (3,'30987456M','Jorge Martín','567891234', 1);
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');

@@ -7,7 +7,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="employee">
+<petclinic:layout pageName="employees">
     <h2>Employee</h2>
 
     <table id="employeesTable" class="table table-striped">
@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${employee}" var="employee">
+        <c:forEach items="${employees}" var="employee">
             <tr>
                 <td>
                     <c:out value="${employee.dni}"/>
@@ -33,10 +33,10 @@
                     <c:out value="${employee.phone_number}"/>
                 </td>
                 <td>
-                    <c:out value="${employee.shift}"/>
+                    <c:out value="${employee.shift.name}"/>
                 </td>
                 <td>
-                	<spring:url value="/employee/delete/{employeeId}" var="employeeUrl">
+                	<spring:url value="/employees/delete/{employeeId}" var="employeeUrl">
                         <spring:param name="employeeId" value="${employee.id}"/>
                     </spring:url>
                     
