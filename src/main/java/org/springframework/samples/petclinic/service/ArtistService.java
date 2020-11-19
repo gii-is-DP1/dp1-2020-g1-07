@@ -22,7 +22,7 @@ public class ArtistService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Artist> findArtistById(String id){ 
+	public  Optional<Artist> findArtistById(int id){ 
 		return artistRep.findById(id);
 	}
 

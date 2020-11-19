@@ -22,7 +22,7 @@ public class MaintenanceWorkerService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<MaintenanceWorker> findMaintenanceWorkerById(String id){ 
+	public  Optional<MaintenanceWorker> findMaintenanceWorkerById(int id){ 
 		return maintenanceWorkerRep.findById(id);
 	}
 

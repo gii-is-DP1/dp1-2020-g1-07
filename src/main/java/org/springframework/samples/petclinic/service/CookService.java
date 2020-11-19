@@ -22,7 +22,7 @@ public class CookService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Cook> findCookById(String id){ 
+	public  Optional<Cook> findCookById(int id){ 
 		return cookRep.findById(id);
 	}
 

@@ -22,7 +22,7 @@ public class WaiterService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Waiter> findWaiterById(String id){ 
+	public  Optional<Waiter> findWaiterById(int id){ 
 		return waiterRep.findById(id);
 	}
 

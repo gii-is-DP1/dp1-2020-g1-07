@@ -27,10 +27,10 @@ public class EmployeeController {
 	
 	@GetMapping()
 	public String listEmployees(ModelMap modelMap) {
-		String vista= "employees/listEmployee";
+		String view= "employees/listEmployee";
 		Iterable<Employee> employees=employeeService.findAll();
-		modelMap.addAttribute("employee", employees);
-		return vista;
+		modelMap.addAttribute("employees", employees);
+		return view;
 	}
 	
 	@ModelAttribute("shifts")

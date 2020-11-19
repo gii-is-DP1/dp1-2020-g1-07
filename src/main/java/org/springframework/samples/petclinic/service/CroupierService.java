@@ -22,7 +22,7 @@ public class CroupierService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Croupier> findCroupierById(String id){ 
+	public  Optional<Croupier> findCroupierById(int id){ 
 		return croupierRep.findById(id);
 	}
 

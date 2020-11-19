@@ -22,7 +22,7 @@ public class ChefService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Chef> findChefById(String id){ 
+	public  Optional<Chef> findChefById(int id){ 
 		return chefRep.findById(id);
 	}
 
