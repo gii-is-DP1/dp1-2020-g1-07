@@ -5,8 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.MaintenanceWorker;
 import org.springframework.samples.petclinic.repository.MaintenanceWorkerRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class MaintenanceWorkerService {
 	@Autowired
 	private  MaintenanceWorkerRepository maintenanceWorkerRep; 
