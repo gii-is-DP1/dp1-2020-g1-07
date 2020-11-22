@@ -40,8 +40,4 @@ public class EmployeeService {
 		employeeRep.delete(employee);
 	}
 	
-	public Collection<Shift> findShifts() throws DataAccessException{
-        // TODO Auto-generated method stub
-        return employeeRep.findShifts();
-    }
 }

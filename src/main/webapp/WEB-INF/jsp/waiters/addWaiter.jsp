@@ -11,10 +11,7 @@
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Dni" name="dni"/>
                 <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="Phone Number" name="phoneNumber"/>
-                <div class="control-group">
-                    <petclinic:selectField label="Shift" name="shift" names="${shifts}" size="1"/>
-                </div>      
+                <petclinic:inputField label="Phone Number" name="phone_number"/>    
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

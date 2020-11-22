@@ -16,9 +16,9 @@ INSERT INTO shifts VALUES (3, 'Night');
 INSERT INTO shifts VALUES (4, 'Free');
 
 
-INSERT INTO employees(id,dni,name,phone_number,shift_id) VALUES (1,'12345678A','Manuel Rodríguez','987654321', 3);
-INSERT INTO employees(id,dni,name,phone_number,shift_id) VALUES (2,'98765432Z','Rosa García','123456789', 2);
-INSERT INTO employees(id,dni,name,phone_number,shift_id) VALUES (3,'30987456M','Jorge Martín','567891234', 1);
+INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678a','Manuel Rodríguez','987654321');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432z','Rosa García','123456789');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (3,'30987456m','Jorge Martín','567891234');
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');

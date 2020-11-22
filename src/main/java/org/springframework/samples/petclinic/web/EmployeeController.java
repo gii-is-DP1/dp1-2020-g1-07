@@ -33,11 +33,6 @@ public class EmployeeController {
 		return view;
 	}
 	
-	@ModelAttribute("shifts")
-    public Collection<Shift> populateShifts() {
-        return this.employeeService.findShifts();
-    }
-	
 	@GetMapping(path="/new")
 	public String createEmployee(ModelMap modelMap) {
 		String view="employees/addEmployee";

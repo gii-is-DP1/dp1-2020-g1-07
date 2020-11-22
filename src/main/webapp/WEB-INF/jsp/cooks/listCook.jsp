@@ -16,7 +16,6 @@
             <th style="width: 200px;">Dni</th>
             <th style="width: 200px;">Name</th>
             <th style="width: 200px;">Phone Number</th>
-            <th style="width: 200px;">Shift</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -31,9 +30,6 @@
                 </td>
                 <td>
                     <c:out value="${cook.phone_number}"/>
-                </td>
-                <td>
-                    <c:out value="${cook.shift.name}"/>
                 </td>
                 <td>
                 	<spring:url value="/cooks/delete/{cookId}" var="cookUrl">
