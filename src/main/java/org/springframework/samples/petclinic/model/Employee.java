@@ -32,12 +32,7 @@ public class Employee extends NamedEntity{
 	@NotEmpty
 	@Pattern(regexp="^[0-9]{9}$",message="phone number must contain 9 digits")  
 	@Column(name = "phone_number")
-	private String phoneNumber;
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "shift_id")
-	private Shift shift;
+	private String phone_number;
 	
 }
 
