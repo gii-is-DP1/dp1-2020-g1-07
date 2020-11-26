@@ -13,8 +13,10 @@
     <table id="casinotablesTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Game</th>
+        	<th style="width: 150px;">Id</th>
+            <th style="width: 150px;">Game</th>
+            <th style="width: 200px;">GameType</th>
+            <th style="width: 200px;">Skill Level</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -22,10 +24,16 @@
         <c:forEach items="${casinotables}" var="casinotable">
             <tr>
                 <td>
-                    <c:out value="${casinotable.name}"/>
+                    <c:out value="${casinotable.id}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.game}"/>
+                    <c:out value="${casinotable.game.name}"/>
+                </td>
+                <td>
+                    <c:out value="${casinotable.gametype}"/>
+                </td>
+                <td>
+                    <c:out value="${casinotable.skill}"/>
                 </td>
                 <td>
                 	<spring:url value="/casinotables/delete/{casinotableId}" var="casinotableUrl">
@@ -37,5 +45,10 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="form-group">
+    	<form method="get" action="/casinotables/new">
+    		<button class="btn btn-default" type="submit">Add new table</button>
+		</form>
+	</div>
     
 </petclinic:layout>

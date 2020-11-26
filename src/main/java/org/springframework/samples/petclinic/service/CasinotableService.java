@@ -4,8 +4,11 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
-import org.springframework.samples.petclinic.model.DishCourse;
+import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.GameType;
+import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CasinotableService {
 	@Autowired
-	private  CasinotableRepository castabRepo; ///Cambiado a static aunque no viene en el video
+	private  CasinotableRepository castabRepo;
 	
 	@Transactional
 	public int casinoTableCount() {
@@ -26,17 +29,29 @@ public class CasinotableService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Casinotable> findCasinotableById(int id){ ///Cambiado a static aunque no viene en el video
+	public  Optional<Casinotable> findCasinotableById(int id){
 		return castabRepo.findById(id);
 	}
 
 	@Transactional
-	public  void save(Casinotable casinotable) {   ///Cambiado a static aunque no viene en el video
+	public  void save(Casinotable casinotable) {
 		castabRepo.save(casinotable);
 	}
 
-	public  void delete(Casinotable casinotable) { ///Cambiado a static aunque no viene en el video
+	public  void delete(Casinotable casinotable) {
 		castabRepo.delete(casinotable);
 	}
+	public Collection<Skill> findSkills() throws DataAccessException{
+        // TODO Auto-generated method stub
+        return castabRepo.findSkills();
+    }
+	public Collection<GameType> findGameTypes() throws DataAccessException{
+        // TODO Auto-generated method stub
+        return castabRepo.findGameTypes();
+    }
 
+	public Collection<Game> findGames() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return castabRepo.findGames();
+	}
 }

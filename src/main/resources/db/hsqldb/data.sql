@@ -8,7 +8,22 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
-INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
+
+
+INSERT INTO GAMETYPES VALUES(1,'Roullete');
+INSERT INTO GAMETYPES VALUES(2, 'Cards');
+INSERT INTO GAMETYPES VALUES(3,'Dices');
+INSERT INTO SKILLS VALUES(1,'AMATEUR');
+INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
+INSERT INTO games VALUES (1,'Poker',8,2);
+
+
+
+INSERT INTO CASINOTABLE VALUES(1,'Mesa 1',1,2,1);
+
+
+
+
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678a','Manuel Rodríguez','987654321');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432z','Rosa García','123456789');

@@ -5,28 +5,26 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="casinotables">
+<petclinic:layout pageName="games">
     <jsp:body>
-        <h2>New table</h2>
+        <h2>New game</h2>
 
 
-        <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
+        <form:form modelAttribute="game" class="form-horizontal" action="/games/save">
             <div class="form-group has-feedback">
-            	<div class="control-group">
+                <petclinic:inputField label="Name" name="name"/>
+                <div class="control-group">
+                	<petclinic:inputField label="Max Players" name="maxPlayers"/>
+                </div>
+                <div class="control-group">
                 	<petclinic:selectField label="Game Type" name="gametype" names="${gametypes}" size="1"/>
-                </div>
-                <div class="control-group">
-                	<petclinic:selectField label="Game" name="game" names="${games}" size="1"/>
-                </div>
-                <div class="control-group">
-                	<petclinic:selectField label="Skill Level" name="skill" names="${skills}" size="1"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="casinotableId" value="${casinotable.id}"/>
-                    <button class="btn btn-default" type="submit">Add Casino Table</button>
+                    <input type="hidden" name="gameId" value="${game.id}"/>
+                    <button class="btn btn-default" type="submit">Add Game</button>
                 </div>
             </div>
         </form:form>
