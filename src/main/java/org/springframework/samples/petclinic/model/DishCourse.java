@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "shifts")
-public class Shift extends NamedEntity{
-	
+@Table(name = "dish_courses")
+public class DishCourse extends NamedEntity{
+
 }
