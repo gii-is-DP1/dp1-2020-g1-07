@@ -17,6 +17,6 @@ public class EmployeeServiceTest {
 	@Test
 	public void testCountWithInitialData() {
 		int count= empService.employeeCount();
-		assertEquals(count,3);
+		assertEquals(count,21);
 	}
 }

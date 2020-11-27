@@ -16,6 +16,6 @@ public class AdministratorServiceTest {
 	@Test
 	public void testCountWithInitialData() {
 		int count= adminService.AdministratorCount();
-		assertEquals(count,3);
+		assertEquals(count,6);
 	}
 }
