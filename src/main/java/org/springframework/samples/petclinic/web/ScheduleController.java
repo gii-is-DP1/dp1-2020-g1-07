@@ -6,20 +6,30 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
+import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.samples.petclinic.service.ScheduleService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+
+@Controller
+@RequestMapping("/schedules")
 public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
+	
 	
 	@GetMapping()
 	public String listSchedules(ModelMap modelMap) {
@@ -33,6 +43,11 @@ public class ScheduleController {
     public Collection<Shift> populateShifts() {
         return this.scheduleService.findShifts();
     }
+	
+	@ModelAttribute("employees_ids")
+	public Collection<Employee> employeeIds() {
+		return this.scheduleService.findEmployeeId();
+	}
 	
 	@GetMapping(path="/new")
 	public String createSchedule(ModelMap modelMap) {

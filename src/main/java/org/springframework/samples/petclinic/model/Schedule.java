@@ -18,15 +18,11 @@ import lombok.Data;
 @Entity
 @Table(name="schedules")
 
-public class Schedule {
+public class Schedule extends NamedEntity{
 
-	@Id
-	@GeneratedValue
-	private long id;
-	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "employee_id")
+	@JoinColumn(name = "employees_id")
 	private Employee emp;
 	
 	@NotNull
