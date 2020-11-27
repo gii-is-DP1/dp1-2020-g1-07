@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
+
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,9 @@ public class CasinotableService {
 	}
 
 	@Transactional
-	public  void save(Casinotable casinotable) {
+	public  void save(Casinotable casinotable) throws DataAccessException {
 		castabRepo.save(casinotable);
+		
 	}
 
 	public  void delete(Casinotable casinotable) {
@@ -54,4 +56,5 @@ public class CasinotableService {
 		// TODO Auto-generated method stub
 		return castabRepo.findGames();
 	}
+
 }
