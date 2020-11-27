@@ -14,7 +14,7 @@ public interface DishRepository extends CrudRepository<Dish, Integer>{
 	@Query("SELECT dcourse FROM DishCourse dcourse ORDER BY dcourse.id")
 	List<DishCourse> findDishCourses() throws DataAccessException;
 	
-	@Query("SELECT shift FROM Shift shift ORDER BY shift.id")
+	@Query("SELECT shift FROM Shift shift WHERE shift.id!=4 ORDER BY shift.id")
 	List<Shift> findShifts() throws DataAccessException;
 
 }

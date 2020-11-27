@@ -26,8 +26,20 @@ public class DishFormatter implements Formatter<Dish>{
 
 	@Override
 	public Dish parse(String text, Locale locale) throws ParseException {
-		Collection<Dish> findDishes = this.menuService.findDishes();
-		for (Dish dish : findDishes) {
+		Collection<Dish> findFirstDishes = this.menuService.findFirstDishes();
+		Collection<Dish> findSecondDishes = this.menuService.findSecondDishes();
+		Collection<Dish> findDesserts = this.menuService.findDesserts();
+		for (Dish dish : findFirstDishes) {
+			if (dish.getName().equals(text)) {
+				return dish;
+			}
+		}
+		for (Dish dish : findSecondDishes) {
+			if (dish.getName().equals(text)) {
+				return dish;
+			}
+		}
+		for (Dish dish : findDesserts) {
 			if (dish.getName().equals(text)) {
 				return dish;
 			}

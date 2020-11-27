@@ -8,8 +8,26 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 
-INSERT INTO CASINOTABLE(id,name,game) VALUES (1,'Mesa1', 'Blackjack');
 
+
+INSERT INTO GAMETYPES VALUES(1,'Roullete');
+INSERT INTO GAMETYPES VALUES(2, 'Cards');
+INSERT INTO GAMETYPES VALUES(3,'Dices');
+INSERT INTO SKILLS VALUES(1,'AMATEUR');
+INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
+INSERT INTO games VALUES (1,'Poker',8,2);
+
+
+
+INSERT INTO CASINOTABLE VALUES(1,'Mesa 1',1,2,1);
+
+
+
+
+
+INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678a','Manuel Rodríguez','987654321');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432z','Rosa García','123456789');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (3,'30987456m','Jorge Martín','567891234');
 INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'12345678A', 'Paco Perez','123456789');
 
 
@@ -22,7 +40,10 @@ INSERT INTO shifts VALUES (2, 'Afternoon');
 INSERT INTO shifts VALUES (3, 'Night');
 INSERT INTO shifts VALUES (4, 'Free');
 
-INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Serranito',2, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Ensalada Cesar',1, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (2,'Serranito',2, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (3,'Flan Potax',3, 2);
+
 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
@@ -77,4 +98,3 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
-

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Dish;
-import org.springframework.samples.petclinic.model.DishCourse;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.repository.MenuRepository;
@@ -41,9 +40,19 @@ public class MenuService {
 	public  void delete(Menu menu) { ///Cambiado a static aunque no viene en el video
 		menuRepo.delete(menu);
 	}
-	public Collection<Dish> findDishes() throws DataAccessException{
+	public Collection<Dish> findFirstDishes() throws DataAccessException{
 		// TODO Auto-generated method stub
-		return menuRepo.findDishes();
+		return menuRepo.findFirstDishes();
+	}
+	
+	public Collection<Dish> findSecondDishes() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return menuRepo.findSecondDishes();
+	}
+	
+	public Collection<Dish> findDesserts() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return menuRepo.findDesserts();
 	}
 	
 	public Collection<Shift> findShifts() throws DataAccessException{

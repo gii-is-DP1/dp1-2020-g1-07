@@ -80,9 +80,19 @@ public class MenuController {
 		return view;
 	}
 	
-	@ModelAttribute("dishes")
-	public Collection<Dish> populateDishes() {
-		return this.menuService.findDishes();
+	@ModelAttribute("first_dishes")
+	public Collection<Dish> populateFirstDishes() {
+		return this.menuService.findFirstDishes();
+	}
+	
+	@ModelAttribute("second_dishes")
+	public Collection<Dish> populateSecondDishes() {
+		return this.menuService.findSecondDishes();
+	}
+	
+	@ModelAttribute("desserts")
+	public Collection<Dish> populateDesserts() {
+		return this.menuService.findDesserts();
 	}
 	
 	@ModelAttribute("shifts")
