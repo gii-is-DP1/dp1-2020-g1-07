@@ -38,6 +38,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/casinotables").permitAll()
 				.antMatchers("/casinotables/**").hasAnyAuthority("admin")
+				.antMatchers("/employees").hasAnyAuthority("admin")
+				.antMatchers("/employees/**").hasAnyAuthority("admin")
+				.antMatchers("/administrators").hasAnyAuthority("admin")
+				.antMatchers("/administrators/**").hasAnyAuthority("admin")
+				.antMatchers("/artists").hasAnyAuthority("admin")
+				.antMatchers("/artists/**").hasAnyAuthority("admin")
+				.antMatchers("/chefs").hasAnyAuthority("admin")
+				.antMatchers("/chefs/**").hasAnyAuthority("admin")
+				.antMatchers("/cooks").hasAnyAuthority("admin")
+				.antMatchers("/cooks/**").hasAnyAuthority("admin")
+				.antMatchers("/croupiers").hasAnyAuthority("admin")
+				.antMatchers("/croupiers/**").hasAnyAuthority("admin")
+				.antMatchers("/maintenanceWorkers").hasAnyAuthority("admin")
+				.antMatchers("/maintenanceWorkers/**").hasAnyAuthority("admin")
+				.antMatchers("/waiters").hasAnyAuthority("admin")
+				.antMatchers("/waiters/**").hasAnyAuthority("admin")
+				.antMatchers("/dishes").permitAll()
+				.antMatchers("/dishes/**").hasAnyAuthority("admin")
+				.antMatchers("/menus").permitAll()
+				.antMatchers("/menus/**").hasAnyAuthority("admin")
+				.antMatchers("/clients").permitAll()
+				.antMatchers("/clients/**").hasAnyAuthority("admin")
+				.antMatchers("/games").permitAll()
+				.antMatchers("/games/**").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
@@ -55,6 +79,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // se sirve desde esta misma página.
                 http.csrf().ignoringAntMatchers("/h2-console/**");
                 http.headers().frameOptions().sameOrigin();
+                http.headers()
+    	        .defaultsDisabled()
+    	        .contentTypeOptions();
 	}
 
 	@Override
@@ -69,7 +96,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       "select username, authority "
 	        + "from authorities "
 	        + "where username = ?")	      	      
-	      .passwordEncoder(passwordEncoder());	
+	      .passwordEncoder(passwordEncoder());
+		
 	}
 	
 	@Bean
@@ -77,6 +105,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
 	}
+	
+	/*
+	protected void configureHeaders(HttpSecurity http) throws Exception {
+	    http.headers()
+	        .defaultsDisabled()
+	        .contentTypeOptions()
+	        .disable();
+	}*/
 	
 }
 

@@ -32,6 +32,74 @@
 
     </properties>
 
+    
+ 	<developers>
+ 	
+ 		<developer>
+			<id>dancarolm</id>
+			<name>Daniel</name>
+			<email>danielcaroolmedo2@gmail.com</email>
+			<url></url>
+			<roles>
+				<role>leader</role>
+			</roles>
+		</developer>
+ 	
+ 	
+		 <developer>
+		    <id>Dani</id>
+		 	<name>Daniel</name>
+		 	<email>danmuaher@alum.us.es</email>
+		 	<url>https://github.com/NoSoyDani</url>
+		 	<roles>
+		 		<role>leader</role>
+		 	</roles>
+			<properties>
+			</properties>
+		 </developer>
+ 
+ 
+		 <developer>
+		 	<id>davbarsal1</id>
+		 	<name>David</name>
+		 	<email>davbarsal1@alum.us.es</email>
+		 	<url>https://github.com/davbarsal1</url>
+		 	<roles>
+				<role>leader</role>
+		 	</roles>
+		 	<properties>
+		 	</properties>
+		 </developer>
+
+
+	
+		 <developer>
+ 			<id>vicsorvaz</id>
+ 			<name>Vicente</name>
+ 			<email>visorvaz@gmail.com</email>
+ 			<url>https://github.com/vicsorvaz</url>
+			<roles>
+ 		    	<role>leader</role>
+ 			</roles>
+ 			<properties>	
+ 			</properties>
+ 		</developer>
+ <!-- More developers ...-->
+
+		 <developer>
+		 	<id>beatrizbeltranalvarez</id>
+			 <name>Beatriz</name>
+			 <email>beltranalvarezbeatriz@gmail.com</email>
+			 <url>https://github.com/beatrizbeltranalvarez</url>
+			 <roles>
+				 <role>developer</role>
+			 </roles>
+			 <properties>
+			 </properties>
+		 </developer>
+ <!-- More developers ...-->
+ 	</developers>
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
@@ -93,6 +161,24 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- JSTL tag lib -->
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        
         <!-- WebJars -->
         <dependency>
             <groupId>org.webjars</groupId>

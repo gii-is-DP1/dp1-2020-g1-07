@@ -7,31 +7,36 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="casinotables">
-    <h2>Casinotables</h2>
+<petclinic:layout pageName="employees">
+    <h2>Employee</h2>
 
-    <table id="casinotablesTable" class="table table-striped">
+    <table id="employeesTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Game</th>
+            <th style="width: 200px;">Dni</th>
+            <th style="width: 200px;">Name</th>
+            <th style="width: 200px;">Phone Number</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${casinotables}" var="casinotable">
+        <c:forEach items="${employees}" var="employee">
             <tr>
                 <td>
-                    <c:out value="${casinotable.name}"/>
+                    <c:out value="${employee.dni}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.game}"/>
+                    <c:out value="${employee.name}"/>
                 </td>
                 <td>
-                	<spring:url value="/casinotables/delete/{casinotableId}" var="casinotableUrl">
-                        <spring:param name="casinotableId" value="${casinotable.id}"/>
+                    <c:out value="${employee.phone_number}"/>
+                </td>
+                <td>
+                	<spring:url value="/employees/delete/{employeeId}" var="employeeUrl">
+                        <spring:param name="employeeId" value="${employee.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(casinotableUrl)}">Delete</a>
+                    
+                    <a href="${fn:escapeXml(employeeUrl)}">Delete</a>
                 </td> 
             </tr>
         </c:forEach>

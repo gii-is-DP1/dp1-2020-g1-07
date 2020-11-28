@@ -1,16 +1,27 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.GameType;
+
+import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.service.CasinotableService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,53 +30,97 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/casinotables")
 public class CasinotableController {
 
+	 
 	@Autowired
 	private CasinotableService castableService;
 	
 	@GetMapping()
-	public String listadoMesasCasino(ModelMap modelMap) {
-		String vista= "casinotables/listadoMesascasino";
+	public String casinotablesListed(ModelMap modelMap) {
+		String view = "casinotables/listCasinotable";
 		Iterable<Casinotable> casinotables=castableService.findAll();
 		modelMap.addAttribute("casinotables", casinotables);
-		return vista;
+		return view;
 	}
 	
+	
 	@GetMapping(path="/new")
-	public String crearMesacasino(ModelMap modelMap) {
+	public String createCasinotable(ModelMap modelMap) {
 		String view="casinotables/addCasinotable";
 		modelMap.addAttribute("casinotable", new Casinotable());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String salvarMesacasino(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) {
-		String view="casinotables/listadoMesascasino";
+	public String saveCasinotable(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) {
+		String view="casinotables/listCasinotable";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("casinotable", casinotable);
-			return "casinotables/editCasinotable";
+			return "casinotables/addCasinotable";
 			
 		}else {
 			
 			castableService.save(casinotable);
 			
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
-			view=listadoMesasCasino(modelMap);
+			view=casinotablesListed(modelMap);
 		}
 		return view;
 	}
 	
 	@GetMapping(path="/delete/{casinotableId}")
-	public String borrarCasinotable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
-		String view="casinotables/listadoMesascasino";
+	public String deleteCasinoTable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
+		String view="casinotables/listCasinotable";
 		Optional<Casinotable> casinotable = castableService.findCasinotableById(casinotableId);
 		if(casinotable.isPresent()) {
 			castableService.delete(casinotable.get());
 			modelMap.addAttribute("message", "Casinotable successfully deleted!");
-			view=listadoMesasCasino(modelMap);
+			view=casinotablesListed(modelMap);
 		}else {
 			modelMap.addAttribute("message", "Casinotable not found!");
-			view=listadoMesasCasino(modelMap);
+			view=casinotablesListed(modelMap);
 		}
 		return view;
 	}
+	
+	@GetMapping(value = "/{casinotableId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		Casinotable casinotable = castableService.findCasinotableById(casinotableId).get();
+		
+		model.put("casinotable", casinotable);
+		return "casinotables/updateCasinotable";
+	}
+
+	@PostMapping(value = "/{casinotableId}/edit")
+	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
+			@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("casinotable", casinotable);
+			return "casinotables/updateCasinotable";
+		}
+		else {
+			casinotable.setId(casinotableId);
+			this.castableService.save(casinotable);
+			return "redirect:/casinotables";
+			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
+			 Casinotable casinotableToUpdateGet = casinotableToUpdate.get();                                                                            
+	                                      
+	              this.castableService.save(casinotableToUpdateGet);                    
+	                    
+	            return "redirect:/casinotables/";*/
+		}
+	}
+
+	@ModelAttribute("gametypes")
+    public Collection<GameType> populateGameTypes() {
+        return this.castableService.findGameTypes();
+    }
+	
+	@ModelAttribute("skills")
+    public Collection<Skill> populateSkills() {
+        return this.castableService.findSkills();
+    }
+	@ModelAttribute("games")
+    public Collection<Game> populateGames() {
+        return this.castableService.findGames();
+    }
 }
