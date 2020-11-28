@@ -5,17 +5,16 @@
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
 <petclinic:layout pageName="home">
-    <h2><fmt:message key="welcome"/></h2>
+	<div class="fullpage"> 
     <div class="row">
         <div class="col-md-12">
-            <spring:url value="/resources/images/casino.jpg" htmlEscape="true" var="petsImage"/>
-            <img class="img-responsive" src="${petsImage}"/>
         </div>
         
     </div>
     <div class = "row">
-    
+    	<h1 class="tuvis"> Tuvi's casino </h1>
     	<a style="font-size:50px;" class = "enlace" href = "/casinotables" > Delete table Link</a><br>
    		<a style="font-size:50px;" class = "enlace" href = "/casinotables/new" > Add table link</a>
+    </div>
     </div>
 </petclinic:layout>

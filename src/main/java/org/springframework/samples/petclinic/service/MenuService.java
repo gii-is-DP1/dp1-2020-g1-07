@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MenuService {
 	@Autowired
-	private  MenuRepository menuRepo; ///Cambiado a static aunque no viene en el video
+	private  MenuRepository menuRepo;
 	
 	@Transactional
 	public int menuCount() {
@@ -28,18 +28,34 @@ public class MenuService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Menu> findMenuById(int id){ ///Cambiado a static aunque no viene en el video
+	public  Optional<Menu> findMenuById(int id){ 
 		return menuRepo.findById(id);
 	}
 
 	@Transactional
-	public  void save(Menu menu) {   ///Cambiado a static aunque no viene en el video
+	public  void save(Menu menu) {   
 		menuRepo.save(menu);
 	}
 
-	public  void delete(Menu menu) { ///Cambiado a static aunque no viene en el video
+	public  void delete(Menu menu) { 
 		menuRepo.delete(menu);
 	}
+	
+	public Collection<Dish> findFirstDishesByShift(int id) throws DataAccessException{
+		// TODO Auto-generated method stub
+		return menuRepo.findFirstDishesByShift(id);
+	}
+	
+	public Collection<Dish> findSecondDishesByShift(int id) throws DataAccessException{
+		// TODO Auto-generated method stub
+		return menuRepo.findSecondDishesByShift(id);
+	}
+	
+	public Collection<Dish> findDessertsByShift(int id) throws DataAccessException{
+		// TODO Auto-generated method stub
+		return menuRepo.findDessertsByShift(id);
+	}
+	
 	public Collection<Dish> findFirstDishes() throws DataAccessException{
 		// TODO Auto-generated method stub
 		return menuRepo.findFirstDishes();
