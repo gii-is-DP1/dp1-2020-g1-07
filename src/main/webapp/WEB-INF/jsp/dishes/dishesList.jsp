@@ -36,10 +36,23 @@
                         <spring:param name="dishId" value="${dish.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(dishUrl)}">Delete</a>
+                </td>
+            
+            <td>
+                	<spring:url value="/dishes/{dishId}/edit" var="editUrl">
+                        <spring:param name="dishId" value="${dish.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    
+        <div class="form-group">
+    	<form method="get" action="/dishes/new">
+    		<button class="btn btn-default" type="submit">Add new dish</button>
+		</form>
+	</div>
     
 </petclinic:layout>

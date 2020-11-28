@@ -26,14 +26,14 @@ public class MenuValidator implements Validator {
 			errors.rejectValue("date", REQUIRED, REQUIRED);
 		}
 		// Dishes validation
-		if(shift.getId() != first_dish.getShift().getId()) {
-			errors.rejectValue("first_dish", REQUIRED + " that the dish is in the selected shift", REQUIRED + " that the dish is in the selected shift");
+		if(first_dish==null || shift.getId() != first_dish.getShift().getId()) {
+			errors.rejectValue("first_dish", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
 		}
 		if(shift.getId() != second_dish.getShift().getId()) {
-			errors.rejectValue("second_dish", REQUIRED + " that the dish is in the selected shift", REQUIRED + " that the dish is in the selected shift");
+			errors.rejectValue("second_dish", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
 		}
 		if(shift.getId() != dessert.getShift().getId()) {
-			errors.rejectValue("dessert", REQUIRED + " that the dish is in the selected shift", REQUIRED + " that the dish is in the selected shift");
+			errors.rejectValue("dessert", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
 		}
 	}
 

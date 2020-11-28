@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -72,6 +73,28 @@ public class ClientController {
 			view=clientsList(modelMap);
 		}
 		return view;
+	}
+	
+	@GetMapping(value = "/{clientId}/edit")
+	public String initUpdateClientForm(@PathVariable("clientId") int clientId, ModelMap model) {
+		Client client = clientService.findClientById(clientId).get();
+		
+		model.put("client", client);
+		return "clients/updateClient";
+	}
+
+	@PostMapping(value = "/{clientId}/edit")
+	public String processUpdateClientForm(@Valid Client client, BindingResult result,
+			@PathVariable("clientId") int clientId, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("client", client);
+			return "clients/updateClient";
+		}
+		else {
+			client.setId(clientId);
+			this.clientService.save(client);
+			return "redirect:/clients";
+		}
 	}
 	
 

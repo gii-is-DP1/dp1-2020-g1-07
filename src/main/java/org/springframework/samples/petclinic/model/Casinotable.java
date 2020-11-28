@@ -21,4 +21,5 @@ public class Casinotable extends NamedEntity{
     @JoinColumn(name = "skill_id")
 	private Skill skill;
 	
+
 }

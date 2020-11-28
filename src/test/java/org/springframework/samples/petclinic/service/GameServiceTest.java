@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,14 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class CasinoTableServiceTest {
-	
+class GameServiceTest {
+
 	@Autowired
-	private CasinotableService casTabService;
+	private GameService gameService;
 	
 	/*@Test
 	public void testCountWithInitialData() {
@@ -27,13 +28,13 @@ public class CasinoTableServiceTest {
 		assertEquals(count,1);
 	}*/
 	@Test
-	void shouldFindCasinotable() {
-		List<Casinotable> casinotables = StreamSupport.stream(this.casTabService.findAll().spliterator(), false).collect(Collectors.toList());
+	void shouldFineGame() {
+		List<Game> games = StreamSupport.stream(this.gameService.findAll().spliterator(), false).collect(Collectors.toList());
 
-		Casinotable casinotable = EntityUtils.getById(casinotables, Casinotable.class, 1);
-		assertThat(casinotable.getId()).isEqualTo(1);
-		assertThat(casinotable.getGame().getId()).isEqualTo(1);
-		assertThat(casinotable.getGametype().getId()).isEqualTo(2);
-	}
+		Game game = EntityUtils.getById(games, Game.class, 1);
+		assertThat(game.getName()).isEqualTo("Poker");
+		assertThat(game.getMaxPlayers()).isEqualTo(8);
+		assertThat(game.getGametype().getId()).isEqualTo(2);
+	}	
+
 }
-
