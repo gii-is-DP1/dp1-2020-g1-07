@@ -37,9 +37,20 @@
                     </spring:url>
                     <a href="${fn:escapeXml(clientUrl)}">Delete</a>
                 </td> 
+                
+                <td>
+                	<spring:url value="/clients/{clientId}/edit" var="editUrl">
+                        <spring:param name="clientId" value="${client.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
+                </td> 
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    
+    <div class="form-group">
+    	<form method="get" action="/clients/new">
+    		<button class="btn btn-default" type="submit">Add new client</button>
+		</form>
+		</div>
 </petclinic:layout>

@@ -80,6 +80,28 @@ public class MenuController {
 		return view;
 	}
 	
+	@GetMapping(value = "/{menuId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("menuId") int menuId, ModelMap model) {
+		Menu menu = menuService.findMenuById(menuId).get();
+		
+		model.put("menu", menu);
+		return "menus/updateMenu";
+	}
+
+	@PostMapping(value = "/{menuId}/edit")
+	public String processUpdateCasTbForm(@Valid Menu menu, BindingResult result,
+			@PathVariable("menuId") int menuId, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("menu", menu);
+			return "menus/updateMenu";
+		}
+		else {
+			menu.setId(menuId);
+			this.menuService.save(menu);
+			return "redirect:/menus";
+		}
+	}
+	
 	@ModelAttribute("first_dishes")
 	public Collection<Dish> populateFirstDishes() {
 		return this.menuService.findFirstDishes();

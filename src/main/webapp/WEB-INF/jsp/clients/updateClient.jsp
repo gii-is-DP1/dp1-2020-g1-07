@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="dishes">
+<petclinic:layout pageName="clients">
     <jsp:body>
         <h2>Edit table</h2>
 
@@ -15,28 +15,26 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/dishes/"+"${dish.id}"+"/edit";
+           frm.action = "/clients/"+"${client.id}"+"/edit";
         }
 
    			 }
     	</script>
 			
-        <form:form modelAttribute="dish" class="form-horizontal" action="/dishes/{dishId}/edit" onsubmit = "chgAction()" id = "id">
+        <form:form modelAttribute="client" class="form-horizontal" action="/clients/{clientId}/edit" onsubmit = "chgAction()" id = "id">
        
             <div class="form-group has-feedback">
+               <div class="form-group has-feedback">
+                <petclinic:inputField label="Dni" name="dni"/>
                 <petclinic:inputField label="Name" name="name"/>
-            	<div class="control-group">
-                	<petclinic:selectField label="Dish Course" name="dish_course" names="${dish_courses}" size="1"/>
-                </div>
-                <div class="control-group">
-                	<petclinic:selectField label="Shift" name="shift" names="${shifts}" size="1"/>
-                </div>
+                <petclinic:inputField label="Phone Number" name="phone_number"/>
+            	</div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     
-                    <button class="btn btn-default" type="submit">Update dish</button>
+                    <button class="btn btn-default" type="submit">Update client</button>
                 </div>
             </div>
         </form:form>
