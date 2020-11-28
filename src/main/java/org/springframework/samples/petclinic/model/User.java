@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -14,10 +15,14 @@ import lombok.Data;
 @Entity
 @Table(name = "users")
 public class User{
+	
 	@Id
 	String username;
 	
 	String password;
+	
+	@JoinColumn(name = "dni")
+	String dni;
 	
 	boolean enabled;
 	

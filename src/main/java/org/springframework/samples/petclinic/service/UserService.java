@@ -16,11 +16,14 @@
 package org.springframework.samples.petclinic.service;
 
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,5 +52,15 @@ public class UserService {
 	
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
+	}
+	
+	public Collection<Employee> findEmployees() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return userRepository.findEmployees();
+	}
+	
+	public Collection<Client> findClients() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return userRepository.findClients();
 	}
 }
