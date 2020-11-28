@@ -5,16 +5,27 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-
 <petclinic:layout pageName="dishes">
     <jsp:body>
-        <h2>Dish</h2>
+        <h2>Edit table</h2>
 
+		<script>
+    	function chgAction()
+    		{
+        
+        var frm = document.getElementById('id') || null;
+        if(frm) {
+           frm.action = "/dishes/"+"${dish.id}"+"/edit";
+        }
 
-        <form:form modelAttribute="dish" class="form-horizontal" action="/dishes/save">
+   			 }
+    	</script>
+			
+        <form:form modelAttribute="dish" class="form-horizontal" action="/dishes/{dishId}/edit" onsubmit = "chgAction()" id = "id">
+       
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Name" name="name"/>
-                <div class="control-group">
+            	<div class="control-group">
                 	<petclinic:selectField label="Dish Course" name="dish_course" names="${dish_courses}" size="1"/>
                 </div>
                 <div class="control-group">
@@ -24,8 +35,8 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="dishId" value="${dish.id}"/>
-                    <button class="btn btn-default" type="submit">Add Dish</button>
+                    
+                    <button class="btn btn-default" type="submit">Update dish</button>
                 </div>
             </div>
         </form:form>

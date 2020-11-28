@@ -45,9 +45,21 @@
                     </spring:url>
                     <a href="${fn:escapeXml(menuUrl)}">Delete</a>
                 </td> 
+                
+                <td>
+                	<spring:url value="/menus/{menuId}/edit" var="editUrl">
+                        <spring:param name="menuId" value="${menu.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
+                </td> 
             </tr>
         </c:forEach>
         </tbody>
     </table>
+            <div class="form-group">
+    	<form method="get" action="/menus/new">
+    		<button class="btn btn-default" type="submit">Add new menu</button>
+		</form>
+		</div>
     
 </petclinic:layout>

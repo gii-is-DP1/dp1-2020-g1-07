@@ -41,6 +41,12 @@
                     </spring:url>
                     <a href="${fn:escapeXml(gameUrl)}">Delete</a>
                 </td> 
+                <td>
+                	<spring:url value="/games/{gameId}/edit" var="editUrl">
+                        <spring:param name="gameId" value="${game.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -51,4 +57,4 @@
 		</form>
 	</div>
     
-</petclinic:layout>
+</petclinic:layout>l>

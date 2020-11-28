@@ -82,6 +82,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // se sirve desde esta misma página.
                 http.csrf().ignoringAntMatchers("/h2-console/**");
                 http.headers().frameOptions().sameOrigin();
+                http.headers()
+    	        .defaultsDisabled()
+    	        .contentTypeOptions();
 	}
 
 	@Override
@@ -96,7 +99,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       "select username, authority "
 	        + "from authorities "
 	        + "where username = ?")	      	      
-	      .passwordEncoder(passwordEncoder());	
+	      .passwordEncoder(passwordEncoder());
+		
 	}
 	
 	@Bean
@@ -104,6 +108,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
 	}
+	
+	/*
+	protected void configureHeaders(HttpSecurity http) throws Exception {
+	    http.headers()
+	        .defaultsDisabled()
+	        .contentTypeOptions()
+	        .disable();
+	}*/
 	
 }
 
