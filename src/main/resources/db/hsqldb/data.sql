@@ -1,16 +1,4 @@
--- One admin user, named admin1 with passwor 4dm1n and authority admin
-INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678a',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
--- One owner user, named owner1 with passwor 0wn3r
-INSERT INTO users(username,password,dni,enabled) VALUES ('owner1','0wn3r','98765431z',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
--- One vet user, named vet1 with passwor v3t
-INSERT INTO users(username,password,dni,enabled) VALUES ('vet1','v3t','30987454m',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
-
-
-
-INSERT INTO GAMETYPES VALUES(1,'Roullete');
+INSERT INTO GAMETYPES VALUES(1,'Roulette');
 INSERT INTO GAMETYPES VALUES(2, 'Cards');
 INSERT INTO GAMETYPES VALUES(3,'Dices');
 INSERT INTO SKILLS VALUES(1,'AMATEUR');
@@ -75,6 +63,18 @@ INSERT INTO waiters(id) VALUES (21);
 
 INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'12345678A', 'Paco Perez','123456789');
 
+-- ADMIN: admin1|4dm1n
+INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678a',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
+-- EMPLOYEE: artist1|artist1
+INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431z',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (2,'artist1','employee');
+-- CLIENT: client1|client1
+INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','30987454m',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (3,'client1','client');
+-- TEMPORAL
+INSERT INTO users(username,password,dni,enabled) VALUES ('owner1','0wn3r','98765431z',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'owner1','owner');
 
 INSERT INTO dish_courses VALUES (1, 'First');
 INSERT INTO dish_courses VALUES (2, 'Second');
