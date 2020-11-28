@@ -1,19 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
-import java.util.Collection;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Employee;
-import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.service.CasinotableService;
 import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,4 +66,26 @@ public class EmployeeController {
 		}
 		return view;
 	}
+	
+
+	@GetMapping(value = "/{employeeId}/edit")
+    public String initUpdateEmployeeForm(@PathVariable("employeeId") int employeeId, ModelMap model) {
+		Employee employee = employeeService.findEmployeeById(employeeId).get();
+        model.put("employee", employee);
+        return "employees/updateEmployee";
+    }
+
+    @PostMapping(value = "/{employeeId}/edit")
+    public String processUpdateEmployeeForm(@Valid Employee employee, BindingResult result,
+            @PathVariable("employeeId") int employeeId, ModelMap model) {
+        if (result.hasErrors()) {
+            model.put("employee", employee);
+            return "employees/updateEmployee";
+        }
+        else {
+        	employee.setId(employeeId);
+            this.employeeService.save(employee);
+            return "redirect:/employees";
+        }
+    }
 }
