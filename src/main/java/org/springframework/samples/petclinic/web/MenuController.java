@@ -24,8 +24,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+<<<<<<< Updated upstream
 
 import com.google.gson.Gson;
+=======
+>>>>>>> Stashed changes
 
 @Controller
 @RequestMapping("/menus")
@@ -86,6 +89,7 @@ public class MenuController {
 		return view;
 	}
 	
+<<<<<<< Updated upstream
 	@GetMapping(value = "/{menuId}/edit")
 	public String initUpdateCasTbForm(@PathVariable("menuId") int menuId, ModelMap model) {
 		Menu menu = menuService.findMenuById(menuId).get();
@@ -106,6 +110,37 @@ public class MenuController {
 			this.menuService.save(menu);
 			return "redirect:/menus";
 		}
+=======
+	@ResponseBody
+	@RequestMapping(value = "/new/loadGamesByGameType/{id}", method = RequestMethod.GET)
+	public String loadGamesByGameType(@PathVariable("id")int id) {
+		String json = "[{";
+		try {
+			List<Dish> first_dishes = new ArrayList<Dish>(menuService.findFirstDishesByShift(id));
+			for(Dish dish:first_dishes) {
+				json = json + "\"id\":" + dish.getId() +","
+						+ "\"name\":\"" + dish.getName() +"\","
+						+ "\"dish_course\":{"
+							+ "\"id\":" + dish.getDish_course().getId() + ","
+							+ "\"name\":\"" + dish.getDish_course().getName() + "\"},"
+						+ "\"shift\":{"
+							+ "\"id\":" + dish.getShift().getId() + ","
+							+ "\"name\":\"" + dish.getShift().getName() + "\"}},";
+				if(first_dishes.indexOf(dish)==first_dishes.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]#[{";
+				}
+			}
+			
+			if(first_dishes.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]#[{";
+			}
+			
+
+		}catch(Exception e) {
+			//System.out.println(menuService.findFirstDishesByShift(id));
+		}
+		return json;
+>>>>>>> Stashed changes
 	}
 	
 	@ModelAttribute("first_dishes")

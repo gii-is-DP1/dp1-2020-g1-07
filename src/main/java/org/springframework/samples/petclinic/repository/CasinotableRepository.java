@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -24,8 +25,10 @@ public interface CasinotableRepository extends CrudRepository<Casinotable, Integ
 
 	@Query("SELECT game FROM Game game ORDER BY game.id ")
 	List<Game> findGames()throws DataAccessException;
-	
+
 	@Query("SELECT game FROM Game game WHERE game.gametype.id = :id ORDER BY game.id")
-	 public List<Game> findGamesByGameType(@Param("id") int id);
+	public List<Game> findGamesByGameType(@Param("id") int id);
+	
+
 
 }

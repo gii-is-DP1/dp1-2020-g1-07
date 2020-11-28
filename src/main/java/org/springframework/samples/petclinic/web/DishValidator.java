@@ -1,19 +1,38 @@
 package org.springframework.samples.petclinic.web;
 
+<<<<<<< Updated upstream
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.service.DishService;
+=======
+
+
+import java.util.Locale;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+
+import org.junit.Test;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.samples.petclinic.model.Dish;
+import org.springframework.samples.petclinic.model.Person;
+>>>>>>> Stashed changes
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class DishValidator implements Validator {
 
 	private static final String REQUIRED = "required";
+<<<<<<< Updated upstream
 	protected DishService dishService;
 	private Integer prueba = 0;
+=======
+	 
+	
+>>>>>>> Stashed changes
 
 	public Dish getDishwithIdDifferent(String name, Integer id) {
 		name = name.toLowerCase();
@@ -48,6 +67,10 @@ public class DishValidator implements Validator {
 		return Dish.class.isAssignableFrom(clazz);
 	}
 	
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	
 
 }
