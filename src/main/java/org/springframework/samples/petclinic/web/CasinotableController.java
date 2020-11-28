@@ -1,30 +1,28 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
-
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.service.CasinotableService;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/casinotables")
@@ -109,6 +107,36 @@ public class CasinotableController {
 	            return "redirect:/casinotables/";*/
 		}
 	}
+	
+	@ResponseBody
+    @RequestMapping(value = "/new/loadGamesByGameType/{id}", method = RequestMethod.GET)
+    public String loadGamesByGameType(@PathVariable("id")int id) {
+        String json = "[{";
+        try {
+            List<Game> games = new ArrayList<Game>(castableService.findGamesByGameType(id));
+            for(Game game:games) {
+                json = json + "\"id\":" + game.getId() +","
+                        + "\"name\":\"" + game.getName() +"\","
+                        +"\"maxPlayers\":" + game.getMaxPlayers() +","
+                        + "\"gametype\":{"
+                            + "\"id\":" + game.getGametype().getId() + ","
+                            + "\"name\":\"" + game.getGametype().getName() + "\"}},";
+
+                if(games.indexOf(game)==games.size()-1) {
+                    json = json.substring(0, json.length() - 1) + "]";
+                }
+            }
+            
+            if(games.size()==0) {
+                json = json.substring(0, json.length() - 1) + "]";
+            }
+            
+
+        }catch(Exception e) {
+            //System.out.println(menuService.findFirstDishesByShift(id));
+        }
+        return json;
+    }
 
 	@ModelAttribute("gametypes")
     public Collection<GameType> populateGameTypes() {
