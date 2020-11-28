@@ -8,6 +8,7 @@
 <petclinic:layout pageName="casinotables">
     <jsp:body>
         <h2>Edit table</h2>
+
 		<script>
     	function chgAction()
     		{
@@ -16,9 +17,6 @@
         if(frm) {
            frm.action = "/casinotables/"+"${casinotable.id}"+"/edit";
         }
-            
-            
-
 
    			 }
     	</script>
