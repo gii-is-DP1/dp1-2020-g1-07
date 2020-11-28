@@ -13,6 +13,7 @@ public class DishValidator implements Validator {
 
 	private static final String REQUIRED = "required";
 	protected DishService dishService;
+	private Integer prueba = 0;
 
 	public Dish getDishwithIdDifferent(String name, Integer id) {
 		name = name.toLowerCase();
@@ -31,10 +32,11 @@ public class DishValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		Dish dish = (Dish) obj;
 		String name = dish.getName();
-		Dish otherDish=getDishwithIdDifferent(dish.getName(), dish.getId());
+		//Dish otherDish=getDishwithIdDifferent(dish.getName(), dish.getId());
 		// name validation
-		if (name == null || name.trim().equals("") || (otherDish!= null && otherDish.getId()!=dish.getId())) {
+		if (name == null || name.trim().equals("") /*|| (otherDish!= null && otherDish.getId()!=dish.getId())*/) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
+			prueba=1;
 		}
 	}
 
@@ -45,5 +47,7 @@ public class DishValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return Dish.class.isAssignableFrom(clazz);
 	}
+	
+	
 
 }

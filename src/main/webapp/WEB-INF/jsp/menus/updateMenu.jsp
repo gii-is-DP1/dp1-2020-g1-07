@@ -6,6 +6,13 @@
 
 
 <petclinic:layout pageName="menus">
+	<jsp:attribute name="customScript">
+		<script>
+			$(function () {
+				$("#date").datepicker({dateFormat: 'yy/mm/dd'});
+			});
+		</script>
+	</jsp:attribute>
     <jsp:body>
         <h2>Edit table</h2>
 

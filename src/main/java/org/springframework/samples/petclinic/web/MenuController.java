@@ -110,8 +110,8 @@ public class MenuController {
 	
 	@ModelAttribute("first_dishes")
 	public Collection<Dish> populateFirstDishes() {
-		return this.menuService.findFirstDishes(int);
-	}*/
+		return this.menuService.findFirstDishes();
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/new/loadDishesByShift/{id}", method = RequestMethod.GET)
