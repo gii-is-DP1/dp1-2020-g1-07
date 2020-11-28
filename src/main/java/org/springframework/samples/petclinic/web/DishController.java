@@ -89,4 +89,26 @@ public class DishController {
 		}
 		return view;
 	}
+	
+	@GetMapping(value = "/{dishId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("dishId") int dishId, ModelMap model) {
+		Dish dish = dishService.findDishById(dishId).get();
+		
+		model.put("dish", dish);
+		return "dishes/updateDish";
+	}
+
+	@PostMapping(value = "/{dishId}/edit")
+	public String processUpdateCasTbForm(@Valid Dish dish, BindingResult result,
+			@PathVariable("dishId") int dishId, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("dish", dish);
+			return "dishes/updateDish";
+		}
+		else {
+			dish.setId(dishId);
+			this.dishService.save(dish);
+			return "redirect:/dishes";
+		}
+	}
 }

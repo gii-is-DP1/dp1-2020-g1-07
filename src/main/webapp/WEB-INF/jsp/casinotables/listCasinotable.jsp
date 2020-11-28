@@ -36,10 +36,16 @@
                     <c:out value="${casinotable.skill}"/>
                 </td>
                 <td>
-                	<spring:url value="/casinotables/delete/{casinotableId}" var="casinotableUrl">
+                	<spring:url value="/casinotables/delete/{casinotableId}" var="deleteUrl">
                         <spring:param name="casinotableId" value="${casinotable.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(casinotableUrl)}">Delete</a>
+                    <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
+                </td> 
+                 <td>
+                	<spring:url value="/casinotables/{casinotableId}/edit" var="editUrl">
+                        <spring:param name="casinotableId" value="${casinotable.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
             </tr>
         </c:forEach>

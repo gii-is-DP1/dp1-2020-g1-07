@@ -5,13 +5,17 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
+
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.service.CasinotableService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/casinotables")
 public class CasinotableController {
 
-	
+	 
 	@Autowired
 	private CasinotableService castableService;
 	
@@ -78,7 +82,33 @@ public class CasinotableController {
 		return view;
 	}
 	
-	
+	@GetMapping(value = "/{casinotableId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		Casinotable casinotable = castableService.findCasinotableById(casinotableId).get();
+		
+		model.put("casinotable", casinotable);
+		return "casinotables/updateCasinotable";
+	}
+
+	@PostMapping(value = "/{casinotableId}/edit")
+	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
+			@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("casinotable", casinotable);
+			return "casinotables/updateCasinotable";
+		}
+		else {
+			casinotable.setId(casinotableId);
+			this.castableService.save(casinotable);
+			return "redirect:/casinotables";
+			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
+			 Casinotable casinotableToUpdateGet = casinotableToUpdate.get();                                                                            
+	                                      
+	              this.castableService.save(casinotableToUpdateGet);                    
+	                    
+	            return "redirect:/casinotables/";*/
+		}
+	}
 
 	@ModelAttribute("gametypes")
     public Collection<GameType> populateGameTypes() {
