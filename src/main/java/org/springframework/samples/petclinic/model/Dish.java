@@ -28,5 +28,8 @@ public class Dish extends NamedEntity{
 	@ManyToOne
 	@JoinColumn(name = "shift_id")
 	private Shift shift;
+
+	
+	
 	
 }

@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -20,6 +22,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/menus")
@@ -80,17 +86,84 @@ public class MenuController {
 		return view;
 	}
 	
-	@ModelAttribute("first_dishes")
+	/*@ModelAttribute("first_dishes")
 	public Collection<Dish> populateFirstDishes() {
-		return this.menuService.findFirstDishes();
+		return this.menuService.findFirstDishes(int);
+	}*/
+	
+	@ResponseBody
+	@RequestMapping(value = "/new/loadDishesByShift/{id}", method = RequestMethod.GET)
+	public String loadFirstDishesByShift(@PathVariable("id")int id) {
+		Gson gson = new Gson();
+		String json = "[{";
+		try {
+			List<Dish> first_dishes = new ArrayList<Dish>(menuService.findFirstDishesByShift(id));
+			for(Dish dish:first_dishes) {
+				json = json + "\"id\":" + dish.getId() +","
+						+ "\"name\":\"" + dish.getName() +"\","
+						+ "\"dish_course\":{"
+							+ "\"id\":" + dish.getDish_course().getId() + ","
+							+ "\"name\":\"" + dish.getDish_course().getName() + "\"},"
+						+ "\"shift\":{"
+							+ "\"id\":" + dish.getShift().getId() + ","
+							+ "\"name\":\"" + dish.getShift().getName() + "\"}},";
+				if(first_dishes.indexOf(dish)==first_dishes.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]#[{";
+				}
+			}
+			
+			if(first_dishes.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]#[{";
+			}
+			
+			List<Dish> second_dishes = new ArrayList<Dish>(menuService.findSecondDishesByShift(id));
+			for(Dish dish:second_dishes) {
+				json = json + "\"id\":" + dish.getId() +","
+						+ "\"name\":\"" + dish.getName() +"\","
+						+ "\"dish_course\":{"
+							+ "\"id\":" + dish.getDish_course().getId() + ","
+							+ "\"name\":\"" + dish.getDish_course().getName() + "\"},"
+						+ "\"shift\":{"
+							+ "\"id\":" + dish.getShift().getId() + ","
+							+ "\"name\":\"" + dish.getShift().getName() + "\"}},";
+				if(second_dishes.indexOf(dish)==second_dishes.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]#[{";
+				}
+			}
+			if(second_dishes.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]#[{";
+			}
+			
+			List<Dish> desserts = new ArrayList<Dish>(menuService.findDessertsByShift(id));
+			for(Dish dish:desserts) {
+				json = json + "\"id\":" + dish.getId() +","
+						+ "\"name\":\"" + dish.getName() +"\","
+						+ "\"dish_course\":{"
+							+ "\"id\":" + dish.getDish_course().getId() + ","
+							+ "\"name\":\"" + dish.getDish_course().getName() + "\"},"
+						+ "\"shift\":{"
+							+ "\"id\":" + dish.getShift().getId() + ","
+							+ "\"name\":\"" + dish.getShift().getName() + "\"}},";
+				if(desserts.indexOf(dish)==desserts.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(desserts.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(menuService.findFirstDishesByShift(id));
+		}
+		return json;
 	}
+	
 	
 	@ModelAttribute("second_dishes")
 	public Collection<Dish> populateSecondDishes() {
 		return this.menuService.findSecondDishes();
 	}
 	
-	@ModelAttribute("desserts")
+	@ModelAttribute("desserts")																								
 	public Collection<Dish> populateDesserts() {
 		return this.menuService.findDesserts();
 	}
