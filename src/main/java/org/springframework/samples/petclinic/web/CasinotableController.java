@@ -98,15 +98,15 @@ public class CasinotableController {
 			return "casinotables/updateCasinotable";
 		}
 		else {
-			/*casinotable.setId(casinotableId);
+			casinotable.setId(casinotableId);
 			this.castableService.save(casinotable);
-			return "redirect:/casinotables";*/
-			 Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
-			 Casinotable casinotableToUpdateGet = casinotableToUpdate.get();                                                                                
+			return "redirect:/casinotables";
+			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
+			 Casinotable casinotableToUpdateGet = casinotableToUpdate.get();                                                                            
 	                                      
 	              this.castableService.save(casinotableToUpdateGet);                    
 	                    
-	            return "redirect:/casinotables/";
+	            return "redirect:/casinotables/";*/
 		}
 	}
 

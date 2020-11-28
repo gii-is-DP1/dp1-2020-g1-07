@@ -8,9 +8,23 @@
 <petclinic:layout pageName="casinotables">
     <jsp:body>
         <h2>Edit table</h2>
+		<script>
+    	function chgAction()
+    		{
+        
+        var frm = document.getElementById('joseluis') || null;
+        if(frm) {
+           frm.action = "/casinotables/"+"${casinotable.id}"+"/edit";
+        }
+            
+            
 
 
-        <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
+   			 }
+    	</script>
+			
+        <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/{casinotableId}/edit" onsubmit = "chgAction()" id = "joseluis">
+       
             <div class="form-group has-feedback">
             	<div class="control-group">
                 	<petclinic:selectField label="Game Type" name="gametype" names="${gametypes}" size="1"/>
@@ -25,7 +39,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="casinotableId" value="${casinotable.id}"/>
+                    
                     <button class="btn btn-default" type="submit">Update Casino Table</button>
                 </div>
             </div>
