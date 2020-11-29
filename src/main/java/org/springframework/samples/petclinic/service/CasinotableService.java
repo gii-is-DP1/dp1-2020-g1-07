@@ -58,5 +58,7 @@ public class CasinotableService {
 		// TODO Auto-generated method stub
 		return castabRepo.findGames();
 	}
-
+	public Collection<Game> findGamesByGameType(int id) throws DataAccessException {
+        return castabRepo.findGamesByGameType(id);
+    }
 }
