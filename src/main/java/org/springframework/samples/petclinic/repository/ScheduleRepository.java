@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.List;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,8 +14,11 @@ public interface ScheduleRepository extends CrudRepository<Schedule, Integer>{
 	@Query("SELECT shift FROM Shift shift ORDER BY shift.id")
     List<Shift> findShifts() throws DataAccessException;
 	
+	@Query("SELECT employee.dni FROM Employee employee ORDER BY employee.dni")
+	List<String> findEmployeeDni() throws DataAccessException;
+	
 	@Query("SELECT employee FROM Employee employee ORDER BY employee.id")
-	List<Employee> findEmployeeId() throws DataAccessException;
+	List<Employee> findEmployees() throws DataAccessException;
 	
 	@Query("SELECT user FROM User user ORDER BY user.dni")
 	List<User> findUsers() throws DataAccessException;
