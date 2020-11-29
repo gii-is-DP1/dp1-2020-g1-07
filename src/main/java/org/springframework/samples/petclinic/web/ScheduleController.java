@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.MenuService;
@@ -44,9 +45,14 @@ public class ScheduleController {
         return this.scheduleService.findShifts();
     }
 	
-	@ModelAttribute("employees_ids")
-	public Collection<Employee> employeeIds() {
-		return this.scheduleService.findEmployeeId();
+	@ModelAttribute("employees")
+	public Collection<Employee> populateEmployees() {
+		return this.scheduleService.findEmployees();
+	}
+	
+	@ModelAttribute("employees_dnis")
+	public Collection<String> employeeDnis() {
+		return this.scheduleService.findScheduleByDni();
 	}
 	
 	@GetMapping(path="/new")
@@ -72,6 +78,30 @@ public class ScheduleController {
 		}
 		return view;
 	}
+	
+	@GetMapping(value = "/{scheduleId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("scheduleId") int scheduleId, ModelMap model) {
+		Schedule schedule = scheduleService.findScheduleById(scheduleId).get();
+		
+		model.put("schedule", schedule);
+		return "schedules/updateSchedule";
+	}
+
+	@PostMapping(value = "/{scheduleId}/edit")
+	public String processUpdateCasTbForm(@Valid Schedule schedule, BindingResult result,
+			@PathVariable("scheduleId") int scheduleId, ModelMap model) {
+		
+		if (result.hasErrors()) {
+			model.put("schedule", schedule);
+			return "schedules/updateSchedule";
+		}
+		else {
+			schedule.setId(scheduleId);
+			this.scheduleService.save(schedule);
+			return "redirect:/schedules";
+		}
+	}
+	
 	
 	@GetMapping(path="/delete/{scheduleId}")
 	public String deleteSchedule(@PathVariable("scheduleId") int scheduleId, ModelMap modelMap) {

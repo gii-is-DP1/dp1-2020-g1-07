@@ -9,7 +9,9 @@
 
 <petclinic:layout pageName="schedules">
     <h2>Schedules</h2>
-
+	
+    <a href=/schedules/new>New Schedule</a>
+    
     <table id="schedulesTable" class="table table-striped">
         <thead>
         <tr>
@@ -23,7 +25,7 @@
         <c:forEach items="${schedules}" var="schedules">
             <tr>
                 <td>
-                    <c:out value="${schedules.emp}"/>
+                    <c:out value="${schedules.emp.dni}"/>
                 </td>
                 <td>
                     <c:out value="${schedules.date}"/>
@@ -33,9 +35,15 @@
                 </td> 
                  <td>
                 	<spring:url value="/schedules/delete/{schedulesId}" var="schedulesUrl">
-                        <spring:param name="menuId" value="${schedules.id}"/>
+                        <spring:param name="schedulesId" value="${schedules.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(schedulesUrl)}">Delete</a>
+                </td> 
+                <td>
+                	<spring:url value="/schedules/{schedulesId}/edit" var="editUrl">
+                        <spring:param name="schedulesId" value="${schedules.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
             </tr>
         </c:forEach>

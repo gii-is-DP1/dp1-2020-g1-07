@@ -20,7 +20,7 @@ import lombok.Data;
 
 public class Schedule extends NamedEntity{
 
-	@NotNull
+	
 	@ManyToOne
 	@JoinColumn(name = "employees_id")
 	private Employee emp;

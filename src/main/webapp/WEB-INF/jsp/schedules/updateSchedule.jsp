@@ -6,34 +6,41 @@
 
 
 <petclinic:layout pageName="schedules">
-	<jsp:attribute name="customScript">
-		<script>
-			$(function () {
-				$("#date").datepicker({dateFormat: 'yy/mm/dd'});
-			});
-		</script>
-	</jsp:attribute>
     <jsp:body>
-    
-        <h2>Modify Schedule</h2>
+        <h2>Edit Schedule</h2>
 
-        <form:form modelAttribute="schedule" class="form-horizontal" action="/schedules/save">
+		<script>
+    	function chgActionSh()
+    		{
+        
+        var frm = document.getElementById('id') || null;
+        if(frm) {
+           frm.action = "/schedules/"+"${schedule.id}"+"/edit";
+        }
+
+   			 }
+    	</script>
+			
+       <form:form modelAttribute="schedule" class="form-horizontal" action="/schedules/{scheduleId}/edit" onsubmit = "chgActionSh()" id = "id">
+       
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Date" name="date"/>
-                <div class="control-group">
+            	<div style="display: none">
+            	     <petclinic:inputField label="Date" name="date" />
+            	</div>
+                <div class="control-group" style="display: none">
                 	<petclinic:selectField label="Select Employee" name="emp" names="${employees_dnis}" size="1"/>
                 </div>
                 <div class="control-group">
-                	<petclinic:selectField label="Shift" name="shift" names="${shifts}" size="1"/>
+                	<petclinic:selectField  label="Shift" name="shift" names="${shifts}" size="1"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="schedules_Id" value="${schedules.id}"/>
-                    <button class="btn btn-default" type="submit">Add Shift</button>
+                    <button class="btn btn-default" type="submit">Update Schedule</button>
                 </div>
             </div>
+            
         </form:form>
 
         

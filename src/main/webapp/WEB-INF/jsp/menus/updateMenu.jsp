@@ -55,6 +55,7 @@
                     <button class="btn btn-default" type="submit">Update menu</button>
                 </div>
             </div>
+            
         </form:form>
 
         
