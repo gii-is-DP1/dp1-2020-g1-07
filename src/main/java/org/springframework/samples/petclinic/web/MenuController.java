@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,6 +49,67 @@ public class MenuController {
 		Iterable<Menu> menus=menuService.findAll();
 		modelMap.addAttribute("menus", menus);
 		return vista;
+	}
+	
+	@GetMapping(path="/byDay")
+	public String menusByDay(ModelMap modelMap) {
+		String vista= "menus/menusByDay";
+		Collection<LocalDate> list=menuService.findAllDates();
+		Iterable<LocalDate> dates = list;
+		modelMap.addAttribute("dates", dates);
+		return vista;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/byDay/{date}", method = RequestMethod.GET)
+	public String loadMenusByDate(@PathVariable("date")String datestr) {
+		String json = "[";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		LocalDate date = LocalDate.parse(datestr, formatter);
+		try {
+			List<Menu> menus = new ArrayList<Menu>(menuService.findMenusByDate(date));
+			for(Menu menu:menus) {
+				json = json + "{\"id\":" + menu.getId() +","
+						+ "\"name\":\"" + menu.getName() +"\","
+						+ "\"date\":\"" + menu.getDate() +"\","
+						+ "\"first_dish\":{"
+							+ "\"id\":" + menu.getFirst_dish().getId() +","
+							+ "\"name\":\"" + menu.getFirst_dish().getName() +"\","
+							+ "\"dish_course\":{"
+								+ "\"id\":" + menu.getFirst_dish().getDish_course().getId() + ","
+								+ "\"name\":\"" + menu.getFirst_dish().getDish_course().getName() + "\"},"
+							+ "\"shift\":{"
+								+ "\"id\":" + menu.getFirst_dish().getShift().getId() + ","
+								+ "\"name\":\"" + menu.getFirst_dish().getShift().getName() + "\"}},"
+						+ "\"second_dish\":{"
+							+ "\"id\":" + menu.getSecond_dish().getId() +","
+							+ "\"name\":\"" + menu.getSecond_dish().getName() +"\","
+							+ "\"dish_course\":{"
+								+ "\"id\":" + menu.getSecond_dish().getDish_course().getId() + ","
+								+ "\"name\":\"" + menu.getSecond_dish().getDish_course().getName() + "\"},"
+							+ "\"shift\":{"
+								+ "\"id\":" + menu.getSecond_dish().getShift().getId() + ","
+								+ "\"name\":\"" + menu.getSecond_dish().getShift().getName() + "\"}},"
+						+ "\"dessert\":{"
+							+ "\"id\":" + menu.getDessert().getId() +","
+							+ "\"name\":\"" + menu.getDessert().getName() +"\","
+							+ "\"dish_course\":{"
+								+ "\"id\":" + menu.getDessert().getDish_course().getId() + ","
+								+ "\"name\":\"" + menu.getDessert().getDish_course().getName() + "\"},"
+							+ "\"shift\":{"
+								+ "\"id\":" + menu.getDessert().getShift().getId() + ","
+								+ "\"name\":\"" + menu.getDessert().getShift().getName() + "\"}}},";
+				if(menus.indexOf(menu)==menus.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(menus.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(menuService.findMenusByDate(date));
+		}
+		return json;
 	}
 	
 	@GetMapping(path="/new")

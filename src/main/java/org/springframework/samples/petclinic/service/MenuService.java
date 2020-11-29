@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -25,6 +26,11 @@ public class MenuService {
 	@Transactional
 	public Iterable<Menu> findAll() {
 		return menuRepo.findAll();
+	}
+	
+	@Transactional
+	public Collection<LocalDate> findAllDates() {
+		return menuRepo.findAllDates();
 	}
 	
 	@Transactional(readOnly=true)
@@ -74,5 +80,10 @@ public class MenuService {
 	public Collection<Shift> findShifts() throws DataAccessException{
 		// TODO Auto-generated method stub
 		return menuRepo.findShifts();
+	}
+
+	public Collection<Menu> findMenusByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		return menuRepo.findMenusByDate(date);
 	}
 }

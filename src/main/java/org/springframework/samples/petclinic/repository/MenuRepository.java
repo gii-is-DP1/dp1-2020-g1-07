@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -34,6 +36,12 @@ public interface MenuRepository extends CrudRepository<Menu, Integer>{
 
 	@Query("SELECT dish FROM Dish dish WHERE dish.shift.id = :id AND dish.dish_course.id=3 ORDER BY dish.id")
 	public List<Dish> findDessertsByShift(@Param("id") int id);
+
+	@Query("SELECT DISTINCT date FROM Menu")
+	public List<LocalDate> findAllDates();
+
+	@Query("SELECT menu FROM Menu menu where menu.date = :date ORDER BY menu.shift.id")
+	public List<Menu> findMenusByDate(@Param("date") LocalDate date);
 
 
 }
