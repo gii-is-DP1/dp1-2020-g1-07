@@ -9,6 +9,7 @@ import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.samples.petclinic.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,8 @@ public class ScheduleService {
 		// TODO Auto-generated method stub
 		return scheduleRep.findEmployeeId();
 	}
-
+	public Collection<User> findUsers() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return scheduleRep.findUsers();
+	}
 }

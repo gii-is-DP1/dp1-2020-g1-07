@@ -18,13 +18,13 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${schedules}" var="schedules">
+        <c:forEach items="${userschedules}" var="schedule">
             <tr>
                 <td>
-                    <c:out value="${schedules.date}"/>
+                    <c:out value="${schedule.date}"/>
                 </td>
                 <td>
-                    <c:out value="${schedules.shift}"/>
+                    <c:out value="${schedule.shift}"/>
                 </td>
             </tr>
         </c:forEach>
