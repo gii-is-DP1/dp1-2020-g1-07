@@ -1,5 +1,3 @@
-
-
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
@@ -37,10 +35,10 @@ public class DishController {
 	
 	@GetMapping()
 	public String dishesList(ModelMap modelMap) {
-		String vista= "dishes/dishesList";
+		String view= "dishes/dishesList";
 		Iterable<Dish> dishes=dishService.findAll();
 		modelMap.addAttribute("dishes", dishes);
-		return vista;
+		return view;
 	}
 	
 	@ModelAttribute("dish_courses")
@@ -54,14 +52,14 @@ public class DishController {
 	}
 	
 	@GetMapping(path="/new")
-	public String crearDish(ModelMap modelMap) {
+	public String createDish(ModelMap modelMap) {
 		String view="dishes/addDish";
 		modelMap.addAttribute("dish", new Dish());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String salvarPlato(@Valid Dish dish, BindingResult result, ModelMap modelMap) {
+	public String saveDish(@Valid Dish dish, BindingResult result, ModelMap modelMap) {
 		String view="dishes/dishesList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("dish", dish);
@@ -76,7 +74,7 @@ public class DishController {
 	}
 	
 	@GetMapping(path="/delete/{dishId}")
-	public String borrarDish(@PathVariable("dishId") int dishId, ModelMap modelMap) {
+	public String deleteDish(@PathVariable("dishId") int dishId, ModelMap modelMap) {
 		String view="dishes/dishesList";
 		Optional<Dish> dish = dishService.findDishById(dishId);
 		if(dish.isPresent()) {

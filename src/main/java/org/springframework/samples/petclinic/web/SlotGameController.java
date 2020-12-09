@@ -25,16 +25,16 @@ public class SlotGameController {
 	private SlotGameService slotGameService;
 	
 	@InitBinder("slotgame")
-	public void initslotGameBinder(WebDataBinder dataBinder) {
+	public void initSlotGameBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(new SlotGameValidator());
 	}
 	
 	@GetMapping()
 	public String slotGamesList(ModelMap modelMap) {
-		String vista= "slotgames/slotgamesList";
+		String view= "slotgames/slotgamesList";
 		Iterable<SlotGame> slotGames=slotGameService.findAll();
 		modelMap.addAttribute("slotgames", slotGames);
-		return vista;
+		return view;
 	}
 	
 	@GetMapping(path="/new")
@@ -46,7 +46,7 @@ public class SlotGameController {
 	
 	@PostMapping(path="/save")
 	public String saveSlotGame(@Valid SlotGame slotGame, BindingResult result, ModelMap modelMap) {
-		String view="slorgames/slotgamesList";
+		String view="slotgames/slotgamesList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("slotgame", slotGame);
 			return "slotgames/addSlotGame";

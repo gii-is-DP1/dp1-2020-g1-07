@@ -13,13 +13,11 @@ public class SlotGameValidator implements Validator {
 
 
 	@Override
-	public void validate(Object obj, Errors errors) {
-		SlotGame slotGame = (SlotGame) obj;
+	public void validate(Object target, Errors errors) {
+		SlotGame slotGame = (SlotGame) target;
 		String name = slotGame.getName();
 		Integer jackpot = slotGame.getJackpot();
-		//Dish otherDish=getDishwithIdDifferent(dish.getName(), dish.getId());
-		// name validation
-		if (name == null || name.trim().equals("") /*|| (otherDish!= null && otherDish.getId()!=dish.getId())*/) {
+		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
 		}
 		if(jackpot == null || jackpot<0) {
