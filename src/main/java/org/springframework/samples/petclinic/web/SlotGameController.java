@@ -31,7 +31,7 @@ public class SlotGameController {
 	
 	@GetMapping()
 	public String slotGamesList(ModelMap modelMap) {
-		String view= "slotgames/slotgamesList";
+		String view= "slotgames/slotGamesList";
 		Iterable<SlotGame> slotGames=slotGameService.findAll();
 		modelMap.addAttribute("slotgames", slotGames);
 		return view;
@@ -46,7 +46,7 @@ public class SlotGameController {
 	
 	@PostMapping(path="/save")
 	public String saveSlotGame(@Valid SlotGame slotGame, BindingResult result, ModelMap modelMap) {
-		String view="slotgames/slotgamesList";
+		String view="slotgames/slotGamesList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("slotgame", slotGame);
 			return "slotgames/addSlotGame";
@@ -61,7 +61,7 @@ public class SlotGameController {
 	
 	@GetMapping(path="/delete/{slotgameId}")
 	public String deleteSlotGame(@PathVariable("slotgameId") int slotGameId, ModelMap modelMap) {
-		String view="slotgames/slotgamesList";
+		String view="slotgames/slotGamesList";
 		Optional<SlotGame> slotGame = slotGameService.findSlotGameById(slotGameId);
 		if(slotGame.isPresent()) {
 			slotGameService.delete(slotGame.get());

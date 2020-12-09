@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.web;
 
-
 import java.time.LocalDate;
 
 import org.springframework.samples.petclinic.model.Dish;
