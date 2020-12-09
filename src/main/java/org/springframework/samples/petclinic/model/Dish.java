@@ -1,15 +1,9 @@
 package org.springframework.samples.petclinic.model;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.springframework.samples.petclinic.service.DishService;
 
 import lombok.Data;
 

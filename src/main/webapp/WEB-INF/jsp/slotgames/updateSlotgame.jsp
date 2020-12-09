@@ -10,18 +10,18 @@
         <h2>Edit Slot Game</h2>
 
 		<script>
-    	function chgActionSh()
+    	function chgAction()
     		{
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/slotgames/"+"${slotgame.id}"+"/edit";
+        	frm.action = "/slotgames/"+"${slotgame.id}"+"/edit";
         }
 
    			 }
     	</script>
 			
-       <form:form modelAttribute="slotgame" class="form-horizontal" action="/slotgames/{slotgameId}/edit" onsubmit = "chgActionSh()" id = "id">
+       <form:form modelAttribute="slotgame" class="form-horizontal" action="/slotgames/{slotgameId}/edit" onsubmit = "chgAction()" id = "id">
        
             <div class="form-group has-feedback">
             	<petclinic:inputField label="Name" name="name"/>

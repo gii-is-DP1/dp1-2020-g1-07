@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "slotgames")
-public class SlotGame extends NamedEntity{
+public class Slotgame extends NamedEntity{
 	
 	private String name;
 	
