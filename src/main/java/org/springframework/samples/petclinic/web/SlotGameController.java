@@ -5,8 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.SlotGame;
-import org.springframework.samples.petclinic.service.SlotGameService;
+import org.springframework.samples.petclinic.model.Slotgame;
+import org.springframework.samples.petclinic.service.SlotgameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -19,79 +19,79 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/slotgames")
-public class SlotGameController {
+public class SlotgameController {
 	
 	@Autowired
-	private SlotGameService slotGameService;
+	private SlotgameService slotgameService;
 	
 	@InitBinder("slotgame")
-	public void initSlotGameBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new SlotGameValidator());
+	public void initSlotgameBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(new SlotgameValidator());
 	}
 	
 	@GetMapping()
-	public String slotGamesList(ModelMap modelMap) {
-		String view= "slotgames/slotGamesList";
-		Iterable<SlotGame> slotGames=slotGameService.findAll();
-		modelMap.addAttribute("slotgames", slotGames);
+	public String slotgamesList(ModelMap modelMap) {
+		String view= "slotgames/slotgamesList";
+		Iterable<Slotgame> slotgames=slotgameService.findAll();
+		modelMap.addAttribute("slotgames", slotgames);
 		return view;
 	}
 	
 	@GetMapping(path="/new")
-	public String createSlotGame(ModelMap modelMap) {
-		String view="slotgames/addSlotGame";
-		modelMap.addAttribute("slotgame", new SlotGame());
+	public String createSlotgame(ModelMap modelMap) {
+		String view="slotgames/addSlotgame";
+		modelMap.addAttribute("slotgame", new Slotgame());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String saveSlotGame(@Valid SlotGame slotGame, BindingResult result, ModelMap modelMap) {
-		String view="slotgames/slotGamesList";
+	public String saveSlotgame(@Valid Slotgame slotgame, BindingResult result, ModelMap modelMap) {
+		String view="slotgames/slotgamesList";
 		if(result.hasErrors()) {
-			modelMap.addAttribute("slotgame", slotGame);
-			return "slotgames/addSlotGame";
+			modelMap.addAttribute("slotgame", slotgame);
+			return "slotgames/addSlotgame";
 			
 		}else {
-			slotGameService.save(slotGame);
+			slotgameService.save(slotgame);
 			modelMap.addAttribute("message", "SlotGame successfully saved!");
-			view=slotGamesList(modelMap);
+			view=slotgamesList(modelMap);
 		}
 		return view;
 	}
 	
 	@GetMapping(path="/delete/{slotgameId}")
-	public String deleteSlotGame(@PathVariable("slotgameId") int slotGameId, ModelMap modelMap) {
-		String view="slotgames/slotGamesList";
-		Optional<SlotGame> slotGame = slotGameService.findSlotGameById(slotGameId);
-		if(slotGame.isPresent()) {
-			slotGameService.delete(slotGame.get());
+	public String deleteSlotgame(@PathVariable("slotgameId") int slotgameId, ModelMap modelMap) {
+		String view="slotgames/slotgamesList";
+		Optional<Slotgame> slotgame = slotgameService.findSlotgameById(slotgameId);
+		if(slotgame.isPresent()) {
+			slotgameService.delete(slotgame.get());
 			modelMap.addAttribute("message", "SlotGame successfully deleted!");
-			view=slotGamesList(modelMap);
+			view=slotgamesList(modelMap);
 		}else {
 			modelMap.addAttribute("message", "SlotGame not found!");
-			view=slotGamesList(modelMap);
+			view=slotgamesList(modelMap);
 		}
 		return view;
 	}
 	
 	@GetMapping(value = "/{slotgameId}/edit")
-	public String initUpdateCasTbForm(@PathVariable("slotgameId") int slotGameId, ModelMap model) {
-		SlotGame slotGame = slotGameService.findSlotGameById(slotGameId).get();
+	public String initUpdateCasTbForm(@PathVariable("slotgameId") int slotgameId, ModelMap model) {
+		Slotgame slotgame = slotgameService.findSlotgameById(slotgameId).get();
 		
-		model.put("slotgame", slotGame);
-		return "slotgames/updateSlotGame";
+		model.put("slotgame", slotgame);
+		return "slotgames/updateSlotgame";
 	}
 
 	@PostMapping(value = "/{slotgameId}/edit")
-	public String processUpdateCasTbForm(@Valid SlotGame slotGame, BindingResult result,
-			@PathVariable("slotgameId") int slotGameId, ModelMap model) {
+	public String processUpdateCasTbForm(@Valid Slotgame slotgame, BindingResult result,
+			@PathVariable("slotgameId") int slotgameId, ModelMap model) {
 		if (result.hasErrors()) {
-			model.put("slotgame", slotGame);
-			return "slotgames/updateSlotGame";
+			model.put("slotgame", slotgame);
+			return "slotgames/updateSlotgame";
 		}
 		else {
-			slotGame.setId(slotGameId);
-			this.slotGameService.save(slotGame);
+			slotgame.setId(slotgameId);
+			this.slotgameService.save(slotgame);
 			return "redirect:/slotgames";
 		}
 	}

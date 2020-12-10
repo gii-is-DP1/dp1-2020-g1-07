@@ -15,10 +15,10 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/dishes/"+"${dish.id}"+"/edit";
+        	frm.action = "/dishes/"+"${dish.id}"+"/edit";
         }
 
-   			 }
+   			}
     	</script>
 			
         <form:form modelAttribute="dish" class="form-horizontal" action="/dishes/{dishId}/edit" onsubmit = "chgAction()" id = "id">
