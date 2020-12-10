@@ -86,7 +86,7 @@ public class SlotGameController {
 	public String processUpdateCasTbForm(@Valid SlotGame slotGame, BindingResult result,
 			@PathVariable("slotgameId") int slotGameId, ModelMap model) {
 		if (result.hasErrors()) {
-			model.put("slotsame", slotGame);
+			model.put("slotgame", slotGame);
 			return "slotgames/updateSlotGame";
 		}
 		else {
