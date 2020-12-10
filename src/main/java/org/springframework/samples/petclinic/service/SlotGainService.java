@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.SlotGain;
+import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.repository.SlotGainRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,5 +37,10 @@ public class SlotGainService {
 
 	public  void delete(SlotGain slotGain) { 
 		slotGainRepo.delete(slotGain);
+	}
+	
+	@Transactional
+	public Collection<SlotMachine> findSlotMachines() {
+		return slotGainRepo.findSlotMachines();
 	}
 }

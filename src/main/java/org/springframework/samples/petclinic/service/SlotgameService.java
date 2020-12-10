@@ -37,5 +37,7 @@ public class SlotgameService {
 	public  void delete(Slotgame slotgame) { 
 		slotGameRepo.delete(slotgame);
 	}
+	
+	
 
 }

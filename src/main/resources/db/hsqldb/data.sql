@@ -5,9 +5,19 @@ INSERT INTO SKILLS VALUES(1,'AMATEUR');
 INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
 INSERT INTO games VALUES (1,'Poker',8,2);
 
+INSERT INTO statuses VALUES(1,'OK');
+INSERT INTO statuses VALUES(2,'COLLECT');
+INSERT INTO statuses VALUES(3,'REPAIR');
+
 INSERT INTO slotgames VALUES (1,'Phoenix Fury',100);
 INSERT INTO slotgames VALUES (2,'The Atlantis Treasure',0);
 INSERT INTO slotgames VALUES (3,'Amazon Adventure',58);
+
+INSERT INTO slotmachines VALUES (1,'1',1,1);
+INSERT INTO slotmachines VALUES (2,'2',2,2);
+INSERT INTO slotmachines VALUES (3,'3',3,3);
+
+
 
 
 INSERT INTO CASINOTABLE VALUES(1,'Mesa 1',1,2,1);

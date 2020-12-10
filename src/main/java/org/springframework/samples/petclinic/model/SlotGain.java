@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -21,5 +23,9 @@ public class SlotGain extends NamedEntity{
 	
 	@NotNull
 	private Integer amount;
+	
+	@ManyToOne
+    @JoinColumn(name = "slot_machine_id")
+	private SlotMachine slotMachine;
 
 }

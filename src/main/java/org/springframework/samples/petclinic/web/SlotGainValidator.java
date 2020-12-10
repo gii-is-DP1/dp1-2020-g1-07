@@ -1,12 +1,10 @@
 package org.springframework.samples.petclinic.web;
 
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import java.time.LocalDate;
 
 import org.springframework.samples.petclinic.model.SlotGain;
-import org.springframework.samples.petclinic.model.SlotGame;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 
 public class SlotGainValidator implements Validator{
