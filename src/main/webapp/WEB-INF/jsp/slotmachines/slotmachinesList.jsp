@@ -17,6 +17,7 @@
             <th style="width: 200px;">Game</th>
             <th style="width: 200px;">Status</th>
             <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

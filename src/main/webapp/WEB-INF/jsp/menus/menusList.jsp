@@ -19,6 +19,7 @@
             <th style="width: 200px;">Dessert</th>
             <th style="width: 200px;">Shift</th>
             <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

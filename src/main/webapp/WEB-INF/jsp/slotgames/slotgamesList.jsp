@@ -16,6 +16,7 @@
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">Jackpot</th>
             <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
