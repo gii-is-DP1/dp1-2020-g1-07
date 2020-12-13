@@ -15,7 +15,9 @@
         <tr>
             <th style="width: 150px;">Date</th>
             <th style="width: 200px;">Amount</th>
+            <th style="width: 200px;">Slot Machine assigned</th>
             <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +28,9 @@
                 </td>
                 <td>
                     <c:out value="${slotGain.amount}"/>
+                </td>
+                <td>
+                    <c:out value="${slotGain.slotMachine.id}"/>
                 </td>
             <td>
                 	<spring:url value="/slotgains/delete/{slotGainId}" var="slotGainUrl">

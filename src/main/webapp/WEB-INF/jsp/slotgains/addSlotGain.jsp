@@ -22,6 +22,9 @@
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Date" name="date"/>
                 <petclinic:inputField label="Amount" name="amount"/>
+                <div class="control-group">
+            	<petclinic:selectField label="Assign to slot machine" name="slotMachine" names="${slotMachines}" size="1"/>
+            	</div>
             </div>
 
             <div class="form-group">
