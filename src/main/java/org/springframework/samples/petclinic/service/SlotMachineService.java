@@ -1,10 +1,10 @@
 package org.springframework.samples.petclinic.service;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.SlotGain;
 import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
 import org.springframework.samples.petclinic.model.Status;
@@ -41,11 +41,6 @@ public class SlotMachineService {
 	public  void delete(SlotMachine slotMachine) { 
 		slotMachineRepo.delete(slotMachine);
 	}
-
-	@Transactional
-	public Collection<LocalDate> findAllGains() {
-		return slotMachineRepo.findAllGains();
-	}
 	
 	@Transactional
 	public Collection<Status> findStatus() {
@@ -56,4 +51,10 @@ public class SlotMachineService {
 	public Collection<Slotgame> findSlotgames() {
 		return slotMachineRepo.findSlotgames();
 	}
+	
+	@Transactional
+	public Collection<SlotGain> findGains() {
+		return slotMachineRepo.findGains();
+	}
+	
 }

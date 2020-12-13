@@ -1,11 +1,15 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Menu;
+import org.springframework.samples.petclinic.model.SlotGain;
 import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
 import org.springframework.samples.petclinic.model.Status;
@@ -109,5 +113,28 @@ public class SlotMachineController {
 	public Collection<Slotgame> populateSlotgame() {
 		return this.slotMachineService.findSlotgames();
 	}
+	
+	@ModelAttribute("slotgains")
+	public String populateSlotGain() {
+		String json = "[";
+		try {
+			List<SlotGain> slotGains = new ArrayList<SlotGain>(slotMachineService.findGains());
+			for(SlotGain slotGain:slotGains) {
+				json = json + "{\"id\":" + slotGain.getId() +","
+						+ "\"name\":\"" + slotGain.getName() +"\","
+						+ "\"date\":\"" + slotGain.getDate() +"\","
+						+ "\"amount\":" + slotGain.getAmount() +","
+						+ "\"slotMachine\":" + slotGain.getSlotMachine().getId() +"},";
+				if(slotGains.indexOf(slotGain)==slotGains.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(slotGains.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(slotMachineService.findGains());
+		}
+		return json;	}
 
 }
