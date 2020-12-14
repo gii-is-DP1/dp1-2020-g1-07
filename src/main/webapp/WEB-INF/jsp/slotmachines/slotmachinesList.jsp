@@ -12,16 +12,16 @@
 <script type="text/javascript">
 
 function getDates(idSM){
-	var s1= '';
+	var s1= '<option value=""> Seleccione fecha </option>';
 	var slotgains = JSON.parse('${slotgains}');
 	for(var slotgain of slotgains){
-		if(slotgain.slotMachine==idSM) s1 += '<option value="' + slotgain.id + '">' + slotgain.date + '</option>';
+		if(slotgain.slotMachine==idSM) s1 += '<option value="' + slotgain.amount + '">' + slotgain.date + '</option>';
 	}
 	$('#comboboxDate'+idSM.toString()).html(s1);
 }
 
+
 $(document).ready(function(){
-	
 });
 </script>
 
@@ -53,11 +53,21 @@ $(document).ready(function(){
                     <c:out value="${slotMachine.status}"/>
                 </td>
                 <td>
-                    <select id="comboboxDate${slotMachine.id}" name="date"></select>
-                    <script>getDates(${slotMachine.id});</script>
+                    <select id="comboboxDate${slotMachine.id}" name="date">
+                    </select>
+                    <script>
+                    	getDates(${slotMachine.id});
+                    	var select = document.getElementById("comboboxDate${slotMachine.id}");
+                    	select.addEventListener("change", function(){
+                    		var valAmount = $(select).val().toString();
+                    		var s1 = '';
+                    		s1 += '<c:out value="' + valAmount + '"/>';
+                    		$('#amount').html(s1);
+                    	});
+                    </script>
                 </td>
-                <td>
-                    <c:out value="${slotMachine.status}"/>
+                <td id="amount">
+                    <!-- <c:out value="${slotMachine.status}"/> -->
                 </td>
             <td>
                 	<spring:url value="/slotmachines/delete/{slotMachineId}" var="slotMachineUrl">
