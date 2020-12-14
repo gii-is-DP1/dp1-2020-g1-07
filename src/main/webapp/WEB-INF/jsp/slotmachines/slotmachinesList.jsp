@@ -59,14 +59,14 @@ $(document).ready(function(){
                     	getDates(${slotMachine.id});
                     	var select = document.getElementById("comboboxDate${slotMachine.id}");
                     	select.addEventListener("change", function(){
-                    		var valAmount = $(select).val().toString();
+                    		var valAmount = $(this).val().toString();
                     		var s1 = '';
-                    		s1 += '<c:out value="' + valAmount + '"/>';
-                    		$('#amount').html(s1);
+                    		s1 += '<p>' + valAmount + '</p>';
+                    		$('#amount${slotMachine.id}').html(s1);
                     	});
                     </script>
                 </td>
-                <td id="amount">
+                <td id="amount${slotMachine.id}">
                     <!-- <c:out value="${slotMachine.status}"/> -->
                 </td>
             <td>
