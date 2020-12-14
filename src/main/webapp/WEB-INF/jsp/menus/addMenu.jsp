@@ -96,3 +96,17 @@ $(document).ready(function(){
     </jsp:body>
 
 </petclinic:layout>
+
+
+
+
+
+
+
+
+
+
+
+
+    	
+    	

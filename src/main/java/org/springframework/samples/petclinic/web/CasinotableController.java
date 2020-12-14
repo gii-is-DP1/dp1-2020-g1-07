@@ -112,11 +112,11 @@ public class CasinotableController {
 	@ResponseBody
     @RequestMapping(value = "/new/loadGamesByGameType/{id}", method = RequestMethod.GET)
     public String loadGamesByGameType(@PathVariable("id")int id) {
-        String json = "[{";
+        String json = "[";
         try {
             List<Game> games = new ArrayList<Game>(castableService.findGamesByGameType(id));
             for(Game game:games) {
-                json = json + "\"id\":" + game.getId() +","
+                json = json + "{\"id\":" + game.getId() +","
                         + "\"name\":\"" + game.getName() +"\","
                         +"\"maxPlayers\":" + game.getMaxPlayers() +","
                         + "\"gametype\":{"

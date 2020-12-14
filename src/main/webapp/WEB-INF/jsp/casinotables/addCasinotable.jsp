@@ -46,7 +46,7 @@ $(document).ready(function(){
         <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
             <div class="form-group has-feedback">
             	<div class="control-group">
-                	Shift <select id="comboboxGameType" name="gametype">
+                	GameType <select id="comboboxGameType" name="gametype">
                 		<c:forEach var="gametype" items="${gametypes}">
                 			<option value="${gametype.name}">${gametype.name}</option>
                 		</c:forEach>
@@ -73,3 +73,10 @@ $(document).ready(function(){
     </jsp:body>
 
 </petclinic:layout>
+
+
+
+
+
+    	
+    	
