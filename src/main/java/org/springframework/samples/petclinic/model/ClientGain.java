@@ -24,11 +24,9 @@ public class ClientGain extends NamedEntity{
 	@DateTimeFormat(pattern= "yyyy/MM/dd")
 	private LocalDate date;
 	
-	@OneToMany
 	@JoinColumn(name = "dni")
 	private String dni;
 	
-	@OneToMany
-	@JoinColumn(name = "game_id")
-	private Game game;
+	@JoinColumn(name = "game")
+	private String game;
 }

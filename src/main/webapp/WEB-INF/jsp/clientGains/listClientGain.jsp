@@ -7,43 +7,43 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="casinotables">
-    <h2>Casinotables</h2>
+<petclinic:layout pageName="cgains">
+    <h2>Client Gains</h2>
 
-    <table id="casinotablesTable" class="table table-striped">
+    <table id="clientgainsTable" class="table table-striped">
         <thead>
         <tr>
-        	<th style="width: 150px;">Id</th>
-            <th style="width: 150px;">Game</th>
-            <th style="width: 200px;">GameType</th>
-            <th style="width: 200px;">Skill Level</th>
+        	<th style="width: 150px;">Client</th>
+            <th style="width: 150px;">Amount</th>
+            <th style="width: 200px;">Date</th>
+            <th style="width: 200px;">Game</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${casinotables}" var="casinotable">
+        <c:forEach items="${cgains}" var="cgain">
             <tr>
                 <td>
-                    <c:out value="${casinotable.id}"/>
+                    <c:out value="${cgain.dni}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.game.name}"/>
+                    <c:out value="${cgain.amount}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.gametype}"/>
+                    <c:out value="${cgain.date}"/>
                 </td>
                 <td>
-                    <c:out value="${casinotable.skill}"/>
+                    <c:out value="${cgain.game.name}"/>
                 </td>
                 <td>
-                	<spring:url value="/casinotables/delete/{casinotableId}" var="deleteUrl">
-                        <spring:param name="casinotableId" value="${casinotable.id}"/>
+                	<spring:url value="/cgains/delete/{cgainId}" var="deleteUrl">
+                        <spring:param name="cgainId" value="${cgain.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
                 </td> 
                  <td>
-                	<spring:url value="/casinotables/{casinotableId}/edit" var="editUrl">
-                        <spring:param name="casinotableId" value="${casinotable.id}"/>
+                	<spring:url value="/cgains/{cgainId}/edit" var="editUrl">
+                        <spring:param name="cgainId" value="${cgain.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
@@ -52,8 +52,8 @@
         </tbody>
     </table>
     <div class="form-group">
-    	<form method="get" action="/casinotables/new">
-    		<button class="btn btn-default" type="submit">Add new table</button>
+    	<form method="get" action="/cgains/new">
+    		<button class="btn btn-default" type="submit">Add new client gain</button>
 		</form>
 	</div>
     

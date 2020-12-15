@@ -5,9 +5,9 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="schedules">
+<petclinic:layout pageName="cgains">
     <jsp:body>
-        <h2>Edit Schedule</h2>
+        <h2>Edit Client Gain</h2>
 
 		<script>
     	function chgActionSh()
@@ -15,29 +15,27 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/schedules/"+"${schedule.id}"+"/edit";
+           frm.action = "/cgains/"+"${cgain.id}"+"/edit";
         }
 
    			 }
     	</script>
 			
-       <form:form modelAttribute="schedule" class="form-horizontal" action="/schedules/{scheduleId}/edit" onsubmit = "chgActionSh()" id = "id">
-       
+       <form:form modelAttribute="cgain" class="form-horizontal" action="/cgains/{cgainId}/edit" onsubmit = "chgActionSh()" id = "id">
             <div class="form-group has-feedback">
-            	<div style="display: none">
-            	     <petclinic:inputField label="Date" name="date" />
-            	</div>
-                <div class="control-group" style="display: none">
-                	<petclinic:selectField label="Select Employee" name="emp" names="${employees_dnis}" size="1"/>
+            	<petclinic:inputField label="Amount" name="amount"/>
+                <petclinic:inputField label="Date" name="date"/>
+                <div class="control-group">
+                	<petclinic:selectField label="Select Client" name="dni" names="${clients_dni}" size="1"/>
                 </div>
                 <div class="control-group">
-                	<petclinic:selectField  label="Shift" name="shift" names="${shifts}" size="1"/>
+                	<petclinic:selectField label="Game" name="game" names="${games}" size="1"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-default" type="submit">Update Schedule</button>
+                    <button class="btn btn-default" type="submit">Update Client Gain</button>
                 </div>
             </div>
             

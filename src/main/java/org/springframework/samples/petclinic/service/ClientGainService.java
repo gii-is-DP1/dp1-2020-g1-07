@@ -50,4 +50,14 @@ public class ClientGainService {
 		// TODO Auto-generated method stub
 		return cgainRepo.findUsers();
 	}
+	
+	public Collection<String> findClients() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return cgainRepo.findClients();
+	}
+	
+	public Collection<String> findGames() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return cgainRepo.findGames();
+	}
 }

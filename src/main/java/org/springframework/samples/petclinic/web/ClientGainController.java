@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -48,6 +50,16 @@ public class ClientGainController {
 				userGains.add(cg);
 		modelMap.addAttribute("usergains", userGains);
 		return view;
+	}
+	
+	@ModelAttribute("clients_dnis")
+	public Collection<String> clients() {
+		return this.cgainService.findClients();
+	}
+	
+	@ModelAttribute("games")
+	public Collection<String> games() {
+		return this.cgainService.findGames();
 	}
 	
 	@GetMapping(path="/new")

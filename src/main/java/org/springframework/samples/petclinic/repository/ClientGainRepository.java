@@ -18,4 +18,10 @@ public interface ClientGainRepository extends CrudRepository<ClientGain,Integer>
 	
 	@Query("SELECT user FROM User user ORDER BY user.dni")
 	List<User> findUsers() throws DataAccessException;
+	
+	@Query("SELECT dni FROM Client client ORDER BY client.id")
+	List<String> findClients() throws DataAccessException;
+	
+	@Query("SELECT name FROM Game game ORDER BY game.name")
+	List<String> findGames() throws DataAccessException;
 }
