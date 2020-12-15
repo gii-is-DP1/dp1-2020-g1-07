@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -26,17 +27,15 @@ public class SlotGainServiceTests {
 		int count= slotGainService.slotGainCount();
 		assertEquals(count,9);
 	}
-	/*
-	
 	//INSERT INTO slotgains VALUES (1,'1',100,'2010-09-07',1);
 	@Test
 	void shouldFindSlotGains() {
 		List<SlotGain> slotgains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
 		
-		SlotMachine slotMachine = EntityUtils.getById(slotgains, SlotMachine.class, 2);
-		assertThat(slotMachine.getStatus().equals("1"));
-		assertThat(slotMachine.getSlotgame().getId()==1);
+		SlotGain slotGain = EntityUtils.getById(slotgains, SlotGain.class, 2);
+		assertThat(slotGain.getDate().equals(LocalDate.of(2010, 9, 07)));
+		assertThat(slotGain.getSlotMachine().equals(1));
+		assertThat(slotGain.getAmount().equals(100));
+
 	}
-	
-	*/
 }
