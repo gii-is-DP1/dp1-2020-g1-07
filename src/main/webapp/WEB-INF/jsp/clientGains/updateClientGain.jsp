@@ -26,7 +26,7 @@
             	<petclinic:inputField label="Amount" name="amount"/>
                 <petclinic:inputField label="Date" name="date"/>
                 <div class="control-group">
-                	<petclinic:selectField label="Select Client" name="dni" names="${clients_dni}" size="1"/>
+                	<petclinic:selectField label="Select Client" name="dni" names="${clients_dnis}" size="1"/>
                 </div>
                 <div class="control-group">
                 	<petclinic:selectField label="Game" name="game" names="${games}" size="1"/>

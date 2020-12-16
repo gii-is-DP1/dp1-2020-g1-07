@@ -33,7 +33,7 @@
                     <c:out value="${cgain.date}"/>
                 </td>
                 <td>
-                    <c:out value="${cgain.game.name}"/>
+                    <c:out value="${cgain.game}"/>
                 </td>
                 <td>
                 	<spring:url value="/cgains/delete/{cgainId}" var="deleteUrl">

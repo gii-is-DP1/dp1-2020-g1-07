@@ -14,11 +14,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "clientGain")
+@Table(name = "client_gains")
 public class ClientGain extends NamedEntity{
 
 	@NotNull
-	private Double amount;
+	private Integer amount;
 	
 	@NotNull
 	@DateTimeFormat(pattern= "yyyy/MM/dd")

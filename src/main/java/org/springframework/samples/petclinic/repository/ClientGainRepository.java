@@ -14,12 +14,12 @@ import org.springframework.samples.petclinic.model.User;
 public interface ClientGainRepository extends CrudRepository<ClientGain,Integer>{
 
 	@Query("SELECT DISTINCT date FROM ClientGain")
-	public List<LocalDate> findAllDates();
+	List<LocalDate> findAllDates() throws DataAccessException;
 	
 	@Query("SELECT user FROM User user ORDER BY user.dni")
 	List<User> findUsers() throws DataAccessException;
 	
-	@Query("SELECT dni FROM Client client ORDER BY client.id")
+	@Query("SELECT dni FROM Client client ORDER BY client.dni")
 	List<String> findClients() throws DataAccessException;
 	
 	@Query("SELECT name FROM Game game ORDER BY game.name")
