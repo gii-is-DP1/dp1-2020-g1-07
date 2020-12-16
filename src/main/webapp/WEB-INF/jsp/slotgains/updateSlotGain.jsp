@@ -5,40 +5,38 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="dishes">
+<petclinic:layout pageName="slotgains">
     <jsp:body>
-        <h2>Edit table</h2>
+        <h2>Edit Slot Gain</h2>
 
 		<script>
-    	function chgAction()
+    	function chgActionSh()
     		{
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-        	frm.action = "/dishes/"+"${dish.id}"+"/edit";
+           frm.action = "/slotgains/"+"${slotGain.id}"+"/edit";
         }
 
-   			}
+   			 }
     	</script>
 			
-        <form:form modelAttribute="dish" class="form-horizontal" action="/dishes/{dishId}/edit" onsubmit = "chgAction()" id = "id">
+       <form:form modelAttribute="slotGain" class="form-horizontal" action="/slotgains/{slotGainId}/edit" onsubmit = "chgActionSh()" id = "id">
        
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Name" name="name"/>
-            	<div class="control-group">
-                	<petclinic:selectField label="Dish Course" name="dish_course" names="${dish_courses}" size="1"/>
-                </div>
+            	<petclinic:inputField label="Date" name="date"/>
+                <petclinic:inputField label="Amount" name="amount"/>
                 <div class="control-group">
-                	<petclinic:selectField label="Shift" name="shift" names="${shifts}" size="1"/>
-                </div>
+            	<petclinic:selectField label="Assign to slot machine" name="slotMachine" names="${slotMachines}" size="1"/>
+            	</div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    
-                    <button class="btn btn-default" type="submit">Update dish</button>
+                    <button class="btn btn-default" type="submit">Update Slot Gain</button>
                 </div>
             </div>
+            
         </form:form>
 
         

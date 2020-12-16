@@ -18,6 +18,7 @@
             <th style="width: 200px;">GameType</th>
             <th style="width: 200px;">Skill Level</th>
             <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

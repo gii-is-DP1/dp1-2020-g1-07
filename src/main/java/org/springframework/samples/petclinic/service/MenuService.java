@@ -15,8 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MenuService {
-	@Autowired
+	
 	private  MenuRepository menuRepo;
+	
+	@Autowired
+	public MenuService(MenuRepository menuRepo) {
+		this.menuRepo = menuRepo;
+	}
 	
 	@Transactional
 	public int menuCount() {

@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class CroupierValidator implements Validator{
+	
 	private static final String REQUIRED = "required";
 
 	@Override

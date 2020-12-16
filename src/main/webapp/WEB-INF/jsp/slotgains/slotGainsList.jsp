@@ -7,41 +7,41 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="dishes">
-    <h2>Dishes</h2>
+<petclinic:layout pageName="slotgains">
+    <h2>Slot Gains</h2>
 
-    <table id="dishesTable" class="table table-striped">
+    <table id="slotgainsTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">DishCourse</th>
-            <th style="width: 200px;">Shift</th>
+            <th style="width: 150px;">Date</th>
+            <th style="width: 200px;">Amount</th>
+            <th style="width: 200px;">Slot Machine assigned</th>
             <th>Actions</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${dishes}" var="dish">
+        <c:forEach items="${slotgains}" var="slotGain">
             <tr>
                 <td>
-                    <c:out value="${dish.name}"/>
+                    <c:out value="${slotGain.date}"/>
                 </td>
                 <td>
-                    <c:out value="${dish.dish_course.name}"/>
+                    <c:out value="${slotGain.amount}"/>
                 </td>
                 <td>
-                    <c:out value="${dish.shift.name}"/>
+                    <c:out value="${slotGain.slotMachine.id}"/>
                 </td>
             <td>
-                	<spring:url value="/dishes/delete/{dishId}" var="dishUrl">
-                        <spring:param name="dishId" value="${dish.id}"/>
+                	<spring:url value="/slotgains/delete/{slotGainId}" var="slotGainUrl">
+                        <spring:param name="slotGainId" value="${slotGain.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(dishUrl)}">Delete</a>
+                    <a href="${fn:escapeXml(slotGainUrl)}">Delete</a>
                 </td>
             
             <td>
-                	<spring:url value="/dishes/{dishId}/edit" var="editUrl">
-                        <spring:param name="dishId" value="${dish.id}"/>
+                	<spring:url value="/slotgains/{slotGainId}/edit" var="editUrl">
+                        <spring:param name="slotGainId" value="${slotGain.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
@@ -51,8 +51,8 @@
     </table>
     
         <div class="form-group">
-    	<form method="get" action="/dishes/new">
-    		<button class="btn btn-default" type="submit">Add new dish</button>
+    	<form method="get" action="/slotgains/new">
+    		<button class="btn btn-default" type="submit">Add new slot gain</button>
 		</form>
 	</div>
     

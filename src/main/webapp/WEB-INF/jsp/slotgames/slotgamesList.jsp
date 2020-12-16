@@ -7,41 +7,37 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="dishes">
-    <h2>Dishes</h2>
+<petclinic:layout pageName="slotgames">
+    <h2>Slot Games</h2>
 
-    <table id="dishesTable" class="table table-striped">
+    <table id="slotgamesTable" class="table table-striped">
         <thead>
         <tr>
             <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">DishCourse</th>
-            <th style="width: 200px;">Shift</th>
+            <th style="width: 200px;">Jackpot</th>
             <th>Actions</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${dishes}" var="dish">
+        <c:forEach items="${slotgames}" var="slotgame">
             <tr>
                 <td>
-                    <c:out value="${dish.name}"/>
+                    <c:out value="${slotgame.name}"/>
                 </td>
                 <td>
-                    <c:out value="${dish.dish_course.name}"/>
-                </td>
-                <td>
-                    <c:out value="${dish.shift.name}"/>
+                    <c:out value="${slotgame.jackpot}"/>
                 </td>
             <td>
-                	<spring:url value="/dishes/delete/{dishId}" var="dishUrl">
-                        <spring:param name="dishId" value="${dish.id}"/>
+                	<spring:url value="/slotgames/delete/{slotgameId}" var="slotgameUrl">
+                        <spring:param name="slotgameId" value="${slotgame.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(dishUrl)}">Delete</a>
+                    <a href="${fn:escapeXml(slotgameUrl)}">Delete</a>
                 </td>
             
             <td>
-                	<spring:url value="/dishes/{dishId}/edit" var="editUrl">
-                        <spring:param name="dishId" value="${dish.id}"/>
+                	<spring:url value="/slotgames/{slotgameId}/edit" var="editUrl">
+                        <spring:param name="slotgameId" value="${slotgame.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
@@ -51,8 +47,8 @@
     </table>
     
         <div class="form-group">
-    	<form method="get" action="/dishes/new">
-    		<button class="btn btn-default" type="submit">Add new dish</button>
+    	<form method="get" action="/slotgames/new">
+    		<button class="btn btn-default" type="submit">Add new slot game</button>
 		</form>
 	</div>
     

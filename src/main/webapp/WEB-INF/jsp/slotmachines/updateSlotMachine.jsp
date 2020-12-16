@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="dishes">
+<petclinic:layout pageName="slotmachines">
     <jsp:body>
         <h2>Edit table</h2>
 
@@ -15,32 +15,30 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-        	frm.action = "/dishes/"+"${dish.id}"+"/edit";
+        	frm.action = "/slotmachines/"+"${slotMachine.id}"+"/edit";
         }
 
    			}
     	</script>
 			
-        <form:form modelAttribute="dish" class="form-horizontal" action="/dishes/{dishId}/edit" onsubmit = "chgAction()" id = "id">
+        <form:form modelAttribute="slotMachine" class="form-horizontal" action="/slotmachines/{slotmachineId}/edit" onsubmit = "chgAction()" id = "id">
        
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Name" name="name"/>
             	<div class="control-group">
-                	<petclinic:selectField label="Dish Course" name="dish_course" names="${dish_courses}" size="1"/>
+                	<petclinic:selectField label="Slot Game" name="slotgame" names="${slotgames}" size="1"/>
                 </div>
                 <div class="control-group">
-                	<petclinic:selectField label="Shift" name="shift" names="${shifts}" size="1"/>
+                	<petclinic:selectField label="Status" name="status" names="${statuses}" size="1"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     
-                    <button class="btn btn-default" type="submit">Update dish</button>
+                    <button class="btn btn-default" type="submit">Update Slot Machine</button>
                 </div>
             </div>
         </form:form>
-
         
     </jsp:body>
 
