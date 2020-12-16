@@ -1,7 +1,10 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,20 @@ public class ClientGainService {
 	@Transactional(readOnly=true)
 	public  Optional<ClientGain> findClientGainById(int id){ 
 		return cgainRepo.findById(id);
+	}
+	
+	@Transactional
+	public List<ClientGain> findClientGainsForWeek(LocalDate inicio, String dni) {
+		Iterator<ClientGain> it = cgainRepo.findAll().iterator();
+		List<ClientGain> result = new ArrayList<ClientGain>();
+		LocalDate fin = inicio.plusDays(8);
+		while (it.hasNext()) {
+			ClientGain cg = it.next();
+			if (cg.getDni().equals(dni) && inicio.isBefore(cg.getDate())
+					&& fin.isAfter(cg.getDate()))
+				result.add(cg);
+		}
+		return result;
 	}
 
 	@Transactional

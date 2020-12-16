@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.ClientGain;
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/cgains")
@@ -64,6 +69,41 @@ public class ClientGainController {
 	@ModelAttribute("games")
 	public Collection<String> games() {
 		return this.cgainService.findGames();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/myGains/{date}", method = RequestMethod.GET)
+	public String loadMenusByDate(@PathVariable("date")String datestr) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		if (principal instanceof UserDetails)
+			username = ((UserDetails)principal).getUsername();
+		else
+			username = principal.toString();
+		String dni = cgainService.findUsers().stream()
+				.filter(x -> x.getUsername().equals(username)).findFirst().get().getDni();
+		String json = "[";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		LocalDate date = LocalDate.parse(datestr, formatter);
+		try {
+			List<ClientGain> gains = new ArrayList<ClientGain>(cgainService.findClientGainsForWeek(date.minusDays(1), dni));
+			for(ClientGain cg : gains) {
+				json = json + "{\"id\":" + cg.getId() +","
+						+ "\"amount\":" + cg.getAmount() +","
+						+ "\"date\":\"" + cg.getDate() +"\","
+						+ "\"dni\":\"" + cg.getDni() +"\","
+						+ "\"game\":\"" + cg.getGame() +"\"},";
+				if(gains.indexOf(cg)==gains.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(gains.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(cgainService.findClientGainsForWeek(date, dni));
+		}
+		return json;
 	}
 	
 	@GetMapping(path="/new")
