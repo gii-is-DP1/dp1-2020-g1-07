@@ -47,6 +47,33 @@ public class DishServiceTests {
 		assertThat(dish.getShift().getId()).isEqualTo(2);
 		assertThat(dish.getDish_course().getId()).isEqualTo(2);
 	}
+	
+	@Test
+	void testFindDishCourses() {
+		List<DishCourse> dishCourses = StreamSupport.stream(this.dishService.findDishCourses().spliterator(), false).collect(Collectors.toList());
+		
+		assertThat(dishCourses.size()==3);
+		DishCourse DC1 = EntityUtils.getById(dishCourses, DishCourse.class, 1);
+		assertThat(DC1.getName()).isEqualTo("First");
+		DishCourse DC2 = EntityUtils.getById(dishCourses, DishCourse.class, 2);
+		assertThat(DC2.getName()).isEqualTo("Second");
+		DishCourse DC3 = EntityUtils.getById(dishCourses, DishCourse.class, 3);
+		assertThat(DC3.getName()).isEqualTo("Dessert");
+	}
+	
+	@Test
+	void testFindShifts() {
+		List<Shift> shifts = StreamSupport.stream(this.dishService.findShifts().spliterator(), false).collect(Collectors.toList());
+		
+		assertThat(shifts.size()==3);
+		Shift S1 = EntityUtils.getById(shifts, Shift.class, 1);
+		assertThat(S1.getName()).isEqualTo("Day");
+		Shift S2 = EntityUtils.getById(shifts, Shift.class, 2);
+		assertThat(S2.getName()).isEqualTo("Afternoon");
+		Shift S3 = EntityUtils.getById(shifts, Shift.class, 3);
+		assertThat(S3.getName()).isEqualTo("Night");
+	}
+	
 	/* DOES NOT WORK
 	@Test
 	@Transactional
