@@ -78,10 +78,10 @@ public class DishServiceTests {
 		dishService.save(new_dish);
 		
 		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
-		Dish saved_dish = dishes.get(3);
-		assertThat(saved_dish.getName()).isEqualTo("Duck a l'orange");
-		assertThat(saved_dish.getShift().getName()).isEqualTo("Night");
-		assertThat(saved_dish.getDish_course().getName()).isEqualTo("Second");
+		Dish saved_dish = dishes.get(dishes.size()-1);
+		assertThat(saved_dish.getName().equals("Duck a l'orange"));
+		assertThat(saved_dish.getShift().getName().equals("Night"));
+		assertThat(saved_dish.getDish_course().getName().equals("Second"));
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class DishServiceTests {
 		new_dish.setShift(shifts.get(2)); //Night
 		List<DishCourse> dishCourses = StreamSupport.stream(this.dishService.findDishCourses().spliterator(), false).collect(Collectors.toList());
 		new_dish.setDish_course(dishCourses.get(1)); //Second
-		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {dishService.save(new_dish);;});
+		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {dishService.save(new_dish);});
 	}
 	
 	/* DOES NOT WORK
