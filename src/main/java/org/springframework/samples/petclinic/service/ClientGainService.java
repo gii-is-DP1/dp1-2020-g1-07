@@ -11,8 +11,10 @@ import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.ClientGainRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class ClientGainService {
 	@Autowired
 	private  ClientGainRepository cgainRepo;
