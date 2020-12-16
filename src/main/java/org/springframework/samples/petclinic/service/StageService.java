@@ -27,7 +27,7 @@ public class StageService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Stage> findCasinotableById(int id){
+	public  Optional<Stage> findStagebyId(int id){
 		return stgrepo.findById(id);
 	}
 

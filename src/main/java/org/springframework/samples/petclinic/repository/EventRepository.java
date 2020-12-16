@@ -12,7 +12,7 @@ import org.springframework.samples.petclinic.model.ShowType;
 
 public interface EventRepository extends CrudRepository<Event, Integer>{
 
-	@Query("SELECT showtype FROM Showtype showtype ORDER BY showtype.id")
+	@Query("SELECT stype FROM ShowType stype ORDER BY stype.id")
 	List<ShowType> findShowtypes() throws DataAccessException;
 
 	@Query("SELECT artist FROM Artist artist ORDER BY artist.id")

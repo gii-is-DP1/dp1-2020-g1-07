@@ -23,8 +23,8 @@ public class ShowTypeFormatter implements Formatter<ShowType> {
 	    }
 
 	    @Override
-	    public String print(ShowType gameType, Locale locale) {
-	        return gameType.getName();
+	    public String print(ShowType showType, Locale locale) {
+	        return showType.getName();
 	    }
 
 	    @Override

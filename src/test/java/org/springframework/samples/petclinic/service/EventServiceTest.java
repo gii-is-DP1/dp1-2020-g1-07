@@ -28,7 +28,7 @@ public class EventServiceTest {
 		Event event = EntityUtils.getById(events, Event.class, 1);
 		assertThat(event.getId()).isEqualTo(1);
 		assertThat(event.getName()).isEqualTo("Magic and Pasion");
-		assertThat(event.getDay()).isEqualTo("2019-12-21");
+		assertThat(event.getDate()).isEqualTo("2019-12-21");
 		assertThat(event.getShowtype_id()).isEqualTo(3);
 		assertThat(event.getArtist_id()).isEqualTo(4);
 	}

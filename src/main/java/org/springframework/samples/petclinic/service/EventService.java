@@ -29,7 +29,7 @@ public class EventService {
 	}
 	
 	@Transactional(readOnly=true)
-	public  Optional<Event> findCasinotableById(int id){
+	public  Optional<Event> findEventbyId(int id){
 		return eventRepo.findById(id);
 	}
 

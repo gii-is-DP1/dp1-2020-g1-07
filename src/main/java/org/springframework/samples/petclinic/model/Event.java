@@ -18,7 +18,7 @@ public class Event extends NamedEntity{
 	
 	private String name;
 	
-	private String day;
+	private LocalDate date;
 	
 	@ManyToOne
 	@JoinColumn(name = "showtype_id")
