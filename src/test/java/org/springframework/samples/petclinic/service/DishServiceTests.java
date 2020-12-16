@@ -3,28 +3,21 @@ package org.springframework.samples.petclinic.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
-import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedDishNameException;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class DishServiceTests {
@@ -72,6 +65,34 @@ public class DishServiceTests {
 		assertThat(S2.getName()).isEqualTo("Afternoon");
 		Shift S3 = EntityUtils.getById(shifts, Shift.class, 3);
 		assertThat(S3.getName()).isEqualTo("Night");
+	}
+	
+	@Test
+	void testAddingDuck() {
+		Dish new_dish = new Dish();
+		new_dish.setName("Duck a l'orange");
+		List<Shift> shifts = StreamSupport.stream(this.dishService.findShifts().spliterator(), false).collect(Collectors.toList());
+		new_dish.setShift(shifts.get(2)); //Night
+		List<DishCourse> dishCourses = StreamSupport.stream(this.dishService.findDishCourses().spliterator(), false).collect(Collectors.toList());
+		new_dish.setDish_course(dishCourses.get(1)); //Second
+		dishService.save(new_dish);
+		
+		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
+		Dish saved_dish = dishes.get(3);
+		assertThat(saved_dish.getName()).isEqualTo("Duck a l'orange");
+		assertThat(saved_dish.getShift().getName()).isEqualTo("Night");
+		assertThat(saved_dish.getDish_course().getName()).isEqualTo("Second");
+	}
+	
+	@Test
+	void testAddingDishThatExists() throws Exception{
+		Dish new_dish = new Dish();
+		new_dish.setName("Serranito");
+		List<Shift> shifts = StreamSupport.stream(this.dishService.findShifts().spliterator(), false).collect(Collectors.toList());
+		new_dish.setShift(shifts.get(2)); //Night
+		List<DishCourse> dishCourses = StreamSupport.stream(this.dishService.findDishCourses().spliterator(), false).collect(Collectors.toList());
+		new_dish.setDish_course(dishCourses.get(1)); //Second
+		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {dishService.save(new_dish);;});
 	}
 	
 	/* DOES NOT WORK
