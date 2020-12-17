@@ -22,12 +22,15 @@ public class Menu extends NamedEntity {
 	@ManyToOne
     @JoinColumn(name = "first_dish_id")
 	private Dish first_dish;
+	
 	@ManyToOne
     @JoinColumn(name = "second_dish_id")
 	private Dish second_dish;
+	
 	@ManyToOne
     @JoinColumn(name = "dessert_id")
 	private Dish dessert;
+	
 	@ManyToOne
     @JoinColumn(name = "shift_id")
 	private Shift shift;
