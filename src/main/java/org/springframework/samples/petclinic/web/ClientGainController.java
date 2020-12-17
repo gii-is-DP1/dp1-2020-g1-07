@@ -4,8 +4,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -14,6 +20,7 @@ import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.service.ClientGainService;
+import org.springframework.samples.petclinic.util.Week;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -42,38 +49,17 @@ public class ClientGainController {
 	}
 	
 	@GetMapping(path="/user")
-	public String listUserGains(ModelMap modelMap) {
+	public String userGains(ModelMap modelMap) {
 		String view= "cgains/myGains";
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		if (principal instanceof UserDetails)
-			username = ((UserDetails)principal).getUsername();
-		else
-			username = principal.toString();
-		Iterable<ClientGain> gains=cgainService.findAll();
-		List<ClientGain> userGains = new ArrayList<ClientGain>();
-		String dni = cgainService.findUsers().stream()
-				.filter(x -> x.getUsername().equals(username)).findFirst().get().getDni();
-		for (ClientGain cg : gains)
-			if (cg.getDni().equals(dni))
-				userGains.add(cg);
-		modelMap.addAttribute("usergains", userGains);
+		SortedSet<Week> weeks= cgainService.findAllWeeks();
+		Iterable<Week> dates = weeks;
+		modelMap.addAttribute("dates", dates);
 		return view;
 	}
 	
-	@ModelAttribute("clients_dnis")
-	public Collection<String> clients() {
-		return this.cgainService.findClients();
-	}
-	
-	@ModelAttribute("games")
-	public Collection<String> games() {
-		return this.cgainService.findGames();
-	}
-	
 	@ResponseBody
-	@RequestMapping(value = "/myGains/{date}", method = RequestMethod.GET)
-	public String loadMenusByDate(@PathVariable("date")String datestr) {
+	@RequestMapping(value = "/user/{date}", method = RequestMethod.GET)
+	public String loadUserGains(@PathVariable("date")String datestr) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails)
@@ -86,7 +72,7 @@ public class ClientGainController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
 		try {
-			List<ClientGain> gains = new ArrayList<ClientGain>(cgainService.findClientGainsForWeek(date.minusDays(1), dni));
+			List<ClientGain> gains = new ArrayList<ClientGain>(cgainService.findClientGainsForWeek(new Week(date), dni));
 			for(ClientGain cg : gains) {
 				json = json + "{\"id\":" + cg.getId() +","
 						+ "\"amount\":" + cg.getAmount() +","
@@ -101,9 +87,19 @@ public class ClientGainController {
 				json = json.substring(0, json.length() - 1) + "]";
 			}
 		}catch(Exception e) {
-			System.out.println(cgainService.findClientGainsForWeek(date, dni));
+			System.out.println(cgainService.findClientGainsForWeek(new Week(date), dni));
 		}
 		return json;
+	}
+	
+	@ModelAttribute("clients_dnis")
+	public Collection<String> clients() {
+		return this.cgainService.findClients();
+	}
+	
+	@ModelAttribute("games")
+	public Collection<String> games() {
+		return this.cgainService.findGames();
 	}
 	
 	@GetMapping(path="/new")

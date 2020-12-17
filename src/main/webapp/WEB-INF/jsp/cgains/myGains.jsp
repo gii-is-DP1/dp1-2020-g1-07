@@ -4,9 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="src/weekPicker.js"></script>
-
-
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -15,15 +12,14 @@ $(document).ready(function(){
 		var valDate = $(this).val();
 		$.ajax({
 			type: 'GET',
-			url: '${pageContext.request.contextPath}/cgains/myGains/' + valDate,
+			url: '${pageContext.request.contextPath}/cgains/user/' + valDate,
 			success: function(result){
 				var result = JSON.parse(result)
 				var s1= '';
 				for(var i = 0; i < result.length; i++){
-					s1 += '<div> <br> <b>' + result[i].first_dish.shift.name
-					+ '</b> <br>' + result[i].first_dish.name
-					+ '<br>' + result[i].second_dish.name
-					+ '<br>' + result[i].dessert.name
+					s1 += '<div> <br>' + result[i].date
+					+ '<br>' + result[i].amount
+					+ '<br>' + result[i].game
 					+ '<br> </div>';
 				}
 				$('#tableGains').html(s1);
@@ -36,10 +32,10 @@ $(document).ready(function(){
 <petclinic:layout pageName="myGains">
     <h2>Your Gains</h2>
     <div class="control-group">
-        	Dates <select id="comboboxDates" name="date">
+    
+        	<select id="comboboxDates" name="date">
             <c:forEach var="date" items="${dates}">
-            	<option selected>Selecciona semana</option>
-            	<option value="${date}">${date}</option>
+            	<option value="${date.monday}">${date.text}</option>
             </c:forEach>
             </select>
         </div>
