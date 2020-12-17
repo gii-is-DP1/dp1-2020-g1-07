@@ -27,6 +27,6 @@ public class EventValidator implements Validator {
 	}
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Game.class.isAssignableFrom(clazz);
+		return Event.class.isAssignableFrom(clazz);
 	}
 }

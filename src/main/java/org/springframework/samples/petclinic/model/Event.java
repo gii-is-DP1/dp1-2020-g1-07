@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -17,7 +19,7 @@ public class Event extends NamedEntity{
 	private Integer id;
 	
 	private String name;
-	
+	@DateTimeFormat(pattern= "yyyy/MM/dd")
 	private LocalDate date;
 	
 	@ManyToOne

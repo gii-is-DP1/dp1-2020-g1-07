@@ -10,7 +10,7 @@
 <petclinic:layout pageName="events">
     <h2>Events</h2>
 
-    <table id="gamesTable" class="table table-striped">
+    <table id="eventsTable" class="table table-striped">
         <thead>
         <tr>
         	<th style="width: 150px;">Id</th>
@@ -22,7 +22,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${events}" var="game">
+        <c:forEach items="${events}" var="event">
             <tr>
             	<td>
             		<c:out value="${event.id}"/>
@@ -37,7 +37,7 @@
                     <c:out value="${event.showtype_id.name}"/>
                 </td>
                 <td>
-                    <c:out value="${event.artists.name}"/>
+                    <c:out value="${event.artist_id.name}"/>
                 </td>
             <td>
                 	<spring:url value="/events/delete/{eventId}" var="eventUrl">
