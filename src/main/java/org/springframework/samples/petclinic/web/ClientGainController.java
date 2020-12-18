@@ -34,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/cgains")
 public class ClientGainController {
@@ -50,9 +53,11 @@ public class ClientGainController {
 	
 	@GetMapping(path="/user")
 	public String userGains(ModelMap modelMap) {
+		log.warn("Loading cgains/user page");
 		String view= "cgains/myGains";
 		SortedSet<Week> weeks= cgainService.findAllWeeks();
 		Iterable<Week> dates = weeks;
+		log.warn("Displaying weeks: " + weeks.size());
 		modelMap.addAttribute("dates", dates);
 		return view;
 	}
@@ -60,6 +65,7 @@ public class ClientGainController {
 	@ResponseBody
 	@RequestMapping(value = "/user/{date}", method = RequestMethod.GET)
 	public String loadUserGains(@PathVariable("date")String datestr) {
+		log.warn("Loading user gains for week starting at: " + datestr);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails)
@@ -68,6 +74,7 @@ public class ClientGainController {
 			username = principal.toString();
 		String dni = cgainService.findUsers().stream()
 				.filter(x -> x.getUsername().equals(username)).findFirst().get().getDni();
+		log.warn("Searching data for user with dni: " + dni);
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -82,6 +89,7 @@ public class ClientGainController {
 				if(gains.indexOf(cg)==gains.size()-1) {
 					json = json.substring(0, json.length() - 1) + "]";
 				}
+				log.warn("ClientGain data: " + json);
 			}
 			if(gains.size()==0) {
 				json = json.substring(0, json.length() - 1) + "]";

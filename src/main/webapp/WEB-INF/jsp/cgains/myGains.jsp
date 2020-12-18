@@ -32,11 +32,11 @@ $(document).ready(function(){
 <petclinic:layout pageName="myGains">
     <h2>Your Gains</h2>
     <div class="control-group">
-    
         	<select id="comboboxDates" name="date">
-            <c:forEach var="date" items="${dates}">
-            	<option value="${date.monday}">${date.text}</option>
-            </c:forEach>
+        	<option selected>Select week</option>
+	            <c:forEach var="date" items="${dates}">
+	            	<option value="${date.monday}">${date.text}</option>
+	            </c:forEach>
             </select>
         </div>
     <div id="tableGains"></div>    
