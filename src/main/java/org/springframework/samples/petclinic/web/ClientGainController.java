@@ -89,11 +89,11 @@ public class ClientGainController {
 				if(gains.indexOf(cg)==gains.size()-1) {
 					json = json.substring(0, json.length() - 1) + "]";
 				}
-				log.warn("ClientGain data: " + json);
 			}
 			if(gains.size()==0) {
 				json = json.substring(0, json.length() - 1) + "]";
 			}
+			log.warn("ClientGain data: " + json);
 		}catch(Exception e) {
 			System.out.println(cgainService.findClientGainsForWeek(new Week(date), dni));
 		}
