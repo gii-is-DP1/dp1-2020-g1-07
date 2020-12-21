@@ -18,6 +18,11 @@ public class DishService {
 	@Autowired
 	private  DishRepository dishRepo; ///Cambiado a static aunque no viene en el video
 	
+	@Autowired
+	public DishService(DishRepository dishRepo) {
+		this.dishRepo = dishRepo;
+	}		
+	
 	@Transactional
 	public int dishCount() {
 		return (int)dishRepo.count();
