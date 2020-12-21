@@ -30,6 +30,9 @@ INSERT INTO slotgains VALUES (8,'8',900,'2010-09-12',3);
 INSERT INTO slotgains VALUES (9,'9',800,'2010-09-13',3);
 
 
+INSERT INTO SHOWTYPES VALUES(1, 'Music');
+INSERT INTO SHOWTYPES VALUES(2, 'Theater');
+INSERT INTO SHOWTYPES VALUES(3, 'Magic');
 
 
 INSERT INTO CASINOTABLE VALUES(1,'Mesa 1',1,2,1);
@@ -48,6 +51,11 @@ INSERT INTO artists(id) VALUES (4);
 INSERT INTO artists(id) VALUES (5);
 INSERT INTO artists(id) VALUES (6);
 
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id)VALUES(1,'Magic and Pasion','2019-12-21',3,4);
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id)VALUES(2,'Hamlet','2020-02-17',2,6);
+
+INSERT INTO STAGE (id, capacity, event_id) VALUES(1,40,1);
+INSERT INTO STAGE(id, capacity, event_id) VALUES(2,40,2);
 INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676a','Ofelia Rodríguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430z','Raúl García','123456787');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (9,'30987454m','María Martín','567891232');

@@ -7,44 +7,47 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="games">
-    <h2>Games</h2>
+<petclinic:layout pageName="events">
+    <h2>Events</h2>
 
-    <table id="gamesTable" class="table table-striped">
+    <table id="eventsTable" class="table table-striped">
         <thead>
         <tr>
         	<th style="width: 150px;">Id</th>
             <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">MaxPlayers</th>
-            <th style="width: 200px;">GameType</th>
+            <th style="width: 200px;">Date</th>
+            <th style="width: 200px;">Show Type</th>
+            <th style="width: 200px;">Artist/Group</th>
             <th>Actions</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${games}" var="game">
+        <c:forEach items="${events}" var="event">
             <tr>
             	<td>
-            		<c:out value="${game.id}"/>
+            		<c:out value="${event.id}"/>
             	</td>
                 <td>
-                    <c:out value="${game.name}"/>
+                    <c:out value="${event.name}"/>
                 </td>
                 <td>
-                    <c:out value="${game.maxPlayers}"/>
+                    <c:out value="${event.date}"/>
                 </td>
                 <td>
-                    <c:out value="${game.gametype.name}"/>
+                    <c:out value="${event.showtype_id.name}"/>
+                </td>
+                <td>
+                    <c:out value="${event.artist_id.name}"/>
                 </td>
             <td>
-                	<spring:url value="/games/delete/{gameId}" var="gameUrl">
-                        <spring:param name="gameId" value="${game.id}"/>
+                	<spring:url value="/events/delete/{eventId}" var="eventUrl">
+                        <spring:param name="eventId" value="${event.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(gameUrl)}">Delete</a>
+                    <a href="${fn:escapeXml(eventUrl)}">Delete</a>
                 </td> 
                 <td>
-                	<spring:url value="/games/{gameId}/edit" var="editUrl">
-                        <spring:param name="gameId" value="${game.id}"/>
+                	<spring:url value="/events/{eventId}/edit" var="editUrl">
+                        <spring:param name="eventId" value="${event.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td>
@@ -53,8 +56,8 @@
         </tbody>
     </table>
     <div class="form-group">
-    	<form method="get" action="/games/new">
-    		<button class="btn btn-default" type="submit">Add new game</button>
+    	<form method="get" action="/events/new">
+    		<button class="btn btn-default" type="submit">Add new event</button>
 		</form>
 	</div>
     
