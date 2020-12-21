@@ -21,7 +21,7 @@ $(document).ready(function(){
 					+ '<br>' + result[i].amount
 					+ '<br>' + result[i].game
 					+ '<br> </div>';
-				}	
+				}
 				$('#tableGains').html(s1);
 			}
 		});
