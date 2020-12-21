@@ -18,6 +18,7 @@ import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.ClientGainRepository;
+import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.samples.petclinic.util.Week;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,17 +38,6 @@ public class ClientGainService {
 		return cgainRepo.findAll();
 	}
 	
-	@Transactional
-	public SortedSet<Week> findAllWeeks() {
-		Collection<LocalDate> dates = cgainRepo.findAllDates();
-		SortedSet<Week> weeks = new TreeSet<>();
-		for (LocalDate day : dates) {
-			Week w = new Week(day);
-			weeks.add(w);
-		}
-		return weeks;
-	}
-	
 	@Transactional(readOnly=true)
 	public  Optional<ClientGain> findClientGainById(int id){ 
 		return cgainRepo.findById(id);
@@ -64,7 +54,26 @@ public class ClientGainService {
 		}
 		return result;
 	}
+	
+	@Transactional
+	public String findClientByUsername(String username) {
+		return cgainRepo.findUsers().stream()
+				.filter(x -> x.getUsername().equals(username))
+				.findFirst().get().getDni();
+	}
 
+	@Transactional
+	public SortedSet<Week> findWeeksForUser() {
+		String dni = this.findClientByUsername(UserUtils.getUser());
+		Collection<LocalDate> dates = cgainRepo.findDatesForClient(dni);
+		SortedSet<Week> weeks = new TreeSet<>();
+		for (LocalDate day : dates) {
+			Week w = new Week(day);
+			weeks.add(w);
+		}
+		return weeks;
+	}
+	
 	@Transactional
 	public  void save(ClientGain cgain) {
 		cgainRepo.save(cgain);

@@ -20,6 +20,7 @@ import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.service.ClientGainService;
+import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.samples.petclinic.util.Week;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,11 +54,11 @@ public class ClientGainController {
 	
 	@GetMapping(path="/user")
 	public String userGains(ModelMap modelMap) {
-		log.warn("Loading cgains/user page");
+		log.info("Loading cgains/user page");
 		String view= "cgains/myGains";
-		SortedSet<Week> weeks= cgainService.findAllWeeks();
+		SortedSet<Week> weeks= cgainService.findWeeksForUser();
 		Iterable<Week> dates = weeks;
-		log.warn("Displaying weeks: " + weeks.size());
+		log.info("Weeks found: " + weeks.size());
 		modelMap.addAttribute("dates", dates);
 		return view;
 	}
@@ -65,16 +66,11 @@ public class ClientGainController {
 	@ResponseBody
 	@RequestMapping(value = "/user/{date}", method = RequestMethod.GET)
 	public String loadUserGains(@PathVariable("date")String datestr) {
-		log.warn("Loading user gains for week starting at: " + datestr);
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		if (principal instanceof UserDetails)
-			username = ((UserDetails)principal).getUsername();
-		else
-			username = principal.toString();
-		String dni = cgainService.findUsers().stream()
-				.filter(x -> x.getUsername().equals(username)).findFirst().get().getDni();
-		log.warn("Searching data for user with dni: " + dni);
+		log.info("Loading user gains for week starting at: " + datestr);
+		String username = UserUtils.getUser();
+		log.info("Searching dni for username " + username);
+		String dni = cgainService.findClientByUsername(username);
+		log.info("Searching data for user with dni: " + dni);
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -93,9 +89,10 @@ public class ClientGainController {
 			if(gains.size()==0) {
 				json = json.substring(0, json.length() - 1) + "]";
 			}
-			log.warn("ClientGain data: " + json);
+			log.info("ClientGain JSON data: " + json);
 		}catch(Exception e) {
-			System.out.println(cgainService.findClientGainsForWeek(new Week(date), dni));
+			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		return json;
 	}
