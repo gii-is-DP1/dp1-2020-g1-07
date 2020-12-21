@@ -4,6 +4,8 @@ INSERT INTO GAMETYPES VALUES(3,'Dices');
 INSERT INTO SKILLS VALUES(1,'AMATEUR');
 INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
 INSERT INTO games VALUES (1,'Poker',8,2);
+INSERT INTO games VALUES (2,'BlackJack',10,2);
+INSERT INTO games VALUES (3,'Texas Hold em',8,2);
 
 INSERT INTO statuses VALUES(1,'OK');
 INSERT INTO statuses VALUES(2,'COLLECT');
@@ -84,7 +86,14 @@ INSERT INTO waiters(id) VALUES (19);
 INSERT INTO waiters(id) VALUES (20);
 INSERT INTO waiters(id) VALUES (21);
 
-INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'12345678A', 'Paco Perez','123456789');
+INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'11111111A', 'Ofelia Bustos','444444444');
+INSERT INTO clients(id,dni,name,phone_number) VALUES (2,'22222222B', 'Federico González','555555555');
+INSERT INTO clients(id,dni,name,phone_number) VALUES (3,'33333333C', 'Aurelio Pino','666666666');
+
+INSERT INTO client_gains(id,amount,date,dni,game) VALUES (1,350,'2020-09-07','11111111A','Poker');
+INSERT INTO client_gains(id,amount,date,dni,game) VALUES (2,500,'2020-09-08','11111111A','Poker');
+INSERT INTO client_gains(id,amount,date,dni,game) VALUES (3,100,'2020-09-08','11111111A','BlackJack');
+INSERT INTO client_gains(id,amount,date,dni,game) VALUES (4,-200,'2020-09-21','11111111A','Poker');
 
 -- ADMIN: admin1|4dm1n
 INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678a',TRUE);
@@ -93,7 +102,7 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431z',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'artist1','employee');
 -- CLIENT: client1|client1
-INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','30987454m',TRUE);
+INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','11111111A',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'client1','client');
 -- TEMPORAL
 INSERT INTO users(username,password,dni,enabled) VALUES ('owner1','0wn3r','98765431z',TRUE);
@@ -117,7 +126,7 @@ INSERT INTO schedules(employees_id, date, shift_id) VALUES (1, '2010-09-07', 3);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (9, '2010-09-09', 2);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (16, '2010-09-06', 1);
 
-
+-- TEMPORAL
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets VALUES (3, 'Linda', 'Douglas');
