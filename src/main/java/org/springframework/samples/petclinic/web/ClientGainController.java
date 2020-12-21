@@ -83,12 +83,10 @@ public class ClientGainController {
 						+ "\"dni\":\"" + cg.getDni() +"\","
 						+ "\"game\":\"" + cg.getGame() +"\"},";
 				if(gains.indexOf(cg)==gains.size()-1) {
-					json = json.substring(0, json.length() - 1) + "]";
+					json = json.substring(0, json.length() - 1);
 				}
 			}
-			if(gains.size()==0) {
-				json = "[]";
-			}
+			json += "]";
 			log.info("ClientGain JSON data: " + json);
 		}catch(Exception e) {
 			log.error(e.getMessage());

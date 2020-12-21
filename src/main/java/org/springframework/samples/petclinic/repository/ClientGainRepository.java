@@ -17,6 +17,11 @@ public interface ClientGainRepository extends CrudRepository<ClientGain,Integer>
 	@Query("SELECT DISTINCT date FROM ClientGain cgain WHERE cgain.dni LIKE :dni%")
 	List<LocalDate> findDatesForClient(@Param("dni") String dni) throws DataAccessException;
 	
+	@Query("SELECT cgain FROM ClientGain cgain WHERE cgain.dni LIKE :dni%"
+			+ "AND cgain.date >= :start% AND cgain.date <= :end%")
+	List<ClientGain> findClientGainsForWeek(@Param("dni") String dni,
+		@Param("start") LocalDate monday, @Param("end") LocalDate sunday) throws DataAccessException;
+	
 	@Query("SELECT user FROM User user ORDER BY user.dni")
 	List<User> findUsers() throws DataAccessException;
 	
