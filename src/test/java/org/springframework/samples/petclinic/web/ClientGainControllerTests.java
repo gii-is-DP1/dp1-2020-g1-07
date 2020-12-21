@@ -110,4 +110,17 @@ public class ClientGainControllerTests {
 		.andExpect(content().string(TEST_JSON));
 	}
 	
+	void loadUserGainsNoGainsTestSetup() {
+		given(this.cgainService.findClientByUsername(anyString())).willReturn("11111111A");
+		given(this.cgainService.findClientGainsForWeek(any(Week.class), anyString())).willReturn(Lists.newArrayList());
+	}
+	
+	@WithMockUser(value = "spring")
+    @Test
+    void loadUserGainsNoGainsTest() throws Exception {
+		loadUserGainsNoGainsTestSetup();
+		mockMvc.perform(get("/cgains/user/{date}", TEST_DATE)).andExpect(status().isOk())
+		.andExpect(content().string("[]"));
+	}
+	
 }

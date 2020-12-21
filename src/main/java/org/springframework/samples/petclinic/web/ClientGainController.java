@@ -87,7 +87,7 @@ public class ClientGainController {
 				}
 			}
 			if(gains.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]";
+				json = "[]";
 			}
 			log.info("ClientGain JSON data: " + json);
 		}catch(Exception e) {
