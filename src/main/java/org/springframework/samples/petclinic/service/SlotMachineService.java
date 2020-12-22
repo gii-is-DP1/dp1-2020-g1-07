@@ -15,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SlotMachineService {
 	
-	@Autowired
 	private  SlotMachineRepository slotMachineRepo; 
+	
+	@Autowired
+	public SlotMachineService(SlotMachineRepository slotMachineRepo) {
+		this.slotMachineRepo = slotMachineRepo;
+	}
 	
 	@Transactional
 	public int slotMachineCount() {
