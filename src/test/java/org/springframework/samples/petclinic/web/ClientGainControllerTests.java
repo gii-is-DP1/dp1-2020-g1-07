@@ -25,7 +25,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
+import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.samples.petclinic.util.Week;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -80,24 +82,33 @@ public class ClientGainControllerTests {
 	}
 	
 	void loadUserGainsTestSetup() {
+		Client cl = new Client();
+		cl.setDni("11111111A");
+		Game poker = new Game();
+		poker.setId(1);
+		poker.setName("Poker");
+		Game bjack = new Game();
+		poker.setId(2);
+		poker.setName("BlackJack");
+		
 		ClientGain cg1 = new ClientGain();
 		cg1.setId(1);
 		cg1.setAmount(350);
 		cg1.setDate(LocalDate.of(2020, 9, 7));
-		cg1.setDni("11111111A");
-		cg1.setGame("Poker");
+		cg1.setClient(cl);
+		cg1.setGame(poker);
 		ClientGain cg2 = new ClientGain();
 		cg2.setId(2);
 		cg2.setAmount(500);
 		cg2.setDate(LocalDate.of(2020, 9, 8));
-		cg2.setDni("11111111A");
-		cg2.setGame("Poker");
+		cg2.setClient(cl);
+		cg2.setGame(poker);
 		ClientGain cg3 = new ClientGain();
 		cg3.setId(3);
 		cg3.setAmount(100);
 		cg3.setDate(LocalDate.of(2020, 9, 8));
-		cg3.setDni("11111111A");
-		cg3.setGame("BlackJack");
+		cg3.setClient(cl);
+		cg3.setGame(bjack);
 		given(this.cgainService.findClientByUsername(anyString())).willReturn("11111111A");
 		given(this.cgainService.findClientGainsForWeek(any(Week.class), anyString())).willReturn(Lists.newArrayList(cg1, cg2, cg3));
 	}

@@ -3,7 +3,9 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
+import org.springframework.samples.petclinic.model.Game;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 public class ClientGainValidator implements Validator{
@@ -22,8 +24,8 @@ public class ClientGainValidator implements Validator{
 		ClientGain cgain = (ClientGain) target;
 		Integer amount = cgain.getAmount();
 		LocalDate date = cgain.getDate();
-		String dni = cgain.getDni();
-		String game = cgain.getGame();
+		Client client = cgain.getClient();
+		Game game = cgain.getGame();
 		
 		//Amount validation
 		if (amount == null || amount < 5) {
@@ -35,13 +37,13 @@ public class ClientGainValidator implements Validator{
 			errors.rejectValue("date", REQUIRED, REQUIRED);
 		}
 		
-		//DNI validation
-		if (dni == null || dni.trim().equals("") || !Pattern.matches("[0-9]{8}[A-Z]", dni)) {
-			errors.rejectValue("dni", REQUIRED + " to have 8 numbers and one capital letter at the end", REQUIRED + " to have 8 numbers and one capital letter at the end");
+		//Client validation
+		if (client == null) {
+			errors.rejectValue("client", REQUIRED, REQUIRED);
 		}
 		
 		//Game validation
-		if (game == null || game.trim().equals("")) {
+		if (game == null) {
 			errors.rejectValue("game", REQUIRED, REQUIRED);
 		}
 		

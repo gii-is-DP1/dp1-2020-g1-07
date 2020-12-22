@@ -16,7 +16,9 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
+import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.service.ClientGainService;
@@ -80,15 +82,13 @@ public class ClientGainController {
 				json = json + "{\"id\":" + cg.getId() +","
 						+ "\"amount\":" + cg.getAmount() +","
 						+ "\"date\":\"" + cg.getDate() +"\","
-						+ "\"dni\":\"" + cg.getDni() +"\","
-						+ "\"game\":\"" + cg.getGame() +"\"},";
+						+ "\"dni\":\"" + cg.getClient().getDni() +"\","
+						+ "\"game\":\"" + cg.getGame().getName() +"\"},";
 				if(gains.indexOf(cg)==gains.size()-1) {
-					json = json.substring(0, json.length() - 1) + "]";
+					json = json.substring(0, json.length() - 1);
 				}
 			}
-			if(gains.size()==0) {
-				json = "[]";
-			}
+			json += "]";
 			log.info("ClientGain JSON data: " + json);
 		}catch(Exception e) {
 			log.error(e.getMessage());
@@ -97,13 +97,13 @@ public class ClientGainController {
 		return json;
 	}
 	
-	@ModelAttribute("clients_dnis")
-	public Collection<String> clients() {
+	@ModelAttribute("clients")
+	public Collection<Client> clients() {
 		return this.cgainService.findClients();
 	}
 	
 	@ModelAttribute("games")
-	public Collection<String> games() {
+	public Collection<Game> games() {
 		return this.cgainService.findGames();
 	}
 	

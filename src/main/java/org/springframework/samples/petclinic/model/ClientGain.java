@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,9 +25,11 @@ public class ClientGain extends NamedEntity{
 	@DateTimeFormat(pattern= "yyyy/MM/dd")
 	private LocalDate date;
 	
-	@JoinColumn(name = "dni")
-	private String dni;
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
 	
-	@JoinColumn(name = "game")
-	private String game;
+	@ManyToOne
+	@JoinColumn(name = "game_id")
+	private Game game;
 }

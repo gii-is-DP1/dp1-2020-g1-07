@@ -26,10 +26,14 @@
             	<petclinic:inputField label="Amount" name="amount"/>
                 <petclinic:inputField label="Date" name="date"/>
                 <div class="control-group">
-                	<petclinic:selectField label="Select Client" name="dni" names="${clients_dnis}" size="1"/>
+                	<c:forEach var="game" items="${clients}">
+		            	<option value="${client.id}">${client.dni}</option>
+		            </c:forEach>
                 </div>
                 <div class="control-group">
-                	<petclinic:selectField label="Game" name="game" names="${games}" size="1"/>
+	                <c:forEach var="game" items="${games}">
+		            	<option value="${game.id}">${game.name}</option>
+		            </c:forEach>
                 </div>
             </div>
 
