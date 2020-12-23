@@ -74,7 +74,8 @@ public class ClientGainService {
 	}
 	
 	public List<ClientGain> findClientGainsForWeek(Week week, String dni) {
-		return cgainRepo.findClientGainsForWeek(dni, week.getMonday(), week.getSunday());
+		return cgainRepo.findClientGainsForWeek(dni, 
+				week.getMonday(), week.getSunday());
 	}
 	
 	public Collection<User> findUsers() throws DataAccessException{
