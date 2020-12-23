@@ -118,6 +118,7 @@ public class ClientGainController {
 	public String saveClientGain(@Valid ClientGain cgain, BindingResult result, ModelMap modelMap) {
 		String view="cgains/listClientGain";
 		if(result.hasErrors()) {
+			log.error("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("cgain", cgain);
 			return "cgains/addClientGain";
 			
@@ -157,6 +158,7 @@ public class ClientGainController {
     public String processUpdateClientGainForm(@Valid ClientGain clientgain, BindingResult result,
             @PathVariable("cgainId") int cgainId, ModelMap model) {
         if (result.hasErrors()) {
+        	log.error("Found errors on update: " + result.getAllErrors());
             model.put("cgain", clientgain);
             return "cgains/updateClientGain";
         }

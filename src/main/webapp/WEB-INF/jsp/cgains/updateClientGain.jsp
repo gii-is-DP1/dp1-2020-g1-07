@@ -26,14 +26,18 @@
             	<petclinic:inputField label="Amount" name="amount"/>
                 <petclinic:inputField label="Date" name="date"/>
                 <div class="control-group">
-                	<c:forEach var="game" items="${clients}">
-		            	<option value="${client.id}">${client.dni}</option>
+                 Client <select id="client" name="client">
+                	<c:forEach var="c" items="${clients}">
+		            	<option value="${c.dni}">${c.dni}</option>
 		            </c:forEach>
+		        </select>
                 </div>
                 <div class="control-group">
-	                <c:forEach var="game" items="${games}">
-		            	<option value="${game.id}">${game.name}</option>
+                Game <select id="game" name="game">
+	                <c:forEach var="g" items="${games}">
+		            	<option value="${g.name}">${g.name}</option>
 		            </c:forEach>
+		        </select>
                 </div>
             </div>
 

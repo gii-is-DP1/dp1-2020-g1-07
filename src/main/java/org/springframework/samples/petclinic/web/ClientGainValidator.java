@@ -28,8 +28,8 @@ public class ClientGainValidator implements Validator{
 		Game game = cgain.getGame();
 		
 		//Amount validation
-		if (amount == null || amount < 5) {
-			errors.rejectValue("amount", REQUIRED + " to be equal or larger than 5", REQUIRED + " to be equal or larger than 5");
+		if (amount == null || amount%5!=0) {
+			errors.rejectValue("amount", REQUIRED + "to be a multiple of 5", REQUIRED + "to be a multiple of 5");
 		}
 		
 		//Date validation
