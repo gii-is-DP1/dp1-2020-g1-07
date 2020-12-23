@@ -1,6 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -51,13 +51,13 @@ public class MenuServiceTest {
 		
 		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
 		Menu saved_menu = menus.get(menus.size()-1);
-		assertThat(saved_menu.getDate().getDayOfMonth()==11);
-		assertThat(saved_menu.getDate().getMonthValue()==9);
-		assertThat(saved_menu.getDate().getYear()==2020);
-		assertThat(saved_menu.getShift().getName().equals("Day"));
-		assertThat(saved_menu.getFirst_dish().getName().equals("Ensalada"));
-		assertThat(saved_menu.getSecond_dish().getName().equals("Filete"));
-		assertThat(saved_menu.getDessert().getName().equals("Flan"));
+		assertTrue(saved_menu.getDate().getDayOfMonth()==11);
+		assertTrue(saved_menu.getDate().getMonthValue()==9);
+		assertTrue(saved_menu.getDate().getYear()==2020);
+		assertTrue(saved_menu.getShift().getName().equals("Day"));
+		assertTrue(saved_menu.getFirst_dish().getName().equals("Ensalada"));
+		assertTrue(saved_menu.getSecond_dish().getName().equals("Filete"));
+		assertTrue(saved_menu.getDessert().getName().equals("Flan"));
 	}
 	
 	@Test
@@ -78,13 +78,13 @@ public class MenuServiceTest {
 		
 		List<Menu> menus = StreamSupport.stream(this.menuService.findMenusByDate(date).spliterator(), false).collect(Collectors.toList());
 		Menu saved_menu = menus.get(menus.size()-1);
-		assertThat(saved_menu.getDate().getDayOfMonth()==11);
-		assertThat(saved_menu.getDate().getMonthValue()==9);
-		assertThat(saved_menu.getDate().getYear()==2020);
-		assertThat(saved_menu.getShift().getName().equals("Day"));
-		assertThat(saved_menu.getFirst_dish().getName().equals("Ensalada"));
-		assertThat(saved_menu.getSecond_dish().getName().equals("Filete"));
-		assertThat(saved_menu.getDessert().getName().equals("Flan"));
+		assertTrue(saved_menu.getDate().getDayOfMonth()==11);
+		assertTrue(saved_menu.getDate().getMonthValue()==9);
+		assertTrue(saved_menu.getDate().getYear()==2020);
+		assertTrue(saved_menu.getShift().getName().equals("Day"));
+		assertTrue(saved_menu.getFirst_dish().getName().equals("Ensalada"));
+		assertTrue(saved_menu.getSecond_dish().getName().equals("Filete"));
+		assertTrue(saved_menu.getDessert().getName().equals("Flan"));
 	}
 	
 	@Test
@@ -106,9 +106,9 @@ public class MenuServiceTest {
 		
 		List<LocalDate> dates = StreamSupport.stream(this.menuService.findAllDates().spliterator(), false).collect(Collectors.toList());
 		LocalDate saved_date = dates.get(dates.size()-1);
-		assertThat(saved_date.getDayOfMonth()==11);
-		assertThat(saved_date.getMonthValue()==9);
-		assertThat(saved_date.getYear()==2020);
+		assertTrue(saved_date.getDayOfMonth()==11);
+		assertTrue(saved_date.getMonthValue()==9);
+		assertTrue(saved_date.getYear()==2020);
 	}
 		
 	public Dish generateDummyFirstDish(){

@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class SlotgameServiceTest {
 		
 		List<Slotgame> slotgames = StreamSupport.stream(this.slotgameService.findAll().spliterator(), false).collect(Collectors.toList());
 		Slotgame saved_slotgame = slotgames.get(slotgames.size()-1);
-		assertThat(saved_slotgame.getName().equals("New game"));
-		assertThat(saved_slotgame.getJackpot()==75);
+		assertTrue(saved_slotgame.getName().equals("New game"));
+		assertTrue(saved_slotgame.getJackpot()==75);
 	}
 	
 }

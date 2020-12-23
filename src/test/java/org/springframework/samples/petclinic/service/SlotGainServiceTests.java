@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.SlotGain;
-import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,9 @@ public class SlotGainServiceTests {
 		List<SlotGain> slotgains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
 		
 		SlotGain slotGain = EntityUtils.getById(slotgains, SlotGain.class, 2);
-		assertThat(slotGain.getDate().equals(LocalDate.of(2010, 9, 07)));
-		assertThat(slotGain.getSlotMachine().equals(1));
-		assertThat(slotGain.getAmount().equals(100));
+		assertTrue(slotGain.getDate().equals(LocalDate.of(2010, 9, 07)));
+		assertTrue(slotGain.getSlotMachine().equals(1));
+		assertTrue(slotGain.getAmount().equals(100));
 
 	}
 }
