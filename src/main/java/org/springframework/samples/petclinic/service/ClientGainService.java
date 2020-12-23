@@ -16,9 +16,13 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.ClientGainRepository;
 import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.samples.petclinic.util.Week;
+import org.springframework.samples.petclinic.web.ClientGainController;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ClientGainService {
 	
@@ -56,6 +60,7 @@ public class ClientGainService {
 	
 	@Transactional
 	public String findClientByUsername(String username) {
+		log.info("List of users: " + cgainRepo.findUsers());
 		return cgainRepo.findUsers().stream()
 				.filter(x -> x.getUsername().equals(username))
 				.findFirst().get().getDni();
