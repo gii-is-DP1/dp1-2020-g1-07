@@ -6,9 +6,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "dishes", uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
 public class Dish extends NamedEntity{
