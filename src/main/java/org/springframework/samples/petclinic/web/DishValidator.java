@@ -22,8 +22,6 @@ public class DishValidator implements Validator {
 	@Autowired
 	private DishService dishService;
 	
-	private Integer prueba = 0;
-	
 	public Dish getDishwithIdDifferent(String name) {
 		name = name.toLowerCase();
 		Dish empty_dish = new Dish();
@@ -48,11 +46,9 @@ public class DishValidator implements Validator {
 		// name validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
-			prueba=1;
 		}
 		if(otherDish.getName()!=null) {
 			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
-			prueba=1;
 		}
 		// dish_course validation
 		if (dc == null || dc.getName().trim().equals("")) {
