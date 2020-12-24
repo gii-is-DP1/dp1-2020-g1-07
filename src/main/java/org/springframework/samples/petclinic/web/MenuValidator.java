@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class MenuValidator implements Validator {
 
 	private static final String REQUIRED = "required";

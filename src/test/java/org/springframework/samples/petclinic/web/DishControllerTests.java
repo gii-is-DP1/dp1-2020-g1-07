@@ -32,7 +32,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers= DishController.class,
 		includeFilters= {@ComponentScan.Filter(value = DishCourseFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
-						@ComponentScan.Filter(value = ShiftFormatter.class, type = FilterType.ASSIGNABLE_TYPE )},
+						@ComponentScan.Filter(value = ShiftFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
+						@ComponentScan.Filter(value = DishValidator.class, type = FilterType.ASSIGNABLE_TYPE )},
 		excludeFilters= @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 		excludeAutoConfiguration= SecurityConfiguration.class)
 public class DishControllerTests {
@@ -160,7 +161,7 @@ public class DishControllerTests {
 
     @WithMockUser(value = "spring")
 	@Test
-	void testProcessUpdateOwnerFormHasErrors() throws Exception {
+	void testProcessUpdateDishFormHasErrors() throws Exception {
 		mockMvc.perform(post("/dishes/{dishId}/edit", 1)
 							.with(csrf())
 							.param("dish_course", "First")

@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.samples.petclinic.model.Slotgame;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class SlotgameValidator implements Validator {
 	
 	private static final String REQUIRED = "required";

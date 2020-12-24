@@ -3,10 +3,11 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 
 import org.springframework.samples.petclinic.model.SlotGain;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-
+@Component
 public class SlotGainValidator implements Validator{
 	
 	private static final String REQUIRED = "required";
