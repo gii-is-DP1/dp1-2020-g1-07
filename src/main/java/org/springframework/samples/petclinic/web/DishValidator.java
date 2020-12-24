@@ -7,6 +7,8 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Dish;
+import org.springframework.samples.petclinic.model.DishCourse;
+import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.DishService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -40,9 +42,11 @@ public class DishValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		Dish dish = (Dish) obj;
 		String name = dish.getName();
+		DishCourse dc = dish.getDish_course();
+		Shift shift = dish.getShift();
 		Dish otherDish=getDishwithIdDifferent(dish.getName());
 		// name validation
-		if (name == null || name.trim().equals("") /*|| (otherDish!= null && otherDish.getId()!=dish.getId())*/) {
+		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
 			prueba=1;
 		}
@@ -50,6 +54,14 @@ public class DishValidator implements Validator {
 			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
 			prueba=1;
 		}
+		// dish_course validation
+		if (dc == null || dc.getName().trim().equals("")) {
+			errors.rejectValue("dish_course", REQUIRED, REQUIRED);
+		}
+		// shift validation
+		if (shift == null || shift.getName().trim().equals("")) {
+			errors.rejectValue("shift", REQUIRED, REQUIRED);
+		}		
 	}
 
 	/**

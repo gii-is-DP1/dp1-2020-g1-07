@@ -86,6 +86,9 @@ public class DishControllerTests {
 		dish.setShift(shift3);
 		dish.setDish_course(dishCourse2);
 		given(this.dishService.findDishById(1)).willReturn(Optional.of(dish));
+		List<Dish> dishes = new ArrayList<Dish>();
+		dishes.add(dish);
+		given(this.dishService.findAll()).willReturn(dishes);
 	}
 	
 	@WithMockUser(value = "spring")
@@ -114,25 +117,20 @@ public class DishControllerTests {
 						.param("dish_course", "First")
 						.param("shift", "Day"))
 			.andExpect(status().is2xxSuccessful())
-			.andExpect(view().name("dishes/dishesList"));
-		mockMvc.perform(post("/dishes/save").param("name", "Espagueti")
-				.with(csrf())
-				.param("dish_course", "First")
-				.param("shift", "Day"))
-		.andExpect(status().is2xxSuccessful())
-		.andExpect(view().name("dishes/dishesList"));
+			.andExpect(model().attributeHasErrors("dish"))
+			.andExpect(model().attributeHasFieldErrors("dish", "name"))
+			.andExpect(view().name("dishes/addDish"));
 	}
 	
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/dishes/save")
+		mockMvc.perform(post("/dishes/save").param("name", "Macarrones")
 						.with(csrf())
-						.param("dish_course", "First")
 						.param("shift", "Day"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("dish"))
-			.andExpect(model().attributeHasFieldErrors("dish", "name"))
+			.andExpect(model().attributeHasFieldErrors("dish", "dish_course"))
 			.andExpect(view().name("dishes/addDish"));
 	}
 
@@ -162,14 +160,27 @@ public class DishControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateDishFormHasErrors() throws Exception {
-		mockMvc.perform(post("/dishes/{dishId}/edit", 1)
+		mockMvc.perform(post("/dishes/{dishId}/edit", 1).param("name", "")
 							.with(csrf())
-							.param("dish_course", "First")
-							.param("shift", "Day"))
+							.param("dish_course", "First"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("dish"))
 				.andExpect(model().attributeHasFieldErrors("dish", "name"))
+				.andExpect(model().attributeHasFieldErrors("dish", "shift"))
 				.andExpect(view().name("dishes/updateDish"));
+	}
+    
+    @WithMockUser(value = "spring")
+    @Test
+    void testProcessUpdateFormRepeatedName() throws Exception {
+		mockMvc.perform(post("/dishes/{dishId}/edit", 1).param("name", "Espagueti")
+						.with(csrf())
+						.param("dish_course", "First")
+						.param("shift", "Day"))
+			.andExpect(status().is2xxSuccessful())
+			.andExpect(model().attributeHasErrors("dish"))
+			.andExpect(model().attributeHasFieldErrors("dish", "name"))
+			.andExpect(view().name("dishes/updateDish"));
 	}
 	
 }
