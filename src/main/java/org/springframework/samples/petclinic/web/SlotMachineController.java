@@ -32,9 +32,12 @@ public class SlotMachineController {
 	@Autowired
 	private SlotMachineService slotMachineService;
 	
+	@Autowired
+	private SlotMachineValidator slotMachineValidator;
+	
 	@InitBinder("slotMachine")
 	public void SlotMachine(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new SlotMachineValidator());
+		dataBinder.setValidator(slotMachineValidator);
 	}
 	
 	@GetMapping()

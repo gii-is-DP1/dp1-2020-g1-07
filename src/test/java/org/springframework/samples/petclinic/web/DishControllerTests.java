@@ -107,6 +107,23 @@ public class DishControllerTests {
 	
 	@WithMockUser(value = "spring")
     @Test
+    void testProcessCreationFormRepeatedName() throws Exception {
+		mockMvc.perform(post("/dishes/save").param("name", "Espagueti")
+						.with(csrf())
+						.param("dish_course", "First")
+						.param("shift", "Day"))
+			.andExpect(status().is2xxSuccessful())
+			.andExpect(view().name("dishes/dishesList"));
+		mockMvc.perform(post("/dishes/save").param("name", "Espagueti")
+				.with(csrf())
+				.param("dish_course", "First")
+				.param("shift", "Day"))
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(view().name("dishes/dishesList"));
+	}
+	
+	@WithMockUser(value = "spring")
+    @Test
     void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/dishes/save")
 						.with(csrf())

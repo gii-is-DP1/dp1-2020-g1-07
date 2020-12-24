@@ -30,9 +30,12 @@ public class DishController {
 	@Autowired
 	private DishService dishService;
 	
+	@Autowired
+	private DishValidator dishValidator;
+	
 	@InitBinder("dish")
 	public void initDishBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new DishValidator());
+		dataBinder.setValidator(dishValidator);
 	}
 	
 	@GetMapping()

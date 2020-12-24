@@ -26,9 +26,12 @@ public class SlotGainController {
 	@Autowired
 	private SlotGainService slotGainService;
 	
+	@Autowired
+	private SlotGainValidator slotGainValidator;
+	
 	@InitBinder("slotGain")
 	public void initSlotGainBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new SlotGainValidator());
+		dataBinder.setValidator(slotGainValidator);
 	}
 	
 	@GetMapping()

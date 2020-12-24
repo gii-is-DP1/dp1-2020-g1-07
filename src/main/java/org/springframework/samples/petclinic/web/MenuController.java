@@ -38,9 +38,12 @@ public class MenuController {
 	@Autowired
 	private MenuService menuService;
 	
+	@Autowired
+	private MenuValidator menuValidator;
+	
 	@InitBinder("menu")
 	public void initMenuBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new MenuValidator());
+		dataBinder.setValidator(menuValidator);
 	}
 	
 	@GetMapping()
