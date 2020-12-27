@@ -1,29 +1,25 @@
 package org.springframework.samples.petclinic.model;
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="employees")
 
-public class Employee extends NamedEntity{
+public class Employee extends BaseEntity{
 
 	@NotEmpty
-	@Pattern(regexp="^[0-9]{8}[a-z]$",message="DNI must contain 8 digits and a single lower-case letter")  
+	@Pattern(regexp="^[0-9]{8}[A-Z]$",message="DNI must contain 8 digits and a single capital letter")  
 	private String dni;
 	
 	@NotEmpty
