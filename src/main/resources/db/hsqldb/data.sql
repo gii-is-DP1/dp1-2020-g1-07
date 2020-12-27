@@ -98,10 +98,10 @@ INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'11111111A', 'Ofelia Bus
 INSERT INTO clients(id,dni,name,phone_number) VALUES (2,'22222222B', 'Federico González','555555555');
 INSERT INTO clients(id,dni,name,phone_number) VALUES (3,'33333333C', 'Aurelio Pino','666666666');
 
-INSERT INTO client_gains(id,amount,date,dni,game) VALUES (1,350,'2020-09-07','11111111A','Poker');
-INSERT INTO client_gains(id,amount,date,dni,game) VALUES (2,500,'2020-09-08','11111111A','Poker');
-INSERT INTO client_gains(id,amount,date,dni,game) VALUES (3,100,'2020-09-08','11111111A','BlackJack');
-INSERT INTO client_gains(id,amount,date,dni,game) VALUES (4,-200,'2020-09-21','11111111A','Poker');
+INSERT INTO client_gains(id,amount,date,client_id,game_id) VALUES (1,350,'2020-09-07',1,1);
+INSERT INTO client_gains(id,amount,date,client_id,game_id) VALUES (2,500,'2020-09-08',1,1);
+INSERT INTO client_gains(id,amount,date,client_id,game_id) VALUES (3,100,'2020-09-08',1,2);
+INSERT INTO client_gains(id,amount,date,client_id,game_id) VALUES (4,-200,'2020-09-21',1,1);
 
 -- ADMIN: admin1|4dm1n
 INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678a',TRUE);

@@ -24,7 +24,7 @@
         <c:forEach items="${cgains}" var="cgain">
             <tr>
                 <td>
-                    <c:out value="${cgain.dni}"/>
+                    <c:out value="${cgain.client.dni}"/>
                 </td>
                 <td>
                     <c:out value="${cgain.amount}"/>
@@ -33,7 +33,7 @@
                     <c:out value="${cgain.date}"/>
                 </td>
                 <td>
-                    <c:out value="${cgain.game}"/>
+                    <c:out value="${cgain.game.name}"/>
                 </td>
                 <td>
                 	<spring:url value="/cgains/delete/{cgainId}" var="deleteUrl">

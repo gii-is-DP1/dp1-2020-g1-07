@@ -4,30 +4,25 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.SortedSet;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
-import org.springframework.samples.petclinic.model.Menu;
-import org.springframework.samples.petclinic.model.Schedule;
+import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.samples.petclinic.util.Week;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,8 +36,17 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/cgains")
 public class ClientGainController {
+	
 	@Autowired
 	private ClientGainService cgainService;
+	
+	@Autowired
+	private ClientGainValidator validator;
+	
+	@InitBinder("clientGain")
+	public void initClientGainBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(validator);
+	}
 	
 	@GetMapping()
 	public String listClientGains(ModelMap modelMap) {
@@ -80,15 +84,13 @@ public class ClientGainController {
 				json = json + "{\"id\":" + cg.getId() +","
 						+ "\"amount\":" + cg.getAmount() +","
 						+ "\"date\":\"" + cg.getDate() +"\","
-						+ "\"dni\":\"" + cg.getDni() +"\","
-						+ "\"game\":\"" + cg.getGame() +"\"},";
+						+ "\"dni\":\"" + cg.getClient().getDni() +"\","
+						+ "\"game\":\"" + cg.getGame().getName() +"\"},";
 				if(gains.indexOf(cg)==gains.size()-1) {
-					json = json.substring(0, json.length() - 1) + "]";
+					json = json.substring(0, json.length() - 1);
 				}
 			}
-			if(gains.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]";
-			}
+			json += "]";
 			log.info("ClientGain JSON data: " + json);
 		}catch(Exception e) {
 			log.error(e.getMessage());
@@ -97,13 +99,13 @@ public class ClientGainController {
 		return json;
 	}
 	
-	@ModelAttribute("clients_dnis")
-	public Collection<String> clients() {
+	@ModelAttribute("clients")
+	public Collection<Client> clients() {
 		return this.cgainService.findClients();
 	}
 	
 	@ModelAttribute("games")
-	public Collection<String> games() {
+	public Collection<Game> games() {
 		return this.cgainService.findGames();
 	}
 	
@@ -118,6 +120,7 @@ public class ClientGainController {
 	public String saveClientGain(@Valid ClientGain cgain, BindingResult result, ModelMap modelMap) {
 		String view="cgains/listClientGain";
 		if(result.hasErrors()) {
+			log.error("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("cgain", cgain);
 			return "cgains/addClientGain";
 			
@@ -157,6 +160,7 @@ public class ClientGainController {
     public String processUpdateClientGainForm(@Valid ClientGain clientgain, BindingResult result,
             @PathVariable("cgainId") int cgainId, ModelMap model) {
         if (result.hasErrors()) {
+        	log.error("Found errors on update: " + result.getAllErrors());
             model.put("cgain", clientgain);
             return "cgains/updateClientGain";
         }
