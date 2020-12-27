@@ -57,6 +57,11 @@ public class SlotGainController {
 			return "slotgains/addSlotGain";
 			
 		}else {
+			if(slotGainValidator.getSlotGainwithIdDifferent(slotGain.getSlotMachine(), slotGain.getDate())) {
+				result.rejectValue("date", "date.duplicate", "Ya hay un registro para esta slot en esta fecha");
+				modelMap.addAttribute("slotGain", slotGain);
+				return "slotgains/addSlotGain";
+			}
 			slotGainService.save(slotGain);
 			modelMap.addAttribute("message", "SlotGain successfully saved!");
 			view=slotGainsList(modelMap);
@@ -96,6 +101,11 @@ public class SlotGainController {
 		}
 		else {
 			slotGain.setId(slotGainId);
+			if(slotGainValidator.getSlotGainwithIdDifferent(slotGain.getSlotMachine(), slotGain.getDate(), slotGain.getId())) {
+				result.rejectValue("date", "date.duplicate", "Ya hay un registro para esta slot en esta fecha");
+				model.put("slotGain", slotGain);
+				return "slotgains/updateSlotGain";
+			}
 			this.slotGainService.save(slotGain);
 			return "redirect:/slotgains";
 		}

@@ -55,6 +55,11 @@ public class SlotgameController {
 			return "slotgames/addSlotgame";
 			
 		}else {
+			if(slotgameValidator.getSlotgamewithIdDifferent(slotgame.getName())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				modelMap.addAttribute("slotgame", slotgame);
+				return "slotgames/addSlotgame";
+			}
 			slotgameService.save(slotgame);
 			modelMap.addAttribute("message", "SlotGame successfully saved!");
 			view=slotgamesList(modelMap);
@@ -94,6 +99,11 @@ public class SlotgameController {
 		}
 		else {
 			slotgame.setId(slotgameId);
+			if(slotgameValidator.getSlotgamewithIdDifferent(slotgame.getName(), slotgame.getId())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				model.put("slotgame", slotgame);
+				return "slotgames/updateSlotgame";
+			}
 			this.slotgameService.save(slotgame);
 			return "redirect:/slotgames";
 		}

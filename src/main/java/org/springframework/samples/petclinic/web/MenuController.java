@@ -130,9 +130,12 @@ public class MenuController {
 			return "menus/addMenu";
 			
 		}else {
-			
+			if(menuValidator.getMenuwithIdDifferent(menu.getShift() ,menu.getDate())) {
+				result.rejectValue("date", "date.duplicate", "Ya existe un menu para esa fecha y turno");
+				modelMap.addAttribute("menu", menu);
+				return "menus/addMenu";
+			}
 			menuService.save(menu);
-			
 			modelMap.addAttribute("message", "Menu successfully saved!");
 			view=menusList(modelMap);
 		}
@@ -171,6 +174,11 @@ public class MenuController {
 		}
 		else {
 			menu.setId(menuId);
+			if(menuValidator.getMenuwithIdDifferent(menu.getShift() ,menu.getDate(), menu.getId())) {
+				result.rejectValue("date", "date.duplicate", "Ya existe un menu para esa fecha y turno");
+				model.put("menu", menu);
+				return "menus/updateMenu";
+			}
 			this.menuService.save(menu);
 			return "redirect:/menus";
 		}

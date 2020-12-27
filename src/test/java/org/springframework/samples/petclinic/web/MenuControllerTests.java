@@ -185,7 +185,7 @@ public class MenuControllerTests {
 	
 	@WithMockUser(value = "spring")
 	@Test
-	void testInitUpdateDishForm() throws Exception {
+	void testInitUpdateMenuForm() throws Exception {
 		mockMvc.perform(get("/menus/{menuId}/edit", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("menu"))
 				.andExpect(model().attribute("menu", hasProperty("date", is(LocalDate.of(2020, 12, 24)))))

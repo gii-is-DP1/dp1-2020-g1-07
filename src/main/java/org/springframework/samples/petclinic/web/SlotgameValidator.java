@@ -20,18 +20,32 @@ public class SlotgameValidator implements Validator {
 	@Autowired
 	private SlotgameService slotgameService;
 	
-	public Slotgame getSlotgamewithIdDifferent(String name, Integer id) {
+	public Boolean getSlotgamewithIdDifferent(String name) {
 		name = name.toLowerCase();
-		Slotgame empty_slotgame = null;
+		Boolean result = false;
+		List<Slotgame> slotgames = StreamSupport.stream(this.slotgameService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Slotgame slotgame : slotgames) {
+			String compName = slotgame.getName();
+			compName = compName.toLowerCase();
+			if (compName.equals(name)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public Boolean getSlotgamewithIdDifferent(String name, Integer id) {
+		name = name.toLowerCase();
+		Boolean result = false;
 		List<Slotgame> slotgames = StreamSupport.stream(this.slotgameService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Slotgame slotgame : slotgames) {
 			String compName = slotgame.getName();
 			compName = compName.toLowerCase();
 			if (compName.equals(name) && slotgame.getId()!=id) {
-				return slotgame;
+				result = true;
 			}
 		}
-		return empty_slotgame;
+		return result;
 	}
 	
 	@Override
@@ -39,13 +53,8 @@ public class SlotgameValidator implements Validator {
 		Slotgame slotgame = (Slotgame) target;
 		String name = slotgame.getName();
 		Integer jackpot = slotgame.getJackpot();
-		Slotgame otherslotgame = null;
-		if(name!=null) otherslotgame=getSlotgamewithIdDifferent(name, slotgame.getId());
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
-		}
-		if(otherslotgame!=null) {
-			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
 		}
 		if(jackpot == null || jackpot<0) {
 			errors.rejectValue("jackpot", REQUIRED + "No puede ser nulo ni negativo", REQUIRED + "No puede ser nulo ni negativo");

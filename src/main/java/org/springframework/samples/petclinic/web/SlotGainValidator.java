@@ -22,15 +22,26 @@ public class SlotGainValidator implements Validator{
 	@Autowired
 	private SlotGainService slotGainService;
 	
-	public SlotGain getSlotGainwithIdDifferent(SlotMachine SM, LocalDate date, Integer id) {
-		SlotGain empty_slotGain = null;
+	public Boolean getSlotGainwithIdDifferent(SlotMachine SM, LocalDate date) {
+		Boolean result = false;
+		List<SlotGain> slotGains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (SlotGain slotGain : slotGains) {
+			if (slotGain.getSlotMachine().getId().equals(SM.getId()) && slotGain.getDate().isEqual(date)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public Boolean getSlotGainwithIdDifferent(SlotMachine SM, LocalDate date, Integer id) {
+		Boolean result = false;
 		List<SlotGain> slotGains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (SlotGain slotGain : slotGains) {
 			if (slotGain.getSlotMachine().getId().equals(SM.getId()) && slotGain.getDate().isEqual(date) && id!=slotGain.getId()) {
-				return slotGain;
+				result = true;
 			}
 		}
-		return empty_slotGain;
+		return result;
 	}
 
 	@Override
@@ -44,8 +55,6 @@ public class SlotGainValidator implements Validator{
 		LocalDate date = slotGain.getDate();
 		Integer amount = slotGain.getAmount();
 		SlotMachine slotM = slotGain.getSlotMachine();
-		SlotGain anotherSlotGain = null;
-		if(slotM != null && date!=null) anotherSlotGain = getSlotGainwithIdDifferent(slotM, date, slotGain.getId());
 		if (date == null) {
 			errors.rejectValue("date", REQUIRED, REQUIRED);
 		}
@@ -54,9 +63,6 @@ public class SlotGainValidator implements Validator{
 		}
 		if(slotM == null) {
 			errors.rejectValue("slotMachine", REQUIRED, REQUIRED);
-		}
-		if(anotherSlotGain!=null) {
-			errors.rejectValue("date", "Ya existe un registro para esta SlotMachine hoy", "Ya existe un registro para esta SlotMachine hoy");
 		}
 	}
 
