@@ -69,8 +69,13 @@ public class DishController {
 		if(result.hasErrors()) {
 			modelMap.addAttribute("dish", dish);
 			return "dishes/addDish";
-			
 		}else {
+			if(dishValidator.getDishwithIdDifferent(dish.getName())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				modelMap.addAttribute("dish", dish);
+				return "dishes/addDish";
+			}
+			result.rejectValue("name", "name.duplicate", "Ese no vale");
 			dishService.save(dish);
 			modelMap.addAttribute("message", "Dish successfully saved!");
 			view=dishesList(modelMap);
@@ -110,6 +115,11 @@ public class DishController {
 		}
 		else {
 			dish.setId(dishId);
+			if(dishValidator.getDishwithIdDifferent(dish.getName(), dish.getId())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				model.put("dish", dish);
+				return "dishes/updateDish";
+			}
 			this.dishService.save(dish);
 			return "redirect:/dishes";
 		}

@@ -20,20 +20,38 @@ public class DishValidator implements Validator {
 	private static final String REQUIRED = "required";
 
 	@Autowired
-	private DishService dishService;
+	private DishService dishService;	
 	
-	public Dish getDishwithIdDifferent(String name, Integer id) {
+	//For creating
+		public boolean getDishwithIdDifferent(String name) {
+			name = name.toLowerCase();
+			Boolean result = false;
+			List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
+			for (Dish dish : dishes) {
+				String compName = dish.getName();
+				compName = compName.toLowerCase();
+				if (compName.equals(name)) {
+					result = true;
+					break;
+				}
+			}
+			return result;
+		}
+	
+	//For editing
+	public boolean getDishwithIdDifferent(String name, Integer id) {
 		name = name.toLowerCase();
-		Dish empty_dish = null;
+		Boolean result = false;
 		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Dish dish : dishes) {
 			String compName = dish.getName();
 			compName = compName.toLowerCase();
 			if (compName.equals(name) && id!=dish.getId()) {
-				return dish;
+				result = true;
+				break;
 			}
 		}
-		return empty_dish;
+		return result;
 	}
 	
 	@Override
@@ -42,14 +60,9 @@ public class DishValidator implements Validator {
 		String name = dish.getName();
 		DishCourse dc = dish.getDish_course();
 		Shift shift = dish.getShift();
-		Dish otherDish = null;
-		if(name!=null) otherDish=getDishwithIdDifferent(dish.getName(), dish.getId());
 		// name validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
-		}
-		if(otherDish!=null) {
-			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
 		}
 		// dish_course validation
 		if (dc == null || dc.getName().trim().equals("")) {

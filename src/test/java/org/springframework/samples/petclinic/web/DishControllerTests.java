@@ -173,7 +173,7 @@ public class DishControllerTests {
     @WithMockUser(value = "spring")
     @Test
     void testProcessUpdateFormRepeatedName() throws Exception {
-		mockMvc.perform(post("/dishes/{dishId}/edit", 1).param("name", "Espagueti")
+		mockMvc.perform(post("/dishes/{dishId}/edit", 2).param("name", "Espagueti")
 						.with(csrf())
 						.param("dish_course", "First")
 						.param("shift", "Day"))
