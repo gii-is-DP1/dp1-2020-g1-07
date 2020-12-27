@@ -23,7 +23,7 @@ public class MenuValidator implements Validator {
 	private MenuService menuService;
 
 	public Menu getMenuwithIdDifferent(Shift shift, LocalDate date) {
-		Menu empty_menu = new Menu();
+		Menu empty_menu = null;
 		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Menu menu : menus) {
 			if (menu.getShift().getName().equals(shift.getName()) && menu.getDate().isEqual(date)) {
@@ -41,7 +41,8 @@ public class MenuValidator implements Validator {
 		Dish first_dish = menu.getFirst_dish();
 		Dish second_dish = menu.getSecond_dish();
 		Dish dessert = menu.getDessert();
-		Menu existing_menu = getMenuwithIdDifferent(shift,date);
+		Menu existing_menu = null;
+		if(shift!=null && date!=null) existing_menu = getMenuwithIdDifferent(shift,date);
 		// Date validation
 		if (date == null) {
 			errors.rejectValue("date", REQUIRED, REQUIRED);
@@ -57,7 +58,7 @@ public class MenuValidator implements Validator {
 			errors.rejectValue("dessert", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
 		}
 		//Already existing menu validation
-		if(existing_menu.getDate()!=null) {
+		if(existing_menu != null) {
 			errors.rejectValue("date", "Ya existe un menu para este turno y esta fecha", "Ya existe un menu para este turno y esta fecha");
 		}
 	}

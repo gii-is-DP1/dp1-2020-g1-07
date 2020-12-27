@@ -24,7 +24,7 @@ public class DishValidator implements Validator {
 	
 	public Dish getDishwithIdDifferent(String name) {
 		name = name.toLowerCase();
-		Dish empty_dish = new Dish();
+		Dish empty_dish = null;
 		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Dish dish : dishes) {
 			String compName = dish.getName();
@@ -42,12 +42,13 @@ public class DishValidator implements Validator {
 		String name = dish.getName();
 		DishCourse dc = dish.getDish_course();
 		Shift shift = dish.getShift();
-		Dish otherDish=getDishwithIdDifferent(dish.getName());
+		Dish otherDish = null;
+		if(name!=null) otherDish=getDishwithIdDifferent(dish.getName());
 		// name validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
 		}
-		if(otherDish.getName()!=null) {
+		if(otherDish!=null) {
 			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
 		}
 		// dish_course validation

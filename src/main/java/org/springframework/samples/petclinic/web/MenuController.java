@@ -116,14 +116,14 @@ public class MenuController {
 	}
 	
 	@GetMapping(path="/new")
-	public String crearMenu(ModelMap modelMap) {
+	public String createMenu(ModelMap modelMap) {
 		String view="menus/addMenu";
 		modelMap.addAttribute("menu", new Menu());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String salvarPlato(@Valid Menu menu, BindingResult result, ModelMap modelMap) {
+	public String saveMenu(@Valid Menu menu, BindingResult result, ModelMap modelMap) {
 		String view="menus/menusList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("menu", menu);
@@ -140,7 +140,7 @@ public class MenuController {
 	}
 	
 	@GetMapping(path="/delete/{menuId}")
-	public String borrarMenu(@PathVariable("menuId") int menuId, ModelMap modelMap) {
+	public String deleteMenu(@PathVariable("menuId") int menuId, ModelMap modelMap) {
 		String view="menus/menusList";
 		Optional<Menu> menu = menuService.findMenuById(menuId);
 		if(menu.isPresent()) {
