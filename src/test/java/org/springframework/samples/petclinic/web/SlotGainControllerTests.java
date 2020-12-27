@@ -56,8 +56,8 @@ public class SlotGainControllerTests {
 		slotgame.setJackpot(128);
 		
 		Status status = new Status();
-		slotgame.setId(1);
-		slotgame.setName("OK");	
+		status.setId(1);
+		status.setName("OK");	
 		
 		SlotMachine slotMachine = new SlotMachine();
 		slotMachine.setId(1);
@@ -80,7 +80,7 @@ public class SlotGainControllerTests {
 		given(this.slotGainService.findAll()).willReturn(slotgains);
 	}
 	
-	/*@WithMockUser(value = "spring")
+	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception{
 		mockMvc.perform(get("/slotgains/new")).andExpect(status().isOk()).andExpect(model().attributeExists("slotGain"))
@@ -90,36 +90,36 @@ public class SlotGainControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/slotgains/save").param("name", "Macarrones")
+		mockMvc.perform(post("/slotgains/save").param("date", "2020/12/10")
 						.with(csrf())
-						.param("slotGain_course", "First")
-						.param("shift", "Day"))
+						.param("amount", "100")
+						.param("slotMachine", "1"))
 			.andExpect(status().is2xxSuccessful())
-			.andExpect(view().name("slotgains/slotgainsList"));
+			.andExpect(view().name("slotgains/slotGainsList"));
 	}
 	
 	@WithMockUser(value = "spring")
     @Test
-    void testProcessCreationFormRepeatedName() throws Exception {
-		mockMvc.perform(post("/slotgains/save").param("name", "Espagueti")
-						.with(csrf())
-						.param("slotGain_course", "First")
-						.param("shift", "Day"))
+    void testProcessCreationFormRepeatedDateAndSlot() throws Exception {
+		mockMvc.perform(post("/slotgains/save").param("date", "2020/12/27")
+				.with(csrf())
+				.param("amount", "100")
+				.param("slotMachine", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(model().attributeHasErrors("slotGain"))
-			.andExpect(model().attributeHasFieldErrors("slotGain", "name"))
+			.andExpect(model().attributeHasFieldErrors("slotGain", "date"))
 			.andExpect(view().name("slotgains/addSlotGain"));
 	}
 	
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/slotgains/save").param("name", "Macarrones")
-						.with(csrf())
-						.param("shift", "Day"))
+		mockMvc.perform(post("/slotgains/save").param("date", "2020/12/27")
+				.with(csrf())
+				.param("slotMachine", "1"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("slotGain"))
-			.andExpect(model().attributeHasFieldErrors("slotGain", "slotGain_course"))
+			.andExpect(model().attributeHasFieldErrors("slotGain", "amount"))
 			.andExpect(view().name("slotgains/addSlotGain"));
 	}
 
@@ -128,9 +128,9 @@ public class SlotGainControllerTests {
 	void testInitUpdateSlotGainForm() throws Exception {
 		mockMvc.perform(get("/slotgains/{slotGainId}/edit", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("slotGain"))
-				.andExpect(model().attribute("slotGain", hasProperty("name", is("Espagueti"))))
-				.andExpect(model().attribute("slotGain", hasProperty("slotGain_course", is(slotGainService.findSlotGainCourses().toArray()[1]))))
-				.andExpect(model().attribute("slotGain", hasProperty("shift", is(slotGainService.findShifts().toArray()[2]))))
+				.andExpect(model().attribute("slotGain", hasProperty("date", is(LocalDate.of(2020, 12, 27)))))
+				.andExpect(model().attribute("slotGain", hasProperty("amount", is(200))))
+				.andExpect(model().attribute("slotGain", hasProperty("slotMachine", is(slotGainService.findSlotMachines().toArray()[0]))))
 				.andExpect(view().name("slotgains/updateSlotGain"));
 	}
 
@@ -139,9 +139,9 @@ public class SlotGainControllerTests {
 	void testProcessUpdateSlotGainFormSuccess() throws Exception {
 		mockMvc.perform(post("/slotgains/{slotGainId}/edit", 1)
 							.with(csrf())
-							.param("name", "Macarrones")
-							.param("slotGain_course", "First")
-							.param("shift", "Day"))
+							.param("date", "2020/12/20")
+							.param("amount", "100")
+							.param("slotMachine", "1"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/slotgains"));
 	}
@@ -149,27 +149,28 @@ public class SlotGainControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateSlotGainFormHasErrors() throws Exception {
-		mockMvc.perform(post("/slotgains/{slotGainId}/edit", 1).param("name", "")
+		mockMvc.perform(post("/slotgains/{slotGainId}/edit", 1)
 							.with(csrf())
-							.param("slotGain_course", "First"))
+							.param("date", "2020/12/20")
+							.param("amount", "-100")
+							.param("slotMachine", "1"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("slotGain"))
-				.andExpect(model().attributeHasFieldErrors("slotGain", "name"))
-				.andExpect(model().attributeHasFieldErrors("slotGain", "shift"))
+				.andExpect(model().attributeHasFieldErrors("slotGain", "amount"))
 				.andExpect(view().name("slotgains/updateSlotGain"));
 	}
     
     @WithMockUser(value = "spring")
     @Test
-    void testProcessUpdateFormRepeatedName() throws Exception {
-		mockMvc.perform(post("/slotgains/{slotGainId}/edit", 2).param("name", "Espagueti")
-						.with(csrf())
-						.param("slotGain_course", "First")
-						.param("shift", "Day"))
+    void testProcessUpdateFormRepeatedDateAndSlot() throws Exception {
+		mockMvc.perform(post("/slotgains/{slotGainId}/edit", 2).param("date", "2020/12/27")
+				.with(csrf())
+				.param("amount", "100")
+				.param("slotMachine", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(model().attributeHasErrors("slotGain"))
-			.andExpect(model().attributeHasFieldErrors("slotGain", "name"))
+			.andExpect(model().attributeHasFieldErrors("slotGain", "date"))
 			.andExpect(view().name("slotgains/updateSlotGain"));
-	}*/
+	}
 
 }

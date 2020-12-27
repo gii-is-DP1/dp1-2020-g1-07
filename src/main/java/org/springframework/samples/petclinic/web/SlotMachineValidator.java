@@ -18,7 +18,7 @@ public class SlotMachineValidator implements Validator {
 		Slotgame game = slotMachine.getSlotgame();
 		Status status = slotMachine.getStatus();
 		if (game == null || game.getName().trim().equals("")) {
-			errors.rejectValue("game", REQUIRED, REQUIRED);
+			errors.rejectValue("slotgame", REQUIRED, REQUIRED);
 		}
 		if (status == null || status.getName().trim().equals("")) {
 			errors.rejectValue("status", REQUIRED, REQUIRED);
