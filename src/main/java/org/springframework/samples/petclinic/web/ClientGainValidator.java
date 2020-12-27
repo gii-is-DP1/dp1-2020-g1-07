@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
@@ -20,11 +19,6 @@ public class ClientGainValidator implements Validator{
 		// TODO Auto-generated method stub
 		return ClientGain.class.isAssignableFrom(clazz);
 	}
-
-	private boolean isNotMultiple(Integer amount) {
-		
-		return true;
-	}
 	
 	@Override
 	public void validate(Object target, Errors errors) {
@@ -36,8 +30,8 @@ public class ClientGainValidator implements Validator{
 		Game game = cgain.getGame();
 		
 		//Amount validation
-		if (amount == null || isNotMultiple(amount)) {
-			errors.rejectValue("amount", REQUIRED + "to be a multiple of 5", REQUIRED + "to be a multiple of 5");
+		if (amount == null || amount%5!=0) {
+			errors.rejectValue("amount", REQUIRED + " to be a multiple of 5", REQUIRED + " to be a multiple of 5");
 		}
 		
 		//Date validation

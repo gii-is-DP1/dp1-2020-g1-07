@@ -16,7 +16,6 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.ClientGainRepository;
 import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.samples.petclinic.util.Week;
-import org.springframework.samples.petclinic.web.ClientGainController;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
