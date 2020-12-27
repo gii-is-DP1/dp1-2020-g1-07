@@ -1,11 +1,8 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-<<<<<<< Updated upstream
 import static org.junit.jupiter.api.Assertions.assertTrue;
-=======
 import static org.mockito.Mockito.when;
->>>>>>> Stashed changes
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,19 +16,11 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Dish;
-import org.springframework.samples.petclinic.model.DishCourse;
-import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.model.SlotGain;
-<<<<<<< Updated upstream
-=======
 import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
 import org.springframework.samples.petclinic.model.Status;
-import org.springframework.samples.petclinic.repository.DishRepository;
 import org.springframework.samples.petclinic.repository.SlotGainRepository;
->>>>>>> Stashed changes
-import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -75,10 +64,10 @@ public class SlotGainServiceTests {
         
 		List<SlotGain> slotGains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
 		SlotGain saved_slotGain = slotGains.get(slotGains.size()-1);
-		assertThat(saved_slotGain.getDate().equals(LocalDate.of(2020, 3, 14)));
-		assertThat(saved_slotGain.getAmount()==100);
-		assertThat(saved_slotGain.getSlotMachine().getSlotgame().getName().equals("Game"));
-		assertThat(saved_slotGain.getSlotMachine().getStatus().getName().equals("REPAIR"));
+		assertTrue(saved_slotGain.getDate().equals(LocalDate.of(2020, 3, 14)));
+		assertTrue(saved_slotGain.getAmount()==100);
+		assertTrue(saved_slotGain.getSlotMachine().getSlotgame().getName().equals("Game"));
+		assertTrue(saved_slotGain.getSlotMachine().getStatus().getName().equals("REPAIR"));
 
 	}
 	

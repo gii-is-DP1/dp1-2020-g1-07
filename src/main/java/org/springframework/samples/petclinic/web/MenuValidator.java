@@ -22,11 +22,11 @@ public class MenuValidator implements Validator {
 	@Autowired
 	private MenuService menuService;
 
-	public Menu getMenuwithIdDifferent(Shift shift, LocalDate date) {
+	public Menu getMenuwithIdDifferent(Shift shift, LocalDate date, Integer id) {
 		Menu empty_menu = null;
 		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Menu menu : menus) {
-			if (menu.getShift().getName().equals(shift.getName()) && menu.getDate().isEqual(date)) {
+			if (menu.getShift().getName().equals(shift.getName()) && menu.getDate().isEqual(date) && id!=menu.getId()) {
 				return menu;
 			}
 		}
@@ -42,7 +42,7 @@ public class MenuValidator implements Validator {
 		Dish second_dish = menu.getSecond_dish();
 		Dish dessert = menu.getDessert();
 		Menu existing_menu = null;
-		if(shift!=null && date!=null) existing_menu = getMenuwithIdDifferent(shift,date);
+		if(shift!=null && date!=null) existing_menu = getMenuwithIdDifferent(shift,date,menu.getId());
 		// Date validation
 		if (date == null) {
 			errors.rejectValue("date", REQUIRED, REQUIRED);

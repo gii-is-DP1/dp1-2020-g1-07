@@ -22,14 +22,14 @@ public class DishValidator implements Validator {
 	@Autowired
 	private DishService dishService;
 	
-	public Dish getDishwithIdDifferent(String name) {
+	public Dish getDishwithIdDifferent(String name, Integer id) {
 		name = name.toLowerCase();
 		Dish empty_dish = null;
 		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Dish dish : dishes) {
 			String compName = dish.getName();
 			compName = compName.toLowerCase();
-			if (compName.equals(name)) {
+			if (compName.equals(name) && id!=dish.getId()) {
 				return dish;
 			}
 		}
@@ -43,7 +43,7 @@ public class DishValidator implements Validator {
 		DishCourse dc = dish.getDish_course();
 		Shift shift = dish.getShift();
 		Dish otherDish = null;
-		if(name!=null) otherDish=getDishwithIdDifferent(dish.getName());
+		if(name!=null) otherDish=getDishwithIdDifferent(dish.getName(), dish.getId());
 		// name validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
