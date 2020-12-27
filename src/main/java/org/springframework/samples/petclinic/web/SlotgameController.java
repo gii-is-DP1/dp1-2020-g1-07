@@ -24,9 +24,12 @@ public class SlotgameController {
 	@Autowired
 	private SlotgameService slotgameService;
 	
+	@Autowired
+	private SlotgameValidator slotgameValidator;
+	
 	@InitBinder("slotgame")
 	public void initSlotgameBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new SlotgameValidator());
+		dataBinder.setValidator(slotgameValidator);
 	}
 	
 	@GetMapping()

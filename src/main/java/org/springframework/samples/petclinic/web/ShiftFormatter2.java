@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.MenuService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ShiftFormatter2 implements Formatter<Shift>{
 	private final MenuService menuService;
 	

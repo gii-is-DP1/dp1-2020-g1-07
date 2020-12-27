@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -58,9 +58,9 @@ public class DishServiceTests {
         
 		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
 		Dish saved_dish = dishes.get(dishes.size()-1);
-		assertThat(saved_dish.getName().equals("Duck a l'orange"));
-		assertThat(saved_dish.getShift().getName().equals("Night"));
-		assertThat(saved_dish.getDish_course().getName().equals("Second"));
+		assertTrue(saved_dish.getName().equals("Duck a l'orange"));
+		assertTrue(saved_dish.getShift().getName().equals("Night"));
+		assertTrue(saved_dish.getDish_course().getName().equals("Second"));
 	}
 	
 	@Test
