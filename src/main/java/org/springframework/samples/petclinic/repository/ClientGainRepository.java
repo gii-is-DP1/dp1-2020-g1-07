@@ -25,7 +25,7 @@ public interface ClientGainRepository extends CrudRepository<ClientGain,Integer>
 	List<ClientGain> findClientGainsForWeek(@Param("dni") String dni, @Param("start") LocalDate monday,
 			@Param("end") LocalDate sunday) throws DataAccessException;
 	
-	@Query("SELECT user FROM User user ORDER BY user.dni")
+	@Query("SELECT DISTINCT user FROM User user ORDER BY user.dni")
 	List<User> findUsers() throws DataAccessException;
 	
 	@Query("SELECT client FROM Client client ORDER BY client.dni")

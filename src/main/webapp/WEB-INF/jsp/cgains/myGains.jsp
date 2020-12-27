@@ -19,7 +19,7 @@ $(document).ready(function(){
 				for(var i = 0; i < result.length; i++){
 					s1 += '<div> <br>' + result[i].date
 					+ '<br>' + result[i].amount
-					+ '<br>' + result[i].game.name
+					+ '<br>' + result[i].game
 					+ '<br> </div>';
 				}	
 				$('#tableGains').html(s1);

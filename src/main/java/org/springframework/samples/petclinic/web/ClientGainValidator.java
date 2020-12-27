@@ -6,8 +6,11 @@ import java.util.regex.Pattern;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Game;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+@Component
 public class ClientGainValidator implements Validator{
 
 	private static final String REQUIRED = "required";
@@ -18,6 +21,11 @@ public class ClientGainValidator implements Validator{
 		return ClientGain.class.isAssignableFrom(clazz);
 	}
 
+	private boolean isNotMultiple(Integer amount) {
+		
+		return true;
+	}
+	
 	@Override
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
@@ -28,7 +36,7 @@ public class ClientGainValidator implements Validator{
 		Game game = cgain.getGame();
 		
 		//Amount validation
-		if (amount == null || amount%5!=0) {
+		if (amount == null || isNotMultiple(amount)) {
 			errors.rejectValue("amount", REQUIRED + "to be a multiple of 5", REQUIRED + "to be a multiple of 5");
 		}
 		
