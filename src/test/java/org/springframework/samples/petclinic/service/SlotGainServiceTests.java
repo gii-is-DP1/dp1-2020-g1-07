@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -78,16 +79,9 @@ public class SlotGainServiceTests {
 		List<SlotGain> slotgains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
 		
 		SlotGain slotGain = EntityUtils.getById(slotgains, SlotGain.class, 2);
-<<<<<<< Updated upstream
-		assertTrue(slotGain.getDate().equals(LocalDate.of(2010, 9, 07)));
-		assertTrue(slotGain.getSlotMachine().equals(1));
-		assertTrue(slotGain.getAmount().equals(100));
-
-=======
 		assertThat(slotGain.getDate().equals(LocalDate.of(2010, 9, 07)));
 		assertThat(slotGain.getSlotMachine().equals(1));
 		assertThat(slotGain.getAmount().equals(100));
->>>>>>> Stashed changes
 	}
 	*/
 }
