@@ -23,6 +23,7 @@ import java.util.TreeSet;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -66,7 +67,7 @@ public class ClientGainControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@BeforeAll
+	@BeforeEach
 	void setup() {
 		this.cl = new Client();
 		cl.setId(1);
