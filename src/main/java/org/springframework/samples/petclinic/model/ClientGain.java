@@ -10,12 +10,12 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 @Entity
 @Table(name = "client_gains")
 public class ClientGain extends BaseEntity{
