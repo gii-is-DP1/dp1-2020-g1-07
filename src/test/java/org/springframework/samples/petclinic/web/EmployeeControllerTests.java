@@ -40,8 +40,6 @@ excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classe
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class EmployeeControllerTests {
 
-	private static final String TEST_DATE = "2020-09-07";
-
 	private Employee emp;
 	
 	@MockBean

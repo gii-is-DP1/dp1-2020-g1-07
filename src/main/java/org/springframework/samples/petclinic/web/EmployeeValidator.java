@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -19,8 +20,16 @@ public class EmployeeValidator implements Validator{
 	@Autowired
 	private EmployeeService employeeService;
 	
-	public Employee getEmployeewithIdDifferent(String dni) {
-		Employee result = null;
+	public Employee getEmployeewithIdDifferent(String dni, Integer id) {
+		Optional<Employee> res = StreamSupport.stream(this.employeeService.findAll().spliterator(), false)
+				.filter(x -> x.getDni().equals(dni) && id != null && !x.getId().equals(id))
+				.findAny();
+		if (res.isPresent())
+			return res.get();
+		else
+			return null;
+		
+		/*
 		List<Employee> employees = StreamSupport.stream(this.employeeService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Employee e : employees) {
 			String compDni = e.getName();
@@ -28,7 +37,8 @@ public class EmployeeValidator implements Validator{
 				return e;
 			}
 		}
-		return result;
+		return null;
+		*/
 	}
 	
 	@Override

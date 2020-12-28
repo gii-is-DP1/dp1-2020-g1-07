@@ -56,7 +56,11 @@ public class EmployeeController {
 			return "employees/addEmployee";
 			
 		}else {
-			
+			if (validator.getEmployeewithIdDifferent(employee.getDni(), null) != null) {
+				result.rejectValue("dni", "dni.duplicate", "Employee with dni" + employee.getDni() + "already in database");
+				modelMap.addAttribute("employee", employee);
+				return "employees/addEmployee";
+			}
 			employeeService.save(employee);
 			
 			modelMap.addAttribute("message", "Employee successfully saved!");
@@ -96,6 +100,11 @@ public class EmployeeController {
             return "employees/updateEmployee";
         }
         else {
+        	if (validator.getEmployeewithIdDifferent(employee.getDni(), employee.getId()) != null) {
+				result.rejectValue("dni", "dni.duplicate", "Employee with dni" + employee.getDni() + "already in database");
+				model.addAttribute("employee", employee);
+				return "employees/updateEmployee";
+			}
         	employee.setId(employeeId);
             this.employeeService.save(employee);
             return "redirect:/employees";
