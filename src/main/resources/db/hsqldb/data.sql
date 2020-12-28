@@ -7,6 +7,7 @@ INSERT INTO games VALUES (1,'Poker',8,2);
 INSERT INTO games VALUES (2,'BlackJack',10,2);
 INSERT INTO games VALUES (3,'Texas Hold em',8,2);
 
+
 INSERT INTO statuses VALUES(1,'OK');
 INSERT INTO statuses VALUES(2,'COLLECT');
 INSERT INTO statuses VALUES(3,'REPAIR');
@@ -36,6 +37,7 @@ INSERT INTO SHOWTYPES VALUES(3, 'Magic');
 
 
 INSERT INTO CASINOTABLE VALUES(1,'Mesa 1',1,2,1);
+
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678a','Manuel Rodríguez','987654321');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432z','Rosa García','123456789');

@@ -1,39 +1,84 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.Event;
+import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.GameType;
+import org.springframework.samples.petclinic.model.ShowType;
+import org.springframework.samples.petclinic.model.Skill;
+import org.springframework.samples.petclinic.model.Stage;
+import org.springframework.samples.petclinic.repository.CasinotableRepository;
+import org.springframework.samples.petclinic.repository.StageRepository;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@ExtendWith(MockitoExtension.class)
 public class CasinoTableServiceTest {
 	
-	@Autowired
-	private CasinotableService casTabService;
+	@Mock
+	private CasinotableRepository casinotableRepo;
 	
-	/*@Test
-	public void testCountWithInitialData() {
-		int count= casTabService.casinoTableCount();
-		assertEquals(count,1);
-	}*/
+	protected CasinotableService casinotableService;
+	
+	@BeforeEach
+    void setup() {
+		casinotableService = new CasinotableService(casinotableRepo);
+    }
 	@Test
-	void shouldFindCasinotable() {
-		List<Casinotable> casinotables = StreamSupport.stream(this.casTabService.findAll().spliterator(), false).collect(Collectors.toList());
-
-		Casinotable casinotable = EntityUtils.getById(casinotables, Casinotable.class, 1);
-		assertThat(casinotable.getId()).isEqualTo(1);
-		assertThat(casinotable.getGame().getId()).isEqualTo(1);
-		assertThat(casinotable.getGametype().getId()).isEqualTo(2);
+	public void testCountWithInitialData() {
+		int count= casinotableService.casinoTableCount();
+		assertEquals(count,0);
 	}
+	@Test
+	void testAddingCasTab() {
+		Casinotable new_ct = new Casinotable();
+		Game game = new Game();
+		game.setName("Poker");
+		GameType gametype = new GameType();
+		gametype.setName("Cards");
+		game.setGametype(gametype);
+		game.setMaxPlayers(6);
+		new_ct.setGame(game);
+		new_ct.setGametype(gametype);
+		Skill skill = new Skill();
+		skill.setName("Amateur");
+		new_ct.setSkill(skill);
+		Collection<Casinotable> sampleCasinotables = new ArrayList<Casinotable>();
+		sampleCasinotables.add(new_ct);
+        when(casinotableRepo.findAll()).thenReturn(sampleCasinotables);
+		
+        
+		List<Casinotable> casinotables = StreamSupport.stream(this.casinotableService.findAll().spliterator(), 
+				false).collect(Collectors.toList());
+		
+		Casinotable saved_ct = casinotables.get(0);
+		assertTrue(saved_ct.getGame().getName().equals("Poker"));
+		assertTrue(saved_ct.getGame().getGametype().getName().equals("Cards") 
+		&& saved_ct.getGametype().getName().equals(saved_ct.getGame().getGametype().getName()));
+		assertTrue(saved_ct.getSkill().getName().equals("Amateur"));
+		assertTrue(saved_ct.getGame().getMaxPlayers() == 6);
+		
+	}
+
 }
 

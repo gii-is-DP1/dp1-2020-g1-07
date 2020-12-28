@@ -11,6 +11,7 @@ import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
+import org.springframework.samples.petclinic.repository.StageRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,10 @@ import org.springframework.util.StringUtils;
 public class CasinotableService {
 	@Autowired
 	private  CasinotableRepository castabRepo;
+	@Autowired
+	public CasinotableService(CasinotableRepository castabRepo) {
+		this.castabRepo = castabRepo;
+	}		
 	
 	@Transactional
 	public int casinoTableCount() {

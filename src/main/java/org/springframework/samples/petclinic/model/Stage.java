@@ -10,7 +10,6 @@ import lombok.Data;
 @Entity
 public class Stage extends NamedEntity{
 	
-	private Integer id;
 	
 	private Integer capacity;
 	

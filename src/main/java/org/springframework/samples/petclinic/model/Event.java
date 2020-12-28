@@ -16,7 +16,6 @@ import lombok.Data;
 @Table(name = "events")
 public class Event extends NamedEntity{
 	
-	private Integer id;
 	
 	private String name;
 	@DateTimeFormat(pattern= "yyyy/MM/dd")
