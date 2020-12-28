@@ -73,7 +73,6 @@ public class DishController {
 				modelMap.addAttribute("dish", dish);
 				return "dishes/addDish";
 			}
-			result.rejectValue("name", "name.duplicate", "Ese no vale");
 			dishService.save(dish);
 			modelMap.addAttribute("message", "Dish successfully saved!");
 			view=dishesList(modelMap);

@@ -88,7 +88,6 @@ public class SlotMachineControllerTests {
 		
 		SlotMachine slotMachine = new SlotMachine();
 		slotMachine.setId(1);
-		slotMachine.setName("SlotMachine 1");
 		slotMachine.setSlotgame(slotgame);
 		slotMachine.setStatus(status1);
 		List<SlotMachine> slotMachines = new ArrayList<SlotMachine>();

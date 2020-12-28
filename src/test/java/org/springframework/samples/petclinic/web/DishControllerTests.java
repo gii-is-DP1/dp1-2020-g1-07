@@ -111,6 +111,18 @@ public class DishControllerTests {
 	
 	@WithMockUser(value = "spring")
     @Test
+    void testProcessCreationFormHasErrors() throws Exception {
+		mockMvc.perform(post("/dishes/save").param("name", "Macarrones")
+						.with(csrf())
+						.param("shift", "Day"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeHasErrors("dish"))
+			.andExpect(model().attributeHasFieldErrors("dish", "dish_course"))
+			.andExpect(view().name("dishes/addDish"));
+	}
+	
+	@WithMockUser(value = "spring")
+    @Test
     void testProcessCreationFormRepeatedName() throws Exception {
 		mockMvc.perform(post("/dishes/save").param("name", "Espagueti")
 						.with(csrf())
@@ -119,18 +131,6 @@ public class DishControllerTests {
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(model().attributeHasErrors("dish"))
 			.andExpect(model().attributeHasFieldErrors("dish", "name"))
-			.andExpect(view().name("dishes/addDish"));
-	}
-	
-	@WithMockUser(value = "spring")
-    @Test
-    void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/dishes/save").param("name", "Macarrones")
-						.with(csrf())
-						.param("shift", "Day"))
-			.andExpect(status().isOk())
-			.andExpect(model().attributeHasErrors("dish"))
-			.andExpect(model().attributeHasFieldErrors("dish", "dish_course"))
 			.andExpect(view().name("dishes/addDish"));
 	}
 
