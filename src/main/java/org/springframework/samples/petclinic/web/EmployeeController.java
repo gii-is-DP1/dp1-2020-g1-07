@@ -8,17 +8,30 @@ import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private EmployeeValidator validator;
+	
+	@InitBinder("employee")
+	public void initClientGainBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(validator);
+	}
 	
 	@GetMapping()
 	public String listEmployees(ModelMap modelMap) {

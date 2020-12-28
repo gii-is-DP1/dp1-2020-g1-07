@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "client_gains")
-public class ClientGain extends NamedEntity{
+public class ClientGain extends BaseEntity{
 
 	@NotNull
 	private Integer amount;
