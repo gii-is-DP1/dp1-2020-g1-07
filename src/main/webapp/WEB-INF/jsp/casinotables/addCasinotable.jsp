@@ -12,7 +12,7 @@ $(document).ready(function(){
 	$('#comboboxGameType').change(function(){
 		var gametypeId = null;
 		var gametypeName = $(this).val();
-		if(gametypeName=="Roullete"){
+		if(gametypeName=="Roulette"){
 			gametypeId=1;
 		}else if(gametypeName=="Cards"){
 			gametypeId=2;
@@ -47,6 +47,7 @@ $(document).ready(function(){
             <div class="form-group has-feedback">
             	<div class="control-group">
                 	GameType <select id="comboboxGameType" name="gametype">
+                		<option value="">Select Game type</option>
                 		<c:forEach var="gametype" items="${gametypes}">
                 			<option value="${gametype.name}">${gametype.name}</option>
                 		</c:forEach>
