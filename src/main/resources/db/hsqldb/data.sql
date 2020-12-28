@@ -15,9 +15,9 @@ INSERT INTO slotgames VALUES (1,'Phoenix Fury',100);
 INSERT INTO slotgames VALUES (2,'The Atlantis Treasure',0);
 INSERT INTO slotgames VALUES (3,'Amazon Adventure',58);
 
-INSERT INTO slotmachines VALUES (1,'1',1,1);
-INSERT INTO slotmachines VALUES (2,'2',2,2);
-INSERT INTO slotmachines VALUES (3,'3',3,3);
+INSERT INTO slotmachines VALUES (1,1,1);
+INSERT INTO slotmachines VALUES (2,2,2);
+INSERT INTO slotmachines VALUES (3,3,3);
 
 INSERT INTO slotgains VALUES (1,'1',100,'2010-09-07',1);
 INSERT INTO slotgains VALUES (2,'2',300,'2010-09-08',1);

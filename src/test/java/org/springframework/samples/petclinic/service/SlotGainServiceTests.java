@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,18 @@ public class SlotGainServiceTests {
 	@Mock
 	private SlotGainRepository slotGainRepo;
 	
-	@Autowired
 	protected SlotGainService slotGainService;
 	
-	@Test
-	public void testCountWithInitialData() {
-		int count= slotGainService.slotGainCount();
-		assertEquals(count,9);
-	}
+	@BeforeEach
+    void setup() {
+		slotGainService = new SlotGainService(slotGainRepo);
+    }
 	
 	@Test
 	void testAddingSlotGain() {
 		SlotGain new_gain = new SlotGain();
-		new_gain.setDate(LocalDate.of(2020, 3, 14));
+		LocalDate date = LocalDate.of(2020, 3, 14);
+		new_gain.setDate(date);
 		new_gain.setAmount(100);
 		
 		Slotgame slotgame = new Slotgame();
@@ -64,7 +64,7 @@ public class SlotGainServiceTests {
         
 		List<SlotGain> slotGains = StreamSupport.stream(this.slotGainService.findAll().spliterator(), false).collect(Collectors.toList());
 		SlotGain saved_slotGain = slotGains.get(slotGains.size()-1);
-		assertTrue(saved_slotGain.getDate().equals(LocalDate.of(2020, 3, 14)));
+		assertTrue(saved_slotGain.getDate().isEqual(date));
 		assertTrue(saved_slotGain.getAmount()==100);
 		assertTrue(saved_slotGain.getSlotMachine().getSlotgame().getName().equals("Game"));
 		assertTrue(saved_slotGain.getSlotMachine().getStatus().getName().equals("REPAIR"));

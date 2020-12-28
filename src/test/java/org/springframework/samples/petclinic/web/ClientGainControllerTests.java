@@ -33,13 +33,16 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers=ClientGainController.class,
+includeFilters = @ComponentScan.Filter(value = ClientGainValidator.class, type = FilterType.ASSIGNABLE_TYPE ),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class ClientGainControllerTests {
 
 	private static final String TEST_DATE = "2020-09-07";
-	private static final String TEST_JSON = "[{\"id\":1,\"amount\":350,\"date\":\"2020-09-07\",\"dni\":\"11111111A\",\"game\":\"Poker\"},{\"id\":2,\"amount\":500,\"date\":\"2020-09-08\",\"dni\":\"11111111A\",\"game\":\"Poker\"},{\"id\":3,\"amount\":100,\"date\":\"2020-09-08\",\"dni\":\"11111111A\",\"game\":\"BlackJack\"}]";
+	private static final String TEST_JSON = "[{\"id\":1,\"amount\":350,\"date\":\"2020-09-07\",\"dni\":\"11111111A\",\"game\":\"Poker\"},"
+											+ "{\"id\":2,\"amount\":500,\"date\":\"2020-09-08\",\"dni\":\"11111111A\",\"game\":\"Poker\"},"
+											+ "{\"id\":3,\"amount\":100,\"date\":\"2020-09-08\",\"dni\":\"11111111A\",\"game\":\"BlackJack\"}]";
 	
 	@MockBean
 	private ClientGainService cgainService;
@@ -86,8 +89,8 @@ public class ClientGainControllerTests {
 		poker.setId(1);
 		poker.setName("Poker");
 		Game bjack = new Game();
-		poker.setId(2);
-		poker.setName("BlackJack");
+		bjack.setId(2);
+		bjack.setName("BlackJack");
 		
 		ClientGain cg1 = new ClientGain();
 		cg1.setId(1);

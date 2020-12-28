@@ -23,10 +23,9 @@ public class ClientServiceTests {
 	@Test
 	void shouldFindMenus() {
 		List<Client> clients = StreamSupport.stream(this.clientService.findAll().spliterator(), false).collect(Collectors.toList());
-
 		Client client = EntityUtils.getById(clients, Client.class, 1);
-		assertThat(client.getName()).isEqualTo("Paco Perez");
-		assertThat(client.getDni()).isEqualTo("12345678A");
-		assertThat(client.getPhone_number()).isEqualTo("123456789");
+		assertThat(client.getName()).isEqualTo("Ofelia Bustos");
+		assertThat(client.getDni()).isEqualTo("11111111A");
+		assertThat(client.getPhone_number()).isEqualTo("444444444");
 	}
 }
