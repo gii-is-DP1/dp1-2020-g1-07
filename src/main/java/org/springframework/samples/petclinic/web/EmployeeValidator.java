@@ -1,8 +1,13 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -10,7 +15,22 @@ import org.springframework.validation.Validator;
 @Component
 public class EmployeeValidator implements Validator{
 	private static final String REQUIRED = "required";
-
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
+	public Employee getEmployeewithIdDifferent(String dni) {
+		Employee result = null;
+		List<Employee> employees = StreamSupport.stream(this.employeeService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Employee e : employees) {
+			String compDni = e.getName();
+			if (compDni.equals(dni)) {
+				return e;
+			}
+		}
+		return result;
+	}
+	
 	@Override
 	public void validate(Object target, Errors errors) {
 		Employee employee = (Employee) target;
