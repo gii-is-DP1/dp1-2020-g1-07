@@ -52,7 +52,7 @@ public class CroupierController {
 		String view="croupiers/listCroupier";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("croupier", croupier);
-			return "croupiers/editCroupier";
+			return "croupiers/addCroupier";
 			
 		}else {
 			if (validator.getCroupierwithIdDifferent(croupier.getDni(), null)) {

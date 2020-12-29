@@ -52,7 +52,7 @@ public class ChefController {
 		String view="chefs/listChef";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("chef", chef);
-			return "chefs/editChef";
+			return "chefs/addChef";
 			
 		}else {
 			if (validator.getChefwithIdDifferent(chef.getDni(), null)) {

@@ -52,7 +52,7 @@ public class CookController {
 		String view="cooks/listCook";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("cook", cook);
-			return "cooks/editCook";
+			return "cooks/addCook";
 			
 		}else {
 			if (validator.getCookwithIdDifferent(cook.getDni(), null)) {

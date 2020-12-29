@@ -52,7 +52,7 @@ public class WaiterController {
 		String view="waiters/listWaiter";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("waiter", waiter);
-			return "waiters/editWaiter";
+			return "waiters/addWaiter";
 			
 		}else {
 			if (validator.getWaiterwithIdDifferent(waiter.getDni(), null)) {

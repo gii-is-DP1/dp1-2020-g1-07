@@ -52,7 +52,7 @@ public class MaintenanceWorkerController {
 		String view="maintenanceWorkers/listMaintenanceWorker";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("maintenanceWorker", maintenanceWorker);
-			return "maintenanceWorkers/editMaintenanceWorker";
+			return "maintenanceWorkers/addMaintenanceWorker";
 			
 		}else {
 			if (validator.getMaintenanceWorkerwithIdDifferent(maintenanceWorker.getDni(), null)) {

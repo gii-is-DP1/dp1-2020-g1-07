@@ -52,7 +52,7 @@ public class ArtistController {
 		String view="artists/listArtist";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("artist", artist);
-			return "artists/editArtist";
+			return "artists/addArtist";
 			
 		}else {
 			if (validator.getArtistwithIdDifferent(artist.getDni(), null)) {

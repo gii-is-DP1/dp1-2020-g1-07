@@ -51,7 +51,7 @@ public class AdministratorController {
 		String view="administrators/listAdministrator";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("administrator", administrator);
-			return "administrators/editAdministrator";
+			return "administrators/addAdministrator";
 			
 		}else {
 			if (validator.getAdministratorwithIdDifferent(administrator.getDni(), null)) {
