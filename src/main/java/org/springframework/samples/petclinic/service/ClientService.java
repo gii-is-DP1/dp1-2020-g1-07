@@ -14,6 +14,10 @@ public class ClientService {
 	@Autowired
 	private  ClientRepository clientRepo;
 	
+	public ClientService(ClientRepository clientRepo) {
+		this.clientRepo = clientRepo;
+	}
+
 	@Transactional
 	public int clientCount() {
 		return (int)clientRepo.count();

@@ -1,15 +1,53 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.service.ClientService;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class ClientValidator implements Validator {
 	
 	private static final String REQUIRED = "required";
-
+	
+	@Autowired
+	private ClientService clientService;
+	
+	public Boolean getClientwithIdDifferent(String dni) {
+		dni = dni.toLowerCase();
+		Boolean result = false;
+		List<Client> clients = StreamSupport.stream(this.clientService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Client client : clients) {
+			String compDni = client.getDni();
+			compDni = compDni.toLowerCase();
+			if (compDni.equals(dni)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public Boolean getClientwithIdDifferent(String dni, Integer id) {
+		dni = dni.toLowerCase();
+		Boolean result = false;
+		List<Client> clients = StreamSupport.stream(this.clientService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Client client : clients) {
+			String compDni = client.getDni();
+			compDni = compDni.toLowerCase();
+			if (compDni.equals(dni) && client.getId()!=id) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 	@Override
 	public void validate(Object obj, Errors errors) {
 		Client client = (Client) obj;

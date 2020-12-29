@@ -25,9 +25,12 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
+	@Autowired
+	private ClientValidator clientValidator;
+
 	@InitBinder("client")
 	public void initClientBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new ClientValidator());
+		dataBinder.setValidator(clientValidator);
 	}
 	
 	@GetMapping()
@@ -53,6 +56,11 @@ public class ClientController {
 			return "clients/addClient";
 			
 		}else {
+			if(clientValidator.getClientwithIdDifferent(client.getDni())) {
+				result.rejectValue("dni", "dni.duplicate", "El dni esta repetido");
+				modelMap.addAttribute("client", client);
+				return "clients/addClient";
+			}
 			clientService.save(client);
 			modelMap.addAttribute("message", "Clients successfully saved!");
 			view=clientsList(modelMap);
@@ -92,6 +100,11 @@ public class ClientController {
 		}
 		else {
 			client.setId(clientId);
+			if(clientValidator.getClientwithIdDifferent(client.getDni(), client.getId())) {
+				result.rejectValue("dni", "dni.duplicate", "El dni esta repetido");
+				model.put("client", client);
+				return "clients/updateClient";
+			}
 			this.clientService.save(client);
 			return "redirect:/clients";
 		}
