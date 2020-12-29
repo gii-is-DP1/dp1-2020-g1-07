@@ -31,13 +31,18 @@
                 <td>
                     <c:out value="${croupier.phone_number}"/>
                 </td>
-                <td>
-                	<spring:url value="/croupiers/delete/{croupierId}" var="croupierUrl">
+               <td>
+                	<spring:url value="/croupiers/delete/{croupierId}" var="deleteUrl">
                         <spring:param name="croupierId" value="${croupier.id}"/>
                     </spring:url>
-                    
-                    <a href="${fn:escapeXml(croupierUrl)}">Delete</a>
-                </td> 
+                    <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
+                </td>
+                <td>
+                    <spring:url value="/croupiers/{croupierId}/edit" var="editUrl">
+                        <spring:param name="croupierId" value="${croupier.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

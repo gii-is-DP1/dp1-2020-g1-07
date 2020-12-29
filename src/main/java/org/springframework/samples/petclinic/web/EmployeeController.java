@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -29,7 +26,7 @@ public class EmployeeController {
 	private EmployeeValidator validator;
 	
 	@InitBinder("employee")
-	public void initClientGainBinder(WebDataBinder dataBinder) {
+	public void initEmployeeBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(validator);
 	}
 	
@@ -56,7 +53,11 @@ public class EmployeeController {
 			return "employees/addEmployee";
 			
 		}else {
-			
+			if (validator.getEmployeewithIdDifferent(employee.getDni(), null)) {
+				result.rejectValue("dni", "dni.duplicate", "Employee with dni" + employee.getDni() + "already in database");
+				modelMap.addAttribute("employee", employee);
+				return "employees/addEmployee";
+			}
 			employeeService.save(employee);
 			
 			modelMap.addAttribute("message", "Employee successfully saved!");
@@ -96,6 +97,11 @@ public class EmployeeController {
             return "employees/updateEmployee";
         }
         else {
+        	if (validator.getEmployeewithIdDifferent(employee.getDni(), employee.getId())) {
+				result.rejectValue("dni", "dni.duplicate", "Employee with dni" + employee.getDni() + "already in database");
+				model.addAttribute("employee", employee);
+				return "employees/updateEmployee";
+			}
         	employee.setId(employeeId);
             this.employeeService.save(employee);
             return "redirect:/employees";

@@ -32,12 +32,17 @@
                     <c:out value="${chef.phone_number}"/>
                 </td>
                 <td>
-                	<spring:url value="/chefs/delete/{chefId}" var="chefUrl">
+                	<spring:url value="/chefs/delete/{chefId}" var="deleteUrl">
                         <spring:param name="chefId" value="${chef.id}"/>
                     </spring:url>
-                    
-                    <a href="${fn:escapeXml(chefUrl)}">Delete</a>
-                </td> 
+                    <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
+                </td>
+                <td>
+                    <spring:url value="/chefs/{chefId}/edit" var="editUrl">
+                        <spring:param name="chefId" value="${chef.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(editUrl)}">Update</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CroupierService {
+
+	private  CroupierRepository croupierRep;
+	
 	@Autowired
-	private  CroupierRepository croupierRep; 
+	public CroupierService(CroupierRepository croupierRep) {
+		this.croupierRep = croupierRep;
+	}
 	
 	@Transactional
 	public int croupierCount() {

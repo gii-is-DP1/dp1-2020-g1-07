@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MaintenanceWorkerService {
+	
+	private  MaintenanceWorkerRepository maintenanceWorkerRep;
+	
 	@Autowired
-	private  MaintenanceWorkerRepository maintenanceWorkerRep; 
+	public MaintenanceWorkerService(MaintenanceWorkerRepository maintenanceWorkerRep) {
+		this.maintenanceWorkerRep = maintenanceWorkerRep;
+	}
 	
 	@Transactional
 	public int maintenanceWorkerCount() {

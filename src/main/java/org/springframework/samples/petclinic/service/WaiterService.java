@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WaiterService {
+	
+	private  WaiterRepository waiterRep;
+	
 	@Autowired
-	private  WaiterRepository waiterRep; 
+	public WaiterService(WaiterRepository waiterRep) {
+		this.waiterRep = waiterRep;
+	}
 	
 	@Transactional
 	public int waiterCount() {

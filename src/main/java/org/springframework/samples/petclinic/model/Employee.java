@@ -7,16 +7,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="employees")
 
-public class Employee extends BaseEntity{
+public class Employee extends NamedEntity{
 
 	@NotEmpty
 	@Pattern(regexp="^[0-9]{8}[A-Z]$",message="DNI must contain 8 digits and a single capital letter")  
