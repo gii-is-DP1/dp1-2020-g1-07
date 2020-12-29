@@ -10,7 +10,9 @@ import org.springframework.samples.petclinic.service.AdministratorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/administrators")
 public class AdministratorController {
+	
 	@Autowired
 	private AdministratorService administratorService;
 	
+	@Autowired
+	private AdministratorValidator validator;
+	
+	@InitBinder("administrator")
+	public void initAdministratorBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(validator);
+	}
 	@GetMapping()
 	public String listAdministrators(ModelMap modelMap) {
 		String view= "administrators/listAdministrator";
@@ -44,7 +54,11 @@ public class AdministratorController {
 			return "administrators/editAdministrator";
 			
 		}else {
-			
+			if (validator.getAdministratorwithIdDifferent(administrator.getDni(), null)) {
+				result.rejectValue("dni", "dni.duplicate", "Administrator with dni" + administrator.getDni() + "already in database");
+				modelMap.addAttribute("administrator", administrator);
+				return "administrators/addAdministrator";
+			}
 			administratorService.save(administrator);
 			
 			modelMap.addAttribute("message", "Administrator successfully saved!");
@@ -67,4 +81,30 @@ public class AdministratorController {
 		}
 		return view;
 	}
+	
+	@GetMapping(value = "/{administratorId}/edit")
+    public String initUpdateAdministratorForm(@PathVariable("administratorId") int administratorId, ModelMap model) {
+		Administrator administrator = administratorService.findAdministratorById(administratorId).get();
+        model.put("administrator", administrator);
+        return "administrators/updateAdministrator";
+    }
+
+    @PostMapping(value = "/{administratorId}/edit")
+    public String processUpdateAdministratorForm(@Valid Administrator administrator, BindingResult result,
+            @PathVariable("administratorId") int administratorId, ModelMap model) {
+        if (result.hasErrors()) {
+            model.put("administrator", administrator);
+            return "administrators/updateAdministrator";
+        }
+        else {
+        	if (validator.getAdministratorwithIdDifferent(administrator.getDni(), administrator.getId())) {
+				result.rejectValue("dni", "dni.duplicate", "Administrator with dni" + administrator.getDni() + "already in database");
+				model.addAttribute("administrator", administrator);
+				return "administrators/updateAdministrator";
+			}
+        	administrator.setId(administratorId);
+            this.administratorService.save(administrator);
+            return "redirect:/administrators";
+        }
+    }
 }

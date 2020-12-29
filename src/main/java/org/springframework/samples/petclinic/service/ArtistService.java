@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ArtistService {
+
+	private  ArtistRepository artistRep;
+	
 	@Autowired
-	private  ArtistRepository artistRep; 
+	public ArtistService(ArtistRepository artistRep) {
+		this.artistRep = artistRep;
+	}
 	
 	@Transactional
 	public int artistCount() {

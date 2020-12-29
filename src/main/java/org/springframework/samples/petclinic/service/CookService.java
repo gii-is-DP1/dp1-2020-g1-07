@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CookService {
+	
+	private  CookRepository cookRep;
+	
 	@Autowired
-	private  CookRepository cookRep; 
+	public CookService(CookRepository cookRep) {
+		this.cookRep = cookRep;
+	}
 	
 	@Transactional
 	public int cookCount() {

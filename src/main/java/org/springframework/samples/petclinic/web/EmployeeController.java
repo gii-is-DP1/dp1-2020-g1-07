@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -29,7 +26,7 @@ public class EmployeeController {
 	private EmployeeValidator validator;
 	
 	@InitBinder("employee")
-	public void initClientGainBinder(WebDataBinder dataBinder) {
+	public void initEmployeeBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(validator);
 	}
 	

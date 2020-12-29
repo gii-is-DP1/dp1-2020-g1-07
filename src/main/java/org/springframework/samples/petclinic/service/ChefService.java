@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChefService {
+
+	private  ChefRepository chefRep;
+	
 	@Autowired
-	private  ChefRepository chefRep; 
+	public ChefService(ChefRepository chefRep) {
+		this.chefRep = chefRep;
+	}
 	
 	@Transactional
 	public int chefCount() {

@@ -10,7 +10,9 @@ import org.springframework.samples.petclinic.service.CroupierService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/croupiers")
 public class CroupierController {
+	
 	@Autowired
 	private CroupierService croupierService;
+	
+	@Autowired
+	private CroupierValidator validator;
+	
+	@InitBinder("croupier")
+	public void initCroupierBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(validator);
+	}
 	
 	@GetMapping()
 	public String listCroupiers(ModelMap modelMap) {
@@ -44,7 +55,11 @@ public class CroupierController {
 			return "croupiers/editCroupier";
 			
 		}else {
-			
+			if (validator.getCroupierwithIdDifferent(croupier.getDni(), null)) {
+				result.rejectValue("dni", "dni.duplicate", "Croupier with dni" + croupier.getDni() + "already in database");
+				modelMap.addAttribute("croupier", croupier);
+				return "croupiers/addCroupier";
+			}
 			croupierService.save(croupier);
 			
 			modelMap.addAttribute("message", "Croupier successfully saved!");
@@ -67,4 +82,30 @@ public class CroupierController {
 		}
 		return view;
 	}
+	
+	@GetMapping(value = "/{croupierId}/edit")
+    public String initUpdateCroupierForm(@PathVariable("croupierId") int croupierId, ModelMap model) {
+		Croupier croupier = croupierService.findCroupierById(croupierId).get();
+        model.put("croupier", croupier);
+        return "croupiers/updateCroupier";
+    }
+
+    @PostMapping(value = "/{croupierId}/edit")
+    public String processUpdateCroupierForm(@Valid Croupier croupier, BindingResult result,
+            @PathVariable("croupierId") int croupierId, ModelMap model) {
+        if (result.hasErrors()) {
+            model.put("croupier", croupier);
+            return "croupiers/updateCroupier";
+        }
+        else {
+        	if (validator.getCroupierwithIdDifferent(croupier.getDni(), croupier.getId())) {
+				result.rejectValue("dni", "dni.duplicate", "Croupier with dni" + croupier.getDni() + "already in database");
+				model.addAttribute("croupier", croupier);
+				return "croupiers/updateCroupier";
+			}
+        	croupier.setId(croupierId);
+            this.croupierService.save(croupier);
+            return "redirect:/croupiers";
+        }
+    }
 }

@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdministratorService {
+	
+	private  AdministratorRepository administratorRep;
+	
 	@Autowired
-	private  AdministratorRepository administratorRep; 
+	public AdministratorService(AdministratorRepository administratorRep) {
+		this.administratorRep = administratorRep;
+	}
 	
 	@Transactional
 	public int AdministratorCount() {
