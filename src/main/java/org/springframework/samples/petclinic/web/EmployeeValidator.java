@@ -20,25 +20,14 @@ public class EmployeeValidator implements Validator{
 	@Autowired
 	private EmployeeService employeeService;
 	
-	public Employee getEmployeewithIdDifferent(String dni, Integer id) {
-		Optional<Employee> res = StreamSupport.stream(this.employeeService.findAll().spliterator(), false)
-				.filter(x -> x.getDni().equals(dni) && id != null && !x.getId().equals(id))
-				.findAny();
-		if (res.isPresent())
-			return res.get();
+	public boolean getEmployeewithIdDifferent(String dni, Integer id) {
+		if (StreamSupport.stream(this.employeeService.findAll().spliterator(), false)
+				.filter(x -> (x.getDni().equals(dni) && id == null) || 
+						(x.getDni().equals(dni) && id != null && !x.getId().equals(id)))
+				.findAny().isPresent())
+			return true;
 		else
-			return null;
-		
-		/*
-		List<Employee> employees = StreamSupport.stream(this.employeeService.findAll().spliterator(), false).collect(Collectors.toList());
-		for (Employee e : employees) {
-			String compDni = e.getName();
-			if (compDni.equals(dni)) {
-				return e;
-			}
-		}
-		return null;
-		*/
+			return false;
 	}
 	
 	@Override

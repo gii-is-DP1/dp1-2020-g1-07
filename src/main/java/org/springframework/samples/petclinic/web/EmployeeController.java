@@ -56,7 +56,7 @@ public class EmployeeController {
 			return "employees/addEmployee";
 			
 		}else {
-			if (validator.getEmployeewithIdDifferent(employee.getDni(), null) != null) {
+			if (validator.getEmployeewithIdDifferent(employee.getDni(), null)) {
 				result.rejectValue("dni", "dni.duplicate", "Employee with dni" + employee.getDni() + "already in database");
 				modelMap.addAttribute("employee", employee);
 				return "employees/addEmployee";
@@ -100,7 +100,7 @@ public class EmployeeController {
             return "employees/updateEmployee";
         }
         else {
-        	if (validator.getEmployeewithIdDifferent(employee.getDni(), employee.getId()) != null) {
+        	if (validator.getEmployeewithIdDifferent(employee.getDni(), employee.getId())) {
 				result.rejectValue("dni", "dni.duplicate", "Employee with dni" + employee.getDni() + "already in database");
 				model.addAttribute("employee", employee);
 				return "employees/updateEmployee";
