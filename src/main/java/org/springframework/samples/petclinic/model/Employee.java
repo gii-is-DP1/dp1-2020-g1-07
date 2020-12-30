@@ -30,6 +30,10 @@ public class Employee extends NamedEntity{
 	@Column(name = "phone_number")
 	private String phone_number;
 	
+	public String toString() {
+		return this.getDni() + " - " + this.getId();
+	}
+		
 }
 
 

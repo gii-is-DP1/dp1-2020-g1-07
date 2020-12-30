@@ -159,13 +159,13 @@ public class ClientGainController {
     @PostMapping(value = "/{cgainId}/edit")
     public String processUpdateClientGainForm(@Valid ClientGain clientgain, BindingResult result,
             @PathVariable("cgainId") int cgainId, ModelMap model) {
+    	clientgain.setId(cgainId);
         if (result.hasErrors()) {
         	log.error("Found errors on update: " + result.getAllErrors());
             model.put("cgain", clientgain);
             return "cgains/updateClientGain";
         }
         else {
-        	clientgain.setId(cgainId);
             this.cgainService.save(clientgain);
             return "redirect:/cgains";
         }

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -92,6 +95,7 @@ public class EmployeeController {
     @PostMapping(value = "/{employeeId}/edit")
     public String processUpdateEmployeeForm(@Valid Employee employee, BindingResult result,
             @PathVariable("employeeId") int employeeId, ModelMap model) {
+    	employee.setId(employeeId);
         if (result.hasErrors()) {
             model.put("employee", employee);
             return "employees/updateEmployee";
@@ -102,7 +106,6 @@ public class EmployeeController {
 				model.addAttribute("employee", employee);
 				return "employees/updateEmployee";
 			}
-        	employee.setId(employeeId);
             this.employeeService.save(employee);
             return "redirect:/employees";
         }

@@ -93,6 +93,7 @@ public class CroupierController {
     @PostMapping(value = "/{croupierId}/edit")
     public String processUpdateCroupierForm(@Valid Croupier croupier, BindingResult result,
             @PathVariable("croupierId") int croupierId, ModelMap model) {
+    	croupier.setId(croupierId);
         if (result.hasErrors()) {
             model.put("croupier", croupier);
             return "croupiers/updateCroupier";
@@ -103,7 +104,6 @@ public class CroupierController {
 				model.addAttribute("croupier", croupier);
 				return "croupiers/updateCroupier";
 			}
-        	croupier.setId(croupierId);
             this.croupierService.save(croupier);
             return "redirect:/croupiers";
         }
