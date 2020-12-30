@@ -168,12 +168,12 @@ public class MenuController {
 	@PostMapping(value = "/{menuId}/edit")
 	public String processUpdateCasTbForm(@Valid Menu menu, BindingResult result,
 			@PathVariable("menuId") int menuId, ModelMap model) {
+		menu.setId(menuId);
 		if (result.hasErrors()) {
 			model.put("menu", menu);
 			return "menus/updateMenu";
 		}
 		else {
-			menu.setId(menuId);
 			if(menuValidator.getMenuwithIdDifferent(menu.getShift() ,menu.getDate(), menu.getId())) {
 				result.rejectValue("date", "date.duplicate", "Ya existe un menu para esa fecha y turno");
 				model.put("menu", menu);

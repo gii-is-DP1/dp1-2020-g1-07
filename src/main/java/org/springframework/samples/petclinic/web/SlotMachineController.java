@@ -96,12 +96,12 @@ public class SlotMachineController {
 	@PostMapping(value = "/{slotMachineId}/edit")
 	public String processUpdateCasTbForm(@Valid SlotMachine slotMachine, BindingResult result,
 			@PathVariable("slotMachineId") int slotMachineId, ModelMap model) {
+		slotMachine.setId(slotMachineId);
 		if (result.hasErrors()) {
 			model.put("slotMachine", slotMachine);
 			return "slotmachines/updateSlotMachine";
 		}
 		else {
-			slotMachine.setId(slotMachineId);
 			this.slotMachineService.save(slotMachine);
 			return "redirect:/slotmachines";
 		}

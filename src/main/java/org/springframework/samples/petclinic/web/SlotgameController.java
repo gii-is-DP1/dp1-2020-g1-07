@@ -93,12 +93,12 @@ public class SlotgameController {
 	@PostMapping(value = "/{slotgameId}/edit")
 	public String processUpdateCasTbForm(@Valid Slotgame slotgame, BindingResult result,
 			@PathVariable("slotgameId") int slotgameId, ModelMap model) {
+		slotgame.setId(slotgameId);
 		if (result.hasErrors()) {
 			model.put("slotgame", slotgame);
 			return "slotgames/updateSlotgame";
 		}
 		else {
-			slotgame.setId(slotgameId);
 			if(slotgameValidator.getSlotgamewithIdDifferent(slotgame.getName(), slotgame.getId())) {
 				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
 				model.put("slotgame", slotgame);

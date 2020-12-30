@@ -106,12 +106,12 @@ public class DishController {
 	@PostMapping(value = "/{dishId}/edit")
 	public String processUpdateCasTbForm(@Valid Dish dish, BindingResult result,
 			@PathVariable("dishId") int dishId, ModelMap model) {
+		dish.setId(dishId);
 		if (result.hasErrors()) {
 			model.put("dish", dish);
 			return "dishes/updateDish";
 		}
 		else {
-			dish.setId(dishId);
 			if(dishValidator.getDishwithIdDifferent(dish.getName(), dish.getId())) {
 				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
 				model.put("dish", dish);
