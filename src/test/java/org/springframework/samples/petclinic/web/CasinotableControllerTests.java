@@ -37,8 +37,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 
-@WebMvcTest(controllers= DishController.class,
-includeFilters= {@ComponentScan.Filter(value = GameTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
+@WebMvcTest(controllers= CasinotableController.class,
+includeFilters= {@ComponentScan.Filter(value = GameTypeFormatter2.class, type = FilterType.ASSIGNABLE_TYPE ),
+				@ComponentScan.Filter(value = GameFormatter.class, type = FilterType.ASSIGNABLE_TYPE), 
 				@ComponentScan.Filter(value = SkillFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
 				@ComponentScan.Filter(value = CasinotableValidator.class, type = FilterType.ASSIGNABLE_TYPE )},
 excludeFilters= @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
@@ -73,7 +74,7 @@ public class CasinotableControllerTests {
 		gametype2.setName("Cards");
 		GameType gametype3 = new GameType();
 		gametype3.setId(3);
-		gametype.setName("Dices");
+		gametype3.setName("Dices");
 		List<GameType> gametypes = new ArrayList<GameType>();
 		gametypes.add(gametype);
 		gametypes.add(gametype2);
@@ -170,83 +171,74 @@ public class CasinotableControllerTests {
 		casinotables.add(casinotable4);
 		casinotables.add(casinotable5);
 		given(this.casinotableService.findAll()).willReturn(casinotables);
-		
+		given(this.casinotableService.findCasinotableById(1)).willReturn(Optional.of(casinotable));
 	}
 	
 	@WithMockUser(value = "spring")
+	@Test
 	void testInitCreationForm() throws Exception{
 		mockMvc.perform(get("/casinotables/new")).andExpect(status().isOk()).andExpect(model().attributeExists("casinotable"))
 		.andExpect(view().name("casinotables/addCasinotable"));
 	}
-	
+
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/casinotables/save").param("game", "Poker")
 						.with(csrf())
-						.param("GameType", "Cards")
-						.param("Skill", "Amateur"))
+						.param("gametype", "Cards")
+						.param("skill", "Amateur"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(view().name("casinotables/listCasinotable"));
 	}
 	
-	@WithMockUser(value = "spring")
-    @Test
-    void testProcessCreationFormRepeatedName() throws Exception {
-		mockMvc.perform(post("/casinotables/save").param("game", "Poker")
-						.with(csrf())
-						.param("GameType", "Cards")
-						.param("Skill", "Amateur"))
-			.andExpect(status().is2xxSuccessful())
-			.andExpect(model().attributeHasErrors("game"))
-			.andExpect(model().attributeHasFieldErrors("casinotable", "game"))
-			.andExpect(view().name("casinotables/addCasinotable"));
-	}
+	
 	
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/casinotables/save").param("game", "Poker")
 						.with(csrf())
-						.param("Skill", "Amateur"))
+						.param("skill", "Amateur"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("casinotable"))
-			.andExpect(model().attributeHasFieldErrors("casinotable", "GameType"))
+			.andExpect(model().attributeHasFieldErrors("casinotable", "gametype"))
 			.andExpect(view().name("casinotables/addCasinotable"));
 	}
 	
 	@WithMockUser(value = "spring")
 	@Test
-	void testInitUpdateDishForm() throws Exception {
+	void testInitUpdateCasinotableForm() throws Exception {
 		mockMvc.perform(get("/casinotables/{casinotableId}/edit", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("casinotable"))
-				.andExpect(model().attribute("casinotable", hasProperty("game", is("Poker"))))
-				.andExpect(model().attribute("casinotable", hasProperty("GameType", is(casinotableService.findGameTypes().toArray()[1]))))
-				.andExpect(model().attribute("casinotable", hasProperty("Skill", is(casinotableService.findSkills().toArray()[1]))))
+				.andExpect(model().attribute("casinotable", hasProperty("game", is(casinotableService.findCasinotableById(1).get().getGame()))))
+				.andExpect(model().attribute("casinotable", hasProperty("gametype", is(casinotableService.findGameTypes().toArray()[1]))))
+				.andExpect(model().attribute("casinotable", hasProperty("skill", is(casinotableService.findSkills().toArray()[1]))))
 				.andExpect(view().name("casinotables/updateCasinotable"));
 	}
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessUpdateDishFormSuccess() throws Exception {
+	void testProcessUpdateCasinotableFormSuccess() throws Exception {
 		mockMvc.perform(post("/casinotables/{casinotableId}/edit", 1)
 							.with(csrf())
 							.param("game", "BlackJack")
-							.param("GameType", "Cards")
-							.param("Skill", "Proffesional"))
+							.param("gametype", "Cards")
+							.param("skill", "Proffesional"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/casinotables"));
 	}
+	
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessUpdateDishFormHasErrors() throws Exception {
+	void testProcessUpdateCasinotableFormHasErrors() throws Exception {
 		mockMvc.perform(post("/casinotables/{casinotableId}/edit", 1).param("game", "")
 							.with(csrf())
-							.param("GameType", "Cards"))
+							.param("gametype", "Cards"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("casinotable"))
 				.andExpect(model().attributeHasFieldErrors("casinotable", "game"))
-				.andExpect(model().attributeHasFieldErrors("casinotable", "Skill"))
-				.andExpect(view().name("dishes/updateCasinotable"));
+				.andExpect(model().attributeHasFieldErrors("casinotable", "skill"))
+				.andExpect(view().name("casinotables/updateCasinotable"));
 	}
 	
 }
