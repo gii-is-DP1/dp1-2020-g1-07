@@ -93,6 +93,7 @@ public class WaiterController {
     @PostMapping(value = "/{waiterId}/edit")
     public String processUpdateWaiterForm(@Valid Waiter waiter, BindingResult result,
             @PathVariable("waiterId") int waiterId, ModelMap model) {
+    	waiter.setId(waiterId);
         if (result.hasErrors()) {
             model.put("waiter", waiter);
             return "waiters/updateWaiter";
@@ -103,7 +104,7 @@ public class WaiterController {
 				model.addAttribute("waiter", waiter);
 				return "waiters/updateWaiter";
 			}
-        	waiter.setId(waiterId);
+        	
             this.waiterService.save(waiter);
             return "redirect:/waiters";
         }

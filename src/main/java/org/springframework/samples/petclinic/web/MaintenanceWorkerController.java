@@ -93,6 +93,7 @@ public class MaintenanceWorkerController {
     @PostMapping(value = "/{maintenanceWorkerId}/edit")
     public String processUpdateMaintenanceWorkerForm(@Valid MaintenanceWorker maintenanceWorker, BindingResult result,
             @PathVariable("maintenanceWorkerId") int maintenanceWorkerId, ModelMap model) {
+    	maintenanceWorker.setId(maintenanceWorkerId);
         if (result.hasErrors()) {
             model.put("maintenanceWorker", maintenanceWorker);
             return "maintenanceWorkers/updateMaintenanceWorker";
@@ -103,7 +104,6 @@ public class MaintenanceWorkerController {
 				model.addAttribute("maintenanceWorker", maintenanceWorker);
 				return "maintenanceWorkers/updateMaintenanceWorker";
 			}
-        	maintenanceWorker.setId(maintenanceWorkerId);
             this.mworkerService.save(maintenanceWorker);
             return "redirect:/maintenanceWorkers";
         }

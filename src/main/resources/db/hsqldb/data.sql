@@ -37,16 +37,16 @@ INSERT INTO SHOWTYPES VALUES(3, 'Magic');
 
 INSERT INTO CASINOTABLE VALUES(1,'Mesa 1',1,2,1);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678A','Manuel Rodríguez','987654321');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432Z','Rosa García','123456789');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (3,'30987456M','Jorge Martín','567891234');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678A','Manuel Rodriguez','987654321');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432Z','Rosa Garcia','123456789');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (3,'30987456M','Jorge Martin','567891234');
 INSERT INTO administrators(id) VALUES (1);
 INSERT INTO administrators(id) VALUES (2);
 INSERT INTO administrators(id) VALUES (3);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (4,'12345677A','Natalia Rodríguez','987654320');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (5,'98765431Z','Quique García','123456788');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (6,'30987455M','Luis Martín','567891233');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (4,'12345677A','Natalia Rodriguez','987654320');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (5,'98765431Z','Quique Garcia','123456788');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (6,'30987455M','Luis Martin','567891233');
 INSERT INTO artists(id) VALUES (4);
 INSERT INTO artists(id) VALUES (5);
 INSERT INTO artists(id) VALUES (6);
@@ -56,9 +56,9 @@ INSERT INTO EVENTS (id,name,date,showtype_id,artist_id)VALUES(2,'Hamlet','2020-0
 
 INSERT INTO STAGE (id, capacity, event_id) VALUES(1,40,1);
 INSERT INTO STAGE(id, capacity, event_id) VALUES(2,40,2);
-INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Ofelia Rodríguez','987654319');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raúl García','123456787');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (9,'30987454M','María Martín','567891232');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Ofelia Rodriguez','987654319');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (9,'30987454M','Maria Martin','567891232');
 INSERT INTO administrators(id) VALUES (7);
 INSERT INTO administrators(id) VALUES (8);
 INSERT INTO administrators(id) VALUES (9);
@@ -66,36 +66,36 @@ INSERT INTO chefs(id) VALUES (7);
 INSERT INTO chefs(id) VALUES (8);
 INSERT INTO chefs(id) VALUES (9);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (10,'12345675A','Paula Rodríguez','987654318');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (11,'98765420Z','Sergio García','123456786');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (12,'30987453M','Carlos Martín','567891231');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (10,'12345675A','Paula Rodriguez','987654318');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (11,'98765420Z','Sergio Garcia','123456786');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (12,'30987453M','Carlos Martin','567891231');
 INSERT INTO cooks(id) VALUES (10);
 INSERT INTO cooks(id) VALUES (11);
 INSERT INTO cooks(id) VALUES (12);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (13,'12345674A','Rafael Rodríguez','987654317');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (14,'98765419Z','Tamara García','123456785');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (15,'30987452M','Diana Martín','567891230');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (13,'12345674A','Rafael Rodriguez','987654317');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (14,'98765419Z','Tamara Garcia','123456785');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (15,'30987452M','Diana Martin','567891230');
 INSERT INTO croupiers(id) VALUES (13);
 INSERT INTO croupiers(id) VALUES (14);
 INSERT INTO croupiers(id) VALUES (15);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (16,'12345673A','Silvia Rodríguez','987654316');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (17,'98765418Z','Víctor García','123456784');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (18,'30987451M','Emilio Martín','567891229');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (16,'12345673A','Silvia Rodriguez','987654316');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (17,'98765418Z','Victor Garcia','123456784');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (18,'30987451M','Emilio Martin','567891229');
 INSERT INTO maintenance_workers(id) VALUES (16);
 INSERT INTO maintenance_workers(id) VALUES (17);
 INSERT INTO maintenance_workers(id) VALUES (18);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (19,'12345672A','Laura Rodríguez','987654315');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (20,'98765417Z','Ignacio García','123456783');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (21,'30987450M','Fernando Martín','567891228');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (19,'12345672A','Laura Rodriguez','987654315');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (20,'98765417Z','Ignacio Garcia','123456783');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (21,'30987450M','Fernando Martin','567891228');
 INSERT INTO waiters(id) VALUES (19);
 INSERT INTO waiters(id) VALUES (20);
 INSERT INTO waiters(id) VALUES (21);
 
 INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'11111111A', 'Ofelia Bustos','444444444');
-INSERT INTO clients(id,dni,name,phone_number) VALUES (2,'22222222B', 'Federico González','555555555');
+INSERT INTO clients(id,dni,name,phone_number) VALUES (2,'22222222B', 'Federico Gonzalez','555555555');
 INSERT INTO clients(id,dni,name,phone_number) VALUES (3,'33333333C', 'Aurelio Pino','666666666');
 
 INSERT INTO client_gains(id,amount,date,client_id,game_id) VALUES (1,350,'2020-09-07',1,1);

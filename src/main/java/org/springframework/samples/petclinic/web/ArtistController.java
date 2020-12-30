@@ -93,6 +93,7 @@ public class ArtistController {
     @PostMapping(value = "/{artistId}/edit")
     public String processUpdateArtistForm(@Valid Artist artist, BindingResult result,
             @PathVariable("artistId") int artistId, ModelMap model) {
+    	artist.setId(artistId);
         if (result.hasErrors()) {
             model.put("artist", artist);
             return "artists/updateArtist";
@@ -103,7 +104,6 @@ public class ArtistController {
 				model.addAttribute("artist", artist);
 				return "artists/updateArtist";
 			}
-        	artist.setId(artistId);
             this.artistService.save(artist);
             return "redirect:/artists";
         }

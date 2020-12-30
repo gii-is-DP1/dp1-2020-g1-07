@@ -92,6 +92,7 @@ public class AdministratorController {
     @PostMapping(value = "/{administratorId}/edit")
     public String processUpdateAdministratorForm(@Valid Administrator administrator, BindingResult result,
             @PathVariable("administratorId") int administratorId, ModelMap model) {
+    	administrator.setId(administratorId);
         if (result.hasErrors()) {
             model.put("administrator", administrator);
             return "administrators/updateAdministrator";
@@ -102,7 +103,6 @@ public class AdministratorController {
 				model.addAttribute("administrator", administrator);
 				return "administrators/updateAdministrator";
 			}
-        	administrator.setId(administratorId);
             this.administratorService.save(administrator);
             return "redirect:/administrators";
         }

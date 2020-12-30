@@ -93,6 +93,7 @@ public class CookController {
     @PostMapping(value = "/{cookId}/edit")
     public String processUpdateCookForm(@Valid Cook cook, BindingResult result,
             @PathVariable("cookId") int cookId, ModelMap model) {
+    	cook.setId(cookId);
         if (result.hasErrors()) {
             model.put("cook", cook);
             return "cooks/updateCook";
@@ -103,7 +104,6 @@ public class CookController {
 				model.addAttribute("cook", cook);
 				return "cooks/updateCook";
 			}
-        	cook.setId(cookId);
             this.cookService.save(cook);
             return "redirect:/cooks";
         }
