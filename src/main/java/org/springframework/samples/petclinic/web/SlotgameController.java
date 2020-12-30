@@ -72,9 +72,14 @@ public class SlotgameController {
 		String view="slotgames/slotgamesList";
 		Optional<Slotgame> slotgame = slotgameService.findSlotgameById(slotgameId);
 		if(slotgame.isPresent()) {
-			slotgameService.delete(slotgame.get());
-			modelMap.addAttribute("message", "SlotGame successfully deleted!");
-			view=slotgamesList(modelMap);
+			if(slotgameValidator.isUsedInSlotMachine(slotgame)) {
+				modelMap.addAttribute("message", "This game can't be deleted, is in one of the slots!");
+				view=slotgamesList(modelMap);
+			}else {
+				slotgameService.delete(slotgame.get());
+				modelMap.addAttribute("message", "SlotGame successfully deleted!");
+				view=slotgamesList(modelMap);
+			}
 		}else {
 			modelMap.addAttribute("message", "SlotGame not found!");
 			view=slotgamesList(modelMap);

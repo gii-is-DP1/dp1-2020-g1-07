@@ -8,8 +8,11 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
+import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.service.DishService;
+import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -21,6 +24,9 @@ public class DishValidator implements Validator {
 
 	@Autowired
 	private DishService dishService;	
+	
+	@Autowired
+	private MenuService menuService;
 	
 	//For creating
 		public boolean getDishwithIdDifferent(String name) {
@@ -50,6 +56,19 @@ public class DishValidator implements Validator {
 				result = true;
 				break;
 			}
+		}
+		return result;
+	}
+	
+	public boolean isUsedInMenu(Dish dish) {
+		boolean result = false;
+		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
+		for(Menu menu: menus) {
+			String dishName = dish.getName();
+			String FD = menu.getFirst_dish().getName();
+			String SD = menu.getSecond_dish().getName();
+			String D = menu.getDessert().getName();
+			if(dishName.equals(FD) || dishName.equals(SD) || dishName.equals(D)) result = true;
 		}
 		return result;
 	}

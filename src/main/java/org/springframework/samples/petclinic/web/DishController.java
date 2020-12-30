@@ -85,9 +85,15 @@ public class DishController {
 		String view="dishes/dishesList";
 		Optional<Dish> dish = dishService.findDishById(dishId);
 		if(dish.isPresent()) {
-			dishService.delete(dish.get());
-			modelMap.addAttribute("message", "Dish successfully deleted!");
-			view=dishesList(modelMap);
+			if(dishValidator.isUsedInMenu(dish.get())) {
+				modelMap.addAttribute("message", "This dish can't be deleted, is in one of the menus!");
+				view=dishesList(modelMap);
+			}else {
+				dishService.delete(dish.get());
+				modelMap.addAttribute("message", "Dish successfully deleted!");
+				view=dishesList(modelMap);
+			}
+			
 		}else {
 			modelMap.addAttribute("message", "Dish not found!");
 			view=dishesList(modelMap);

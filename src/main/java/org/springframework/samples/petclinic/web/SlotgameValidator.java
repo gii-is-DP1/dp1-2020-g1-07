@@ -1,12 +1,15 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Dish;
+import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
+import org.springframework.samples.petclinic.service.SlotMachineService;
 import org.springframework.samples.petclinic.service.SlotgameService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -19,6 +22,9 @@ public class SlotgameValidator implements Validator {
 
 	@Autowired
 	private SlotgameService slotgameService;
+	
+	@Autowired
+	private SlotMachineService slotMachineService;
 	
 	public Boolean getSlotgamewithIdDifferent(String name) {
 		name = name.toLowerCase();
@@ -44,6 +50,16 @@ public class SlotgameValidator implements Validator {
 			if (compName.equals(name) && slotgame.getId()!=id) {
 				result = true;
 			}
+		}
+		return result;
+	}
+	
+	public boolean isUsedInSlotMachine(Optional<Slotgame> slotgame) {
+		boolean result = false;
+		Slotgame SG = slotgame.get();
+		List<SlotMachine> slotmachines = StreamSupport.stream(this.slotMachineService.findAll().spliterator(), false).collect(Collectors.toList());
+		for(SlotMachine slotmachine: slotmachines) {
+			if(slotmachine.getSlotgame().getName().equals(SG.getName())) result = true;
 		}
 		return result;
 	}
