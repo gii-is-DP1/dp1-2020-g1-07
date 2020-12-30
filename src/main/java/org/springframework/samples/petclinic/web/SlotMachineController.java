@@ -8,11 +8,11 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.SlotGain;
 import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
 import org.springframework.samples.petclinic.model.Status;
+import org.springframework.samples.petclinic.service.SlotGainService;
 import org.springframework.samples.petclinic.service.SlotMachineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +31,9 @@ public class SlotMachineController {
 	
 	@Autowired
 	private SlotMachineService slotMachineService;
+	
+	@Autowired
+	private SlotGainService slotGainService;
 	
 	@Autowired
 	private SlotMachineValidator slotMachineValidator;
@@ -75,6 +78,13 @@ public class SlotMachineController {
 		String view="slotmachines/slotmachinesList";
 		Optional<SlotMachine> slotMachine = slotMachineService.findSlotMachineById(slotMachineId);
 		if(slotMachine.isPresent()) {
+			//Primero hay que borrar los registros asociados a la slotMachine
+			List<SlotGain> slotgains = new ArrayList<SlotGain>(slotMachineService.findGains());
+			for(SlotGain slotgain:slotgains) {
+				if(slotgain.getSlotMachine().getId()==slotMachineId) {
+					slotGainService.delete(slotgain);
+				}
+			}
 			slotMachineService.delete(slotMachine.get());
 			modelMap.addAttribute("message", "Slot Machine successfully deleted!");
 			view=slotMachinesList(modelMap);
