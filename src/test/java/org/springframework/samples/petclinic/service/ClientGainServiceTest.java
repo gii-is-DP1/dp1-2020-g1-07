@@ -110,7 +110,7 @@ public class ClientGainServiceTest {
     }
 	
 	@Test
-	void shouldFindClientGains() {
+	void findClientGainsTest() {
 		Iterator<ClientGain> it = this.cgainService.findAll().iterator();
 		ClientGain cg1 = it.next();
 		assertThat(cg1.getAmount().equals(350));
