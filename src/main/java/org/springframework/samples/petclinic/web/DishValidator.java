@@ -10,7 +10,6 @@ import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.service.DishService;
 import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.stereotype.Component;
