@@ -99,12 +99,13 @@ public class CasinotableController {
 	@PostMapping(value = "/{casinotableId}/edit")
 	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
 			@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		casinotable.setId(casinotableId);
 		if (result.hasErrors()) {
 			model.put("casinotable", casinotable);
 			return "casinotables/updateCasinotable";
 		}
 		else {
-			casinotable.setId(casinotableId);
+			
 			this.castableService.save(casinotable);
 			return "redirect:/casinotables";
 			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);

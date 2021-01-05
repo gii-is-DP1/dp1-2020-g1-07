@@ -14,7 +14,9 @@ import org.springframework.samples.petclinic.service.StageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,10 +28,15 @@ public class StageController {
 	
 	@Autowired
 	private StageService stageService;
-	
+	@Autowired
+	private StageValidator stageValidator;
+	@InitBinder("stage")
+	public void initMenuBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(stageValidator);
+	}
 	@GetMapping()
 	public String stagesListed(ModelMap modelMap) {
-		String view = "stages/listStage";
+		String view = "stages/listStages";
 		Iterable<Stage> stages=stageService.findAll();
 		modelMap.addAttribute("stages", stages);
 		return view;
@@ -44,16 +51,15 @@ public class StageController {
 	}
 	
 	@PostMapping(path="/save")
-	public String saveStage(@Valid Stage stage, BindingResult result, ModelMap modelMap) {
-		String view="stages/listStage";
+	public String saveStage(@Valid Stage stage, 
+			BindingResult result, ModelMap modelMap) {
+		String view="stages/listStages";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("stage", stage);
 			return "stages/addStage";
 			
 		}else {
-			
 			stageService.save(stage);
-			
 			modelMap.addAttribute("message", "Stage successfully saved!");
 			view=stagesListed(modelMap);
 		}

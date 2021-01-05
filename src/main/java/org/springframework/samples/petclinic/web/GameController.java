@@ -27,9 +27,12 @@ public class GameController {
 	@Autowired
 	private GameService gameService;
 	
+	@Autowired
+	private GameValidator gameValidator;
+	
 	@InitBinder("game")
 	public void initMenuBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new GameValidator());
+		dataBinder.setValidator(gameValidator);
 	}
 	
 	@GetMapping()
@@ -55,9 +58,12 @@ public class GameController {
 			return "games/addGame";
 			
 		}else {
-			
+			if(gameValidator.gameWithTheSameName(game.getName())){
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				modelMap.addAttribute("game", game);
+				return "games/addGame";
+			}
 			gameService.save(game);
-			
 			modelMap.addAttribute("message", "Game successfully saved!");
 			view=gamesList(modelMap);
 		}
@@ -69,9 +75,14 @@ public class GameController {
 		String view="games/listGame";
 		Optional<Game> game = gameService.findGameById(gameId);
 		if(game.isPresent()) {
+			if(gameValidator.isUsedInCasinotable(game.get())) {
+				modelMap.addAttribute("message", "This game can't be deleted, is in one of the casinotables!");
+				view=gamesList(modelMap);
+			}else {
 			gameService.delete(game.get());
 			modelMap.addAttribute("message", "Game successfully deleted!");
 			view=gamesList(modelMap);
+			}
 		}else {
 			modelMap.addAttribute("message", "Game not found!");
 			view=gamesList(modelMap);
@@ -94,20 +105,20 @@ public class GameController {
 	@PostMapping(value = "/{gameId}/edit")
 	public String processUpdategameForm(@Valid Game game, BindingResult result,
 			@PathVariable("gameId") int gameId, ModelMap model) {
+		game.setId(gameId);
 		if (result.hasErrors()) {
 			model.put("game", game);
 			return "games/updateGame";
 		}
 		else {
-			game.setId(gameId);
+			if(gameValidator.gameWithTheSameName_Update(game.getName(), gameId)){
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				model.addAttribute("game", game);
+				return "games/updateGame";
+			}
+			
 			this.gameService.save(game);
 			return "redirect:/games";
-			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
-			 Casinotable casinotableToUpdateGet = casinotableToUpdate.get();                                                                            
-	                                      
-	              this.castableService.save(casinotableToUpdateGet);                    
-	                    
-	            return "redirect:/casinotables/";*/
 		}
 	}
 }

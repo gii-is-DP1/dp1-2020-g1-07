@@ -79,6 +79,5 @@ public class CasinoTableServiceTest {
 		assertTrue(saved_ct.getGame().getMaxPlayers() == 6);
 		
 	}
-
 }
 
