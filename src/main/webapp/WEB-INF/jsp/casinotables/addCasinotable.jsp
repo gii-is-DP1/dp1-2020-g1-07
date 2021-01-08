@@ -3,8 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<link href="mdtimepicker.css" rel="stylesheet">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="mdtimepicker.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -38,13 +42,37 @@ $(document).ready(function(){
 
 
 <petclinic:layout pageName="casinotables">
+	<jsp:attribute name="customScript">               <!-- Preguntar a la profe (poner un formato de entrada mas cómodo, errores con el id) con jQuery-->
+		<script>
+			$(function () {
+			  $('#startTime').mdtimepicker();
+			});
 
+		</script>
+	</jsp:attribute>
+	<jsp:attribute name="customScript">
+		<script>
+			$(function () {
+			  $('#endingTime').mdtimepicker();
+			});
+
+		</script>
+	</jsp:attribute>
+	<jsp:attribute name="customScript">
+		<script>
+			$(function () {
+				$("#date").datepicker({dateFormat: 'yy/mm/dd'});
+			});
+		</script>
+	</jsp:attribute>
     <jsp:body>
         <h2>New table</h2>
-
-
         <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
             <div class="form-group has-feedback">
+           	    <petclinic:inputField label="Name" name="name"/>
+           	    <petclinic:inputField label="Date" name="date"/>
+            	<petclinic:inputField label="Start Time" name="startTime"/>
+            	<petclinic:inputField label="Ending Time" name="endingTime"/>
             	<div class="control-group">
                 	GameType <select id="comboboxGameType" name="gametype">
                 		<c:forEach var="gametype" items="${gametypes}">
@@ -58,9 +86,7 @@ $(document).ready(function(){
                 <div class="control-group">
                 	<petclinic:selectField label="Skill Level" name="skill" names="${skills}" size="1"/>
                 </div>
-
              </div>   
-
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="casinotableId" value="${casinotable.id}"/>

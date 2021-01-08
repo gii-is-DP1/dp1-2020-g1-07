@@ -36,7 +36,13 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
+	@Autowired
+	private ScheduleValidator scheduleValidator;
 	
+	@InitBinder("schedule")
+	public void initScheduleBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(scheduleValidator);
+	}
 	
 	@GetMapping()
 	public String listSchedules(ModelMap modelMap) {
@@ -96,9 +102,13 @@ public class ScheduleController {
 			return "schedules/addSchedule";
 			
 		}else {
+			if(scheduleValidator.getSchedulewithIdDifferent(schedule.getEmp().getDni(),schedule.getDate()) != null){
+				result.rejectValue("date", "date.duplicate", "User schedule already exist.");
+				modelMap.addAttribute("schedule", schedule);
+				return "schedules/addSchedule";
+			}
 			
 			scheduleService.save(schedule);
-			
 			modelMap.addAttribute("message", "Schedule successfully saved!");
 			view=listSchedules(modelMap);
 		}

@@ -39,7 +39,13 @@ $(document).ready(function(){
 
 
 <petclinic:layout pageName="casinotables">
-
+	<jsp:attribute name="customScript">
+		<script>
+			$(function () {
+				$("#date").datepicker({dateFormat: 'yy/mm/dd'});
+			});
+		</script>
+	</jsp:attribute>
     <jsp:body>
         <h2>New table</h2>
 		<script>
@@ -53,9 +59,13 @@ $(document).ready(function(){
 
    			 }
     	</script>
-
+		
        <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/{casinotableId}/edit" onsubmit = "chgAction()" id = "joseluis">
             <div class="form-group has-feedback">
+            	<petclinic:inputField label="Name" name="name"/>
+            	<petclinic:inputField label="Date" name="date"/>
+           	    <petclinic:inputField label="Start Time" name="startTime"/>
+            	<petclinic:inputField label="Ending Time" name="endingTime"/>
             	<div class="control-group">
                 	Shift <select id="comboboxGameType" name="gametype">
                 		<c:forEach var="gametype" items="${gametypes}">
@@ -74,13 +84,10 @@ $(document).ready(function(){
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    
                     <button class="btn btn-default" type="submit">Update Casino Table</button>
                 </div>
             </div>
         </form:form>
-
-        
     </jsp:body>
 
 </petclinic:layout>

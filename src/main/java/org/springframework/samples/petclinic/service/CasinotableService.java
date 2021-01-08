@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
@@ -41,7 +43,10 @@ public class CasinotableService {
 		castabRepo.save(casinotable);
 		
 	}
-
+	@Transactional
+	public Collection<LocalDate> findAllDates() {
+		return castabRepo.findAllDates();
+	}
 	public  void delete(Casinotable casinotable) {
 		castabRepo.delete(casinotable);
 	}
@@ -61,4 +66,10 @@ public class CasinotableService {
 	public Collection<Game> findGamesByGameType(int id) throws DataAccessException {
         return castabRepo.findGamesByGameType(id);
     }
+	public Collection<Casinotable> findCasinoTables(){
+        return castabRepo.findCasinoTables();
+    }
+	public Collection<Casinotable> findCasinoTablesByDate(LocalDate date) {
+		return castabRepo.findCasinoTablesByDate(date);
+	}
 }
