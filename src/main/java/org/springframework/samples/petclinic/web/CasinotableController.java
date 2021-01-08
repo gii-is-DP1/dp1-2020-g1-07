@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,15 +34,13 @@ public class CasinotableController {
 	 
 	@Autowired
 	private CasinotableService castableService;
-	
 	@Autowired
-	private CasinotableValidator casinotableValidator;
+	private CasinotableValidator casinotabValidator;
 	
 	@InitBinder("casinotable")
-	public void initMenuBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(casinotableValidator);
+	public void initScheduleBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(casinotabValidator);
 	}
-	
 	
 	@GetMapping()
 	public String casinotablesListed(ModelMap modelMap) {
@@ -60,12 +59,17 @@ public class CasinotableController {
 	}
 	
 	@PostMapping(path="/save")
-	public String saveCasinotable(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) {
+	public String saveCasinotable(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) throws ParseException {
 		String view="casinotables/listCasinotable";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/addCasinotable";
 		}else {
+			if(casinotabValidator.getReverseDate(casinotable.getStartTime(), casinotable.getEndingTime())==true){
+				result.rejectValue("startTime","", "The start time must be before the end time.");
+				modelMap.addAttribute("casinotable", casinotable);
+				return "casinotables/addCasinotable";
+			}
 			castableService.save(casinotable);
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
 			view=casinotablesListed(modelMap);
@@ -98,14 +102,18 @@ public class CasinotableController {
 
 	@PostMapping(value = "/{casinotableId}/edit")
 	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
-			@PathVariable("casinotableId") int casinotableId, ModelMap model) {
-		casinotable.setId(casinotableId);
+			@PathVariable("casinotableId") int casinotableId, ModelMap model) throws ParseException {
 		if (result.hasErrors()) {
 			model.put("casinotable", casinotable);
 			return "casinotables/updateCasinotable";
 		}
 		else {
-			
+			if(casinotabValidator.getReverseDate(casinotable.getStartTime(), casinotable.getEndingTime())==true){
+				result.rejectValue("startTime","", "The start time must be before the end time.");
+				model.put("casinotable", casinotable);
+				return "casinotables/updateCasinotable";
+			}
+			casinotable.setId(casinotableId);
 			this.castableService.save(casinotable);
 			return "redirect:/casinotables";
 			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
