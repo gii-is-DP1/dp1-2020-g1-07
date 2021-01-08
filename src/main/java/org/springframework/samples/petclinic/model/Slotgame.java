@@ -5,9 +5,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "slotgames", uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
 public class Slotgame extends NamedEntity{

@@ -29,8 +29,8 @@ public class EventServiceTest {
 		assertThat(event.getId()).isEqualTo(1);
 		assertThat(event.getName()).isEqualTo("Magic and Pasion");
 		assertThat(event.getDate()).isEqualTo("2019-12-21");
-		assertThat(event.getShowtype_id()).isEqualTo(3);
-		assertThat(event.getArtist_id()).isEqualTo(4);
+		assertThat(event.getShowtype_id().getId()).isEqualTo(3);
+		assertThat(event.getArtist_id().getId()).isEqualTo(4);
 	}
 	
 }

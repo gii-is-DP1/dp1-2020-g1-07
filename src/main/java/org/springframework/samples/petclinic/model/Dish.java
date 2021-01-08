@@ -15,19 +15,14 @@ import lombok.Setter;
 @Table(name = "dishes", uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
 public class Dish extends NamedEntity{
 
-	
 	private String name;
 
 	@ManyToOne
 	@JoinColumn(name = "dish_course_id")
 	private DishCourse dish_course;
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "shift_id")
 	private Shift shift;
-
-	
-	
 	
 }

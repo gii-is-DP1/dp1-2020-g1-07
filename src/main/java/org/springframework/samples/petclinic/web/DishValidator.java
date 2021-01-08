@@ -8,8 +8,10 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.DishService;
+import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -20,20 +22,54 @@ public class DishValidator implements Validator {
 	private static final String REQUIRED = "required";
 
 	@Autowired
-	private DishService dishService;
+	private DishService dishService;	
 	
-	public Dish getDishwithIdDifferent(String name) {
+	@Autowired
+	private MenuService menuService;
+	
+	//For creating
+		public boolean getDishwithIdDifferent(String name) {
+			name = name.toLowerCase();
+			Boolean result = false;
+			List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
+			for (Dish dish : dishes) {
+				String compName = dish.getName();
+				compName = compName.toLowerCase();
+				if (compName.equals(name)) {
+					result = true;
+					break;
+				}
+			}
+			return result;
+		}
+	
+	//For editing
+	public boolean getDishwithIdDifferent(String name, Integer id) {
 		name = name.toLowerCase();
-		Dish empty_dish = null;
+		Boolean result = false;
 		List<Dish> dishes = StreamSupport.stream(this.dishService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Dish dish : dishes) {
 			String compName = dish.getName();
 			compName = compName.toLowerCase();
-			if (compName.equals(name)) {
-				return dish;
+			if (compName.equals(name) && id!=dish.getId()) {
+				result = true;
+				break;
 			}
 		}
-		return empty_dish;
+		return result;
+	}
+	
+	public boolean isUsedInMenu(Dish dish) {
+		boolean result = false;
+		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
+		for(Menu menu: menus) {
+			String dishName = dish.getName();
+			String FD = menu.getFirst_dish().getName();
+			String SD = menu.getSecond_dish().getName();
+			String D = menu.getDessert().getName();
+			if(dishName.equals(FD) || dishName.equals(SD) || dishName.equals(D)) result = true;
+		}
+		return result;
 	}
 	
 	@Override
@@ -42,14 +78,9 @@ public class DishValidator implements Validator {
 		String name = dish.getName();
 		DishCourse dc = dish.getDish_course();
 		Shift shift = dish.getShift();
-		Dish otherDish = null;
-		if(name!=null) otherDish=getDishwithIdDifferent(dish.getName());
 		// name validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
-		}
-		if(otherDish!=null) {
-			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
 		}
 		// dish_course validation
 		if (dc == null || dc.getName().trim().equals("")) {

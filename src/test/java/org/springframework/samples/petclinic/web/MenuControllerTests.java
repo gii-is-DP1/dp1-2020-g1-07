@@ -185,7 +185,7 @@ public class MenuControllerTests {
 	
 	@WithMockUser(value = "spring")
 	@Test
-	void testInitUpdateDishForm() throws Exception {
+	void testInitUpdateMenuForm() throws Exception {
 		mockMvc.perform(get("/menus/{menuId}/edit", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("menu"))
 				.andExpect(model().attribute("menu", hasProperty("date", is(LocalDate.of(2020, 12, 24)))))
@@ -223,6 +223,15 @@ public class MenuControllerTests {
 				.andExpect(model().attributeHasErrors("menu"))
 				.andExpect(model().attributeHasFieldErrors("menu", "date"))
 				.andExpect(view().name("menus/updateMenu"));
+	}
+    
+    //Tests de byDay
+    
+    @WithMockUser(value = "spring")
+	@Test
+	void testInitByDay() throws Exception{
+		mockMvc.perform(get("/menus/byDay")).andExpect(status().isOk()).andExpect(model().attributeExists("dates"))
+		.andExpect(view().name("menus/menusByDay"));
 	}
 
 }

@@ -22,15 +22,26 @@ public class MenuValidator implements Validator {
 	@Autowired
 	private MenuService menuService;
 
-	public Menu getMenuwithIdDifferent(Shift shift, LocalDate date) {
-		Menu empty_menu = null;
+	public Boolean getMenuwithIdDifferent(Shift shift, LocalDate date) {
+		Boolean result = false;
 		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Menu menu : menus) {
 			if (menu.getShift().getName().equals(shift.getName()) && menu.getDate().isEqual(date)) {
-				return menu;
+				result = true;
 			}
 		}
-		return empty_menu;
+		return result;
+	}
+	
+	public Boolean getMenuwithIdDifferent(Shift shift, LocalDate date, Integer id) {
+		Boolean result = false;
+		List<Menu> menus = StreamSupport.stream(this.menuService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Menu menu : menus) {
+			if (menu.getShift().getName().equals(shift.getName()) && menu.getDate().isEqual(date) && id!=menu.getId()) {
+				result = true;
+			}
+		}
+		return result;
 	}
 	
 	@Override
@@ -41,8 +52,6 @@ public class MenuValidator implements Validator {
 		Dish first_dish = menu.getFirst_dish();
 		Dish second_dish = menu.getSecond_dish();
 		Dish dessert = menu.getDessert();
-		Menu existing_menu = null;
-		if(shift!=null && date!=null) existing_menu = getMenuwithIdDifferent(shift,date);
 		// Date validation
 		if (date == null) {
 			errors.rejectValue("date", REQUIRED, REQUIRED);
@@ -56,10 +65,6 @@ public class MenuValidator implements Validator {
 		}
 		if(dessert==null || dessert.getName().trim().equals("") || shift.getId() != dessert.getShift().getId()) {
 			errors.rejectValue("dessert", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
-		}
-		//Already existing menu validation
-		if(existing_menu != null) {
-			errors.rejectValue("date", "Ya existe un menu para este turno y esta fecha", "Ya existe un menu para este turno y esta fecha");
 		}
 	}
 

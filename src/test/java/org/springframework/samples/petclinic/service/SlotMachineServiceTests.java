@@ -35,7 +35,6 @@ public class SlotMachineServiceTests {
 	@Test
 	void testAddingNewSlotMachine() {
 		SlotMachine slotMachine = new SlotMachine();
-		slotMachine.setName("new SlotMachine");
 		Status status = new Status();
 		status.setName("COLLECT");
 		slotMachine.setStatus(status);
@@ -49,7 +48,6 @@ public class SlotMachineServiceTests {
 		
 		List<SlotMachine> slotMachines = StreamSupport.stream(this.slotMachineService.findAll().spliterator(), false).collect(Collectors.toList());
 		SlotMachine saved_slotMachine = slotMachines.get(slotMachines.size()-1);
-		assertTrue(saved_slotMachine.getName().equals("new SlotMachine"));
 		assertTrue(saved_slotMachine.getStatus().getName().equals("COLLECT"));		
 		assertTrue(saved_slotMachine.getSlotgame().getName().equals("Game 1"));
 	}

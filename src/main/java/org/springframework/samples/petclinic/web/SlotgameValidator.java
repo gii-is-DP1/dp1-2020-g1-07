@@ -1,12 +1,15 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Dish;
+import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
+import org.springframework.samples.petclinic.service.SlotMachineService;
 import org.springframework.samples.petclinic.service.SlotgameService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -20,18 +23,45 @@ public class SlotgameValidator implements Validator {
 	@Autowired
 	private SlotgameService slotgameService;
 	
-	public Slotgame getSlotgamewithIdDifferent(String name) {
+	@Autowired
+	private SlotMachineService slotMachineService;
+	
+	public Boolean getSlotgamewithIdDifferent(String name) {
 		name = name.toLowerCase();
-		Slotgame empty_slotgame = new Slotgame();
+		Boolean result = false;
 		List<Slotgame> slotgames = StreamSupport.stream(this.slotgameService.findAll().spliterator(), false).collect(Collectors.toList());
 		for (Slotgame slotgame : slotgames) {
 			String compName = slotgame.getName();
 			compName = compName.toLowerCase();
 			if (compName.equals(name)) {
-				return slotgame;
+				result = true;
 			}
 		}
-		return empty_slotgame;
+		return result;
+	}
+	
+	public Boolean getSlotgamewithIdDifferent(String name, Integer id) {
+		name = name.toLowerCase();
+		Boolean result = false;
+		List<Slotgame> slotgames = StreamSupport.stream(this.slotgameService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Slotgame slotgame : slotgames) {
+			String compName = slotgame.getName();
+			compName = compName.toLowerCase();
+			if (compName.equals(name) && slotgame.getId()!=id) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public boolean isUsedInSlotMachine(Optional<Slotgame> slotgame) {
+		boolean result = false;
+		Slotgame SG = slotgame.get();
+		List<SlotMachine> slotmachines = StreamSupport.stream(this.slotMachineService.findAll().spliterator(), false).collect(Collectors.toList());
+		for(SlotMachine slotmachine: slotmachines) {
+			if(slotmachine.getSlotgame().getName().equals(SG.getName())) result = true;
+		}
+		return result;
 	}
 	
 	@Override
@@ -39,12 +69,8 @@ public class SlotgameValidator implements Validator {
 		Slotgame slotgame = (Slotgame) target;
 		String name = slotgame.getName();
 		Integer jackpot = slotgame.getJackpot();
-		Slotgame otherslotgame=getSlotgamewithIdDifferent(name);
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
-		}
-		if(otherslotgame.getName()!=null) {
-			errors.rejectValue("name", "El nombre no puede estar repetido", "El nombre no puede estar repetido");
 		}
 		if(jackpot == null || jackpot<0) {
 			errors.rejectValue("jackpot", REQUIRED + "No puede ser nulo ni negativo", REQUIRED + "No puede ser nulo ni negativo");

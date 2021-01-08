@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
 import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.DishService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -69,8 +67,12 @@ public class DishController {
 		if(result.hasErrors()) {
 			modelMap.addAttribute("dish", dish);
 			return "dishes/addDish";
-			
 		}else {
+			if(dishValidator.getDishwithIdDifferent(dish.getName())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				modelMap.addAttribute("dish", dish);
+				return "dishes/addDish";
+			}
 			dishService.save(dish);
 			modelMap.addAttribute("message", "Dish successfully saved!");
 			view=dishesList(modelMap);
@@ -83,9 +85,15 @@ public class DishController {
 		String view="dishes/dishesList";
 		Optional<Dish> dish = dishService.findDishById(dishId);
 		if(dish.isPresent()) {
-			dishService.delete(dish.get());
-			modelMap.addAttribute("message", "Dish successfully deleted!");
-			view=dishesList(modelMap);
+			if(dishValidator.isUsedInMenu(dish.get())) {
+				modelMap.addAttribute("message", "This dish can't be deleted, is in one of the menus!");
+				view=dishesList(modelMap);
+			}else {
+				dishService.delete(dish.get());
+				modelMap.addAttribute("message", "Dish successfully deleted!");
+				view=dishesList(modelMap);
+			}
+			
 		}else {
 			modelMap.addAttribute("message", "Dish not found!");
 			view=dishesList(modelMap);
@@ -104,12 +112,17 @@ public class DishController {
 	@PostMapping(value = "/{dishId}/edit")
 	public String processUpdateCasTbForm(@Valid Dish dish, BindingResult result,
 			@PathVariable("dishId") int dishId, ModelMap model) {
+		dish.setId(dishId);
 		if (result.hasErrors()) {
 			model.put("dish", dish);
 			return "dishes/updateDish";
 		}
 		else {
-			dish.setId(dishId);
+			if(dishValidator.getDishwithIdDifferent(dish.getName(), dish.getId())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				model.put("dish", dish);
+				return "dishes/updateDish";
+			}
 			this.dishService.save(dish);
 			return "redirect:/dishes";
 		}

@@ -55,6 +55,11 @@ public class SlotgameController {
 			return "slotgames/addSlotgame";
 			
 		}else {
+			if(slotgameValidator.getSlotgamewithIdDifferent(slotgame.getName())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				modelMap.addAttribute("slotgame", slotgame);
+				return "slotgames/addSlotgame";
+			}
 			slotgameService.save(slotgame);
 			modelMap.addAttribute("message", "SlotGame successfully saved!");
 			view=slotgamesList(modelMap);
@@ -67,9 +72,14 @@ public class SlotgameController {
 		String view="slotgames/slotgamesList";
 		Optional<Slotgame> slotgame = slotgameService.findSlotgameById(slotgameId);
 		if(slotgame.isPresent()) {
-			slotgameService.delete(slotgame.get());
-			modelMap.addAttribute("message", "SlotGame successfully deleted!");
-			view=slotgamesList(modelMap);
+			if(slotgameValidator.isUsedInSlotMachine(slotgame)) {
+				modelMap.addAttribute("message", "This game can't be deleted, is in one of the slots!");
+				view=slotgamesList(modelMap);
+			}else {
+				slotgameService.delete(slotgame.get());
+				modelMap.addAttribute("message", "SlotGame successfully deleted!");
+				view=slotgamesList(modelMap);
+			}
 		}else {
 			modelMap.addAttribute("message", "SlotGame not found!");
 			view=slotgamesList(modelMap);
@@ -88,12 +98,17 @@ public class SlotgameController {
 	@PostMapping(value = "/{slotgameId}/edit")
 	public String processUpdateCasTbForm(@Valid Slotgame slotgame, BindingResult result,
 			@PathVariable("slotgameId") int slotgameId, ModelMap model) {
+		slotgame.setId(slotgameId);
 		if (result.hasErrors()) {
 			model.put("slotgame", slotgame);
 			return "slotgames/updateSlotgame";
 		}
 		else {
-			slotgame.setId(slotgameId);
+			if(slotgameValidator.getSlotgamewithIdDifferent(slotgame.getName(), slotgame.getId())) {
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				model.put("slotgame", slotgame);
+				return "slotgames/updateSlotgame";
+			}
 			this.slotgameService.save(slotgame);
 			return "redirect:/slotgames";
 		}
