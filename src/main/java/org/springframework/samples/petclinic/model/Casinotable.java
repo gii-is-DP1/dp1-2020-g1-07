@@ -5,12 +5,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Casinotable extends NamedEntity{
 
-	private String name;
 	@ManyToOne
     @JoinColumn(name = "game_id")
 	private Game game;

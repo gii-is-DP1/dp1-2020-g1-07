@@ -9,7 +9,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
-import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Skill;
@@ -17,7 +16,9 @@ import org.springframework.samples.petclinic.service.CasinotableService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,15 @@ public class CasinotableController {
 	 
 	@Autowired
 	private CasinotableService castableService;
+	
+	@Autowired
+	private CasinotableValidator casinotableValidator;
+	
+	@InitBinder("casinotable")
+	public void initMenuBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(casinotableValidator);
+	}
+	
 	
 	@GetMapping()
 	public String casinotablesListed(ModelMap modelMap) {
@@ -55,11 +65,8 @@ public class CasinotableController {
 		if(result.hasErrors()) {
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/addCasinotable";
-			
 		}else {
-			
 			castableService.save(casinotable);
-			
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
 			view=casinotablesListed(modelMap);
 		}
@@ -92,12 +99,13 @@ public class CasinotableController {
 	@PostMapping(value = "/{casinotableId}/edit")
 	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
 			@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		casinotable.setId(casinotableId);
 		if (result.hasErrors()) {
 			model.put("casinotable", casinotable);
 			return "casinotables/updateCasinotable";
 		}
 		else {
-			casinotable.setId(casinotableId);
+			
 			this.castableService.save(casinotable);
 			return "redirect:/casinotables";
 			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);

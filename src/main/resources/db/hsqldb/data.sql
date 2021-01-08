@@ -6,6 +6,8 @@ INSERT INTO SKILLS VALUES(2,'PROFFESIONAL');
 INSERT INTO games VALUES (1,'Poker',8,2);
 INSERT INTO games VALUES (2,'BlackJack',10,2);
 INSERT INTO games VALUES (3,'Texas Hold em',8,2);
+INSERT INTO games VALUES (4,'Crazy Dices',4,3);
+INSERT INTO games VALUES (5,'Fortune Roulette',6,1);
 
 INSERT INTO statuses VALUES(1,'OK');
 INSERT INTO statuses VALUES(2,'COLLECT');

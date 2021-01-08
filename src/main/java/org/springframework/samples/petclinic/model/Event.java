@@ -10,13 +10,15 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "events")
 public class Event extends NamedEntity{
 	
-	private Integer id;
 	
 	private String name;
 	@DateTimeFormat(pattern= "yyyy/MM/dd")

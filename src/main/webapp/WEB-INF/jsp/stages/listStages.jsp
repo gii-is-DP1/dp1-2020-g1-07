@@ -37,7 +37,7 @@
                     <c:out value="${game.showtype_id.name}"/>
                 </td>
                 <td>
-                    <c:out value="${game.artists.name}"/>
+                    <c:out value="${game.artist_id.name}"/>
                 </td>
             <td>
                 	<spring:url value="/events/delete/{eventId}" var="eventUrl">

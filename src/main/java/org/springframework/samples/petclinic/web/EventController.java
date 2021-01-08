@@ -28,9 +28,12 @@ public class EventController {
 	@Autowired
 	private EventService eventService;
 	
+	@Autowired
+	private EventValidator eventValidator;
+	
 	@InitBinder("event")
 	public void initMenuBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new EventValidator());
+		dataBinder.setValidator(eventValidator);
 	}
 	
 	@GetMapping()
@@ -56,11 +59,15 @@ public class EventController {
 			return "events/addEvent";
 			
 		}else {
-			
+			if(eventValidator.eventWithTheSameName(event.getName())){
+				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
+				modelMap.addAttribute("event", event);
+				return "events/addEvent";
+			}else {
 			eventService.save(event);
-			
 			modelMap.addAttribute("message", "Event successfully saved!");
 			view=eventsList(modelMap);
+			}
 		}
 		return view;
 	}
@@ -69,9 +76,14 @@ public class EventController {
 		String view="events/listEvent";
 		Optional<Event> event = eventService.findEventbyId(eventId);
 		if(event.isPresent()) {
+			if(eventValidator.isUsedInStage(event.get())) {
+				modelMap.addAttribute("message", "This event can't be deleted, is in one of the stages!");
+				view=eventsList(modelMap);
+			}else {
 			eventService.delete(event.get());
 			modelMap.addAttribute("message", "Event successfully deleted!");
 			view=eventsList(modelMap);
+			}
 		}else {
 			modelMap.addAttribute("message", "Event not found!");
 			view=eventsList(modelMap);
@@ -79,27 +91,7 @@ public class EventController {
 		return view;
 	}
 	
-	@GetMapping(value = "/{eventId}/edit")
-	public String initUpdateEventForm(@PathVariable("eventId") int eventId, ModelMap model) {
-		Event event = eventService.findEventbyId (eventId).get();
-		
-		model.put("event", event);
-		return "events/updateEvent";
-	}
 	
-	@PostMapping(value = "/{eventId}/edit")
-	public String processUpdateEventForm(@Valid Event event, BindingResult result,
-			@PathVariable("eventId") int eventId, ModelMap model) {
-		if (result.hasErrors()) {
-			model.put("event", event);
-			return "events/updateEvent";
-		}
-		else {
-			event.setId(eventId);
-			this.eventService.save(event);
-			return "redirect:/events";
-		}
-	}
 	@ModelAttribute("showtypes")
     public Collection<ShowType> populateShowtypes() {
         return this.eventService.findShowTypes();

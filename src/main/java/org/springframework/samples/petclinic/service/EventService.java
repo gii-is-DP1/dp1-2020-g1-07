@@ -10,6 +10,7 @@ import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.repository.EventRepository;
+import org.springframework.samples.petclinic.repository.StageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,10 @@ public class EventService {
 	@Autowired
 	private  EventRepository eventRepo;
 	
+	@Autowired
+	public EventService(EventRepository eventRepo) {
+		this.eventRepo = eventRepo;
+	}	
 	@Transactional
 	public int eventCount() {
 		return (int)eventRepo.count();

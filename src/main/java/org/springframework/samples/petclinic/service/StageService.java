@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.Stage;
+import org.springframework.samples.petclinic.repository.DishRepository;
 import org.springframework.samples.petclinic.repository.StageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class StageService {
 	@Autowired
 	private  StageRepository stgrepo;
+	
+	@Autowired
+	public StageService(StageRepository stgrepo) {
+		this.stgrepo = stgrepo;
+	}		
 	
 	@Transactional
 	public int stageCount() {
