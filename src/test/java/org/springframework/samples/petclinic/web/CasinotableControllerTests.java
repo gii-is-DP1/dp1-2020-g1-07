@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -136,34 +137,55 @@ public class CasinotableControllerTests {
 		given(this.casinotableService.findGamesByGameType(2)).willReturn(cardsgames);
 		
 		casinotable = new Casinotable();
+		casinotable.setName("Mesa 1");
 		casinotable.setId(1);
 		casinotable.setGame(game);
 		casinotable.setGametype(gametype2);
 		casinotable.setSkill(skill2);
+		casinotable.setDate(LocalDate.of(2021, 1, 8));
+		casinotable.setStartTime("13:00:00");
+		casinotable.setEndingTime("14:00:00");
 		
 		casinotable2 = new Casinotable();
+		casinotable2.setName("Mesa 2");
 		casinotable2.setId(2);
 		casinotable2.setGame(game2);
 		casinotable2.setGametype(gametype2);
 		casinotable2.setSkill(skill);
-
+		casinotable2.setDate(LocalDate.of(2021, 1, 9));
+		casinotable2.setStartTime("14:00:00");
+		casinotable2.setEndingTime("16:00:00");
+		
 		casinotable3 = new Casinotable();
+		casinotable3.setName("Mesa 3");
 		casinotable3.setId(3);
 		casinotable3.setGame(game3);
 		casinotable3.setGametype(gametype2);
 		casinotable3.setSkill(skill2);
-
+		casinotable3.setDate(LocalDate.of(2021, 1, 7));
+		casinotable3.setStartTime("17:00:00");
+		casinotable3.setEndingTime("19:00:00");
+		
 		casinotable4 = new Casinotable();
+		casinotable4.setName("Mesa 4");
 		casinotable4.setId(4);
 		casinotable4.setGame(game4);
 		casinotable4.setGametype(gametype3);
 		casinotable4.setSkill(skill);
+		casinotable4.setDate(LocalDate.of(2021, 1, 6));
+		casinotable4.setStartTime("18:00:00");
+		casinotable4.setEndingTime("20:00:00");
 		
 		casinotable5 = new Casinotable();
+		casinotable5.setName("Mesa 5");
 		casinotable5.setId(5);
 		casinotable5.setGame(game5);
 		casinotable5.setGametype(gametype);
 		casinotable5.setSkill(skill2);
+		casinotable5.setDate(LocalDate.of(2021, 1, 4));
+		casinotable5.setStartTime("13:00:00");
+		casinotable5.setEndingTime("14:00:00");
+		
 		List<Casinotable> casinotables = new ArrayList<Casinotable>();
 		casinotables.add(casinotable);
 		casinotables.add(casinotable2);
@@ -180,11 +202,15 @@ public class CasinotableControllerTests {
 		mockMvc.perform(get("/casinotables/new")).andExpect(status().isOk()).andExpect(model().attributeExists("casinotable"))
 		.andExpect(view().name("casinotables/addCasinotable"));
 	}
-
+	
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/casinotables/save").param("game", "Poker")
+		mockMvc.perform(post("/casinotables/save").param("date", "2020/12/21")
+						.param("endingTime", "13:00:00")
+						.param("startTime","11:00:00")
+						.param("name", "Mesa 6")
+						.param("game", "Poker")
 						.with(csrf())
 						.param("gametype", "Cards")
 						.param("skill", "Amateur"))
@@ -197,9 +223,13 @@ public class CasinotableControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/casinotables/save").param("game", "Poker")
-						.with(csrf())
-						.param("skill", "Amateur"))
+		mockMvc.perform(post("/casinotables/save").param("date", "2020/12/21")
+				.param("endingTime", "13:00:00")
+				.param("startTime","11:00:00")
+				.param("name", "Mesa 6")
+				.param("game", "Poker")
+				.with(csrf())
+				.param("skill", "Amateur"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("casinotable"))
 			.andExpect(model().attributeHasFieldErrors("casinotable", "gametype"))
@@ -211,19 +241,28 @@ public class CasinotableControllerTests {
 	void testInitUpdateCasinotableForm() throws Exception {
 		mockMvc.perform(get("/casinotables/{casinotableId}/edit", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("casinotable"))
+				.andExpect(model().attribute("casinotable", hasProperty("endingTime", is(casinotableService.findCasinotableById(1).get().getEndingTime()))))
+				.andExpect(model().attribute("casinotable", hasProperty("startTime", is(casinotableService.findCasinotableById(1).get().getStartTime()))))
+				.andExpect(model().attribute("casinotable", hasProperty("date", is(casinotableService.findCasinotableById(1).get().getDate()))))
+				.andExpect(model().attribute("casinotable", hasProperty("name", is(casinotableService.findCasinotableById(1).get().getName()))))
 				.andExpect(model().attribute("casinotable", hasProperty("game", is(casinotableService.findCasinotableById(1).get().getGame()))))
 				.andExpect(model().attribute("casinotable", hasProperty("gametype", is(casinotableService.findGameTypes().toArray()[1]))))
 				.andExpect(model().attribute("casinotable", hasProperty("skill", is(casinotableService.findSkills().toArray()[1]))))
 				.andExpect(view().name("casinotables/updateCasinotable"));
 	}
+	
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateCasinotableFormSuccess() throws Exception {
 		mockMvc.perform(post("/casinotables/{casinotableId}/edit", 1)
-							.with(csrf())
-							.param("game", "BlackJack")
-							.param("gametype", "Cards")
-							.param("skill", "Proffesional"))
+				.param("date", "2020/12/19")
+				.param("endingTime", "13:00:00")
+				.param("startTime","11:00:00")
+				.param("name", "Mesa 6")
+				.param("game", "Poker")
+				.with(csrf())
+				.param("gametype", "Cards")
+				.param("skill", "Amateur"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/casinotables"));
 	}
@@ -231,9 +270,13 @@ public class CasinotableControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateCasinotableFormHasErrors() throws Exception {
-		mockMvc.perform(post("/casinotables/{casinotableId}/edit", 1).param("game", "")
-							.with(csrf())
-							.param("gametype", "Cards"))
+		mockMvc.perform(post("/casinotables/{casinotableId}/edit", 1)
+				.param("date", "2020/12/21")
+				.param("endingTime", "13:00:00")
+				.param("startTime","11:00:00")
+				.param("name", "Mesa 6")
+				.with(csrf())
+				.param("gametype", "Cards"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("casinotable"))
 				.andExpect(model().attributeHasFieldErrors("casinotable", "game"))
