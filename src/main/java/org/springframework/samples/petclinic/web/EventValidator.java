@@ -41,6 +41,21 @@ public class EventValidator implements Validator {
 		}
 		return result;
 	}
+	
+	public Boolean eventWithTheSameName_Update(String name, Integer id) {
+		name = name.toLowerCase();
+		Boolean result = false;
+		List<Event> events = StreamSupport.stream(this.eventservice.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Event event : events) {
+			String nameevent = event.getName();
+			nameevent = nameevent.toLowerCase();
+			if (nameevent.equals(name) && event.getId()!=id) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 	public boolean isUsedInStage(Event event) {
 		boolean result = false;
 		List<Stage> stages = StreamSupport.stream(this.stageservice.findAll().spliterator(), false).collect(Collectors.toList());

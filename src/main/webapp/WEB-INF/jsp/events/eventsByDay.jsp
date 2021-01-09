@@ -12,27 +12,27 @@ $(document).ready(function(){
 		var valDate = $(this).val();
 		$.ajax({
 			type: 'GET',
-			url: '${pageContext.request.contextPath}/menus/byDay/' + valDate,
+			url: '${pageContext.request.contextPath}/events/byDay/' + valDate,
 			success: function(result){
 				var result = JSON.parse(result)
 				var s1= '';
 				for(var i = 0; i < result.length; i++){
-					s1 += '<div> <br> <b>' + result[i].first_dish.shift.name
-					+ '</b> <br>' + result[i].first_dish.name
-					+ '<br>' + result[i].second_dish.name
-					+ '<br>' + result[i].dessert.name
+					s1 += '<div> <br> <b>' + result[i].name
+					+ '</b> <br> Showtype: ' + result[i].showtype_id.name
+					+ '<br> Stage number: ' + result[i].stage_id.id
+					+ '<br> Artist/Group: ' + result[i].artist_id.name
 					+ '<br> </div>';
 				}
-				$('#tableMenus').html(s1);
+				$('#tableEvents').html(s1);
 			}
 		});
 	});
 });
 </script>
 
-<petclinic:layout pageName="menusByDay">
+<petclinic:layout pageName="eventsByDay">
     <jsp:body>
-        <h2>Menus</h2>
+        <h2>Events</h2>
         
         <div class="control-group">
         	Dates <select id="comboboxDates" name="date">
@@ -44,7 +44,7 @@ $(document).ready(function(){
             </select>
         </div>
         
-        <div id="tableMenus"></div>    
+        <div id="tableEvents"></div>    
     </jsp:body>
 
 </petclinic:layout>

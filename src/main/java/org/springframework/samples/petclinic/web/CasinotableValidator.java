@@ -2,19 +2,13 @@ package org.springframework.samples.petclinic.web;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
-import org.springframework.samples.petclinic.model.Schedule;
-import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.service.CasinotableService;
-import org.springframework.samples.petclinic.service.ScheduleService;
+import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.GameType;
+import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -57,8 +51,9 @@ public class CasinotableValidator implements Validator{
 		}
 	}
 	@Override
-		return Casinotable.class.isAssignableFrom(clazz);
+		
 	public boolean supports(Class<?> clazz) {
+		return Casinotable.class.isAssignableFrom(clazz);
 	}
 }
 	
