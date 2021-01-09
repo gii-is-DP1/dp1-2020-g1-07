@@ -20,6 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "casinotable")
 public class Casinotable extends NamedEntity{
 	
 	@NotEmpty
