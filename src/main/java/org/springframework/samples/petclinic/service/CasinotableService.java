@@ -72,4 +72,7 @@ public class CasinotableService {
 	public Collection<Casinotable> findCasinoTablesByDate(LocalDate date) {
 		return castabRepo.findCasinoTablesByDate(date);
 	}
+	public Collection<Integer> findGainsByTableId(Integer id) {
+        return castabRepo.findGainsByTableId(id);
+    }
 }

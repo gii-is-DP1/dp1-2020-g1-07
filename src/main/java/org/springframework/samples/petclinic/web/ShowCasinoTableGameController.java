@@ -82,6 +82,11 @@ public class ShowCasinoTableGameController {
 		try {
 			List<Casinotable> casinoTables = new ArrayList<Casinotable>(castableService.findCasinoTablesByDate(date));
 			for(Casinotable casinoTable:casinoTables) {
+				List<Integer> casinoTablesGains = new ArrayList<Integer>(castableService.findGainsByTableId(casinoTable.getId()));
+	            Integer sum=0;
+	            for(int i = 0; i < casinoTablesGains.size(); i++){
+	                sum=sum+casinoTablesGains.get(i);
+	            }
 				json = json + "\"id\":" + casinoTable.getId() +","          
 						+ "\"name\":\"" + casinoTable.getName() +"\","
 						+ "\"game\":{" 
@@ -93,7 +98,8 @@ public class ShowCasinoTableGameController {
 						+ "\"skill\":\"" + casinoTable.getSkill() +"\","
 						+ "\"date\":\"" + casinoTable.getDate() +"\","
 						+ "\"startTime\":\"" + casinoTable.getStartTime() +"\","
-						+ "\"endingTime\":\"" + casinoTable.getEndingTime() +"\"},{";
+						+ "\"endingTime\":\"" + casinoTable.getEndingTime() +"\","
+						+ "\"gains\":\"" + sum +"\"},{";
 
 				if(casinoTables.indexOf(casinoTable)==casinoTables.size()-1) {
 					json = json.substring(0, json.length() - 2)+"]";
