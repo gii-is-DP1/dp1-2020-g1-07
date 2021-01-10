@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
+    <artifactId>spring-tuviscasino</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -12,7 +12,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>petclinic</name>
+    <name>tuviscasino</name>
 
     <properties>
 
@@ -32,7 +32,6 @@
 
     </properties>
 
-    
  	<developers>
  	
  		<developer>
@@ -41,10 +40,9 @@
 			<email>danielcaroolmedo2@gmail.com</email>
 			<url></url>
 			<roles>
-				<role>leader</role>
+				<role>developer</role>
 			</roles>
 		</developer>
- 	
  	
 		 <developer>
 		    <id>Dani</id>
@@ -52,12 +50,11 @@
 		 	<email>danmuaher@alum.us.es</email>
 		 	<url>https://github.com/NoSoyDani</url>
 		 	<roles>
-		 		<role>leader</role>
+		 		<role>developer</role>
 		 	</roles>
 			<properties>
 			</properties>
 		 </developer>
- 
  
 		 <developer>
 		 	<id>davbarsal1</id>
@@ -65,26 +62,35 @@
 		 	<email>davbarsal1@alum.us.es</email>
 		 	<url>https://github.com/davbarsal1</url>
 		 	<roles>
-				<role>leader</role>
+				<role>developer</role>
 		 	</roles>
 		 	<properties>
 		 	</properties>
 		 </developer>
 
-
-	
 		 <developer>
  			<id>vicsorvaz</id>
  			<name>Vicente</name>
  			<email>visorvaz@gmail.com</email>
  			<url>https://github.com/vicsorvaz</url>
 			<roles>
- 		    	<role>leader</role>
+ 		    	<role>developer</role>
  			</roles>
  			<properties>	
  			</properties>
  		</developer>
- <!-- More developers ...-->
+
+		<developer>
+ 			<id>Antonio-Gonzalez-Gomez</id>
+ 			<name>Antonio</name>
+ 			<email>antoniogg696@gmail.com</email>
+ 			<url>https://github.com/Antonio-Gonzalez-Gomez</url>
+			<roles>
+ 		    	<role>developer</role>
+ 			</roles>
+ 			<properties>	
+ 			</properties>
+ 		</developer>
 
 		 <developer>
 		 	<id>beatrizbeltranalvarez</id>
@@ -92,12 +98,11 @@
 			 <email>beltranalvarezbeatriz@gmail.com</email>
 			 <url>https://github.com/beatrizbeltranalvarez</url>
 			 <roles>
-				 <role>developer</role>
+				 <role>leader</role>
 			 </roles>
 			 <properties>
 			 </properties>
 		 </developer>
- <!-- More developers ...-->
  	</developers>
 
     <dependencies>
@@ -340,7 +345,4 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
-
-
-
 </project>
