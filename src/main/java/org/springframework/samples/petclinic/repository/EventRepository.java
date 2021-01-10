@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.model.Stage;
 

@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
-import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

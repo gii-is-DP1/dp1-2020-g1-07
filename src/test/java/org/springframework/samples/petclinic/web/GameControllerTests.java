@@ -22,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.service.CasinotableService;
@@ -31,7 +32,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers= GameController.class,
-includeFilters= {@ComponentScan.Filter(value = ShowTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE ), 
+includeFilters= {@ComponentScan.Filter(value = GameTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE ), 
 				//@ComponentScan.Filter(value = 	ArtistFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
 				@ComponentScan.Filter(value = GameValidator.class, type = FilterType.ASSIGNABLE_TYPE )},
 excludeFilters= @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
@@ -51,6 +52,7 @@ public class GameControllerTests {
 	
 	@MockBean 
 	private CasinotableService casinotableService;
+	
 	@BeforeEach
 	void setup() {
 		//Enumerates: Gametype
@@ -107,6 +109,9 @@ public class GameControllerTests {
 		games.add(game5);
 		given(this.gameService.findAll()).willReturn(games);
 		given(this.gameService.findGameById(1)).willReturn(Optional.of(game));
+		
+		List<Casinotable> casinotables = new ArrayList<Casinotable>();
+		given(this.casinotableService.findAll()).willReturn(casinotables);
 	}
 	
 	@WithMockUser(value = "spring")

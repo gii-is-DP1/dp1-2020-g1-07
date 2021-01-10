@@ -28,9 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-import com.google.gson.Gson;
-
-
 @Controller
 @RequestMapping("/menus")
 public class MenuController {
@@ -193,7 +190,7 @@ public class MenuController {
 	@ResponseBody
 	@RequestMapping(value = "/new/loadDishesByShift/{id}", method = RequestMethod.GET)
 	public String loadFirstDishesByShift(@PathVariable("id")int id) {
-		Gson gson = new Gson();
+		//Gson gson = new Gson();
 		String json = "[{";
 		try {
 			List<Dish> first_dishes = new ArrayList<Dish>(menuService.findFirstDishesByShift(id));

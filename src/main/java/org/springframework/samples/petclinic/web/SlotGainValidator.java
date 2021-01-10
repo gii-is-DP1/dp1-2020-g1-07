@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.SlotGain;
 import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.service.SlotGainService;
