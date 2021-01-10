@@ -93,12 +93,12 @@ public class ClientController {
 	@PostMapping(value = "/{clientId}/edit")
 	public String processUpdateClientForm(@Valid Client client, BindingResult result,
 			@PathVariable("clientId") int clientId, ModelMap model) {
+		client.setId(clientId);
 		if (result.hasErrors()) {
 			model.put("client", client);
 			return "clients/updateClient";
 		}
 		else {
-			client.setId(clientId);
 			if(clientValidator.getClientwithIdDifferent(client.getDni(), client.getId())) {
 				result.rejectValue("dni", "dni.duplicate", "El dni esta repetido");
 				model.put("client", client);
