@@ -1,16 +1,16 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Artist;
-
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
+import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.repository.EventRepository;
-import org.springframework.samples.petclinic.repository.StageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +31,11 @@ public class EventService {
 	@Transactional
 	public Iterable<Event> findAll() {
 		return eventRepo.findAll();
+	}
+	
+	@Transactional
+	public Collection<LocalDate> findAllDates() {
+		return eventRepo.findAllDates();
 	}
 	
 	@Transactional(readOnly=true)
@@ -55,6 +60,15 @@ public class EventService {
         // TODO Auto-generated method stub
         return eventRepo.findArtists();
     }
+	
+	public Collection<Event> findEventsByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		return eventRepo.findEventsByDate(date);
+	}
+	public Stage findStageForEvent(Integer id) {
+		// TODO Auto-generated method stub
+		return eventRepo.findStageForEvent(id);
+	}
 
 
 }

@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -146,5 +148,36 @@ public class StageControllerTests {
 		.andExpect(model().attributeHasFieldErrors("stage", "capacity"))
 		.andExpect(view().name("stages/addStage"));
 	}
-	
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateStageForm() throws Exception {
+		mockMvc.perform(get("/stages/{stageId}/edit", 1)).andExpect(status().isOk())
+				.andExpect(model().attributeExists("stage"))
+				.andExpect(model().attribute("stage", hasProperty("capacity", is(stageService.findStagebyId(1).get().getCapacity()))))
+				.andExpect(model().attribute("stage", hasProperty("event_id", is(stageService.findStagebyId(1).get().getEvent_id()))))
+				.andExpect(view().name("stages/updateStage"));
+	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateStageFormSuccess() throws Exception {
+		mockMvc.perform(post("/stages/{stageId}/edit", 1)
+							.with(csrf())
+							.param("capacity", "140")
+							.param("event_id", "Magic and Pasion"))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/stages"));
+	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateStageFormHasErrors() throws Exception {
+		mockMvc.perform(post("/stages/{stageId}/edit", 1).param("capacity", "")
+							.with(csrf())
+							.param("event_id", "Magic and Pasion"))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeHasErrors("stage"))
+				.andExpect(model().attributeHasFieldErrors("stage", "capacity"))
+				.andExpect(view().name("stages/updateStage"));
+	}
 }
+
+

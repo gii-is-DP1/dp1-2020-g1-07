@@ -103,6 +103,7 @@ public class CasinotableController {
 	@PostMapping(value = "/{casinotableId}/edit")
 	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
 			@PathVariable("casinotableId") int casinotableId, ModelMap model) throws ParseException {
+		casinotable.setId(casinotableId);
 		if (result.hasErrors()) {
 			model.put("casinotable", casinotable);
 			return "casinotables/updateCasinotable";
@@ -113,7 +114,7 @@ public class CasinotableController {
 				model.put("casinotable", casinotable);
 				return "casinotables/updateCasinotable";
 			}
-			casinotable.setId(casinotableId);
+			
 			this.castableService.save(casinotable);
 			return "redirect:/casinotables";
 			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
