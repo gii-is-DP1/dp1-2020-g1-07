@@ -99,7 +99,7 @@ public class ShowCasinoTableGameController {
 						+ "\"date\":\"" + casinoTable.getDate() +"\","
 						+ "\"startTime\":\"" + casinoTable.getStartTime() +"\","
 						+ "\"endingTime\":\"" + casinoTable.getEndingTime() +"\","
-						+ "\"gains\":\"" + sum +"\"},{";
+						+ "\"gains\":\"" + -sum +"\"},{";
 
 				if(casinoTables.indexOf(casinoTable)==casinoTables.size()-1) {
 					json = json.substring(0, json.length() - 2)+"]";
