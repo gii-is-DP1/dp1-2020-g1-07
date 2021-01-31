@@ -31,7 +31,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers= GameController.class,
-includeFilters= {@ComponentScan.Filter(value = ShowTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE ), 
+includeFilters= {@ComponentScan.Filter(value = GameTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE ), 
 				//@ComponentScan.Filter(value = 	ArtistFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
 				@ComponentScan.Filter(value = GameValidator.class, type = FilterType.ASSIGNABLE_TYPE )},
 excludeFilters= @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
