@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.repository.RestaurantTableRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+@Service
 public class RestaurantTableService {
 private  RestaurantTableRepository restaurantTablerepo; 
 	

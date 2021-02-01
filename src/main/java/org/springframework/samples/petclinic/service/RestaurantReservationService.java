@@ -9,9 +9,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.repository.RestaurantReservationRepository;
+import org.springframework.samples.petclinic.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 @Service
 public class RestaurantReservationService {
 	private  RestaurantReservationRepository restaurantReservationrepo; 
