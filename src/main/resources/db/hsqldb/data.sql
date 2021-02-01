@@ -142,9 +142,9 @@ INSERT INTO menu VALUES (1, 'Random','2010-09-07', 3, 1, 2, 2);
 INSERT INTO timeintervals VALUES(1, '13:00 - 14:00');
 INSERT INTO timeintervals VALUES(2, '14:00 - 15:00');
 INSERT INTO timeintervals VALUES(3, '15:00 - 16:00');
-INSERT INTO timeintervals VALUES(1, '21:00 - 22:00');
-INSERT INTO timeintervals VALUES(2, '22:00 - 23:00');
-INSERT INTO timeintervals VALUES(3, '23:00 - 00:00');
+INSERT INTO timeintervals VALUES(4, '21:00 - 22:00');
+INSERT INTO timeintervals VALUES(5, '22:00 - 23:00');
+INSERT INTO timeintervals VALUES(6, '23:00 - 00:00');
 
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (1, '2010-09-07', 3);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (9, '2010-09-09', 2);

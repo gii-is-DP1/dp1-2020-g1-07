@@ -34,5 +34,7 @@ public class RestaurantReservation extends NamedEntity{
 	private Client client;
 	
 	@NotNull
+	@ManyToOne
+    @JoinColumn(name = "time_interval_id")
 	private TimeInterval timeInterval;
 }
