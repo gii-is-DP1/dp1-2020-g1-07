@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -38,6 +39,9 @@ public class RestaurantReservationController {
 	@GetMapping()
 	public String restaurantreservationsList(ModelMap modelMap) {
 		String view= "restaurantreservations/restaurantreservationsList";
+		Collection<LocalDate> list=RestaurantReservationService.findAllDates();
+		Iterable<LocalDate> dates = list;
+		modelMap.addAttribute("dates", dates);
 		Iterable<RestaurantReservation> restaurantreservations=RestaurantReservationService.findAll();
 		modelMap.addAttribute("restaurantreservations", restaurantreservations);
 		return view;

@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -16,4 +17,7 @@ public interface RestaurantReservationRepository extends CrudRepository<Restaura
 	
 	@Query("SELECT timeinterval FROM TimeInterval timeinterval ORDER BY timeinterval.id")
 	List<TimeInterval> findTimeIntervals() throws DataAccessException;
+	
+	@Query("SELECT DISTINCT date FROM RestaurantReservation")
+	public List<LocalDate> findAllDates();
 }

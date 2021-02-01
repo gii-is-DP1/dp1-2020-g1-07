@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -8,8 +9,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.repository.RestaurantReservationRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class RestaurantReservationService {
 	private  RestaurantReservationRepository restaurantReservationrepo; 
 
@@ -50,5 +53,10 @@ public class RestaurantReservationService {
 	public Collection<TimeInterval> findTimeIntervals() throws DataAccessException{
 		// TODO Auto-generated method stub
 		return restaurantReservationrepo.findTimeIntervals();
+	}
+	
+	@Transactional
+	public Collection<LocalDate> findAllDates() {
+		return restaurantReservationrepo.findAllDates();
 	}
 }

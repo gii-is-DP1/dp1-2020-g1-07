@@ -12,7 +12,7 @@ $(document).ready(function(){
 		var valDate = $(this).val();
 		$.ajax({
 			type: 'GET',
-			url: '${pageContext.request.contextPath}/menus/byDay/' + valDate,
+			url: '${pageContext.request.contextPath}/restaurantreservations/' + valDate,
 			success: function(result){
 				var result = JSON.parse(result)
 				var s1= '';
@@ -30,20 +30,28 @@ $(document).ready(function(){
 });
 </script>
 
-<petclinic:layout pageName="menusByDay">
-    <jsp:body>
-        <h2>Menus</h2>
-        
-        <div class="control-group">
-        	Dates <select id="comboboxDates" name="date">
+<petclinic:layout pageName="restaurantreservations">
+    <h2>Restaurant Reservations</h2>
+    
+    <div class="control-group">
+    	Dates <select id="comboboxDates" name="date">
         	<option selected>Selecciona fecha</option>
-            <c:forEach var="date" items="${dates}">
+        	<c:forEach var="date" items="${dates}">
             	<option value="${date}">${date}</option>
-            </c:forEach>
-            </select>
-        </div>
-        
-        <div id="tableMenus"></div>    
-    </jsp:body>
+        	</c:forEach>
+        </select>
+    </div>
 
+    <table id="restaurantReservationsTable" class="table table-striped">
+        <thead>
+        <tr>
+        	<th style="width: 200px;">Table</th>
+            <th style="width: 200px;">Client</th>
+            <th style="width: 200px;">Interval</th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="reservations"></tbody>
+    </table>    
 </petclinic:layout>
