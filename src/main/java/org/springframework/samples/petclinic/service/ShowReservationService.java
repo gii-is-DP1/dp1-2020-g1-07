@@ -2,13 +2,11 @@ package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Client;
-import org.springframework.samples.petclinic.model.Game;
+import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.repository.ShowReservationRepository;
 import org.springframework.stereotype.Service;
@@ -50,9 +48,9 @@ private  ShowReservationRepository showresRepo;
 		showresRepo.delete(showres);
 	}
 	
-	public Collection<ShowReservation> findShowresForDay(LocalDate date) throws DataAccessException{
-		log.info("Loading show reservations from DB for day: " + date.toString());
-		return showresRepo.findShowresForDay(date);
+	public Collection<Event> findAvailableShows() throws DataAccessException{
+		log.info("Loading shows available to book seats");
+		return showresRepo.findAvailableShows(LocalDate.now());
 	}
 	
 	public Integer findAvailableSeats(Integer eventId) throws DataAccessException{

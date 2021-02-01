@@ -19,6 +19,10 @@ public class ShowReservation extends BaseEntity{
 	private Integer seats;
 	
 	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
+	
+	@ManyToOne
 	@JoinColumn(name = "event_id")
-	private Event event_id;
+	private Event event;
 }

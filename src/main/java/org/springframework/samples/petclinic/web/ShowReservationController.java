@@ -1,16 +1,12 @@
 package org.springframework.samples.petclinic.web;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.SortedSet;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.service.ShowReservationService;
 import org.springframework.stereotype.Controller;
@@ -50,16 +46,13 @@ public class ShowReservationController {
 		return view;
 	}
 	
-	@GetMapping(path="/user")
-	public String userGains(ModelMap modelMap) {
-		return "";
-	}
-	
 	@GetMapping(path="/new")
 	public String createShowReservation(ModelMap modelMap) {
 		log.info("Loading new showres form");
 		String view="showress/addShowReservation";
 		modelMap.addAttribute("showres", new ShowReservation());
+		Collection<Event> events = showresService.findAvailableShows();
+		modelMap.addAttribute("events", events);
 		return view;
 	}
 	
