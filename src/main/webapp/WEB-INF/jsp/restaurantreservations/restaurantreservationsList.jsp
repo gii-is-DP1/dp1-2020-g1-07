@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -17,13 +18,15 @@ $(document).ready(function(){
 				var result = JSON.parse(result)
 				var s1= '';
 				for(var i = 0; i < result.length; i++){
-					s1 += '<div> <br> <b>' + result[i].first_dish.shift.name
-					+ '</b> <br>' + result[i].first_dish.name
-					+ '<br>' + result[i].second_dish.name
-					+ '<br>' + result[i].dessert.name
-					+ '<br> </div>';
+					s1 += '<tr> <td> ' + result[i].restaurant_table.id + ' </td>'
+					+ '<td>' + result[i].client.name + '</td>'
+					+ '<td>' + result[i].time_interval.name + '</td>'
+					+ '<td> <spring:url value="/restaurantreservations/delete/{restaurantreservationId}" var="restaurantreservationUrl">'
+					+ '<spring:param name="restaurantreservationId" value="${restaurantreservation.id}"/> </spring:url> <a href="${fn:escapeXml(restaurantreservationUrl)}">Delete</a> </td> '
+					+ '<td> <spring:url value="/restaurantreservations/{restaurantreservationId}/edit" var="editUrl"> '
+					+ '<spring:param name="restaurantreservationId" value="${restaurantreservation.id}"/> </spring:url> <a href="${fn:escapeXml(editUrl)}">Update</a> </td> </tr>';
 				}
-				$('#tableMenus').html(s1);
+				$('#reservations').html(s1);
 			}
 		});
 	});

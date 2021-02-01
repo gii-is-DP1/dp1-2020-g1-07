@@ -1,12 +1,16 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/restaurantreservations")
@@ -45,6 +51,38 @@ public class RestaurantReservationController {
 		Iterable<RestaurantReservation> restaurantreservations=RestaurantReservationService.findAll();
 		modelMap.addAttribute("restaurantreservations", restaurantreservations);
 		return view;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/{date}", method = RequestMethod.GET)
+	public String loadRestaurantReservationsByDate(@PathVariable("date")String datestr) {
+		String json = "[";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		LocalDate date = LocalDate.parse(datestr, formatter);
+		try {
+			List<RestaurantReservation> restaurantReservations = new ArrayList<RestaurantReservation>(RestaurantReservationService.findRestaurantReservationsByDate(date));
+			for(RestaurantReservation restaurantReservation:restaurantReservations) {
+				json = json + "{\"id\":" + restaurantReservation.getId() +","
+						+ "\"date\":\"" + restaurantReservation.getDate() +"\","
+						+ "\"restaurant_table\":{"
+							+ "\"id\":" + restaurantReservation.getRestauranttable().getId() +"},"
+						+ "\"client\":{"
+							+ "\"id\":" + restaurantReservation.getClient().getId() +","
+							+ "\"name\":\"" + restaurantReservation.getClient().getName() +"\"},"
+						+ "\"time_interval\":{"
+							+ "\"id\":" + restaurantReservation.getTimeInterval().getId() +","
+							+ "\"name\":\"" + restaurantReservation.getTimeInterval().getName() +"\"}},";
+				if(restaurantReservations.indexOf(restaurantReservation)==restaurantReservations.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(restaurantReservations.size()==0) {
+				json = json.substring(0, json.length() - 1) + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(RestaurantReservationService.findRestaurantReservationsByDate(date));
+		}
+		return json;
 	}
 	
 	@GetMapping(path="/new")

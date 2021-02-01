@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="restaurantreservations")
-public class RestaurantReservation extends NamedEntity{
+public class RestaurantReservation extends BaseEntity{
 	
 	@NotNull
 	@ManyToOne
@@ -34,5 +34,7 @@ public class RestaurantReservation extends NamedEntity{
 	private Client client;
 	
 	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "time_interval_id")
 	private TimeInterval timeInterval;
 }

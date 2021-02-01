@@ -14,6 +14,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "restauranttables")
 public class RestaurantTable extends BaseEntity{
+	
 	@ManyToOne
 	@JoinColumn(name = "waiter_id")
 	private Waiter waiter;
