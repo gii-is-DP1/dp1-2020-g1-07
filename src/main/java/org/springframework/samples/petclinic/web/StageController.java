@@ -71,9 +71,14 @@ public class StageController {
 		String view="stages/listStage";
 		Optional<Stage> stage = stageService.findStagebyId(stageId);
 		if(stage.isPresent()) {
+			if(stageValidator.isUsedInEvent(stage.get())) {
+				modelMap.addAttribute("message", "This stage can't be deleted, is in one of the events!");
+				view=stagesListed(modelMap);
+			}else {
 			stageService.delete(stage.get());
 			modelMap.addAttribute("message", "Stage successfully deleted!");
 			view=stagesListed(modelMap);
+			}
 		}else {
 			modelMap.addAttribute("message", "Stage not found!");
 			view=stagesListed(modelMap);

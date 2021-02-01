@@ -31,9 +31,7 @@
        
            <div class="form-group has-feedback">
                 <petclinic:inputField label="Capacity" name="capacity"/>
-                <div class="control-group">
-                	<petclinic:selectField label="Event" name="event_id" names="${events}" size="1"/>
-                </div>
+             
                 
             </div>
 

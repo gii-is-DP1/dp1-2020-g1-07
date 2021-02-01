@@ -64,7 +64,7 @@ public class EventController {
 		return vista;
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/byDay/{date}", method = RequestMethod.GET)
 	public String loadEventsByDate(@PathVariable("date")String datestr) {
 		String json = "[";
@@ -102,7 +102,7 @@ public class EventController {
 			System.out.println(e);
 		}
 		return json;
-	}
+	}*/
 
 	@GetMapping(path="/new")
 	public String createEvent(ModelMap modelMap) {
@@ -136,15 +136,7 @@ public class EventController {
 		String view="events/listEvent";
 		Optional<Event> event = eventService.findEventbyId(eventId);
 		if(event.isPresent()) {
-			if(eventValidator.isUsedInStage(event.get())) {
-				modelMap.addAttribute("message", "This event can't be deleted, is in one of the stages!");
-				view=eventsList(modelMap);
-			}else {
 			eventService.delete(event.get());
-			modelMap.addAttribute("message", "Event successfully deleted!");
-			view=eventsList(modelMap);
-			}
-		}else {
 			modelMap.addAttribute("message", "Event not found!");
 			view=eventsList(modelMap);
 		}

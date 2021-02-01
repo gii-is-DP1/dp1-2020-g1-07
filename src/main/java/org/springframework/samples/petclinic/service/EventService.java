@@ -65,9 +65,12 @@ public class EventService {
 		// TODO Auto-generated method stub
 		return eventRepo.findEventsByDate(date);
 	}
-	public Stage findStageForEvent(Integer id) {
+	/*public Stage findStageForEvent(Integer id) {
 		// TODO Auto-generated method stub
 		return eventRepo.findStageForEvent(id);
+	}*/
+	public Collection<Stage> findStages(){
+		return eventRepo.findStages();
 	}
 
 

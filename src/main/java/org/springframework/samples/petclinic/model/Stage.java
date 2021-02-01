@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -10,12 +11,9 @@ import lombok.Data;
 @Entity
 public class Stage extends NamedEntity{
 	
-	
+	@NotNull
 	private Integer capacity;
 	
-	@ManyToOne
-	@JoinColumn(name = "event_id")
-	private Event event_id;
 	
 	
 }

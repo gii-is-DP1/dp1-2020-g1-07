@@ -55,12 +55,11 @@ INSERT INTO employees(id,dni,name,phone_number) VALUES (6,'30987455M','Luis Mart
 INSERT INTO artists(id) VALUES (4);
 INSERT INTO artists(id) VALUES (5);
 INSERT INTO artists(id) VALUES (6);
+INSERT INTO STAGE (id, capacity ) VALUES(1,40);
+INSERT INTO STAGE(id, capacity) VALUES(2,40);
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(1,'Magic and Pasion','2019-12-21',3,4,1);
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(2,'Hamlet','2020-02-17',2,6,2);
 
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id)VALUES(1,'Magic and Pasion','2019-12-21',3,4);
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id)VALUES(2,'Hamlet','2020-02-17',2,6);
-
-INSERT INTO STAGE (id, capacity, event_id) VALUES(1,40,1);
-INSERT INTO STAGE(id, capacity, event_id) VALUES(2,40,2);
 INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Ofelia Rodriguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (9,'30987454M','Maria Martin','567891232');

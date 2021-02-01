@@ -56,17 +56,7 @@ public class EventValidator implements Validator {
 		return result;
 	}
 	
-	public boolean isUsedInStage(Event event) {
-		boolean result = false;
-		List<Stage> stages = StreamSupport.stream(this.stageservice.findAll().spliterator(), false).collect(Collectors.toList());
-		for(Stage stage: stages) {
-			String eventName = event.getName();
-			String eventStage = stage.getEvent_id().getName();
-			
-			if(eventName.equals(eventStage)) result = true;
-		}
-		return result;
-	}
+	
 	@Override
 	public void validate(Object object, Errors errors) {
 		Event event = (Event)object;

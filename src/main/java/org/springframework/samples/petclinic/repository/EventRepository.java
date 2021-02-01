@@ -28,6 +28,9 @@ public interface EventRepository extends CrudRepository<Event, Integer>{
 	@Query("SELECT event FROM Event event where event.date = :date ORDER BY event.id")
 	public List<Event> findEventsByDate(@Param("date") LocalDate date);
 
-	@Query("SELECT stage FROM Stage stage where stage.event_id.id = :id")
-	public Stage findStageForEvent(@Param("id") Integer id);
+	//@Query("SELECT stage FROM Stage stage where stage.event_id.id = :id")
+	//public Stage findStageForEvent(@Param("id") Integer id);
+	
+	@Query("SELECT stage FROM Stage stage ORDER BY stage.id")
+	List<Stage> findStages() throws DataAccessException;
 }
