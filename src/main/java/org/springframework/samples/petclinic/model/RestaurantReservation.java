@@ -35,6 +35,6 @@ public class RestaurantReservation extends BaseEntity{
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "time_interval_id")
+    @JoinColumn(name = "time_interval_id")
 	private TimeInterval timeInterval;
 }
