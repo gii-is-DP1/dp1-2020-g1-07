@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
-import org.springframework.samples.petclinic.model.RestaurantTable;
+import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.repository.RestaurantReservationRepository;
-import org.springframework.samples.petclinic.repository.RestaurantTableRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 public class RestaurantReservationService {
@@ -45,5 +45,10 @@ public class RestaurantReservationService {
 	@Transactional
 	public Collection<RestaurantReservation> findRestaurantReservations() {
 		return restaurantReservationrepo.findRestaurantReservations();
+	}
+	
+	public Collection<TimeInterval> findTimeIntervals() throws DataAccessException{
+		// TODO Auto-generated method stub
+		return restaurantReservationrepo.findTimeIntervals();
 	}
 }
