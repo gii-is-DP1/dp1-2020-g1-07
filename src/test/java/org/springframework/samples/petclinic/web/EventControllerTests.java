@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +24,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Artist;
-
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.service.EventService;
-import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.samples.petclinic.service.StageService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -105,6 +106,7 @@ public class EventControllerTests {
 		List<Event> events = new ArrayList<Event>();
 		events.add(event);events.add(event2);
 		given(this.eventService.findAll()).willReturn(events);
+		given(this.eventService.findEventbyId(1)).willReturn(Optional.of(event));
 		
 	}
 	
@@ -139,4 +141,55 @@ public class EventControllerTests {
 		.andExpect(model().attributeHasFieldErrors("event", "artist_id"))
 		.andExpect(view().name("events/addEvent"));
 	}
+	@WithMockUser(value = "spring")
+    @Test
+    void testProcessCreationFormRepeatedName() throws Exception {
+		mockMvc.perform(post("/events/save").param("name", "Magic and Pasion")
+						.with(csrf())
+						.param("date", "2020/12/25")
+						.param("showtype_id", "Magic")
+						.param("artist_id", "45345678a"))
+			.andExpect(status().is2xxSuccessful())
+			.andExpect(model().attributeHasErrors("event"))
+			.andExpect(model().attributeHasFieldErrors("event", "name"))
+			.andExpect(view().name("events/addEvent"));
+	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateEventForm() throws Exception {
+		mockMvc.perform(get("/events/{eventId}/edit", 1)).andExpect(status().isOk())
+				.andExpect(model().attributeExists("event"))
+				.andExpect(model().attribute("event", hasProperty("name", is(eventService.findEventbyId(1).get().getName()))))
+				.andExpect(model().attribute("event", hasProperty("date", is(eventService.findEventbyId(1).get().getDate()))))
+				.andExpect(model().attribute("event", hasProperty("showtype_id", is(eventService.findShowTypes().toArray()[2]))))
+				.andExpect(model().attribute("event", hasProperty("artist_id", is(eventService.findArtists().toArray()[0]))))
+				.andExpect(view().name("events/updateEvent"));
+	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateEventFormSuccess() throws Exception {
+		mockMvc.perform(post("/events/{eventId}/edit",1).param("name", "Magic and Pasion")
+				.with(csrf())
+				.param("date", "2020/12/27")
+				.param("showtype_id", "Magic")
+				.param("artist_id", "45345678a"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/events"));
+	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateGameFormHasErrors() throws Exception {
+		mockMvc.perform(post("/events/{eventId}/edit", 1).param("name", "")
+							.with(csrf())
+							.param("date", "2020/12/27")
+							.param("showtype_id", "Magic")
+							.param("artist_id", "45345678a"))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeHasErrors("event"))
+				.andExpect(model().attributeHasFieldErrors("event", "name"))
+				.andExpect(view().name("events/updateEvent"));
+	}
+	
+	
+	
 }

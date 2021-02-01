@@ -9,13 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Employee;
-import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.samples.petclinic.service.ScheduleService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;

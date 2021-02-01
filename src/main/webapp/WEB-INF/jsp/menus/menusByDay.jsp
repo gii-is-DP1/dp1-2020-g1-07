@@ -36,8 +36,9 @@ $(document).ready(function(){
         
         <div class="control-group">
         	Dates <select id="comboboxDates" name="date">
+        	<option selected>Selecciona fecha</option>
             <c:forEach var="date" items="${dates}">
-            	<option selected>Selecciona fecha</option>
+            	
             	<option value="${date}">${date}</option>
             </c:forEach>
             </select>

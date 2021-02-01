@@ -7,9 +7,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.Artist;
-import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.service.EventService;
-import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Component;
 
 @Component

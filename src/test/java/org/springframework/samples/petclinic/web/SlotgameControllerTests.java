@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +22,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.model.Slotgame;
-import org.springframework.samples.petclinic.model.Menu;
-import org.springframework.samples.petclinic.model.Shift;
+import org.springframework.samples.petclinic.service.SlotMachineService;
 import org.springframework.samples.petclinic.service.SlotgameService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -43,6 +42,9 @@ public class SlotgameControllerTests {
 	@MockBean
 	private SlotgameService slotgameService;
 	
+	@MockBean
+	private SlotMachineService slotMachineService;
+	
 	private Slotgame slotgame;
 
 	@BeforeEach
@@ -56,6 +58,9 @@ public class SlotgameControllerTests {
 		List<Slotgame> slotgames = new ArrayList<Slotgame>();
 		slotgames.add(slotgame);
 		given(this.slotgameService.findAll()).willReturn(slotgames);
+		
+		List<SlotMachine> slotmachines = new ArrayList<SlotMachine>();
+		given(this.slotMachineService.findAll()).willReturn(slotmachines);
 	}
 	
 	@WithMockUser(value = "spring")

@@ -19,6 +19,7 @@
 
         <form:form modelAttribute="cgain" class="form-horizontal" action="/cgains/save">
             <div class="form-group has-feedback">
+                <petclinic:inputField label="Table Id" name="tableId"/>
             	<petclinic:inputField label="Amount" name="amount"/>
                 <petclinic:inputField label="Date" name="date"/>
                 <div class="control-group">

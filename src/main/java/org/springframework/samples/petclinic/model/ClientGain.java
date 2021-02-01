@@ -36,4 +36,7 @@ public class ClientGain extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "game_id")
 	private Game game;
+	
+	@JoinColumn(name = "tableId")
+    private Integer tableId;
 }

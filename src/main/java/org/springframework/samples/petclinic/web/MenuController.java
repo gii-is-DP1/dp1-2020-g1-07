@@ -28,9 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-import com.google.gson.Gson;
-
-
 @Controller
 @RequestMapping("/menus")
 public class MenuController {
@@ -193,12 +190,12 @@ public class MenuController {
 	@ResponseBody
 	@RequestMapping(value = "/new/loadDishesByShift/{id}", method = RequestMethod.GET)
 	public String loadFirstDishesByShift(@PathVariable("id")int id) {
-		Gson gson = new Gson();
-		String json = "[{";
+		//Gson gson = new Gson();
+		String json = "[";
 		try {
 			List<Dish> first_dishes = new ArrayList<Dish>(menuService.findFirstDishesByShift(id));
 			for(Dish dish:first_dishes) {
-				json = json + "\"id\":" + dish.getId() +","
+				json = json + "{\"id\":" + dish.getId() +","
 						+ "\"name\":\"" + dish.getName() +"\","
 						+ "\"dish_course\":{"
 							+ "\"id\":" + dish.getDish_course().getId() + ","
@@ -207,17 +204,17 @@ public class MenuController {
 							+ "\"id\":" + dish.getShift().getId() + ","
 							+ "\"name\":\"" + dish.getShift().getName() + "\"}},";
 				if(first_dishes.indexOf(dish)==first_dishes.size()-1) {
-					json = json.substring(0, json.length() - 1) + "]#[{";
+					json = json.substring(0, json.length() - 1) + "]#[";
 				}
 			}
 			
 			if(first_dishes.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]#[{";
+				json = json.substring(0, json.length() - 1) + "]#[";
 			}
 			
 			List<Dish> second_dishes = new ArrayList<Dish>(menuService.findSecondDishesByShift(id));
 			for(Dish dish:second_dishes) {
-				json = json + "\"id\":" + dish.getId() +","
+				json = json + "{\"id\":" + dish.getId() +","
 						+ "\"name\":\"" + dish.getName() +"\","
 						+ "\"dish_course\":{"
 							+ "\"id\":" + dish.getDish_course().getId() + ","
@@ -226,16 +223,16 @@ public class MenuController {
 							+ "\"id\":" + dish.getShift().getId() + ","
 							+ "\"name\":\"" + dish.getShift().getName() + "\"}},";
 				if(second_dishes.indexOf(dish)==second_dishes.size()-1) {
-					json = json.substring(0, json.length() - 1) + "]#[{";
+					json = json.substring(0, json.length() - 1) + "]#[";
 				}
 			}
 			if(second_dishes.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]#[{";
+				json = json.substring(0, json.length() - 1) + "]#[";
 			}
 			
 			List<Dish> desserts = new ArrayList<Dish>(menuService.findDessertsByShift(id));
 			for(Dish dish:desserts) {
-				json = json + "\"id\":" + dish.getId() +","
+				json = json + "{\"id\":" + dish.getId() +","
 						+ "\"name\":\"" + dish.getName() +"\","
 						+ "\"dish_course\":{"
 							+ "\"id\":" + dish.getDish_course().getId() + ","
