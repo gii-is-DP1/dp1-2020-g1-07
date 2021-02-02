@@ -41,14 +41,14 @@ public class RestaurantTableController {
 	}
 	
 	@GetMapping(path="/new")
-	public String createRestaurantReservation(ModelMap modelMap) {
-		String view = "restauranttables/addRestauranttable";
-		modelMap.addAttribute("restauranttable", new RestaurantReservation());
+	public String createRestaurantTable(ModelMap modelMap) {
+		String view = "restauranttables/addRestaurantTable";
+		modelMap.addAttribute("restaurantTable", new RestaurantTable());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String saveRestaurantReservation(@Valid RestaurantTable restauranttable, BindingResult result, ModelMap modelMap) {
+	public String saveRestaurantTable(@Valid RestaurantTable restauranttable, BindingResult result, ModelMap modelMap) {
 		String view="restauranttables/restauranttablesList";
 		if(result.hasErrors()) {
 			modelMap.addAttribute("restauranttable", restauranttable);
@@ -67,7 +67,7 @@ public class RestaurantTableController {
 	}
 	
 	@GetMapping(path="/delete/{restauranttableId}")
-	public String deleteRestaurantReservation(@PathVariable("restauranttableId") int restauranttableId, ModelMap modelMap) {
+	public String deleteRestaurantTable(@PathVariable("restauranttableId") int restauranttableId, ModelMap modelMap) {
 		String view="restauranttables/restauranttablesList";
 		Optional<RestaurantTable> restauranttable = RestaurantTableService.findRestaurantTableId(restauranttableId);
 		if(restauranttable.isPresent()) {
