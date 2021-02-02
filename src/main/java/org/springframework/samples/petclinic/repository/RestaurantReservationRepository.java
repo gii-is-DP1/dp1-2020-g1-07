@@ -30,6 +30,6 @@ public interface RestaurantReservationRepository extends CrudRepository<Restaura
 	@Query("SELECT restauranttable FROM RestaurantTable restauranttable")
 	public List<RestaurantTable> findRestaurantTables();
 	
-	@Query("SELECT DISTINCT c FROM Client c WHERE c.user.username = :user%")
+	@Query("SELECT DISTINCT c FROM Client c WHERE c.user.username LIKE :user%")
 	public Client findClientFromUsername(@Param("user")String user) throws DataAccessException;
 }

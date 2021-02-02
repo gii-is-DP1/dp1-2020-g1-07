@@ -20,13 +20,13 @@ import lombok.Setter;
 public class RestaurantReservation extends BaseEntity{
 	
 	@NotNull
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
+    private LocalDate date;
+	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "restauranttable_id")
 	private RestaurantTable restauranttable;
-	
-	@NotNull
-	@DateTimeFormat(pattern= "yyyy-MM-dd")
-    private LocalDate date;
 	
 	@NotNull
 	@ManyToOne
