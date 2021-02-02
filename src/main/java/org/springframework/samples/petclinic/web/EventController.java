@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/events")
 public class EventController {
@@ -45,6 +47,7 @@ public class EventController {
 	
 	@GetMapping()
 	public String eventsList(ModelMap modelMap) {
+		log.info("Loading list of events view");
 		String view = "events/listEvent";
 		Iterable<Event> events=eventService.findAll();
 		modelMap.addAttribute("events", events);
@@ -54,6 +57,7 @@ public class EventController {
 	
 	@GetMapping(path="/byDay")
 	public String eventsByDay(ModelMap modelMap) {
+		log.info("Loading the events for a date");
 		String vista= "events/eventsByDay";
 		Collection<LocalDate> list=eventService.findAllDates();
 		Iterable<LocalDate> dates = list;
@@ -61,7 +65,7 @@ public class EventController {
 		return vista;
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/byDay/{date}", method = RequestMethod.GET)
 	public String loadEventsByDate(@PathVariable("date")String datestr) {
 		String json = "[";
@@ -99,10 +103,11 @@ public class EventController {
 			System.out.println(e);
 		}
 		return json;
-	}
+	}*/
 
 	@GetMapping(path="/new")
 	public String createEvent(ModelMap modelMap) {
+		log.info("Loading new event form");
 		String view="events/addEvent";
 		modelMap.addAttribute("event", new Event());
 		return view;
@@ -110,17 +115,21 @@ public class EventController {
 	
 	@PostMapping(path="/save")
 	public String saveEvent(@Valid Event event, BindingResult result, ModelMap modelMap) {
+		log.info("Saving event: " + event.getId());
 		String view="events/listEvent";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("event", event);
 			return "events/addEvent";
 			
 		}else {
 			if(eventValidator.eventWithTheSameName(event.getName())){
+				log.warn("There is a event with the same name");
 				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
 				modelMap.addAttribute("event", event);
 				return "events/addEvent";
 			}else {
+				log.info("Event validated: saving into DB");
 			eventService.save(event);
 			modelMap.addAttribute("message", "Event successfully saved!");
 			view=eventsList(modelMap);
@@ -130,18 +139,16 @@ public class EventController {
 	}
 	@GetMapping(path="/delete/{eventId}")
 	public String deleteEvent(@PathVariable("eventId") int eventId, ModelMap modelMap) {
+		log.info("Deleting event: " + eventId);
 		String view="events/listEvent";
 		Optional<Event> event = eventService.findEventbyId(eventId);
 		if(event.isPresent()) {
-			if(eventValidator.isUsedInStage(event.get())) {
-				modelMap.addAttribute("message", "This event can't be deleted, is in one of the stages!");
-				view=eventsList(modelMap);
-			}else {
+			log.info("Event found: deleting");
 			eventService.delete(event.get());
-			modelMap.addAttribute("message", "Event successfully deleted!");
+			modelMap.addAttribute("message", "Event not found!");
 			view=eventsList(modelMap);
-			}
 		}else {
+			log.warn("Event not found in DB: " + eventId);
 			modelMap.addAttribute("message", "Event not found!");
 			view=eventsList(modelMap);
 		}
@@ -149,8 +156,8 @@ public class EventController {
 	}
 	@GetMapping(value = "/{eventId}/edit")
 	public String initUpdategameForm(@PathVariable("eventId") int eventId, ModelMap model) {
+		log.info("Loading update event form");
 		Event event = eventService.findEventbyId(eventId).get();
-		
 		model.put("event", event);
 		return "events/updateEvent";
 	}
@@ -158,18 +165,21 @@ public class EventController {
 	@PostMapping(value = "/{eventId}/edit")
 	public String processUpdategameForm(@Valid Event event, BindingResult result,
 			@PathVariable("eventId") int eventId, ModelMap model) {
+		log.info("Updating event: " + eventId);
 		event.setId(eventId);
 		if (result.hasErrors()) {
+			log.warn("Found errors on update: " + result.getAllErrors());
 			model.put("event", event);
 			return "events/updateEvent";
 		}
 		else {
 			if(eventValidator.eventWithTheSameName_Update(event.getName(), eventId)){
+				log.warn("There is a event with the same name");
 				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
 				model.addAttribute("event", event);
 				return "events/updateEvent";
 			}
-			
+			log.info("Event validated: updating into DB");
 			this.eventService.save(event);
 			return "redirect:/events";
 		}
