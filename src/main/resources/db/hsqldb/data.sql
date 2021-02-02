@@ -1,3 +1,16 @@
+-- ADMIN: admin1|4dm1n
+INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678A',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
+-- EMPLOYEE: artist1|artist1
+INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431Z',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (2,'artist1','employee');
+-- CLIENT: client1|client1
+INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','11111111A',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (3,'client1','client');
+-- TEMPORAL
+INSERT INTO users(username,password,dni,enabled) VALUES ('owner1','0wn3r','98765431Z',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'owner1','owner');
+
 INSERT INTO GAMETYPES VALUES(1,'Roulette');
 INSERT INTO GAMETYPES VALUES(2, 'Cards');
 INSERT INTO GAMETYPES VALUES(3,'Dices');
@@ -42,7 +55,7 @@ INSERT INTO CASINOTABLE VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,
 INSERT INTO CASINOTABLE VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
 INSERT INTO CASINOTABLE VALUES(4, 'Mesa 4','2020-01-04','04:40:00','23:30:00',1,2,1);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678A','Manuel Rodriguez','987654321');
+INSERT INTO employees(id,dni,name,phone_number, user_username) VALUES (1,'12345678A','Manuel Rodriguez','987654321', 'admin1');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432Z','Rosa Garcia','123456789');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (3,'30987456M','Jorge Martin','567891234');
 INSERT INTO administrators(id) VALUES (1);
@@ -50,7 +63,7 @@ INSERT INTO administrators(id) VALUES (2);
 INSERT INTO administrators(id) VALUES (3);
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (4,'12345677A','Natalia Rodriguez','987654320');
-INSERT INTO employees(id,dni,name,phone_number) VALUES (5,'98765431Z','Quique Garcia','123456788');
+INSERT INTO employees(id,dni,name,phone_number, user_username) VALUES (5,'98765431Z','Quique Garcia','123456788', 'artist1');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (6,'30987455M','Luis Martin','567891233');
 INSERT INTO artists(id) VALUES (4);
 INSERT INTO artists(id) VALUES (5);
@@ -99,7 +112,7 @@ INSERT INTO waiters(id) VALUES (19);
 INSERT INTO waiters(id) VALUES (20);
 INSERT INTO waiters(id) VALUES (21);
 
-INSERT INTO clients(id,dni,name,phone_number) VALUES (1,'11111111A', 'Ofelia Bustos','444444444');
+INSERT INTO clients(id,dni,name,phone_number, user_username) VALUES (1,'11111111A', 'Ofelia Bustos','444444444', 'client1');
 INSERT INTO clients(id,dni,name,phone_number) VALUES (2,'22222222B', 'Federico Gonzalez','555555555');
 INSERT INTO clients(id,dni,name,phone_number) VALUES (3,'33333333C', 'Aurelio Pino','666666666');
 
@@ -111,18 +124,7 @@ INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (4,-20
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (5,-100,'2020-09-21',1,1,1);
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (6,150,'2020-09-21',1,1,1);
 
--- ADMIN: admin1|4dm1n
-INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678A',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
--- EMPLOYEE: artist1|artist1
-INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431Z',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (2,'artist1','employee');
--- CLIENT: client1|client1
-INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','11111111A',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (3,'client1','client');
--- TEMPORAL
-INSERT INTO users(username,password,dni,enabled) VALUES ('owner1','0wn3r','98765431Z',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (4,'owner1','owner');
+
 
 INSERT INTO dish_courses VALUES (1, 'First');
 INSERT INTO dish_courses VALUES (2, 'Second');

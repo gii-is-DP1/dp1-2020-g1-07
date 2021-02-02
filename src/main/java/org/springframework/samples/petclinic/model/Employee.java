@@ -34,7 +34,7 @@ public class Employee extends NamedEntity{
 	private String phone_number;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_username", referencedColumnName = "username")
     private User user;
 	
 	public String toString() {

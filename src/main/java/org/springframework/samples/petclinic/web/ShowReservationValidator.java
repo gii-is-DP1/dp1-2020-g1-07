@@ -7,9 +7,11 @@ import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.service.ShowReservationService;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class ShowReservationValidator implements Validator{
 
 	private static final String REQUIRED = "required";
