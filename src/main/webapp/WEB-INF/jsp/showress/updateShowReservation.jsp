@@ -7,7 +7,7 @@
 
 <petclinic:layout pageName="showress">
     <jsp:body>
-        <h2>Edit Client Gain</h2>
+        <h2>Edit Show Reservation</h2>
 
 		<script>
     	function chgActionSh()

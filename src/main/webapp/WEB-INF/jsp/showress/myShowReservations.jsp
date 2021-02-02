@@ -8,12 +8,11 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="showress">
-    <h2>Show Reservations</h2>
+    <h2>My Show Reservations</h2>
 
     <table id="showresTable" class="table table-striped">
         <thead>
         <tr>
-        	<th style="width: 150px;">Client</th>
             <th style="width: 150px;">Event</th>
             <th style="width: 200px;">Seats</th>
             <th>Actions</th>
@@ -22,9 +21,6 @@
         <tbody>
         <c:forEach items="${showress}" var="s">
             <tr>
-                <td>
-                    <c:out value="${s.client.dni}"/>
-                </td>
                 <td>
                     <c:out value="${s.event.name}"/>
                 </td>
@@ -47,5 +43,10 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="form-group">
+    	<form method="get" action="/showress/new">
+    		<button class="btn btn-default" type="submit">Add new show reservation</button>
+		</form>
+	</div>
     
 </petclinic:layout>

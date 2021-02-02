@@ -6,9 +6,11 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.service.ShowReservationService;
+import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,7 +34,7 @@ public class ShowReservationController {
 	@Autowired
 	private ShowReservationValidator validator;
 	
-	@InitBinder("clientGain")
+	@InitBinder("showRes")
 	public void initShowReservationBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(validator);
 	}
@@ -46,11 +48,26 @@ public class ShowReservationController {
 		return view;
 	}
 	
+	@GetMapping(path="/user")
+	public String userShowReservations(ModelMap modelMap) {
+		log.info("Loading user showress view");
+		String view= "showress/myShowReservations";
+		String username = UserUtils.getUser();
+		Client client = showresService.findClientFromUsername(username);
+		Iterable<ShowReservation> showress = showresService.findReservationsForUser(client);
+		modelMap.addAttribute("showress", showress);
+		return view;
+	}
+	
 	@GetMapping(path="/new")
 	public String createShowReservation(ModelMap modelMap) {
 		log.info("Loading new showres form");
 		String view="showress/addShowReservation";
-		modelMap.addAttribute("showres", new ShowReservation());
+		ShowReservation showres = new ShowReservation();
+		String username = UserUtils.getUser();
+		Client client = showresService.findClientFromUsername(username);
+		showres.setClient(client);
+		modelMap.addAttribute("showres", showres);
 		Collection<Event> events = showresService.findAvailableShows();
 		modelMap.addAttribute("events", events);
 		return view;

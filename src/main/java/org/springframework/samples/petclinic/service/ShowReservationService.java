@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.repository.ShowReservationRepository;
@@ -51,6 +52,16 @@ private  ShowReservationRepository showresRepo;
 	public Collection<Event> findAvailableShows() throws DataAccessException{
 		log.info("Loading shows available to book seats");
 		return showresRepo.findAvailableShows(LocalDate.now());
+	}
+	
+	public Collection<ShowReservation> findReservationsForUser(Client client) throws DataAccessException{
+		log.info("Loading show reservations for client: " + client.getDni());
+		return showresRepo.findReservationsForUser(LocalDate.now(), client);
+	}
+	
+	public Client findClientFromUsername(String username) throws DataAccessException{
+		log.info("Loading logged client");
+		return showresRepo.findClientFromUsername(username);
 	}
 	
 	public Integer findAvailableSeats(Integer eventId) throws DataAccessException{

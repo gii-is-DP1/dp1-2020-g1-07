@@ -24,6 +24,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
+                	<input type="hidden" name="client" value="${showres.client}"/>
                     <input type="hidden" name="showresId" value="${showres.id}"/>
                     <button class="btn btn-default" type="submit">Add Reservation</button>
                 </div>
