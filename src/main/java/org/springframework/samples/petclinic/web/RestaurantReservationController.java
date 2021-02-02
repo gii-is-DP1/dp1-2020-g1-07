@@ -4,16 +4,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
+import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
+import org.springframework.samples.petclinic.service.RestaurantTableService;
+import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,6 +40,9 @@ public class RestaurantReservationController {
 
 	@Autowired
 	private RestaurantReservationService RestaurantReservationService;
+	
+	@Autowired
+	private RestaurantTableService restaurantTableService;
 	
 	@Autowired
 	private RestaurantReservationValidator restaurantreservationValidator;
@@ -88,10 +98,55 @@ public class RestaurantReservationController {
 	@GetMapping(path="/new")
 	public String createRestaurantReservation(ModelMap modelMap) {
 		String view="restaurantreservations/addRestaurantReservation";
-		modelMap.addAttribute("restaurantreservation", new RestaurantReservation());
+		RestaurantReservation reservation = new RestaurantReservation();
+		String username = UserUtils.getUser();
+		Client client = RestaurantReservationService.findClientFromUsername(username);
+		reservation.setClient(client);
+		modelMap.addAttribute("restaurantreservation", reservation);
 		return view;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/new/loadDinersByTimeInterval/{id}/{date}", method = RequestMethod.GET)
+	public String loadDinersByTimeInterval(@PathVariable("date")String datestr, @PathVariable("id")int id) {
+		String json = "[";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		LocalDate date = LocalDate.parse(datestr, formatter);
+		try {
+			List<RestaurantTable> tables = TablesbyDateAndTimeInterval(date,id);
+			for(RestaurantTable table:tables) {
+				json = json + "{\"id\":" + table.getId() +","
+						+ "\"size\":" + table.getSize() +"},";
+				if(tables.indexOf(table)==tables.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(tables.size()==0) {
+				json = json + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(TablesbyDateAndTimeInterval(date,id));
+		}
+		return json;
+	}
+	
+	private List<RestaurantTable> TablesbyDateAndTimeInterval(LocalDate date, int id) {
+		// TODO Auto-generated method stub
+		List<RestaurantTable> tables = StreamSupport.stream(restaurantTableService.findAll().spliterator(), false).collect(Collectors.toList());
+		List<RestaurantTable> result = new ArrayList<RestaurantTable>();
+		List<RestaurantReservation> reservations = new ArrayList<RestaurantReservation>(RestaurantReservationService.findRestaurantReservationsByDate(date));
+		for(RestaurantReservation reservation:reservations) {
+			if(reservation.getTimeInterval().getId()==id) {
+				tables.remove(reservation.getRestauranttable());
+			}
+		}
+		Set<Integer> sizes = new HashSet<Integer>();
+		for(RestaurantTable table:tables) {
+			if(!sizes.contains(table.getSize())) result.add(table);
+		}
+		return result;
+	}
+
 	@PostMapping(path="/save")
 	public String saveRestaurantReservation(@Valid RestaurantReservation restaurantreservation, BindingResult result, ModelMap modelMap) {
 		String view="restaurantreservations/restaurantreservationsList";
@@ -156,5 +211,10 @@ public class RestaurantReservationController {
 	@ModelAttribute("time_intervals")
 	public Collection<TimeInterval> populateTimeIntervals() {
 		return this.RestaurantReservationService.findTimeIntervals();
+	}
+	
+	@ModelAttribute("restaurant_tables")
+	public Collection<RestaurantTable> populateRestaurantTables() {
+		return this.RestaurantReservationService.findRestaurantTables();
 	}
 }
