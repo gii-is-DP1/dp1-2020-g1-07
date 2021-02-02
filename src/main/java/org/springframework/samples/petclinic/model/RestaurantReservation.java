@@ -25,7 +25,7 @@ public class RestaurantReservation extends BaseEntity{
 	private RestaurantTable restauranttable;
 	
 	@NotNull
-	@DateTimeFormat(pattern= "yyyy/MM/dd")
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
     private LocalDate date;
 	
 	@NotNull

@@ -6,34 +6,37 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
+import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TimeIntervalFormatter implements Formatter<TimeInterval> {
+public class RestaurantTableFormatter implements Formatter<RestaurantTable>  {
 	
 	private final RestaurantReservationService restaurantReservationService;
 
 	@Autowired
-	public TimeIntervalFormatter(RestaurantReservationService restaurantReservationService) {
+	public RestaurantTableFormatter(RestaurantReservationService restaurantReservationService) {
 		this.restaurantReservationService = restaurantReservationService;
 	}
 
 	@Override
-	public String print(TimeInterval timeInterval, Locale locale) {
-		return timeInterval.getName();
+	public String print(RestaurantTable restaurantTable, Locale locale) {
+		return restaurantTable.getId().toString();
 	}
 
 	@Override
-	public TimeInterval parse(String text, Locale locale) throws ParseException {
-		Collection<TimeInterval> findTimeIntervals = this.restaurantReservationService.findTimeIntervals();
-		for (TimeInterval timeInterval : findTimeIntervals) {
-			if (timeInterval.getId()==Integer.valueOf(text)) {
-				return timeInterval;
+	public RestaurantTable parse(String text, Locale locale) throws ParseException {
+		Collection<RestaurantTable> findRestaurantTables = this.restaurantReservationService.findRestaurantTables();
+		for (RestaurantTable restaurantTable : findRestaurantTables) {
+			if (restaurantTable.getId()==Integer.valueOf(text)) {
+				return restaurantTable;
 			}
 		}
 		throw new ParseException("type not found: " + text, 0);
 	}
+	
+	
 
 }

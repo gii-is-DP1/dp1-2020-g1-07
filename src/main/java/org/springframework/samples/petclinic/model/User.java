@@ -2,12 +2,13 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User{
@@ -16,9 +17,6 @@ public class User{
 	String username;
 	
 	String password;
-	
-	@JoinColumn(name = "dni")
-	String dni;
 	
 	boolean enabled;
 	

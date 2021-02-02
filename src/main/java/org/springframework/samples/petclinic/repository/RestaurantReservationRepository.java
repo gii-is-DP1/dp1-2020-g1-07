@@ -7,8 +7,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.Menu;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
+import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +26,10 @@ public interface RestaurantReservationRepository extends CrudRepository<Restaura
 	
 	@Query("SELECT restaurantreservation FROM RestaurantReservation restaurantreservation where restaurantreservation.date = :date ORDER BY restaurantreservation.timeInterval.id")
 	public List<RestaurantReservation> findRestaurantReservationsByDate(@Param("date") LocalDate date);
+	
+	@Query("SELECT restauranttable FROM RestaurantTable restauranttable")
+	public List<RestaurantTable> findRestaurantTables();
+	
+	@Query("SELECT DISTINCT c FROM Client c WHERE c.user.username = :user%")
+	public Client findClientFromUsername(@Param("user")String user) throws DataAccessException;
 }

@@ -8,10 +8,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
-import org.springframework.samples.petclinic.model.SlotGain;
-import org.springframework.samples.petclinic.model.SlotMachine;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
-import org.springframework.samples.petclinic.service.SlotGainService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -59,7 +56,7 @@ private static final String REQUIRED = "required";
 			errors.rejectValue("date", REQUIRED, REQUIRED);
 		}
 		if(restT == null) {
-			errors.rejectValue("restaurantTable", REQUIRED, REQUIRED);
+			errors.rejectValue("restauranttable", REQUIRED, REQUIRED);
 		}
 	}
 }

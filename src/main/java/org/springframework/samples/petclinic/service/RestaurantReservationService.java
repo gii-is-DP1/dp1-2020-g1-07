@@ -6,11 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Menu;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
+import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.repository.RestaurantReservationRepository;
-import org.springframework.samples.petclinic.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 @Service
@@ -64,5 +64,15 @@ public class RestaurantReservationService {
 	public Collection<RestaurantReservation> findRestaurantReservationsByDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		return restaurantReservationrepo.findRestaurantReservationsByDate(date);
+	}
+	
+	@Transactional
+	public Collection<RestaurantTable> findRestaurantTables() {
+		return restaurantReservationrepo.findRestaurantTables();
+	}
+
+	public Client findClientFromUsername(String username) {
+		// TODO Auto-generated method stub
+		return restaurantReservationrepo.findClientFromUsername(username);
 	}
 }
