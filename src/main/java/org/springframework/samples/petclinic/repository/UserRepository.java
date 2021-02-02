@@ -8,13 +8,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.stereotype.Repository;
 
-
-public interface UserRepository extends  CrudRepository<User, String>{
+@Repository("userRepository")
+public interface UserRepository extends CrudRepository<User, String>{
 	
-	@Query("SELECT employee FROM Employee employee ORDER BY employee.id")
+	@Query("SELECT e FROM Employee e ORDER BY e.id")
 	List<Employee> findEmployees() throws DataAccessException;
 	
-	@Query("SELECT client FROM Client client ORDER BY client.id")
+	@Query("SELECT c FROM Client c ORDER BY c.id")
 	List<Client> findClients() throws DataAccessException;
 }

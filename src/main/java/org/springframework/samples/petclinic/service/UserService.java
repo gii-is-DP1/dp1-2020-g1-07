@@ -22,45 +22,57 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Client;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Mostly used as a facade for all Petclinic controllers Also a placeholder
- * for @Transactional and @Cacheable annotations
- *
- * @author Michael Isvy
- */
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
+	private UserRepository userRepo;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public UserService(UserRepository userRepo) {
+		this.userRepo = userRepo;
 	}
 
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
-		userRepository.save(user);
+	public int userCount() {
+		return (int)userRepo.count();
+	}
+
+	@Transactional
+	public Iterable<User> findAll() {
+		return userRepo.findAll();
 	}
 	
+	@Transactional
+	public void saveUser(User user) throws DataAccessException {
+		user.setEnabled(true);
+		userRepo.save(user);
+	}
+	
+	@Transactional(readOnly=true)
 	public Optional<User> findUser(String username) {
-		return userRepository.findById(username);
+		return userRepo.findById(username);
+	}
+	
+	public  void delete(User user) { 
+		userRepo.delete(user);
 	}
 	
 	public Collection<Employee> findEmployees() throws DataAccessException{
-		// TODO Auto-generated method stub
-		return userRepository.findEmployees();
+		log.info("Loading employees from DB");
+		return userRepo.findEmployees();
 	}
 	
 	public Collection<Client> findClients() throws DataAccessException{
-		// TODO Auto-generated method stub
-		return userRepository.findClients();
+		log.info("Loading clients from DB");
+		return userRepo.findClients();
 	}
 }
