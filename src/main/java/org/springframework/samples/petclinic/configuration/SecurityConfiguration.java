@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * @author japarejo
  */
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -82,6 +83,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/cgains/user").hasAnyAuthority("client")
 				.antMatchers("/cgains/user/**").hasAnyAuthority("client")
 				.antMatchers("/cgains/**").hasAnyAuthority("employee", "admin")
+				.antMatchers("/showress").hasAnyAuthority("admin")
+				.antMatchers("/showress/user").hasAnyAuthority("client")
+				.antMatchers("/showress/user/**").hasAnyAuthority("client")
+				.antMatchers("/showress/**").hasAnyAuthority("client", "admin")
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
@@ -121,7 +126,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {	    
+	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
 	}
