@@ -14,7 +14,6 @@ import org.springframework.samples.petclinic.repository.EventRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jdk.internal.jline.internal.Log;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service

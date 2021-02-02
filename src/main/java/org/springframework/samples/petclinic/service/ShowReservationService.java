@@ -51,25 +51,21 @@ private  ShowReservationRepository showresRepo;
 	
 	public Collection<Event> findAvailableShows() throws DataAccessException{
 		log.info("Loading shows available to book seats");
-		//return showresRepo.findAvailableShows(LocalDate.now());
-		return null;
+		return showresRepo.findAvailableShows(LocalDate.now());
 	}
 	
 	public Collection<ShowReservation> findReservationsForUser(Client client) throws DataAccessException{
 		log.info("Loading show reservations for client: " + client.getDni());
-		//return showresRepo.findReservationsForUser(LocalDate.now(), client);
-		return null;
+		return showresRepo.findReservationsForUser(LocalDate.now(), client.getId());
 	}
 	
 	public Client findClientFromUsername(String username) throws DataAccessException{
 		log.info("Loading logged client");
-		//return showresRepo.findClientFromUsername(username);
-		return null;
+		return showresRepo.findClientFromUsername(username);
 	}
 	
 	public Integer findAvailableSeats(Integer eventId) throws DataAccessException{
 		log.info("Loading available seats from DB for event: " + eventId);
-		//return showresRepo.findTotalSeats(eventId) - showresRepo.findReservedSeats(eventId);
-		return 0;
+		return showresRepo.findTotalSeats(eventId) - showresRepo.findReservedSeats(eventId);
 	}
 }
