@@ -61,19 +61,15 @@ public class RestaurantTableValidator implements Validator{
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return RestaurantReservation.class.isAssignableFrom(clazz);
+		return RestaurantTable.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		RestaurantReservation restaurantReservation = (RestaurantReservation) target;
-		LocalDate date = restaurantReservation.getDate();
-		RestaurantTable restT = restaurantReservation.getRestauranttable();
-		if (date == null) {
-			errors.rejectValue("date", REQUIRED, REQUIRED);
-		}
-		if(restT == null) {
-			errors.rejectValue("restaurantTable", REQUIRED, REQUIRED);
+		RestaurantTable restaurantTable = (RestaurantTable) target;
+		Integer size = restaurantTable.getSize();
+		if (size == null) {
+			errors.rejectValue("size", REQUIRED, REQUIRED);
 		}
 	}
 }
