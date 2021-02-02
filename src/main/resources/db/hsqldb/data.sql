@@ -147,6 +147,8 @@ INSERT INTO timeintervals VALUES(5, '22:00 - 23:00');
 INSERT INTO timeintervals VALUES(6, '23:00 - 00:00');
 
 INSERT INTO restauranttables VALUES(1, 4, 19);
+INSERT INTO restauranttables VALUES(2, 5, 20);
+
 
 INSERT INTO restaurantreservations VALUES(1, '2021-02-05', 1, 1, 1);
 INSERT INTO restaurantreservations VALUES(2, '2021-02-05', 2, 1, 2);
