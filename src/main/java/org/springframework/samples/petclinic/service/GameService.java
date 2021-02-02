@@ -11,6 +11,10 @@ import org.springframework.samples.petclinic.repository.CasinotableRepository;
 import org.springframework.samples.petclinic.repository.GameRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jdk.internal.jline.internal.Log;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class GameService {
 	@Autowired
@@ -44,6 +48,7 @@ public class GameService {
 	}
 	public Collection<GameType> findGameTypes() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading gametypes from DB");
         return gameRepo.findGameTypes();
     }
 	
