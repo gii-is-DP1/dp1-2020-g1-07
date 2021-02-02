@@ -100,7 +100,7 @@ public class RestaurantReservationController {
 		String view="restaurantreservations/addRestaurantReservation";
 		RestaurantReservation reservation = new RestaurantReservation();
 		String username = UserUtils.getUser();
-		Client client = RestaurantReservationService.findClientFromUsername(username);
+		Client client = RestaurantReservationService.findClientFromUsername(username).get();
 		reservation.setClient(client);
 		modelMap.addAttribute("restaurantreservation", reservation);
 		return view;

@@ -71,7 +71,7 @@ public class RestaurantReservationService {
 		return restaurantReservationrepo.findRestaurantTables();
 	}
 
-	public Client findClientFromUsername(String username) {
+	public Optional<Client> findClientFromUsername(String username) {
 		// TODO Auto-generated method stub
 		return restaurantReservationrepo.findClientFromUsername(username);
 	}
