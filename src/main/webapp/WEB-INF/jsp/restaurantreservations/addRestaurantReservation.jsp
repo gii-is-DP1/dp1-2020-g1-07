@@ -61,7 +61,7 @@ $(document).ready(function(){
 
         <form:form modelAttribute="restaurantreservation" class="form-horizontal" action="/restaurantreservations/save">
             <div class="form-group has-feedback">
-            	<input type="hidden" name="client" value="${restaurantreservation.client}"/>
+            	<input type="hidden" name="client" value="${client.dni}"/>
                 <div class="control-group">
                     <petclinic:inputField label="Date" name="date"/>
                 </div>

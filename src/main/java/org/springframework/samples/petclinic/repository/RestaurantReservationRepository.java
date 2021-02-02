@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,4 +34,7 @@ public interface RestaurantReservationRepository extends CrudRepository<Restaura
 	
 	@Query("SELECT DISTINCT c FROM Client c WHERE c.user.username LIKE :user%")
 	public Client findClientFromUsername(@Param("user")String user) throws DataAccessException;
+
+	@Query("SELECT DISTINCT c FROM Client c")
+	public Collection<Client> findClients();
 }

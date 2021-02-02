@@ -71,8 +71,13 @@ public class RestaurantReservationService {
 		return restaurantReservationrepo.findRestaurantTables();
 	}
 
-	public Optional<Client> findClientFromUsername(String username) {
+	public Client findClientFromUsername(String username) {
 		// TODO Auto-generated method stub
 		return restaurantReservationrepo.findClientFromUsername(username);
+	}
+
+	public Collection<Client> findClients() {
+		// TODO Auto-generated method stub
+		return restaurantReservationrepo.findClients();
 	}
 }

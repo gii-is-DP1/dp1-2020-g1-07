@@ -98,11 +98,7 @@ public class RestaurantReservationController {
 	@GetMapping(path="/new")
 	public String createRestaurantReservation(ModelMap modelMap) {
 		String view="restaurantreservations/addRestaurantReservation";
-		RestaurantReservation reservation = new RestaurantReservation();
-		String username = UserUtils.getUser();
-		Client client = RestaurantReservationService.findClientFromUsername(username).get();
-		reservation.setClient(client);
-		modelMap.addAttribute("restaurantreservation", reservation);
+		modelMap.addAttribute("restaurantreservation", new RestaurantReservation() );
 		return view;
 	}
 	
@@ -216,5 +212,12 @@ public class RestaurantReservationController {
 	@ModelAttribute("restaurant_tables")
 	public Collection<RestaurantTable> populateRestaurantTables() {
 		return this.RestaurantReservationService.findRestaurantTables();
+	}
+	
+	@ModelAttribute("client")
+	public Client populateClient() {
+		String username = UserUtils.getUser();
+		Client client = RestaurantReservationService.findClientFromUsername(username);
+		return client;
 	}
 }
