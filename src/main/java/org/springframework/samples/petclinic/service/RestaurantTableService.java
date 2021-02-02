@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RestaurantTable;
+import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +45,10 @@ private  RestaurantTableRepository restaurantTablerepo;
 	@Transactional
 	public Collection<RestaurantTable> findRestaurantTables() {
 		return restaurantTablerepo.findRestaurantTables();
+	}
+	
+	@Transactional
+	public Collection<Waiter> findWaiters() {
+		return restaurantTablerepo.findWaiters();
 	}
 }
