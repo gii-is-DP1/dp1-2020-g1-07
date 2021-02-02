@@ -18,8 +18,7 @@ public class User{
 	
 	String password;
 	
-	boolean enabled;
+	String dni; //TEMPORAL
 	
-	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	//private Set<Authorities> authorities;
+	boolean enabled;
 }
