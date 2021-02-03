@@ -19,28 +19,6 @@ private static final String REQUIRED = "required";
 	
 	@Autowired
 	private RestaurantReservationService restaurantReservationService;
-	
-	public Boolean getRestaurantReservationwithIdDifferent(RestaurantReservation RS) {
-		Boolean result = false;
-		List<RestaurantReservation> restaurantReservations = StreamSupport.stream(this.restaurantReservationService.findAll().spliterator(), false).collect(Collectors.toList());
-		for (RestaurantReservation restaurantReservation : restaurantReservations) {
-			if (restaurantReservation.getRestauranttable().getId().equals(RS.getId()) && restaurantReservation.getDate().isEqual(RS.getDate())) {
-				result = true;
-			}
-		}
-		return result;
-	}
-	
-	public Boolean getRestaurantReservationwithIdDifferent(RestaurantReservation RS, Integer id) {
-		Boolean result = false;
-		List<RestaurantReservation> restaurantReservations = StreamSupport.stream(this.restaurantReservationService.findAll().spliterator(), false).collect(Collectors.toList());
-		for (RestaurantReservation restaurantReservation : restaurantReservations) {
-			if (restaurantReservation.getRestauranttable().getId().equals(RS.getId()) && restaurantReservation.getDate().isEqual(RS.getDate()) && id!=restaurantReservation.getId()) {
-				result = true;
-			}
-		}
-		return result;
-	}
 
 	@Override
 	public boolean supports(Class<?> clazz) {

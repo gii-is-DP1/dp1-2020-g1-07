@@ -14,6 +14,7 @@ import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
@@ -52,17 +53,41 @@ public class RestaurantReservationController {
 		dataBinder.setValidator(restaurantreservationValidator);
 	}
 	
+	private List<RestaurantReservation> clientreservations;
+	private List<Integer> clientreservationsId;
+	
 	@GetMapping()
 	public String restaurantreservationsList(ModelMap modelMap) {
+		String username = UserUtils.getUser();
+		Authorities autority = RestaurantReservationService.getAuthority(username);
+		List<LocalDate> list= new ArrayList<LocalDate>(RestaurantReservationService.findAllDates());
+		List<RestaurantReservation> restaurantreservations= StreamSupport.stream(RestaurantReservationService.findAll().spliterator(), false).collect(Collectors.toList());
+		if(autority.getAuthority().equals("client")) {
+			Client client = RestaurantReservationService.findClientFromUsername(username);
+			clientreservations = new ArrayList<RestaurantReservation>();
+			clientreservationsId = new ArrayList<Integer>();
+			list.clear();
+			for(RestaurantReservation restaurantreservation:restaurantreservations) {
+				if(restaurantreservation.getClient().getDni().equals(client.getDni()) && !list.contains(restaurantreservation.getDate())) list.add(restaurantreservation.getDate());
+				if(restaurantreservation.getClient().getDni().equals(client.getDni())) {
+					clientreservations.add(restaurantreservation);
+					clientreservationsId.add(restaurantreservation.getId());
+				}
+			}
+			restaurantreservations = new ArrayList<RestaurantReservation>(clientreservations);
+		}else {
+			clientreservationsId = new ArrayList<Integer>();
+			for(RestaurantReservation restaurantreservation:restaurantreservations) {
+				clientreservationsId.add(restaurantreservation.getId());
+			}
+		}
 		String view= "restaurantreservations/restaurantreservationsList";
-		Collection<LocalDate> list=RestaurantReservationService.findAllDates();
 		Iterable<LocalDate> dates = list;
 		modelMap.addAttribute("dates", dates);
-		Iterable<RestaurantReservation> restaurantreservations=RestaurantReservationService.findAll();
 		modelMap.addAttribute("restaurantreservations", restaurantreservations);
 		return view;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/{date}", method = RequestMethod.GET)
 	public String loadRestaurantReservationsByDate(@PathVariable("date")String datestr) {
@@ -72,22 +97,24 @@ public class RestaurantReservationController {
 		try {
 			List<RestaurantReservation> restaurantReservations = new ArrayList<RestaurantReservation>(RestaurantReservationService.findRestaurantReservationsByDate(date));
 			for(RestaurantReservation restaurantReservation:restaurantReservations) {
-				json = json + "{\"id\":" + restaurantReservation.getId() +","
-						+ "\"date\":\"" + restaurantReservation.getDate() +"\","
-						+ "\"restaurant_table\":{"
-							+ "\"id\":" + restaurantReservation.getRestauranttable().getId() +"},"
-						+ "\"client\":{"
-							+ "\"id\":" + restaurantReservation.getClient().getId() +","
-							+ "\"name\":\"" + restaurantReservation.getClient().getName() +"\"},"
-						+ "\"time_interval\":{"
-							+ "\"id\":" + restaurantReservation.getTimeInterval().getId() +","
-							+ "\"name\":\"" + restaurantReservation.getTimeInterval().getName() +"\"}},";
+				if(clientreservationsId.contains(restaurantReservation.getId())) {
+					json = json + "{\"id\":" + restaurantReservation.getId() +","
+							+ "\"date\":\"" + restaurantReservation.getDate() +"\","
+							+ "\"restaurant_table\":{"
+								+ "\"id\":" + restaurantReservation.getRestauranttable().getId() +"},"
+								+ "\"client\":{"
+								+ "\"id\":" + restaurantReservation.getClient().getId() +","
+								+ "\"name\":\"" + restaurantReservation.getClient().getName() +"\"},"
+								+ "\"time_interval\":{"
+								+ "\"id\":" + restaurantReservation.getTimeInterval().getId() +","
+								+ "\"name\":\"" + restaurantReservation.getTimeInterval().getName() +"\"}},";
+				}
 				if(restaurantReservations.indexOf(restaurantReservation)==restaurantReservations.size()-1) {
 					json = json.substring(0, json.length() - 1) + "]";
 				}
 			}
 			if(restaurantReservations.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]";
+				json = json + "]";
 			}
 		}catch(Exception e) {
 			System.out.println(RestaurantReservationService.findRestaurantReservationsByDate(date));
@@ -151,10 +178,6 @@ public class RestaurantReservationController {
 			return "restaurantreservations/addRestaurantReservation";
 			
 		}else {
-			if(restaurantreservationValidator.getRestaurantReservationwithIdDifferent(restaurantreservation)) {
-				modelMap.addAttribute("restaurantreservation", restaurantreservation);
-				return "restaurantreservations/addRestaurantReservation";
-			}
 			RestaurantReservationService.save(restaurantreservation);
 			modelMap.addAttribute("message", "RestaurantReservation successfully saved!");
 			view=restaurantreservationsList(modelMap);
@@ -194,14 +217,33 @@ public class RestaurantReservationController {
 			return "restaurantreservations/updateRestaurantReservation";
 		}
 		else {
-			if(restaurantreservationValidator.getRestaurantReservationwithIdDifferent(restaurantreservation, restaurantreservation.getId())) {
-				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
-				model.put("restaurantreservation", restaurantreservation);
-				return "restaurantreservations/updateRestaurantReservation";
-			}
 			this.RestaurantReservationService.save(restaurantreservation);
 			return "redirect:/restaurantreservations";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/{restaurantreservationId}/edit/loadDinersByTimeInterval/{id}/{date}", method = RequestMethod.GET)
+	public String loadDinersByTimeInterval(@PathVariable("date")String datestr, @PathVariable("id")int id, @PathVariable("restaurantreservationId")int reservationId ) {
+		String json = "[";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		LocalDate date = LocalDate.parse(datestr, formatter);
+		try {
+			List<RestaurantTable> tables = TablesbyDateAndTimeInterval(date,id);
+			for(RestaurantTable table:tables) {
+				json = json + "{\"id\":" + table.getId() +","
+						+ "\"size\":" + table.getSize() +"},";
+				if(tables.indexOf(table)==tables.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(tables.size()==0) {
+				json = json + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(TablesbyDateAndTimeInterval(date,id));
+		}
+		return json;
 	}
 	
 	@ModelAttribute("time_intervals")
