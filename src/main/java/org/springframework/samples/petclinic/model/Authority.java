@@ -18,9 +18,9 @@ public class Authority extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "username")
-	private User user;
+	User user;
 	
 	@NotBlank
-	private String authority;
+	String authority;
 	
 }

@@ -1,14 +1,14 @@
 -- ADMIN: admin1|4dm1n
-INSERT INTO users(username,password,enabled,dni) VALUES ('admin1','4dm1n',TRUE,'12345678A');
-INSERT INTO authorities VALUES(1,'admin1','admin');
+INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678A',TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(1,'admin1','admin');
 
 -- EMPLOYEE: artist1|artist1
-INSERT INTO users(username,password,enabled,dni) VALUES ('artist1','artist1',TRUE,'98765431Z');
-INSERT INTO authorities VALUES(2,'artist1','employee');
+INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431Z',TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(2,'artist1','employee');
 
 -- CLIENT: client1|client1
-INSERT INTO users(username,password,enabled,dni) VALUES ('client1','client1',TRUE,'11111111A');
-INSERT INTO authorities VALUES(3,'client1','client');
+INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','11111111A',TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(3,'client1','client');
 
 INSERT INTO GAMETYPES VALUES(1,'Roulette');
 INSERT INTO GAMETYPES VALUES(2, 'Cards');

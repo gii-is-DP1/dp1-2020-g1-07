@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Administrator;
 import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
@@ -58,14 +59,14 @@ public class UserController {
 		return this.userService.findClients();
 	}
 	
+	@ModelAttribute("admins")
+	public Collection<Administrator> admins() {
+		return this.userService.findAdmins();
+	}
+	
 	@ModelAttribute("employees")
 	public Collection<Employee> employees() {
 		return this.userService.findEmployees();
-	}
-	
-	@ModelAttribute("authorities")
-	public Collection<Authority> authorities() {
-		return this.userService.findAuthorities();
 	}
 	
 	@GetMapping(path="/new")
@@ -73,6 +74,7 @@ public class UserController {
 		log.info("Loading new user form");
 		String view="users/addUser";
 		modelMap.addAttribute("user", new User());
+		modelMap.addAttribute("auth", new Authority());
 		return view;
 	}
 	
@@ -80,20 +82,21 @@ public class UserController {
 	public String createClientUser(ModelMap modelMap) {
 		log.info("Loading new user form for clients");
 		String view="users/addClient";
-		User us = new User();
-		Authority auth = authService.findAuthorityById(3).get();
-		//us.setAuthority(auth);
-		modelMap.addAttribute("user", us);
+		Authority auth = new Authority();
+		auth.setAuthority("client");
+		modelMap.addAttribute("user", new User());
+		modelMap.addAttribute("auth", auth);
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String saveUser(@Valid User user, BindingResult result, ModelMap modelMap) {
+	public String saveUser(@Valid User user, @Valid Authority auth, BindingResult result, ModelMap modelMap) {
 		log.info("Saving user: " + user.getUsername());
 		String view="users/listUser";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("user", user);
+			modelMap.addAttribute("auth", auth);
 			return "users/addUser";
 			
 		}else {
@@ -101,10 +104,12 @@ public class UserController {
 				log.warn("Couldn't create user, username " + user.getUsername() + " is taken");
 				result.rejectValue("username", "username.duplicate", "Username " + user.getUsername() + " is taken");
 				modelMap.addAttribute("user", user);
+				modelMap.addAttribute("auth", auth);
 				return "users/addUser";
 			}
 			log.info("User validated: saving into DB");
 			userService.save(user);
+			authService.save(auth);
 			modelMap.addAttribute("message", "User successfully saved!");
 			view=listUsers(modelMap);
 		}
@@ -118,7 +123,9 @@ public class UserController {
 		Optional<User> user = userService.findUserById(userId);
 		if(user.isPresent()) {
 			log.info("User found: deleting");
+			Collection<Integer> authids = userService.findAuthorityId(userId);
 			userService.delete(user.get());
+			authids.forEach(id -> authService.delete(authService.findAuthorityById(id).get()));
 			modelMap.addAttribute("message", "User successfully deleted!");
 			view=listUsers(modelMap);
 		}else {

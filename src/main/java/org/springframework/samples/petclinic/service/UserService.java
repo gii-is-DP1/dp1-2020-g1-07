@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Administrator;
 import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
@@ -39,6 +40,7 @@ public class UserService {
 	
 	@Transactional
 	public void save(User user) throws DataAccessException {
+		user.setEnabled(true);
 		userRepo.save(user);
 	}
 	
@@ -51,18 +53,42 @@ public class UserService {
 		userRepo.delete(user);
 	}
 	
-	public Collection<Employee> findEmployees() throws DataAccessException{
-		log.info("Loading employees from DB");
-		return userRepo.findEmployees();
-	}
-	
 	public Collection<Client> findClients() throws DataAccessException{
 		log.info("Loading clients from DB");
 		return userRepo.findClients();
 	}
 	
-	public Collection<Authority> findAuthorities() throws DataAccessException{
-		log.info("Loading authorities from DB");
-		return userRepo.findAuthorities();
+	public Collection<Employee> findEmployees() throws DataAccessException{
+		log.info("Loading employees from DB");
+		return userRepo.findEmployees();
 	}
+	
+	public Collection<Administrator> findAdmins() throws DataAccessException{
+		log.info("Loading admins from DB");
+		return userRepo.findAdmins();
+	}
+	/*
+	public Collection<Client> findClientsWithAccount() throws DataAccessException{
+		log.info("Loading clients with account from DB");
+		return userRepo.findClientsWithAccount();
+	}
+	
+	public Collection<Employee> findEmployeesWithAccount() throws DataAccessException{
+		log.info("Loading employees with account from DB");
+		return userRepo.findEmployeesWithAccount();
+	}
+	
+	public Collection<Administrator> findAdminsWithAccount() throws DataAccessException{
+		log.info("Loading admins with account from DB");
+		return userRepo.findAdminsWithAccount();
+	}
+	
+	*/
+	
+	public Collection<Integer> findAuthorityId(String username) throws DataAccessException{
+		log.info("Looking for authorities from user: " + username);
+		return userRepo.findAuthoritiesId(username);
+	}
+	
+	
 }

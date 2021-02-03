@@ -24,10 +24,10 @@ public class User{
 	@NotBlank
 	private String password;
 	
-	@NotNull
-	private boolean enabled;
-	
 	@NotBlank
 	private String dni; //TEMPORAL
+	
+	@NotNull
+	private boolean enabled;
 	
 }

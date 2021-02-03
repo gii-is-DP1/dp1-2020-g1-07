@@ -31,7 +31,6 @@ private static final String REQUIRED = "required";
 		User us = (User) obj;
 		String name = us.getUsername();
 		String pass = us.getPassword();
-		Authority auth = null; //us.getAuthority();
 		
 		// username validation
 		if (name == null || name.trim().equals("")) {
@@ -40,10 +39,6 @@ private static final String REQUIRED = "required";
 		// password validation
 		if (pass == null || pass.trim().equals("")) {
 			errors.rejectValue("password", REQUIRED, REQUIRED);
-		}
-		// authority validation
-		if (auth == null || !userService.findAuthorities().contains(auth)) {
-			errors.rejectValue("authority", REQUIRED, REQUIRED);
 		}
 	}
 	
