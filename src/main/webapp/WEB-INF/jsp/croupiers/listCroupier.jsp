@@ -16,6 +16,7 @@
             <th style="width: 200px;">Dni</th>
             <th style="width: 200px;">Name</th>
             <th style="width: 200px;">Phone Number</th>
+            <th style="width: 200px;">Casinotable</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -30,6 +31,9 @@
                 </td>
                 <td>
                     <c:out value="${croupier.phone_number}"/>
+                </td>
+                 <td>
+                    <c:out value="${croupier.casinotable.id}"/>
                 </td>
                <td>
                 	<spring:url value="/croupiers/delete/{croupierId}" var="deleteUrl">

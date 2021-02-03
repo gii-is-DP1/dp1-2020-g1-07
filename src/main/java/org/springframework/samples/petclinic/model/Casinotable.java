@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "casinotable")
+@Table(name = "casinotables")
 public class Casinotable extends NamedEntity{
 	
 	@NotEmpty

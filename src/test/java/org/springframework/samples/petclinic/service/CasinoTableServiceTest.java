@@ -60,6 +60,7 @@ public class CasinoTableServiceTest {
 		game.setMaxPlayers(6);
 		new_ct.setGame(game);
 		new_ct.setGametype(gametype);
+		new_ct.setName("Mesa 1");
 		Skill skill = new Skill();
 		skill.setName("Amateur");
 		new_ct.setSkill(skill);
@@ -77,6 +78,7 @@ public class CasinoTableServiceTest {
 		&& saved_ct.getGametype().getName().equals(saved_ct.getGame().getGametype().getName()));
 		assertTrue(saved_ct.getSkill().getName().equals("Amateur"));
 		assertTrue(saved_ct.getGame().getMaxPlayers() == 6);
+		assertTrue(saved_ct.getName().equals("Mesa 1"));
 		
 	}
 }

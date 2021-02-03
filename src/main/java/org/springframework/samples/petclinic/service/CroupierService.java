@@ -1,8 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Croupier;
 import org.springframework.samples.petclinic.repository.CroupierRepository;
 import org.springframework.stereotype.Service;
@@ -10,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CroupierService {
-
+	@Autowired
 	private  CroupierRepository croupierRep;
 	
 	@Autowired
@@ -40,5 +43,9 @@ public class CroupierService {
 
 	public  void delete(Croupier croupier) { 
 		croupierRep.delete(croupier);
+	}
+	
+	public Collection<Casinotable> findCasinotables()throws DataAccessException{
+	  return croupierRep.findCasinoTables();
 	}
 }

@@ -37,10 +37,10 @@ INSERT INTO SHOWTYPES VALUES(2, 'Theater');
 INSERT INTO SHOWTYPES VALUES(3, 'Magic');
 
 
-INSERT INTO CASINOTABLE VALUES(1, 'Mesa 1','2020-01-04','11:30:00','09:30:00',1,2,1);
-INSERT INTO CASINOTABLE VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,2,1);
-INSERT INTO CASINOTABLE VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
-INSERT INTO CASINOTABLE VALUES(4, 'Mesa 4','2020-01-04','04:40:00','23:30:00',1,2,1);
+INSERT INTO CASINOTABLES VALUES(1, 'Mesa 1','2020-01-04','11:30:00','09:30:00',1,2,1);
+INSERT INTO CASINOTABLES VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,2,1);
+INSERT INTO CASINOTABLES VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
+INSERT INTO CASINOTABLES VALUES(4, 'Mesa 4','2020-01-04','04:40:00','23:30:00',1,2,1);
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678A','Manuel Rodriguez','987654321');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432Z','Rosa Garcia','123456789');
@@ -80,9 +80,9 @@ INSERT INTO cooks(id) VALUES (12);
 INSERT INTO employees(id,dni,name,phone_number) VALUES (13,'12345674A','Rafael Rodriguez','987654317');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (14,'98765419Z','Tamara Garcia','123456785');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (15,'30987452M','Diana Martin','567891230');
-INSERT INTO croupiers(id) VALUES (13);
-INSERT INTO croupiers(id) VALUES (14);
-INSERT INTO croupiers(id) VALUES (15);
+INSERT INTO croupiers(id,casinotable) VALUES (13,1);
+INSERT INTO croupiers(id,casinotable) VALUES (14,2);
+INSERT INTO croupiers(id,casinotable) VALUES (15,2);
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (16,'12345673A','Silvia Rodriguez','987654316');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (17,'98765418Z','Victor Garcia','123456784');

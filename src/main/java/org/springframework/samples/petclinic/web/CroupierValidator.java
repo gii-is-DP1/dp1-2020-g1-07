@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Croupier;
 import org.springframework.samples.petclinic.service.CroupierService;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,7 @@ public class CroupierValidator implements Validator{
 		String dni = croupier.getDni();
 		String name = croupier.getName();
 		String phone_number = croupier.getPhone_number();
+		Casinotable casinotable = croupier.getCasinotable();
 		
 		//DNI validation
 		if (dni == null || dni.trim().equals("") || !Pattern.matches("[0-9]{8}[A-Z]{1}", dni)) {
@@ -50,6 +52,10 @@ public class CroupierValidator implements Validator{
 		if (phone_number == null || phone_number.trim().equals("") || !Pattern.matches("[0-9]{9}", phone_number)) {
 			errors.rejectValue("phone_number", REQUIRED + " to contain 9 digits",
 					REQUIRED + " to contain 9 digits");
+		}
+		//Casinotable validation
+		if(casinotable.getName() == null || casinotable.getName().equals("")) {
+			errors.rejectValue("casinotable", REQUIRED, REQUIRED);
 		}
 	}
 	
