@@ -29,7 +29,7 @@ public class RestaurantTableController {
 	@Autowired
 	private RestaurantTableValidator restauranttableValidator;
 	
-	@InitBinder("restauranttable")
+	@InitBinder("restaurantTable")
 	public void initRestaurantTableBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(restauranttableValidator);
 	}

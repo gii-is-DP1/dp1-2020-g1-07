@@ -96,5 +96,18 @@ public class RestaurantTableControllerTests {
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(view().name("restauranttables/restauranttablesList"));
 	}
+	/*
+	@WithMockUser(value = "spring")
+    @Test
+    void testProcessCreationFormHasErrors() throws Exception {
+		mockMvc.perform(post("/restauranttables/save").param("size", "3")
+						.with(csrf())
+						.param("waiter", "177013120B"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeHasErrors("restauranttables"))
+			.andExpect(model().attributeHasFieldErrors("restauranttables", "waiter"))
+			.andExpect(view().name("restauranttables/addRestaurantTable"));
+	}
+	*/
 	
 }
