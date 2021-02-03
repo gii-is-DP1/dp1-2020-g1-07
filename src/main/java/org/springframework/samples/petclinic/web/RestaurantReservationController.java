@@ -55,6 +55,7 @@ public class RestaurantReservationController {
 	
 	private List<RestaurantReservation> clientreservations;
 	private List<Integer> clientreservationsId;
+	private Client editedClient;
 	
 	@GetMapping()
 	public String restaurantreservationsList(ModelMap modelMap) {
@@ -203,7 +204,8 @@ public class RestaurantReservationController {
 	@GetMapping(value = "/{restaurantreservationId}/edit")
 	public String initUpdateCasTbForm(@PathVariable("restaurantreservationId") int restaurantreservationId, ModelMap model) {
 		RestaurantReservation restaurantreservation = RestaurantReservationService.findRestaurantReservationId(restaurantreservationId).get();
-		
+		editedClient = restaurantreservation.getClient();
+		model.put("client", editedClient);
 		model.put("restaurantreservation", restaurantreservation);
 		return "restaurantreservations/updateRestaurantReservation";
 	}
@@ -212,6 +214,7 @@ public class RestaurantReservationController {
 	public String processUpdateCasTbForm(@Valid RestaurantReservation restaurantreservation, BindingResult result,
 			@PathVariable("restaurantreservationId") int restaurantreservationId, ModelMap model) {
 		restaurantreservation.setId(restaurantreservationId);
+		restaurantreservation.setClient(editedClient);
 		if (result.hasErrors()) {
 			model.put("restaurantreservation", restaurantreservation);
 			return "restaurantreservations/updateRestaurantReservation";
