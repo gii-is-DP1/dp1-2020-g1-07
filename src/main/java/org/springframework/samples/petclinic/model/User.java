@@ -1,8 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,14 +13,18 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "users")
-public class User{
+public class User extends BaseEntity{
 	
-	@Id
-	String username;
+	@NotBlank
+	private String username;
 	
-	String password;
+	@NotBlank
+	private String password;
 	
-	String dni; //TEMPORAL
+	@NotBlank
+	private String dni; //TEMPORAL
 	
-	boolean enabled;
+	@ManyToOne
+	@JoinColumn(name = "authority_id")
+	private Authority authority;
 }

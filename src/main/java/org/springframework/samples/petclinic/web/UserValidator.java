@@ -1,11 +1,9 @@
 package org.springframework.samples.petclinic.web;
 
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Component;
@@ -19,16 +17,14 @@ private static final String REQUIRED = "required";
 	@Autowired
 	private UserService userService;
 	
-	public Boolean getUserwithIdDifferent(String username) {
-		Boolean result = false;
-		List<User> users = StreamSupport.stream(this.userService.findAll().spliterator(), false).collect(Collectors.toList());
-		for (User us : users) {
-			String name = us.getUsername();
-			if (name.equals(username)) {
-				result = true;
-			}
-		}
-		return result;
+	public boolean getUserwithIdDifferent(String username, Integer id) {
+		if (StreamSupport.stream(this.userService.findAll().spliterator(), false)
+				.filter(x -> (x.getUsername().equals(username) && id == null) || 
+						(x.getUsername().equals(username) && id != null && !x.getId().equals(id)))
+				.findAny().isPresent())
+			return true;
+		else
+			return false;
 	}
 	
 	@Override
@@ -36,6 +32,8 @@ private static final String REQUIRED = "required";
 		User us = (User) obj;
 		String name = us.getUsername();
 		String pass = us.getPassword();
+		Authority auth = us.getAuthority();
+		
 		// username validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("username", REQUIRED, REQUIRED);
@@ -43,6 +41,10 @@ private static final String REQUIRED = "required";
 		// password validation
 		if (pass == null || pass.trim().equals("")) {
 			errors.rejectValue("password", REQUIRED, REQUIRED);
+		}
+		// authority validation
+		if (auth == null || !userService.findAuthorities().contains(auth)) {
+			errors.rejectValue("authority", REQUIRED, REQUIRED);
 		}
 	}
 	

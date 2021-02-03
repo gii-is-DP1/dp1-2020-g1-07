@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
@@ -13,14 +14,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "authorities")
-public class Authorities extends BaseEntity{
+public class Authority extends BaseEntity{
 	
-	@ManyToOne
-	@JoinColumn(name = "username")
-	User user;
-	
-	@Size(min = 3, max = 50)
-	String authority;
-	
+	@NotBlank
+	private String role;
 	
 }
