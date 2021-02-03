@@ -1,29 +1,17 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
-import org.springframework.samples.petclinic.service.RestaurantReservationService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
 public class RestaurantReservationValidator implements Validator{
-private static final String REQUIRED = "required";
-	
-	@Autowired
-	private RestaurantReservationService restaurantReservationService;
 
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return RestaurantReservation.class.isAssignableFrom(clazz);
-	}
+	private static final String REQUIRED = "required";
 
 	@Override
 	public void validate(Object target, Errors errors) {
@@ -37,4 +25,10 @@ private static final String REQUIRED = "required";
 			errors.rejectValue("restauranttable", REQUIRED, REQUIRED);
 		}
 	}
+	
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return RestaurantReservation.class.isAssignableFrom(clazz);
+	}
+
 }
