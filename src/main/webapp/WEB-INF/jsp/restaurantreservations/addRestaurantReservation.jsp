@@ -59,7 +59,7 @@ $(document).ready(function(){
         <h2>Restaurant Reservation</h2>
 
 
-        <form:form modelAttribute="restaurantreservation" class="form-horizontal" action="/restaurantreservations/save">
+        <form:form modelAttribute="restaurantReservation" class="form-horizontal" action="/restaurantreservations/save">
             <div class="form-group has-feedback">
             	<input type="hidden" name="client" value="${client.dni}"/>
                 <div class="control-group">
@@ -80,7 +80,7 @@ $(document).ready(function(){
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="restaurantreservationId" value="${restaurantreservation.id}"/>
+                    <input type="hidden" name="restaurantReservationId" value="${restaurantReservation.id}"/>
                     <button class="btn btn-default" type="submit">Add Reservation</button>
                 </div>
             </div>

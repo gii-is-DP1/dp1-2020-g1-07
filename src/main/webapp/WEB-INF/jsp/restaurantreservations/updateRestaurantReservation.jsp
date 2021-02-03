@@ -33,7 +33,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			type: 'GET',
-			url: '${pageContext.request.contextPath}/restaurantreservations/${restaurantreservation.id}/edit/loadDinersByTimeInterval/' + timeIntervalId + '/' + date,
+			url: '${pageContext.request.contextPath}/restaurantreservations/${restaurantReservation.id}/edit/loadDinersByTimeInterval/' + timeIntervalId + '/' + date,
 			success: function(result){
 				var result = JSON.parse(result);
 				var s1= '';
@@ -64,12 +64,12 @@ $(document).ready(function(){
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/restaurantreservations/"+"${restaurantreservation.id}"+"/edit";
+           frm.action = "/restaurantreservations/"+"${restaurantReservation.id}"+"/edit";
         }
 
    			 }
     	</script>
-		<form:form modelAttribute="restaurantreservation" class="form-horizontal" action="/menus/{restaurantreservationId}/edit" onsubmit = "chgAction()" id = "id">
+		<form:form modelAttribute="restaurantReservation" class="form-horizontal" action="/menus/{restaurantReservationId}/edit" onsubmit = "chgAction()" id = "id">
             <div class="form-group has-feedback">
             	<input type="hidden" name="client" value="${client.dni}"/>
                 <div class="control-group">
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="restaurantreservationId" value="${restaurantreservation.id}"/>
+                    <input type="hidden" name="restaurantReservationId" value="${restaurantReservation.id}"/>
                     <button class="btn btn-default" type="submit">Add Reservation</button>
                 </div>
             </div>

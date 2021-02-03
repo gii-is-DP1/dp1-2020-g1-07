@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -120,7 +122,7 @@ public class RestaurantReservationControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception{
-		mockMvc.perform(get("/restaurantreservations/new")).andExpect(status().isOk()).andExpect(model().attributeExists("restaurantreservation"))
+		mockMvc.perform(get("/restaurantreservations/new")).andExpect(status().isOk()).andExpect(model().attributeExists("restaurantReservation"))
 		.andExpect(view().name("restaurantreservations/addRestaurantReservation"));
 	}
 	
@@ -144,9 +146,48 @@ public class RestaurantReservationControllerTests {
 				.param("timeInterval", "1")
 				.param("restauranttable", "1"))
 			.andExpect(status().isOk())
-			.andExpect(model().attributeHasErrors("restaurantreservation"))
-			.andExpect(model().attributeHasFieldErrors("restaurantreservation", "date"))
-			.andExpect(view().name("restaurantreservations/addrestaurantreservations"));
+			.andExpect(model().attributeHasErrors("restaurantReservation"))
+			.andExpect(model().attributeHasFieldErrors("restaurantReservation", "date"))
+			.andExpect(view().name("restaurantreservations/addRestaurantReservation"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateForm() throws Exception {
+		mockMvc.perform(get("/restaurantreservations/{restaurantReservationId}/edit", 1)).andExpect(status().isOk())
+				.andExpect(model().attributeExists("restaurantReservation"))
+				.andExpect(model().attribute("restaurantReservation", hasProperty("date", is(LocalDate.of(2021, 02, 15)))))
+				.andExpect(model().attribute("restaurantReservation", hasProperty("client", is(reservationService.findClients().toArray()[0]))))
+				.andExpect(model().attribute("restaurantReservation", hasProperty("timeInterval", is(reservationService.findTimeIntervals().toArray()[0]))))
+				.andExpect(model().attribute("restaurantReservation", hasProperty("restauranttable", is(reservationService.findRestaurantTables().toArray()[0]))))
+				.andExpect(view().name("restaurantreservations/updateRestaurantReservation"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateFormSuccess() throws Exception {
+		mockMvc.perform(post("/restaurantreservations/{restaurantReservationId}/edit", 1)
+					.param("client", "11122233A")
+					.with(csrf())
+					.param("timeInterval", "1")
+					.param("restauranttable", "1")
+					.param("date", "2021-05-20"))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/restaurantreservations"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateFormHasErrors() throws Exception {
+		mockMvc.perform(post("/restaurantreservations/{restaurantReservationId}/edit", 1).param("name", "")
+					.param("client", "11122233A")
+					.with(csrf())
+					.param("restauranttable", "1")
+					.param("date", "2021-05-20"))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeHasErrors("restaurantReservation"))
+				.andExpect(model().attributeHasFieldErrors("restaurantReservation", "timeInterval"))
+				.andExpect(view().name("restaurantreservations/updateRestaurantReservation"));
 	}
 
 

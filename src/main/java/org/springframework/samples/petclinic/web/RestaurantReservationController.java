@@ -46,11 +46,11 @@ public class RestaurantReservationController {
 	private RestaurantTableService restaurantTableService;
 	
 	@Autowired
-	private RestaurantReservationValidator restaurantreservationValidator;
+	private RestaurantReservationValidator restaurantReservationValidator;
 	
-	@InitBinder("restaurantreservation")
+	@InitBinder("restaurantReservation")
 	public void initRestaurantReservationBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(restaurantreservationValidator);
+		dataBinder.setValidator(restaurantReservationValidator);
 	}
 	
 	private List<RestaurantReservation> clientreservations;
@@ -126,7 +126,7 @@ public class RestaurantReservationController {
 	@GetMapping(path="/new")
 	public String createRestaurantReservation(ModelMap modelMap) {
 		String view="restaurantreservations/addRestaurantReservation";
-		modelMap.addAttribute("restaurantreservation", new RestaurantReservation() );
+		modelMap.addAttribute("restaurantReservation", new RestaurantReservation() );
 		return view;
 	}
 	
@@ -155,7 +155,6 @@ public class RestaurantReservationController {
 	}
 	
 	private List<RestaurantTable> TablesbyDateAndTimeInterval(LocalDate date, int id) {
-		// TODO Auto-generated method stub
 		List<RestaurantTable> tables = StreamSupport.stream(restaurantTableService.findAll().spliterator(), false).collect(Collectors.toList());
 		List<RestaurantTable> result = new ArrayList<RestaurantTable>();
 		List<RestaurantReservation> reservations = new ArrayList<RestaurantReservation>(RestaurantReservationService.findRestaurantReservationsByDate(date));
@@ -175,9 +174,8 @@ public class RestaurantReservationController {
 	public String saveRestaurantReservation(@Valid RestaurantReservation restaurantreservation, BindingResult result, ModelMap modelMap) {
 		String view="restaurantreservations/restaurantreservationsList";
 		if(result.hasErrors()) {
-			modelMap.addAttribute("restaurantreservation", restaurantreservation);
+			modelMap.addAttribute("restaurantReservation", restaurantreservation);
 			return "restaurantreservations/addRestaurantReservation";
-			
 		}else {
 			RestaurantReservationService.save(restaurantreservation);
 			modelMap.addAttribute("message", "RestaurantReservation successfully saved!");
@@ -186,8 +184,8 @@ public class RestaurantReservationController {
 		return view;
 	}
 	
-	@GetMapping(path="/delete/{restaurantreservationId}")
-	public String deleteRestaurantReservation(@PathVariable("restaurantreservationId") int restaurantreservationId, ModelMap modelMap) {
+	@GetMapping(path="/delete/{restaurantReservationId}")
+	public String deleteRestaurantReservation(@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap modelMap) {
 		String view="restaurantreservations/restaurantreservationsList";
 		Optional<RestaurantReservation> restaurantreservation = RestaurantReservationService.findRestaurantReservationId(restaurantreservationId);
 		if(restaurantreservation.isPresent()) {
@@ -201,22 +199,22 @@ public class RestaurantReservationController {
 		return view;
 	}
 	
-	@GetMapping(value = "/{restaurantreservationId}/edit")
-	public String initUpdateCasTbForm(@PathVariable("restaurantreservationId") int restaurantreservationId, ModelMap model) {
+	@GetMapping(value = "/{restaurantReservationId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap model) {
 		RestaurantReservation restaurantreservation = RestaurantReservationService.findRestaurantReservationId(restaurantreservationId).get();
 		editedClient = restaurantreservation.getClient();
 		model.put("client", editedClient);
-		model.put("restaurantreservation", restaurantreservation);
+		model.put("restaurantReservation", restaurantreservation);
 		return "restaurantreservations/updateRestaurantReservation";
 	}
 
-	@PostMapping(value = "/{restaurantreservationId}/edit")
+	@PostMapping(value = "/{restaurantReservationId}/edit")
 	public String processUpdateCasTbForm(@Valid RestaurantReservation restaurantreservation, BindingResult result,
-			@PathVariable("restaurantreservationId") int restaurantreservationId, ModelMap model) {
+			@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap model) {
 		restaurantreservation.setId(restaurantreservationId);
 		restaurantreservation.setClient(editedClient);
 		if (result.hasErrors()) {
-			model.put("restaurantreservation", restaurantreservation);
+			model.put("restaurantReservation", restaurantreservation);
 			return "restaurantreservations/updateRestaurantReservation";
 		}
 		else {
@@ -226,8 +224,8 @@ public class RestaurantReservationController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/{restaurantreservationId}/edit/loadDinersByTimeInterval/{id}/{date}", method = RequestMethod.GET)
-	public String loadDinersByTimeInterval(@PathVariable("date")String datestr, @PathVariable("id")int id, @PathVariable("restaurantreservationId")int reservationId ) {
+	@RequestMapping(value = "/{restaurantReservationId}/edit/loadDinersByTimeInterval/{id}/{date}", method = RequestMethod.GET)
+	public String loadDinersByTimeInterval(@PathVariable("date")String datestr, @PathVariable("id")int id, @PathVariable("restaurantReservationId")int reservationId ) {
 		String json = "[";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
