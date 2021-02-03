@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RestaurantTableRepository extends CrudRepository<RestaurantTable, Integer>{
-	@Query("SELECT restauranttable FROM RestaurantTable restauranttable ORDER BY restauranttable.id")
+	@Query("SELECT restaurantTable FROM RestaurantTable restaurantTable ORDER BY restaurantTable.id")
 	List<RestaurantTable> findRestaurantTables() throws DataAccessException;
 	
 	@Query("SELECT waiter FROM Waiter waiter ORDER BY waiter.id")

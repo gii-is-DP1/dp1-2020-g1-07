@@ -44,7 +44,7 @@ public class RestaurantTableControllerTests {
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private RestaurantTableService restauranttableService;
+	private RestaurantTableService restaurantTableService;
 	
 	@MockBean
 	private RestaurantReservationService restaurantReservationService;
@@ -52,20 +52,20 @@ public class RestaurantTableControllerTests {
 	@MockBean
 	private ScheduleService scheduleservice;
 	
-	private RestaurantTable restauranttable;
+	private RestaurantTable restaurantTable;
 	private Waiter waiter;
 
 	@BeforeEach
 	void setup() {
-		restauranttable = new RestaurantTable();
-		restauranttable.setId(1);
-		this.restauranttable.setSize(3);
+		restaurantTable = new RestaurantTable();
+		restaurantTable.setId(1);
+		this.restaurantTable.setSize(3);
 		this.waiter = new Waiter();
 		waiter.setId(1);
 		waiter.setName("Emilio Tejero");
 		waiter.setDni("177013120H");
 		waiter.setPhone_number("999666333");
-		this.restauranttable.setWaiter(waiter);
+		this.restaurantTable.setWaiter(waiter);
 		
 		Collection<Employee> waiters = new ArrayList<Employee>();
 		waiters.add(waiter);
@@ -75,39 +75,39 @@ public class RestaurantTableControllerTests {
 	    given(this.restaurantReservationService.findAll()).willReturn(restaurantreservations);
 				
 		List<RestaurantTable> restauranttables = new ArrayList<RestaurantTable>();
-		restauranttables.add(restauranttable);
-	    given(this.restauranttableService.findAll()).willReturn(restauranttables);
-		given(this.restauranttableService.findRestaurantTableId(1)).willReturn(Optional.of(restauranttable));
+		restauranttables.add(restaurantTable);
+	    given(this.restaurantTableService.findAll()).willReturn(restauranttables);
+		given(this.restaurantTableService.findRestaurantTableId(1)).willReturn(Optional.of(restaurantTable));
 	}
 
 	
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception{
-		mockMvc.perform(get("/restauranttables/new")).andExpect(status().isOk()).andExpect(model().attributeExists("restaurantTable"))
-		.andExpect(view().name("restauranttables/addRestaurantTable"));
+		mockMvc.perform(get("/restaurantTables/new")).andExpect(status().isOk()).andExpect(model().attributeExists("restaurantTable"))
+		.andExpect(view().name("restaurantTables/addRestaurantTable"));
 	}
 	
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/restauranttables/save").param("size", "3").with(csrf())
+		mockMvc.perform(post("/restaurantTables/save").param("size", "3").with(csrf())
 						.param("waiter", "177013120H"))
 			.andExpect(status().is2xxSuccessful())
-			.andExpect(view().name("restauranttables/restauranttablesList"));
+			.andExpect(view().name("restaurantTables/restaurantTablesList"));
 	}
-	/*
+	
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/restauranttables/save").param("size", "3")
+		mockMvc.perform(post("/restaurantTables/save").param("size", "3")
 						.with(csrf())
 						.param("waiter", "177013120B"))
 			.andExpect(status().isOk())
-			.andExpect(model().attributeHasErrors("restauranttables"))
-			.andExpect(model().attributeHasFieldErrors("restauranttables", "waiter"))
-			.andExpect(view().name("restauranttables/addRestaurantTable"));
+			.andExpect(model().attributeHasErrors("restaurantTable"))
+			.andExpect(model().attributeHasFieldErrors("restaurantTable", "waiter"))
+			.andExpect(view().name("restaurantTables/addRestaurantTable"));
 	}
-	*/
+	
 	
 }

@@ -21,97 +21,97 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/restauranttables")
+@RequestMapping("/restaurantTables")
 public class RestaurantTableController {
 	@Autowired
 	private RestaurantTableService RestaurantTableService;
 	
 	@Autowired
-	private RestaurantTableValidator restauranttableValidator;
+	private RestaurantTableValidator restaurantTableValidator;
 	
 	@InitBinder("restaurantTable")
 	public void initRestaurantTableBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(restauranttableValidator);
+		dataBinder.setValidator(restaurantTableValidator);
 	}
 	
 	@GetMapping()
-	public String restauranttablesList(ModelMap modelMap) {
-		String view= "restauranttables/restauranttablesList";
-		Iterable<RestaurantTable> restauranttables=RestaurantTableService.findAll();
-		modelMap.addAttribute("restauranttables", restauranttables);
+	public String restaurantTablesList(ModelMap modelMap) {
+		String view= "restaurantTables/restaurantTablesList";
+		Iterable<RestaurantTable> restaurantTables=RestaurantTableService.findAll();
+		modelMap.addAttribute("restaurantTables", restaurantTables);
 		return view;
 	}
 	
 	@GetMapping(path="/new")
 	public String createRestaurantTable(ModelMap modelMap) {
-		String view = "restauranttables/addRestaurantTable";
+		String view = "restaurantTables/addRestaurantTable";
 		modelMap.addAttribute("restaurantTable", new RestaurantTable());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String saveRestaurantTable(@Valid RestaurantTable restauranttable, BindingResult result, ModelMap modelMap) {
-		String view="restauranttables/restauranttablesList";
+	public String saveRestaurantTable(@Valid RestaurantTable restaurantTable, BindingResult result, ModelMap modelMap) {
+		String view="restaurantTables/restaurantTablesList";
 		if(result.hasErrors()) {
-			modelMap.addAttribute("restauranttable", restauranttable);
-			return "restauranttables/addRestaurantTable";
+			modelMap.addAttribute("restaurantTable", restaurantTable);
+			return "restaurantTables/addRestaurantTable";
 			
 		}else {
-			if(restauranttableValidator.getRestaurantTablewithIdDifferent(restauranttable)) {
-				modelMap.addAttribute("restauranttable", restauranttable);
+			if(restaurantTableValidator.getRestaurantTablewithIdDifferent(restaurantTable)) {
+				modelMap.addAttribute("restauranttable", restaurantTable);
 				return "restauranttables/addRestaurantTable";
 			}
-			RestaurantTableService.save(restauranttable);
+			RestaurantTableService.save(restaurantTable);
 			modelMap.addAttribute("message", "RestaurantTable successfully saved!");
-			view=restauranttablesList(modelMap);
+			view=restaurantTablesList(modelMap);
 		}
 		return view;
 	}
 	
-	@GetMapping(path="/delete/{restauranttableId}")
-	public String deleteRestaurantTable(@PathVariable("restauranttableId") int restauranttableId, ModelMap modelMap) {
-		String view="restauranttables/restauranttablesList";
-		Optional<RestaurantTable> restauranttable = RestaurantTableService.findRestaurantTableId(restauranttableId);
-		if(restauranttable.isPresent()) {
-			if(restauranttableValidator.isUsedInRestaurantReservation(restauranttable)) {
+	@GetMapping(path="/delete/{restaurantTableId}")
+	public String deleteRestaurantTable(@PathVariable("restaurantTableId") int restaurantTableId, ModelMap modelMap) {
+		String view="restaurantTables/restaurantTablesList";
+		Optional<RestaurantTable> restaurantTable = RestaurantTableService.findRestaurantTableId(restaurantTableId);
+		if(restaurantTable.isPresent()) {
+			if(restaurantTableValidator.isUsedInRestaurantReservation(restaurantTable)) {
 				modelMap.addAttribute("message", "This RestaurantTable can't be deleted, it has reservations!");
 
 			}else{
-				RestaurantTableService.delete(restauranttable.get());
+				RestaurantTableService.delete(restaurantTable.get());
 				modelMap.addAttribute("message", "RestaurantTable successfully deleted!");
-				view=restauranttablesList(modelMap);
+				view=restaurantTablesList(modelMap);
 			}
 		}else {
 			modelMap.addAttribute("message", "RestaurantTable not found!");
-			view=restauranttablesList(modelMap);
+			view=restaurantTablesList(modelMap);
 		}
 		return view;
 	}
 	
-	@GetMapping(value = "/{restauranttableId}/edit")
-	public String initUpdateCasTbForm(@PathVariable("restauranttableId") int restauranttableId, ModelMap model) {
-		RestaurantTable restauranttable = RestaurantTableService.findRestaurantTableId(restauranttableId).get();
+	@GetMapping(value = "/{restaurantTableId}/edit")
+	public String initUpdateCasTbForm(@PathVariable("restaurantTableId") int restaurantTableId, ModelMap model) {
+		RestaurantTable restaurantTable = RestaurantTableService.findRestaurantTableId(restaurantTableId).get();
 		
-		model.put("restauranttable", restauranttable);
+		model.put("restaurantTable", restaurantTable);
 		return "restauranttables/updateRestaurantTable";
 	}
 
-	@PostMapping(value = "/{restauranttableId}/edit")
-	public String processUpdateCasTbForm(@Valid RestaurantTable restauranttable, BindingResult result,
-			@PathVariable("restauranttableId") int restauranttableId, ModelMap model) {
-		restauranttable.setId(restauranttableId);
+	@PostMapping(value = "/{restaurantTableId}/edit")
+	public String processUpdateCasTbForm(@Valid RestaurantTable restaurantTable, BindingResult result,
+			@PathVariable("restaurantTableId") int restaurantTableId, ModelMap model) {
+		restaurantTable.setId(restaurantTableId);
 		if (result.hasErrors()) {
-			model.put("restauranttable", restauranttable);
-			return "restauranttables/updateRestaurantTable";
+			model.put("restaurantTable", restaurantTable);
+			return "restaurantTables/updateRestaurantTable";
 		}
 		else {
-			if(restauranttableValidator.getRestaurantTablewithIdDifferent(restauranttable, restauranttable.getId())) {
+			if(restaurantTableValidator.getRestaurantTablewithIdDifferent(restaurantTable, restaurantTable.getId())) {
 				result.rejectValue("name", "name.duplicate", "El nombre esta repetido");
-				model.put("restauranttable", restauranttable);
-				return "restauranttables/updateRestaurantTable";
+				model.put("restaurantTable", restaurantTable);
+				return "restaurantTables/updateRestaurantTable";
 			}
-			this.RestaurantTableService.save(restauranttable);
-			return "redirect:/restauranttables";
+			this.RestaurantTableService.save(restaurantTable);
+			return "redirect:/restaurantTables";
 		}
 	}
 	

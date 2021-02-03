@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="restauranttables">
+<petclinic:layout pageName="restaurantTables">
     <jsp:body>
         <h2>Edit Restaurant Table</h2>
 
@@ -15,13 +15,13 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/restauranttables/"+"${restauranttable.id}"+"/edit";
+           frm.action = "/restaurantTables/"+"${restaurantTable.id}"+"/edit";
         }
 
    			 }
     	</script>
 			
-       <form:form modelAttribute="restauranttable" class="form-horizontal" action="/restauranttables/{restauranttableId}/edit" onsubmit = "chgActionSh()" id = "id">
+       <form:form modelAttribute="restaurantTable" class="form-horizontal" action="/restaurantTables/{restaurantTableId}/edit" onsubmit = "chgActionSh()" id = "id">
        
             <div class="form-group has-feedback">
                 <div class="control-group">

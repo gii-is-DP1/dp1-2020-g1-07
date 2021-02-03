@@ -6,10 +6,10 @@
 
 
 
-<petclinic:layout pageName="restauranttables">
+<petclinic:layout pageName="restaurantTables">
     <jsp:body>
         <h2>Restaurant Tables</h2>
-        <form:form modelAttribute="restaurantTable" class="form-horizontal" action="/restauranttables/save">
+        <form:form modelAttribute="restaurantTable" class="form-horizontal" action="/restaurantTables/save">
             <div class="form-group has-feedback">
                  <div class="control-group">
                 	<petclinic:selectField label="Waiter" name="waiter" names="${waiters}" size="1"/>

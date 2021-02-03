@@ -8,10 +8,10 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-<petclinic:layout pageName="restauranttables">
+<petclinic:layout pageName="restaurantTables">
     <h2>Restaurant Tables</h2>
 
-    <table id="restauranttables" class="table table-striped">
+    <table id="restaurantTables" class="table table-striped">
         <thead>
         <tr>
             <th style="width: 200px;">Waiter</th>
@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${restauranttables}" var="restaurantTable">
+        <c:forEach items="${restaurantTables}" var="restaurantTable">
             <tr>
                 <td>
                     <c:out value="${restaurantTable.waiter.name}"/>
@@ -30,14 +30,14 @@
                     <c:out value="${restaurantTable.size}"/>
                 </td>
             <td>
-                	<spring:url value="/restauranttables/delete/{restaurantTableId}" var="deleteUrl">
+                	<spring:url value="/restaurantTables/delete/{restaurantTableId}" var="deleteUrl">
                         <spring:param name="restaurantTableId" value="${restaurantTable.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
                 </td>
             
             <td>
-                	<spring:url value="/restauranttables/{restaurantTableId}/edit" var="editUrl">
+                	<spring:url value="/restaurantTables/{restaurantTableId}/edit" var="editUrl">
                         <spring:param name="restaurantTableId" value="${restaurantTable.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
@@ -48,7 +48,7 @@
     </table>
     
         <div class="form-group">
-    	<form method="get" action="/restauranttables/new">
+    	<form method="get" action="/restaurantTables/new">
     		<button class="btn btn-default" type="submit">Add new restaurant table</button>
 		</form>
 	</div>

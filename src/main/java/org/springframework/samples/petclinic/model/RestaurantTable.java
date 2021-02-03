@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "restauranttables")
+@Table(name = "restaurantTables")
 public class RestaurantTable extends BaseEntity{
 	
 	@ManyToOne
