@@ -16,7 +16,11 @@ import lombok.Setter;
 @Table(name = "authorities")
 public class Authority extends BaseEntity{
 	
+	@ManyToOne
+	@JoinColumn(name = "username")
+	private User user;
+	
 	@NotBlank
-	private String role;
+	private String authority;
 	
 }

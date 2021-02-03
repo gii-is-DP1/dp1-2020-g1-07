@@ -12,7 +12,7 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.stereotype.Repository;
 
 @Repository("userRepository")
-public interface UserRepository extends CrudRepository<User, Integer>{
+public interface UserRepository extends CrudRepository<User, String>{
 	
 	@Query("SELECT e FROM Employee e ORDER BY e.id")
 	List<Employee> findEmployees() throws DataAccessException;

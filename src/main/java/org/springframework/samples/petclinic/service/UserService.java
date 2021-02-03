@@ -43,8 +43,8 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly=true)
-	public Optional<User> findUserById(int id) {
-		return userRepo.findById(id);
+	public Optional<User> findUserById(String username) {
+		return userRepo.findById(username);
 	}
 	
 	public  void delete(User user) { 

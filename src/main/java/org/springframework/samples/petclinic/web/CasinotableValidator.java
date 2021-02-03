@@ -64,4 +64,3 @@ public class CasinotableValidator implements Validator{
 		return Casinotable.class.isAssignableFrom(clazz);
 	}
 }
-	

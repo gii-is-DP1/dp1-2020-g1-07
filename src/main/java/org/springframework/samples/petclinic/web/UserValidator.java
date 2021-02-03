@@ -17,10 +17,9 @@ private static final String REQUIRED = "required";
 	@Autowired
 	private UserService userService;
 	
-	public boolean getUserwithIdDifferent(String username, Integer id) {
+	public boolean getUserwithIdDifferent(String username) {
 		if (StreamSupport.stream(this.userService.findAll().spliterator(), false)
-				.filter(x -> (x.getUsername().equals(username) && id == null) || 
-						(x.getUsername().equals(username) && id != null && !x.getId().equals(id)))
+				.filter(x -> (x.getUsername().equals(username)))
 				.findAny().isPresent())
 			return true;
 		else
@@ -32,7 +31,7 @@ private static final String REQUIRED = "required";
 		User us = (User) obj;
 		String name = us.getUsername();
 		String pass = us.getPassword();
-		Authority auth = us.getAuthority();
+		Authority auth = null; //us.getAuthority();
 		
 		// username validation
 		if (name == null || name.trim().equals("")) {
