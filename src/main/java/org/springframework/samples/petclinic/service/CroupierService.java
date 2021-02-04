@@ -11,6 +11,8 @@ import org.springframework.samples.petclinic.repository.CroupierRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class CroupierService {
 	@Autowired
@@ -46,6 +48,7 @@ public class CroupierService {
 	}
 	
 	public Collection<Casinotable> findCasinotables()throws DataAccessException{
+	 log.info("Loading Casinotables from DB");
 	  return croupierRep.findCasinoTables();
 	}
 }

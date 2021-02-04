@@ -37,10 +37,10 @@ INSERT INTO SHOWTYPES VALUES(2, 'Theater');
 INSERT INTO SHOWTYPES VALUES(3, 'Magic');
 
 
-INSERT INTO CASINOTABLES VALUES(1, 'Mesa 1','2020-01-04','11:30:00','09:30:00',1,2,1);
-INSERT INTO CASINOTABLES VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,2,1);
-INSERT INTO CASINOTABLES VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
-INSERT INTO CASINOTABLES VALUES(4, 'Mesa 4','2020-01-04','04:40:00','23:30:00',1,2,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id) VALUES(1, 'Mesa 1','2020-01-04','11:30:00','09:30:00',1,2,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id) VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,2,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(4, 'Mesa 4','2020-01-04','04:40:00','23:30:00',1,2,1);
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (1,'12345678A','Manuel Rodriguez','987654321');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432Z','Rosa Garcia','123456789');

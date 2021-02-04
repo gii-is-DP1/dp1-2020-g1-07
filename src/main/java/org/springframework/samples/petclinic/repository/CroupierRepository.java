@@ -8,7 +8,7 @@ import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Croupier;
 import org.springframework.stereotype.Repository;
 
-@Repository("croupierRepository")
+
 public interface CroupierRepository extends CrudRepository<Croupier, Integer>{
 
 	@Query("SELECT casinotable FROM Casinotable casinotable ORDER BY casinotable.id")

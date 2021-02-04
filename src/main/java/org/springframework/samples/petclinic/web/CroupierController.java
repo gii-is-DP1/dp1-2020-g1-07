@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/croupiers")
 public class CroupierController {
@@ -42,6 +44,7 @@ public class CroupierController {
 	
 	@GetMapping(path="/new")
 	public String createCroupier(ModelMap modelMap) {
+		log.info("Loading new croupier form" + croupierService.findCasinotables().toString());
 		String view="croupiers/addCroupier";
 		modelMap.addAttribute("croupier", new Croupier());
 		return view;
