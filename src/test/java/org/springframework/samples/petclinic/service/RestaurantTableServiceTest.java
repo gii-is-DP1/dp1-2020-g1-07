@@ -42,7 +42,7 @@ public class RestaurantTableServiceTest {
 		assertEquals(count,0);
 	}
 	
-	@Test
+	/*@Test
 	void testAddingRestaurantTable() {
 		RestaurantTable new_rt = new RestaurantTable();
 		Waiter waiter1 = new Waiter();
@@ -64,6 +64,6 @@ public class RestaurantTableServiceTest {
 		assertTrue(saved_rt.getSize()==3);
 		assertTrue(saved_rt.getWaiter().getDni().equals("11111111A"));
 		
-	}
+	}*/
 
 }

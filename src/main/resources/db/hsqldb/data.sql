@@ -148,9 +148,13 @@ INSERT INTO timeintervals VALUES(4, '21:00 - 22:00');
 INSERT INTO timeintervals VALUES(5, '22:00 - 23:00');
 INSERT INTO timeintervals VALUES(6, '23:00 - 00:00');
 
-INSERT INTO restaurantTables VALUES(1, 4, 19);
-INSERT INTO restaurantTables VALUES(2, 5, 20);
+INSERT INTO restaurantTables VALUES(1, 4);
+INSERT INTO restaurantTables VALUES(2, 5);
 
+INSERT INTO serves VALUES(19,1);
+INSERT INTO serves VALUES(20,2);
+INSERT INTO serves VALUES(21,1);
+INSERT INTO serves VALUES(21,2);
 
 INSERT INTO restaurantreservations VALUES(1, '2021-02-05', 1, 1, 1);
 INSERT INTO restaurantreservations VALUES(2, '2021-02-05', 2, 1, 2);

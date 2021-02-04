@@ -36,7 +36,7 @@ public class RestaurantReservationServiceTest {
 		reservationService = new RestaurantReservationService(reservationRepo);
     }
 	
-	@Test
+	/*@Test
 	void testNewReservation() {
 		RestaurantReservation new_reservation = new RestaurantReservation();
 		new_reservation.setId(1);
@@ -71,6 +71,6 @@ public class RestaurantReservationServiceTest {
 		assertTrue(saved_reservations.getRestauranttable().getSize()==8);
 		assertTrue(saved_reservations.getTimeInterval().getName().equals("13:00-14:00"));
 
-	}
+	}*/
 	
 }

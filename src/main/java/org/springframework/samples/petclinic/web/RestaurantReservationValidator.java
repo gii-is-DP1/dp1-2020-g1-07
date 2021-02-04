@@ -32,15 +32,6 @@ public class RestaurantReservationValidator implements Validator{
 		if (table == null) {
 			errors.rejectValue("restauranttable", "Value is required", "Value is required");
 		}
-		/*String name = game.getName();
-		Integer maxPlayers = game.getMaxPlayers();
-		// name validation
-		if (name == null || name.trim().equals("")) {
-			errors.rejectValue("name", REQUIRED, REQUIRED);
-		}
-		if( maxPlayers == null  || maxPlayers == 0) {
-			errors.rejectValue("maxPlayers", REQUIRED, REQUIRED);
-		}*/
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class RestaurantReservationControllerTests {
 	
 	private RestaurantReservation reservation;
 	
-	@BeforeEach
+	/*@BeforeEach
 	void setup() {
 
 		//Preparamos una mesa
@@ -188,7 +188,7 @@ public class RestaurantReservationControllerTests {
 				.andExpect(model().attributeHasErrors("restaurantReservation"))
 				.andExpect(model().attributeHasFieldErrors("restaurantReservation", "timeInterval"))
 				.andExpect(view().name("restaurantreservations/updateRestaurantReservation"));
-	}
+	}*/
 
 
 }

@@ -55,7 +55,7 @@ public class RestaurantTableControllerTests {
 	private RestaurantTable restaurantTable;
 	private Waiter waiter;
 
-	@BeforeEach
+	/*@BeforeEach
 	void setup() {
 		restaurantTable = new RestaurantTable();
 		restaurantTable.setId(1);
@@ -107,7 +107,7 @@ public class RestaurantTableControllerTests {
 			.andExpect(model().attributeHasErrors("restaurantTable"))
 			.andExpect(model().attributeHasFieldErrors("restaurantTable", "waiter"))
 			.andExpect(view().name("restaurantTables/addRestaurantTable"));
-	}
+	}*/
 	
 	
 }
