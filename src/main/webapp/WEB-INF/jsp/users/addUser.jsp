@@ -11,11 +11,16 @@
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Username" name="username"/>
                 <petclinic:inputField label="Password" name="password"/>
-                <petclinic:selectField label="Role" name="authority" names="${roles}" size="1"/>
+                Role <select id="role" name="role">
+		            <option value="admin">Administrator</option>
+		            <option value="employee">Employee</option>
+		            <option value="client">Client</option>
+		        </select>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="userId" value="${user.id}"/>
+                <input type="hidden" name="origin" value="admin"/>
+                    <input type="hidden" name="userId" value="${user.username}"/>
                     <button class="btn btn-default" type="submit">Add User</button>
                 </div>
             </div>

@@ -4,19 +4,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="cooks">
+<petclinic:layout pageName="users">
     <jsp:body>
-        <h2>New cook</h2>
-        <form:form modelAttribute="cook" class="form-horizontal" action="/cooks/save">
+        <h2>New User</h2>
+        <form:form modelAttribute="user" class="form-horizontal" action="/users/save">
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Dni" name="dni"/>
-                <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="Phone Number" name="phone_number"/>
+                <petclinic:inputField label="Username" name="username"/>
+                <petclinic:inputField label="Password" name="password"/>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="cookId" value="${cook.id}"/>
-                    <button class="btn btn-default" type="submit">Add Cook</button>
+                	<input type="hidden" name="role" value="client"/>
+                	<input type="hidden" name="origin" value="client"/>
+                    <input type="hidden" name="userId" value="${user.username}"/>
+                    <button class="btn btn-default" type="submit">Register</button>
                 </div>
             </div>
         </form:form>

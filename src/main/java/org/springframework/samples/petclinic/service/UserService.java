@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Administrator;
-import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
@@ -41,6 +40,7 @@ public class UserService {
 	@Transactional
 	public void save(User user) throws DataAccessException {
 		user.setEnabled(true);
+		user.setDni("17712013H"); //TEMPORAL
 		userRepo.save(user);
 	}
 	
@@ -67,7 +67,7 @@ public class UserService {
 		log.info("Loading admins from DB");
 		return userRepo.findAdmins();
 	}
-	/*
+	
 	public Collection<Client> findClientsWithAccount() throws DataAccessException{
 		log.info("Loading clients with account from DB");
 		return userRepo.findClientsWithAccount();
@@ -83,12 +83,9 @@ public class UserService {
 		return userRepo.findAdminsWithAccount();
 	}
 	
-	*/
-	
 	public Collection<Integer> findAuthorityId(String username) throws DataAccessException{
 		log.info("Looking for authorities from user: " + username);
 		return userRepo.findAuthoritiesId(username);
 	}
-	
 	
 }

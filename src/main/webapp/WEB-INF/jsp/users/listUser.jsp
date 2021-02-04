@@ -20,8 +20,8 @@
         </tr>
         </thead>
         <tbody>
-            <tr>
-            	<c:forEach items="${admins}" var="admin">
+            	<c:forEach items="${logadmins}" var="admin">
+            	<tr>
 	                <td>
 	                    <c:out value="${admin.user.username}"/>
 	                </td>
@@ -44,9 +44,11 @@
 	                    </spring:url>
 	                    <a href="${fn:escapeXml(editUrl)}">Update</a>
 	                </td>
+	            </tr>
                 </c:forEach>
                 
-                <c:forEach items="${employees}" var="emp">
+                <c:forEach items="${logemployees}" var="emp">
+                <tr>
 	                <td>
 	                    <c:out value="${emp.user.username}"/>
 	                </td>
@@ -69,14 +71,16 @@
 	                    </spring:url>
 	                    <a href="${fn:escapeXml(editUrl)}">Update</a>
 	                </td>
+	            </tr>
                 </c:forEach>
                 
-                <c:forEach items="${clients}" var="client">
+                <c:forEach items="${logclients}" var="client">
+                <tr>
 	                <td>
 	                    <c:out value="${client.user.username}"/>
 	                </td>
 	                <td>
-	                    <c:out value="Employee"/>
+	                    <c:out value="Client"/>
 	                </td>
 	                <td>
 	                    <c:out value="${client.dni}"/>
@@ -94,8 +98,8 @@
 	                    </spring:url>
 	                    <a href="${fn:escapeXml(editUrl)}">Update</a>
 	                </td>
+	            </tr>
                 </c:forEach>
-            </tr>
         </tbody>
     </table>
     

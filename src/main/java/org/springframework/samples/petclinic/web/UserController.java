@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,6 +52,12 @@ public class UserController {
 		String view= "users/listUser";
 		Iterable<User> users=userService.findAll();
 		modelMap.addAttribute("users", users);
+		Collection<Client> clients = userService.findClientsWithAccount();
+		modelMap.addAttribute("logclients", clients);
+		Collection<Administrator> admins = userService.findAdminsWithAccount();
+		modelMap.addAttribute("logadmins", admins);
+		Collection<Employee> employees = userService.findEmployeesWithAccount();
+		modelMap.addAttribute("logemployees", employees);
 		return view;
 	}
 	
@@ -69,49 +76,54 @@ public class UserController {
 		return this.userService.findEmployees();
 	}
 	
-	@GetMapping(path="/new")
+	@GetMapping(path="/newlog")
 	public String createUser(ModelMap modelMap) {
 		log.info("Loading new user form");
 		String view="users/addUser";
 		modelMap.addAttribute("user", new User());
-		modelMap.addAttribute("auth", new Authority());
 		return view;
 	}
 	
-	@GetMapping(path="/newclient")
+	@GetMapping(path="/new")
 	public String createClientUser(ModelMap modelMap) {
 		log.info("Loading new user form for clients");
 		String view="users/addClient";
-		Authority auth = new Authority();
-		auth.setAuthority("client");
 		modelMap.addAttribute("user", new User());
-		modelMap.addAttribute("auth", auth);
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String saveUser(@Valid User user, @Valid Authority auth, BindingResult result, ModelMap modelMap) {
-		log.info("Saving user: " + user.getUsername());
-		String view="users/listUser";
+	public String saveUser(@Valid User user, @RequestParam("role") String role, 
+			@RequestParam("origin") String origin, BindingResult result, ModelMap modelMap) {
+		//TODO: Conectar con la vista de crear cliente (guardar el usuario dentro del cliente)
+		//Y con la de crear empleado/admin
+		log.info("Saving user: " + user.getUsername());	
+		String view="users/addClient";
+			if (origin.equals("admin"))
+				view="users/addUser";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("user", user);
-			modelMap.addAttribute("auth", auth);
-			return "users/addUser";
+			modelMap.addAttribute("role", role);
+			return view;
 			
 		}else {
 			if (validator.getUserwithIdDifferent(user.getUsername())) {
 				log.warn("Couldn't create user, username " + user.getUsername() + " is taken");
 				result.rejectValue("username", "username.duplicate", "Username " + user.getUsername() + " is taken");
 				modelMap.addAttribute("user", user);
-				modelMap.addAttribute("auth", auth);
-				return "users/addUser";
+				modelMap.addAttribute("role", role);
+				return view;
 			}
 			log.info("User validated: saving into DB");
+			Authority auth = new Authority();
+			auth.setAuthority(role);
 			userService.save(user);
 			authService.save(auth);
 			modelMap.addAttribute("message", "User successfully saved!");
-			view=listUsers(modelMap);
+			//view="home"; TODO: Redirección a la vista de bienvenida
+			//if (origin.equals("admin"))	
+				view=listUsers(modelMap);
 		}
 		return view;
 	}
