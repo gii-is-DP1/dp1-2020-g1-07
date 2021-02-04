@@ -1,10 +1,13 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.service.WaiterService;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/waiters")
 public class WaiterController {
+	
+	private List<RestaurantTable> servedTables;
 
 	@Autowired
 	private WaiterService waiterService;
@@ -109,4 +114,55 @@ public class WaiterController {
             return "redirect:/waiters";
         }
     }
+    
+    //Parte de controlador para las mesas
+    
+    
+    @GetMapping(path="/serves/{waiterId}")
+	public String waiterServes(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+		String view="waiters/assignedTables";
+		Waiter waiter = waiterService.findWaiterById(waiterId).get();
+		modelMap.put("waiter",waiter);
+		servedTables = waiterService.findTablesServed(waiterId);
+		modelMap.put("restaurantTables", servedTables);
+		return view;
+	}
+    
+    @GetMapping(path="/serves/{waiterId}/new")
+	public String createServe(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+		String view="waiters/addServe";
+		modelMap.put("restaurantTable", new RestaurantTable());
+		//HAY QUE HACER UN BUSCAR TODAS LAS MESAS Y ELIMINAR LAS MESAS QUE ESTAN ALMACENADAS EN SERVEDTABLES, A ESA LISTA SE LE HACE EL OBTAINIDS
+		List<RestaurantTable> restaurantTables = waiterService.findTablesNotServedIds(waiterId);
+		List<Integer> restaurantTablesIds = ObtainTablesIds(restaurantTables);
+		modelMap.put("restaurantTablesIds", restaurantTablesIds);
+		return view;
+	}
+	
+    public List<Integer> ObtainTablesIds(List<RestaurantTable> restaurantTables){
+    	List<Integer> res = new ArrayList<Integer>();
+    	for(RestaurantTable restaurantTable:restaurantTables) {
+    		res.add(restaurantTable.getId());
+    	}
+    	return res;
+    }
+    
+	@PostMapping(path="/serves/{waiterId}/save")
+	public String saveServe(@Valid Waiter waiter, BindingResult result, ModelMap modelMap) {
+		String view="waiters/listWaiter";
+		if(result.hasErrors()) {
+			modelMap.addAttribute("waiter", waiter);
+			return "waiters/addServe";
+			
+		}else {
+			waiterService.save(waiter);
+			modelMap.addAttribute("message", "Waiter successfully saved!");
+			view=listWaiters(modelMap);
+		}
+		return view;
+	}
+    
+    
+    
+    
 }

@@ -109,7 +109,7 @@ public class RestaurantTableControllerTests {
 			.andExpect(model().attributeHasErrors("restaurantTable"))
 			.andExpect(model().attributeHasFieldErrors("restaurantTable", "waiter"))
 			.andExpect(view().name("restaurantTables/addRestaurantTable"));
-	}*/
+	}
 	
 	@WithMockUser(value = "spring")
 	@Test
@@ -144,5 +144,5 @@ public class RestaurantTableControllerTests {
 				.andExpect(model().attributeHasErrors("restaurantTable"))
 				.andExpect(model().attributeHasFieldErrors("restaurantTable", "size"))
 				.andExpect(view().name("restaurantTables/updateRestaurantTable"));
-	}
+	}*/
 }
