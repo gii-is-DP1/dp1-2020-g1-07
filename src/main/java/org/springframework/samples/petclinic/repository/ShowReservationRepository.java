@@ -18,7 +18,7 @@ public interface ShowReservationRepository extends CrudRepository<ShowReservatio
 	@Query("SELECT DISTINCT e FROM Event e WHERE e.date >= :today ORDER BY e.date")
 	List<Event> findAvailableShows(@Param("today") LocalDate today) throws DataAccessException;
 	
-	@Query("SELECT DISTINCT s FROM ShowReservation s WHERE s.event.date >= :today and s.client.id = :id ORDER BY s.event.date")
+	@Query("SELECT DISTINCT s FROM ShowReservation s WHERE s.event.date >= :today and s.client.id = :id ORDER BY s.id")
 	List<ShowReservation> findReservationsForUser(@Param("today") LocalDate today, @Param("id") Integer id) throws DataAccessException;
 	
 	@Query("SELECT DISTINCT c FROM Client c WHERE c.user.username LIKE :user%")

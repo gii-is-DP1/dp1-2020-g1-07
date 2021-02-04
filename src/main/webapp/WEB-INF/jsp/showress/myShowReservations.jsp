@@ -25,17 +25,18 @@
                     <c:out value="${s.event.name}"/>
                 </td>
                 <td>
-                    <c:out value="${s.seats}"/>
+                    <c:out value="${s.id}"/>
                 </td>
                 <td>
                 	<spring:url value="/showress/delete/{showresId}" var="deleteUrl">
-                        <spring:param name="showresId" value="${showres.id}"/>
+                        <spring:param name="showresId" value="${s.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
                 </td> 
                  <td>
-                	<spring:url value="/showress/{showresId}/edit" var="editUrl">
-                        <spring:param name="showresId" value="${showres.id}"/>
+                	<spring:url value="/showress/{showresId}/edit/{clientId}" var="editUrl">
+                        <spring:param name="showresId" value="${s.id}"/>
+                        <spring:param name="clientId" value="${s.client.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 

@@ -65,10 +65,12 @@ INSERT INTO employees(id,dni,name,phone_number) VALUES (6,'30987455M','Luis Mart
 INSERT INTO artists(id) VALUES (4);
 INSERT INTO artists(id) VALUES (5);
 INSERT INTO artists(id) VALUES (6);
+
 INSERT INTO STAGE (id, capacity ) VALUES(1,40);
 INSERT INTO STAGE(id, capacity) VALUES(2,40);
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(1,'Magic and Pasion','2019-12-21',3,4,1);
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(2,'Hamlet','2020-02-17',2,6,2);
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(1,'Magic and Pasion','2021-12-21',3,4,1);
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(2,'Hamlet','2021-05-17',2,6,2);
+INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(3,'DJ Kikei','2021-09-25',1,5,2);
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Oscar Rodriguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
@@ -118,6 +120,10 @@ INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (3,100
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (4,-200,'2020-09-21',4,1,1);
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (5,-100,'2020-09-21',1,1,1);
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (6,150,'2020-09-21',1,1,1);
+
+INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (1, 5, 1, 1);
+INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (2, 2, 1, 2);
+INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (3, 1, 1, 3);
 
 INSERT INTO dish_courses VALUES (1, 'First');
 INSERT INTO dish_courses VALUES (2, 'Second');

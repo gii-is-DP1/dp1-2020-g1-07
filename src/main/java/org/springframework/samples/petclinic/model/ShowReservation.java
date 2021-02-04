@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "showreservation")
+@Table(name = "showreservations")
 public class ShowReservation extends BaseEntity{
 
 	@Min(value = 1)
