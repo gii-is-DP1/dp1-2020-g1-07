@@ -49,8 +49,8 @@ public class WaiterService {
 		return waiterRep.findTablesServed(waiterId);
 	}
 	
-	public List<RestaurantTable> findTablesNotServedIds(int waiterId) {
+	public List<RestaurantTable> findRestaurantTables() {
 		// TODO Auto-generated method stub
-		return waiterRep.findTablesNotServedIds(waiterId);
+		return waiterRep.findRestaurantTables();
 	}
 }

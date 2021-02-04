@@ -16,6 +16,7 @@
         <tr>
             <th style="width: 200px;">ID</th>
             <th style="width: 200px;">Size</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -27,13 +28,20 @@
                 <td>
                     <c:out value="${restaurantTable.size}"/>
                 </td>
+                <td>
+                	<spring:url value="/waiters/serves/{waiterId}/delete/{restaurantTableId}" var="restaurantTableUrl">
+                        <spring:param name="restaurantTableId" value="${restaurantTable.id}"/>
+                        <spring:param name="waiterId" value="${waiter.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(restaurantTableUrl)}">Delete</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     
         <div class="form-group">
-        <spring:url value="{waiterId}/new" var="newUrl">
+        <spring:url value="/waiters/serves/{waiterId}/new" var="newUrl">
                         <spring:param name="waiterId" value="${waiter.id}"/>
         </spring:url>
     	<a class="btn btn-default" href="${fn:escapeXml(newUrl)}">Add new table to serve</a>

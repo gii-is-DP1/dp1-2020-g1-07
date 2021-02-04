@@ -7,7 +7,7 @@
 <petclinic:layout pageName="waiters">
     <jsp:body>
         <h2>New table to serve</h2>
-        <form:form modelAttribute="restaurantTable" class="form-horizontal" action="/waiters/saveServe">
+        <form:form modelAttribute="restaurantTable" class="form-horizontal" action="save">
             <div class="form-group has-feedback">
                 <div class="control-group">
                 	<petclinic:selectField label="Restaurant Table" name="id" names="${restaurantTablesIds}" size="1"/>

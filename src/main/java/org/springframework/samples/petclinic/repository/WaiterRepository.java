@@ -16,7 +16,7 @@ public interface WaiterRepository extends CrudRepository<Waiter, Integer>{
 	@Query("SELECT waiter.serves FROM Waiter waiter WHERE waiter.id=:waiterId")
 	public List<RestaurantTable> findTablesServed(@Param("waiterId")int waiterId) throws DataAccessException;
 	
-	@Query("SELECT waiter.serves FROM Waiter waiter WHERE NOT waiter.id=:waiterId")
-	public List<RestaurantTable> findTablesNotServedIds(@Param("waiterId")int waiterId) throws DataAccessException;
+	@Query("SELECT restaurantTable FROM RestaurantTable restaurantTable ORDER BY restaurantTable.id")
+	public List<RestaurantTable> findRestaurantTables() throws DataAccessException;
 
 }
