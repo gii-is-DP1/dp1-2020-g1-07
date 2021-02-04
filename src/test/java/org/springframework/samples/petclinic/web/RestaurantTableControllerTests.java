@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -109,5 +111,38 @@ public class RestaurantTableControllerTests {
 			.andExpect(view().name("restaurantTables/addRestaurantTable"));
 	}*/
 	
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateRestaurantTableForm() throws Exception {
+		mockMvc.perform(get("/restaurantTables/{restaurantTableId}/edit", 1)).andExpect(status().isOk())
+				.andExpect(model().attributeExists("restaurantTable"))
+				.andExpect(model().attribute("restaurantTable", hasProperty("waiter", is(restaurantTableService.findRestaurantTableId(1).get().getWaiter()))))
+				.andExpect(model().attribute("restaurantTable", hasProperty("size", is(restaurantTableService.findRestaurantTableId(1).get().getSize()))))
+				.andExpect(view().name("restauranttables/updateRestaurantTable"));
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateRestaurantTableFormSuccess() throws Exception {
+		mockMvc.perform(post("/restaurantTables/{restaurantTableId}/edit", 1)
+				.param("waiter", "177013120H")
+				.param("size", "3")
+				.with(csrf()))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/restaurantTables"));
+	}
 	
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateRestaurantTableFormHasErrors() throws Exception {
+		mockMvc.perform(post("/restaurantTables/{restaurantTableId}/edit", 1)
+				.param("waiter", "177013120H")
+				.param("size", "0")
+				.with(csrf()))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeHasErrors("restaurantTable"))
+				.andExpect(model().attributeHasFieldErrors("restaurantTable", "size"))
+				.andExpect(view().name("restaurantTables/updateRestaurantTable"));
+	}
 }
