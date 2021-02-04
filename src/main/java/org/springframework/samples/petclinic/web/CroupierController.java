@@ -1,11 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Croupier;
+import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.service.CroupierService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +48,6 @@ public class CroupierController {
 	
 	@GetMapping(path="/new")
 	public String createCroupier(ModelMap modelMap) {
-		log.info("Loading new croupier form" + croupierService.findCasinotables().toString());
 		String view="croupiers/addCroupier";
 		modelMap.addAttribute("croupier", new Croupier());
 		return view;
@@ -110,5 +113,9 @@ public class CroupierController {
             this.croupierService.save(croupier);
             return "redirect:/croupiers";
         }
+    }
+    @ModelAttribute("casinotables")
+    public Collection<Casinotable> populateCasinotables() {
+        return this.croupierService.findCasinotables();
     }
 }
