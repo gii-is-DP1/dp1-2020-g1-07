@@ -73,7 +73,7 @@ public class ClientGainController {
 	public String loadUserGains(@PathVariable("date")String datestr) {
 		log.info("Loading user gains for week starting at: " + datestr);
 		String username = UserUtils.getUser();
-		String dni = cgainService.findClientByUsername(username);
+		String dni = cgainService.findClientByUsername(username).getDni();
 		log.info("User found: " + username + " --- " + dni);
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 

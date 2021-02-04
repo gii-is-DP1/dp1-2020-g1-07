@@ -40,7 +40,6 @@ public class UserService {
 	@Transactional
 	public void save(User user) throws DataAccessException {
 		user.setEnabled(true);
-		user.setDni("17712013H"); //TEMPORAL
 		userRepo.save(user);
 	}
 	

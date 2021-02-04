@@ -1,13 +1,13 @@
 -- ADMIN: admin1|4dm1n
-INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678A',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(1,'admin1','admin');
 
 -- EMPLOYEE: artist1|artist1
-INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431Z',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('artist1','artist1',TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(2,'artist1','employee');
 
 -- CLIENT: client1|client1
-INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','11111111A',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('client1','client1',TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(3,'client1','client');
 
 INSERT INTO GAMETYPES VALUES(1,'Roulette');
@@ -70,7 +70,7 @@ INSERT INTO STAGE(id, capacity) VALUES(2,40);
 INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(1,'Magic and Pasion','2019-12-21',3,4,1);
 INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(2,'Hamlet','2020-02-17',2,6,2);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Ofelia Rodriguez','987654319');
+INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Oscar Rodriguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (9,'30987454M','Maria Martin','567891232');
 INSERT INTO administrators(id) VALUES (7);
