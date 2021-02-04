@@ -68,7 +68,7 @@ public class RestaurantTableValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		RestaurantTable restaurantTable = (RestaurantTable) target;
 		Integer size = restaurantTable.getSize();
-		if (size == null) {
+		if (size == null || size <2) {
 			errors.rejectValue("size", REQUIRED, REQUIRED);
 		}
 	}
