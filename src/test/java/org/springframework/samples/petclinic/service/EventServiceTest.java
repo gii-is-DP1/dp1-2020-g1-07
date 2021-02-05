@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
+import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.repository.EventRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,6 +42,9 @@ public class EventServiceTest {
 	@Test
 	void testAddingEvent() {
 		
+		Stage stage = new Stage();
+		stage.setId(1);
+		stage.setCapacity(100);
 		Event event = new Event();
 		event.setName("Hamlet");
 		event.setDate(LocalDate.parse("2020-02-17"));
@@ -52,6 +56,7 @@ public class EventServiceTest {
 		artist.setDni("23213422B");
 		artist.setPhone_number("65241563");
 		event.setArtist_id(artist);
+		event.setStage_id(stage);
 		Collection<Event> sampleEvents = new ArrayList<Event>();
 		sampleEvents.add(event);
         when(eventRepo.findAll()).thenReturn(sampleEvents);
@@ -61,6 +66,7 @@ public class EventServiceTest {
 		assertTrue(saved_event.getName().equals("Hamlet"));
 		assertTrue(saved_event.getArtist_id().getName().equals("Luis Martín"));
 		assertTrue(saved_event.getShowtype_id().getName().equals("Theater"));
+		assertTrue(saved_event.getStage_id().getCapacity() == 100);
 		
 	}
 }

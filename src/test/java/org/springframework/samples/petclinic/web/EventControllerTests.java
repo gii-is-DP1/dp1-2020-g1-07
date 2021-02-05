@@ -26,6 +26,7 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
+import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.service.EventService;
 import org.springframework.samples.petclinic.service.StageService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -103,6 +104,20 @@ public class EventControllerTests {
 		event2.setName("Hamlet");
 		event2.setShowtype_id(showtype2);
 		
+		
+		Stage stage = new Stage();
+		stage.setId(1);
+		stage.setCapacity(100);
+		
+		Stage stage2= new Stage();
+		stage2.setId(2);
+		stage2.setCapacity(130);
+		
+		List<Stage> stages = new ArrayList<Stage>();
+		stages.add(stage);stages.add(stage2);
+		given(this.eventService.findStages()).willReturn(stages);
+	
+		event.setStage_id(stage);event2.setStage_id(stage2);
 		List<Event> events = new ArrayList<Event>();
 		events.add(event);events.add(event2);
 		given(this.eventService.findAll()).willReturn(events);
@@ -124,7 +139,8 @@ public class EventControllerTests {
 						.with(csrf())
 						.param("date", "2020/12/25")
 						.param("showtype_id", "Magic")
-						.param("artist_id", "45345678a"))
+						.param("artist_id", "45345678a")
+						.param("stage_id", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(view().name("events/listEvent"));
 	}
@@ -135,7 +151,8 @@ public class EventControllerTests {
 		mockMvc.perform(post("/events/save").param("name", "Magic and Ilusion")
 						.with(csrf())
 						.param("date", "2020/12/25")
-						.param("showtype_id", "Magic"))
+						.param("showtype_id", "Magic")
+						.param("stage_id", "1"))
 		.andExpect(status().is2xxSuccessful())
 		.andExpect(model().attributeHasErrors("event"))
 		.andExpect(model().attributeHasFieldErrors("event", "artist_id"))
@@ -148,7 +165,8 @@ public class EventControllerTests {
 						.with(csrf())
 						.param("date", "2020/12/25")
 						.param("showtype_id", "Magic")
-						.param("artist_id", "45345678a"))
+						.param("artist_id", "45345678a")
+						.param("stage_id", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(model().attributeHasErrors("event"))
 			.andExpect(model().attributeHasFieldErrors("event", "name"))
@@ -163,6 +181,7 @@ public class EventControllerTests {
 				.andExpect(model().attribute("event", hasProperty("date", is(eventService.findEventbyId(1).get().getDate()))))
 				.andExpect(model().attribute("event", hasProperty("showtype_id", is(eventService.findShowTypes().toArray()[2]))))
 				.andExpect(model().attribute("event", hasProperty("artist_id", is(eventService.findArtists().toArray()[0]))))
+				.andExpect(model().attribute("event", hasProperty("stage_id", is(eventService.findStages().toArray()[0]))))
 				.andExpect(view().name("events/updateEvent"));
 	}
 	@WithMockUser(value = "spring")

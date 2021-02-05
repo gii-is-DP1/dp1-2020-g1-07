@@ -18,7 +18,7 @@
             <th style="width: 200px;">Date</th>
             <th style="width: 200px;">Show Type</th>
             <th style="width: 200px;">Artist/Group</th>
-            <th>Actions</th>
+            <th style= "width: 200px;">Stage</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +38,9 @@
                 </td>
                 <td>
                     <c:out value="${event.artist_id.name}"/>
+                </td>
+                <td>
+                    <c:out value="${event.stage_id.id}"/>
                 </td>
             <td>
                 	<spring:url value="/events/delete/{eventId}" var="eventUrl">

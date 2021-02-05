@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/casinotables")
 public class CasinotableController {
@@ -44,6 +46,7 @@ public class CasinotableController {
 	
 	@GetMapping()
 	public String casinotablesListed(ModelMap modelMap) {
+		log.info("Loading list of casinotables");
 		String view = "casinotables/listCasinotable";
 		Iterable<Casinotable> casinotables=castableService.findAll();
 		modelMap.addAttribute("casinotables", casinotables);
@@ -53,6 +56,7 @@ public class CasinotableController {
 	
 	@GetMapping(path="/new")
 	public String createCasinotable(ModelMap modelMap) {
+		log.info("Loading new casinotable form");
 		String view="casinotables/addCasinotable";
 		modelMap.addAttribute("casinotable", new Casinotable());
 		return view;
@@ -60,16 +64,20 @@ public class CasinotableController {
 	
 	@PostMapping(path="/save")
 	public String saveCasinotable(@Valid Casinotable casinotable, BindingResult result, ModelMap modelMap) throws ParseException {
+		log.info("Saving casinotable:" + casinotable.getId());
 		String view="casinotables/listCasinotable";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/addCasinotable";
 		}else {
 			if(casinotabValidator.getReverseDate(casinotable.getStartTime(), casinotable.getEndingTime())==true){
+				log.warn("Found a error: the start time must be before the end time");
 				result.rejectValue("startTime","", "The start time must be before the end time.");
 				modelMap.addAttribute("casinotable", casinotable);
 				return "casinotables/addCasinotable";
 			}
+			log.info("Game validated: saving into DB");
 			castableService.save(casinotable);
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
 			view=casinotablesListed(modelMap);
@@ -79,13 +87,16 @@ public class CasinotableController {
 	
 	@GetMapping(path="/delete/{casinotableId}")
 	public String deleteCasinoTable(@PathVariable("casinotableId") int casinotableId, ModelMap modelMap) {
+		log.info("Deleting casinotable:" + casinotableId);
 		String view="casinotables/listCasinotable";
 		Optional<Casinotable> casinotable = castableService.findCasinotableById(casinotableId);
 		if(casinotable.isPresent()) {
+			log.info("Casinotable found: deleting");
 			castableService.delete(casinotable.get());
 			modelMap.addAttribute("message", "Casinotable successfully deleted!");
 			view=casinotablesListed(modelMap);
 		}else {
+			log.warn("Casinotable not found in DB: "+ casinotableId);
 			modelMap.addAttribute("message", "Casinotable not found!");
 			view=casinotablesListed(modelMap);
 		}
@@ -94,8 +105,8 @@ public class CasinotableController {
 	
 	@GetMapping(value = "/{casinotableId}/edit")
 	public String initUpdateCasTbForm(@PathVariable("casinotableId") int casinotableId, ModelMap model) {
+		log.info("Loading update casinotable form: " + casinotableId);
 		Casinotable casinotable = castableService.findCasinotableById(casinotableId).get();
-		
 		model.put("casinotable", casinotable);
 		return "casinotables/updateCasinotable";
 	}
@@ -103,18 +114,21 @@ public class CasinotableController {
 	@PostMapping(value = "/{casinotableId}/edit")
 	public String processUpdateCasTbForm(@Valid Casinotable casinotable, BindingResult result,
 			@PathVariable("casinotableId") int casinotableId, ModelMap model) throws ParseException {
+		log.info("Updating casinotable: " + casinotableId);
 		casinotable.setId(casinotableId);
 		if (result.hasErrors()) {
+			log.warn("Found errors on update: " + result.getAllErrors());
 			model.put("casinotable", casinotable);
 			return "casinotables/updateCasinotable";
 		}
 		else {
 			if(casinotabValidator.getReverseDate(casinotable.getStartTime(), casinotable.getEndingTime())==true){
+				log.warn("Found a error: the start time must be before the end time");
 				result.rejectValue("startTime","", "The start time must be before the end time.");
 				model.put("casinotable", casinotable);
 				return "casinotables/updateCasinotable";
 			}
-			
+			log.info("Casinotable validated: updating into DB");
 			this.castableService.save(casinotable);
 			return "redirect:/casinotables";
 			 /*Optional<Casinotable> casinotableToUpdate=this.castableService.findCasinotableById(casinotableId);
@@ -129,6 +143,7 @@ public class CasinotableController {
 	@ResponseBody
     @RequestMapping(value = "/new/loadGamesByGameType/{id}", method = RequestMethod.GET)
     public String loadGamesByGameType(@PathVariable("id")int id) {
+		log.info("Loading games by a gametype id:" + id);
         String json = "[";
         try {
             List<Game> games = new ArrayList<Game>(castableService.findGamesByGameType(id));
@@ -149,10 +164,12 @@ public class CasinotableController {
                 json = json.substring(0, json.length() - 1) + "]";
             }
             
-
+            log.info("Games JSON data: " + json);
         }catch(Exception e) {
+        	log.error(e.getMessage());
             //System.out.println(menuService.findFirstDishesByShift(id));
         }
+        
         return json;
     }
 

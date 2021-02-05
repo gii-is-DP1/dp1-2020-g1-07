@@ -14,6 +14,8 @@ import org.springframework.samples.petclinic.repository.EventRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class EventService {
 	@Autowired
@@ -35,6 +37,7 @@ public class EventService {
 	
 	@Transactional
 	public Collection<LocalDate> findAllDates() {
+		log.info("Loading dates from DB");
 		return eventRepo.findAllDates();
 	}
 	
@@ -45,29 +48,34 @@ public class EventService {
 
 	@Transactional
 	public  void save(Event event) throws DataAccessException {
-		eventRepo.save(event);
-		
+		eventRepo.save(event);	
 	}
-
 	public  void delete(Event event) {
 		eventRepo.delete(event);
 	}
 	public Collection<ShowType> findShowTypes() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading showtypes from DB");
         return eventRepo.findShowtypes();
     }
 	public Collection<Artist> findArtists() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading artists from DB");
         return eventRepo.findArtists();
     }
 	
 	public Collection<Event> findEventsByDate(LocalDate date) {
 		// TODO Auto-generated method stub
+		log.info("Loading events from DB for a date:" + date);
 		return eventRepo.findEventsByDate(date);
 	}
-	public Stage findStageForEvent(Integer id) {
+	/*public Stage findStageForEvent(Integer id) {
 		// TODO Auto-generated method stub
 		return eventRepo.findStageForEvent(id);
+	}*/
+	public Collection<Stage> findStages(){
+		log.info("Loading stages from DB");
+		return eventRepo.findStages();
 	}
 
 

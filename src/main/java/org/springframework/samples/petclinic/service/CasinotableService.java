@@ -11,9 +11,14 @@ import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
+import org.springframework.samples.petclinic.repository.StageRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.petclinic.web.CasinotableController;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class CasinotableService {
 	@Autowired
@@ -52,24 +57,30 @@ public class CasinotableService {
 	}
 	public Collection<Skill> findSkills() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading skills from DB");
         return castabRepo.findSkills();
     }
 	public Collection<GameType> findGameTypes() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading gametypes from DB");
         return castabRepo.findGameTypes();
     }
 
 	public Collection<Game> findGames() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading games from DB");
 		return castabRepo.findGames();
 	}
 	public Collection<Game> findGamesByGameType(int id) throws DataAccessException {
-        return castabRepo.findGamesByGameType(id);
+        log.info("Loading games from DB for a gametype id:" + id);
+		return castabRepo.findGamesByGameType(id);
     }
 	public Collection<Casinotable> findCasinoTables(){
+		log.info("Loading casinotables from DB");
         return castabRepo.findCasinoTables();
     }
 	public Collection<Casinotable> findCasinoTablesByDate(LocalDate date) {
+		log.info("Loading casinotables for a date:" + date);
 		return castabRepo.findCasinoTablesByDate(date);
 	}
 	public Collection<Integer> findGainsByTableId(Integer id) {

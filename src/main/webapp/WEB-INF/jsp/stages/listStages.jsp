@@ -28,9 +28,7 @@
                 <td>
                     <c:out value="${stage.capacity}"/>
                 </td>
-                <td>
-                    <c:out value="${stage.event_id.name}"/>
-                </td>
+             
             <td>
                 	<spring:url value="/stages/delete/{stageId}" var="eventUrl">
                         <spring:param name="stageId" value="${stage.id}"/>
