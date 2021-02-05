@@ -68,9 +68,13 @@ INSERT INTO artists(id) VALUES (6);
 
 INSERT INTO STAGE (id, capacity ) VALUES(1,40);
 INSERT INTO STAGE(id, capacity) VALUES(2,40);
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(1,'Magic and Pasion','2021-12-21',3,4,1);
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(2,'Hamlet','2021-05-17',2,6,2);
-INSERT INTO EVENTS (id,name,date,showtype_id,artist_id,stage_id)VALUES(3,'DJ Kikei','2021-09-25',1,5,2);
+INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(1,'Magic and Pasion','2021-12-21',3,1);
+INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(2,'Hamlet','2021-05-17',2,2);
+INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(3,'DJ Kikei','2021-09-25',1,2);
+
+INSERT INTO ACTS VALUES (4,1);
+INSERT INTO ACTS VALUES (6,3);
+INSERT INTO ACTS VALUES (5,2);
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Oscar Rodriguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
