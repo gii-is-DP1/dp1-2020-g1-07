@@ -59,15 +59,10 @@ public class EventValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		Event event = (Event)object;
 		String name = event.getName();
-		Artist artistname = event.getArtist_id();
 		LocalDate date = event.getDate();
 		//name validation
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
-		}
-		//Artist's name valiation
-		if(artistname == null || artistname.getName().trim().equals("")) {
-			errors.rejectValue("artist_id", REQUIRED, REQUIRED);
 		}
 		// Date validation
 		if (date == null) {
