@@ -139,7 +139,6 @@ public class WaiterController {
 	public String createServe(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
 		String view="waiters/addServe";
 		modelMap.put("restaurantTable", new RestaurantTable());
-		//HAY QUE HACER UN BUSCAR TODAS LAS MESAS Y ELIMINAR LAS MESAS QUE ESTAN ALMACENADAS EN SERVEDTABLES, A ESA LISTA SE LE HACE EL OBTAINIDS
 		List<RestaurantTable> restaurantTables = waiterService.findRestaurantTables();
 		List<Integer> notServed = new ArrayList<Integer>();
 		for(RestaurantTable restaurantTable:restaurantTables) {

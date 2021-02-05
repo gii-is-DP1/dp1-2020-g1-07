@@ -6,7 +6,9 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -36,7 +38,7 @@ public class RestaurantReservationServiceTest {
 		reservationService = new RestaurantReservationService(reservationRepo);
     }
 	
-	/*@Test
+	@Test
 	void testNewReservation() {
 		RestaurantReservation new_reservation = new RestaurantReservation();
 		new_reservation.setId(1);
@@ -52,7 +54,10 @@ public class RestaurantReservationServiceTest {
 		RestaurantTable restauranttable = new RestaurantTable();
 		restauranttable.setId(1);
 		restauranttable.setSize(8);
-		restauranttable.setWaiter(new Waiter());
+		Waiter waiter = new Waiter();
+		Set<Waiter> waiters = new HashSet<Waiter>();
+		waiters.add(waiter);
+		restauranttable.setWaiters(waiters);
 		new_reservation.setRestauranttable(restauranttable);
 		TimeInterval timeInterval = new TimeInterval();
 		timeInterval.setId(1);
@@ -71,6 +76,6 @@ public class RestaurantReservationServiceTest {
 		assertTrue(saved_reservations.getRestauranttable().getSize()==8);
 		assertTrue(saved_reservations.getTimeInterval().getName().equals("13:00-14:00"));
 
-	}*/
+	}
 	
 }
