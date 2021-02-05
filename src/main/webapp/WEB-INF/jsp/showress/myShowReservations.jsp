@@ -25,7 +25,7 @@
                     <c:out value="${s.event.name}"/>
                 </td>
                 <td>
-                    <c:out value="${s.id}"/>
+                    <c:out value="${s.seats}"/>
                 </td>
                 <td>
                 	<spring:url value="/showress/delete/{showresId}" var="deleteUrl">

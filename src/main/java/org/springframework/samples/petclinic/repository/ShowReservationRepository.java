@@ -24,9 +24,9 @@ public interface ShowReservationRepository extends CrudRepository<ShowReservatio
 	@Query("SELECT DISTINCT c FROM Client c WHERE c.user.username LIKE :user%")
 	Client findClientFromUsername(@Param("user") String user) throws DataAccessException;
 	
-	@Query("SELECT SUM(r.seats) FROM ShowReservation r WHERE r.event.id LIKE :id%")
+	@Query("SELECT SUM(r.seats) FROM ShowReservation r WHERE r.event.id LIKE :id")
 	Integer findReservedSeats(@Param("id") Integer id) throws DataAccessException;
 	
-	@Query("SELECT e.stage_id.capacity FROM Event e WHERE e.id LIKE :id%")
+	@Query("SELECT e.stage_id.capacity FROM Event e WHERE e.id LIKE :id")
 	Integer findTotalSeats(@Param("id") Integer id) throws DataAccessException;
 }

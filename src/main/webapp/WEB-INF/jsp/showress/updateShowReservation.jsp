@@ -15,7 +15,7 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/showress/"+"${showres.id}"+"/edit"+"${clientId}";
+           frm.action = "/showress/"+"${showres.id}"+"/edit/"+"${clientId}";
         }
 
    			 }
@@ -24,9 +24,9 @@
        <form:form modelAttribute="showres" class="form-horizontal" action="/showress/{showresId}/edit/{clientId}" onsubmit = "chgActionSh()" id = "id">
             <div class="form-group has-feedback">
                 <div class="control-group">
-                <petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
-		        <petclinic:inputField label="Seats" name="seats"/>
+                	<petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
                 </div>
+		        <petclinic:inputField label="Seats" name="seats"/>
             </div>
 
             <div class="form-group">

@@ -40,7 +40,7 @@ public class ShowReservationController {
 	@Autowired
 	private ShowReservationValidator validator;
 	
-	@InitBinder("showRes")
+	@InitBinder("showReservation")
 	public void initShowReservationBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(validator);
 	}

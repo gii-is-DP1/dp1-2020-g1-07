@@ -12,10 +12,10 @@
 
         <form:form modelAttribute="showres" class="form-horizontal" action="/showress/save">
             <div class="form-group has-feedback">
-                <div class="control-group">
-                <petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
-		        <petclinic:inputField label="Seats" name="seats"/>
+               	<div class="control-group">
+                	<petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
                 </div>
+		        <petclinic:inputField label="Seats" name="seats"/>
             </div>
 
             <div class="form-group">
