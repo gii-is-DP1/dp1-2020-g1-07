@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
 import org.springframework.samples.petclinic.model.Shift;
@@ -59,5 +60,10 @@ public class DishService {
 		// TODO Auto-generated method stub
 		log.info("Loading shifts from DB");
 		return dishRepo.findShifts();
+	}
+
+	public Optional<Dish> findDishByName(String name) {
+		// TODO Auto-generated method stub
+		return dishRepo.findDishByName(name);
 	}
 }

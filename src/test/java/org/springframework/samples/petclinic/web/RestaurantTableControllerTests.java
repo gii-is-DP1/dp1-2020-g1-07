@@ -13,8 +13,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,21 +59,24 @@ public class RestaurantTableControllerTests {
 	private RestaurantTable restaurantTable;
 	private Waiter waiter;
 
-	/*@BeforeEach
+	@BeforeEach
 	void setup() {
 		restaurantTable = new RestaurantTable();
 		restaurantTable.setId(1);
 		this.restaurantTable.setSize(3);
+		
 		this.waiter = new Waiter();
 		waiter.setId(1);
 		waiter.setName("Emilio Tejero");
 		waiter.setDni("177013120H");
 		waiter.setPhone_number("999666333");
-		this.restaurantTable.setWaiter(waiter);
 		
-		Collection<Employee> waiters = new ArrayList<Employee>();
-		waiters.add(waiter);
-	    given(this.scheduleservice.findEmployees()).willReturn(waiters);
+        Set<Waiter> waiters = new HashSet<Waiter>();
+        waiters.add(waiter);
+		restaurantTable.setWaiters(waiters);
+				
+		Collection<Employee> waiters_coll = new ArrayList<Employee>();
+	    given(this.scheduleservice.findEmployees()).willReturn(waiters_coll);
 	    
 	    Collection<RestaurantReservation> restaurantreservations = new ArrayList<RestaurantReservation>();
 	    given(this.restaurantReservationService.findAll()).willReturn(restaurantreservations);
@@ -81,7 +86,6 @@ public class RestaurantTableControllerTests {
 	    given(this.restaurantTableService.findAll()).willReturn(restauranttables);
 		given(this.restaurantTableService.findRestaurantTableId(1)).willReturn(Optional.of(restaurantTable));
 	}
-
 	
 	@WithMockUser(value = "spring")
 	@Test
@@ -89,6 +93,7 @@ public class RestaurantTableControllerTests {
 		mockMvc.perform(get("/restaurantTables/new")).andExpect(status().isOk()).andExpect(model().attributeExists("restaurantTable"))
 		.andExpect(view().name("restaurantTables/addRestaurantTable"));
 	}
+	
 	
 	@WithMockUser(value = "spring")
     @Test
@@ -102,12 +107,12 @@ public class RestaurantTableControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/restaurantTables/save").param("size", "3")
+		mockMvc.perform(post("/restaurantTables/save").param("size", "0")
 						.with(csrf())
-						.param("waiter", "177013120B"))
+						.param("waiter", "177013120H"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("restaurantTable"))
-			.andExpect(model().attributeHasFieldErrors("restaurantTable", "waiter"))
+			.andExpect(model().attributeHasFieldErrors("restaurantTable", "size"))
 			.andExpect(view().name("restaurantTables/addRestaurantTable"));
 	}
 	
@@ -116,7 +121,7 @@ public class RestaurantTableControllerTests {
 	void testInitUpdateRestaurantTableForm() throws Exception {
 		mockMvc.perform(get("/restaurantTables/{restaurantTableId}/edit", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("restaurantTable"))
-				.andExpect(model().attribute("restaurantTable", hasProperty("waiter", is(restaurantTableService.findRestaurantTableId(1).get().getWaiter()))))
+				.andExpect(model().attribute("restaurantTable", hasProperty("waiters", is(restaurantTableService.findRestaurantTableId(1).get().getWaiters()))))
 				.andExpect(model().attribute("restaurantTable", hasProperty("size", is(restaurantTableService.findRestaurantTableId(1).get().getSize()))))
 				.andExpect(view().name("restauranttables/updateRestaurantTable"));
 	}
@@ -144,5 +149,5 @@ public class RestaurantTableControllerTests {
 				.andExpect(model().attributeHasErrors("restaurantTable"))
 				.andExpect(model().attributeHasFieldErrors("restaurantTable", "size"))
 				.andExpect(view().name("restaurantTables/updateRestaurantTable"));
-	}*/
+	}
 }

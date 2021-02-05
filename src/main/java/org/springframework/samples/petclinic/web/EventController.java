@@ -191,10 +191,6 @@ public class EventController {
     public Collection<ShowType> populateShowtypes() {
         return this.eventService.findShowTypes();
     }
-	@ModelAttribute("artists")
-    public Collection<Artist> populateArtists() {
-        return this.eventService.findArtists();
-    }
 	
 	
 }

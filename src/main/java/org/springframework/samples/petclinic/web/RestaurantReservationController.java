@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
@@ -60,7 +60,7 @@ public class RestaurantReservationController {
 	@GetMapping()
 	public String restaurantreservationsList(ModelMap modelMap) {
 		String username = UserUtils.getUser();
-		Authorities autority = RestaurantReservationService.getAuthority(username);
+		Authority autority = RestaurantReservationService.getAuthority(username);
 		List<LocalDate> list= new ArrayList<LocalDate>(RestaurantReservationService.findAllDates());
 		List<RestaurantReservation> restaurantreservations= StreamSupport.stream(RestaurantReservationService.findAll().spliterator(), false).collect(Collectors.toList());
 		if(autority.getAuthority().equals("client")) {

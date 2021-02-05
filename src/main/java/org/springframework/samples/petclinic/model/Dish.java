@@ -1,7 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -24,5 +27,8 @@ public class Dish extends NamedEntity{
 	@ManyToOne
 	@JoinColumn(name = "shift_id")
 	private Shift shift;
+	
+	@ManyToMany(mappedBy = "prepares")
+	private Set<Cook> cooks;
 	
 }

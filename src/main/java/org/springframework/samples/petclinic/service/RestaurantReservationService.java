@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
@@ -82,7 +82,7 @@ public class RestaurantReservationService {
 		return restaurantReservationrepo.findClients();
 	}
 
-	public Authorities getAuthority(String username) {
+	public Authority getAuthority(String username) {
 		// TODO Auto-generated method stub
 		return restaurantReservationrepo.getAuthority(username);
 	}

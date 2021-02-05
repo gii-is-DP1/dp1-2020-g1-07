@@ -7,7 +7,9 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -55,7 +57,9 @@ public class EventServiceTest {
 		artist.setName("Luis Martín");
 		artist.setDni("23213422B");
 		artist.setPhone_number("65241563");
-		event.setArtist_id(artist);
+		Set<Artist> artists = new HashSet<Artist>();
+		artists.add(artist);
+		event.setArtists(artists);
 		event.setStage_id(stage);
 		Collection<Event> sampleEvents = new ArrayList<Event>();
 		sampleEvents.add(event);
@@ -64,7 +68,7 @@ public class EventServiceTest {
 		List<Event> events = StreamSupport.stream(this.eventService.findAll().spliterator(), false).collect(Collectors.toList());
 		Event saved_event = events.get(0);
 		assertTrue(saved_event.getName().equals("Hamlet"));
-		assertTrue(saved_event.getArtist_id().getName().equals("Luis Martín"));
+		assertTrue(saved_event.getArtists().stream().findFirst().get().getName().equals("Luis Martín"));
 		assertTrue(saved_event.getShowtype_id().getName().equals("Theater"));
 		assertTrue(saved_event.getStage_id().getCapacity() == 100);
 		
