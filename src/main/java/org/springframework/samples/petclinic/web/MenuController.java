@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/menus")
 public class MenuController {
@@ -45,6 +47,7 @@ public class MenuController {
 	
 	@GetMapping()
 	public String menusList(ModelMap modelMap) {
+		log.info("Loading list of menus view");
 		String vista= "menus/menusList";
 		Iterable<Menu> menus=menuService.findAll();
 		modelMap.addAttribute("menus", menus);
@@ -53,6 +56,7 @@ public class MenuController {
 	
 	@GetMapping(path="/byDay")
 	public String menusByDay(ModelMap modelMap) {
+		log.info("Loading a list of menus by day");
 		String vista= "menus/menusByDay";
 		Collection<LocalDate> list=menuService.findAllDates();
 		Iterable<LocalDate> dates = list;
@@ -63,6 +67,7 @@ public class MenuController {
 	@ResponseBody
 	@RequestMapping(value = "/byDay/{date}", method = RequestMethod.GET)
 	public String loadMenusByDate(@PathVariable("date")String datestr) {
+		log.info("Loading a list of menus by date: " + datestr);
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -101,19 +106,24 @@ public class MenuController {
 								+ "\"name\":\"" + menu.getDessert().getShift().getName() + "\"}}},";
 				if(menus.indexOf(menu)==menus.size()-1) {
 					json = json.substring(0, json.length() - 1) + "]";
+					log.info("The json generated is:" + json);
 				}
 			}
 			if(menus.size()==0) {
 				json = json.substring(0, json.length() - 1) + "]";
+				log.info("The json generated is:" + json);
 			}
 		}catch(Exception e) {
+			log.error("Error while parsing menus data: " + e.getMessage());
 			System.out.println(menuService.findMenusByDate(date));
 		}
 		return json;
+		
 	}
 	
 	@GetMapping(path="/new")
 	public String createMenu(ModelMap modelMap) {
+		log.info("Loading new menu form");
 		String view="menus/addMenu";
 		modelMap.addAttribute("menu", new Menu());
 		return view;
@@ -121,17 +131,21 @@ public class MenuController {
 	
 	@PostMapping(path="/save")
 	public String saveMenu(@Valid Menu menu, BindingResult result, ModelMap modelMap) {
+		log.info("Saving menu: " + menu.getId());
 		String view="menus/menusList";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("menu", menu);
 			return "menus/addMenu";
 			
 		}else {
 			if(menuValidator.getMenuwithIdDifferent(menu.getShift() ,menu.getDate())) {
+				log.warn("Menu duplicated");
 				result.rejectValue("date", "date.duplicate", "Ya existe un menu para esa fecha y turno");
 				modelMap.addAttribute("menu", menu);
 				return "menus/addMenu";
 			}
+			log.info("Menu validated: saving into DB");
 			menuService.save(menu);
 			modelMap.addAttribute("message", "Menu successfully saved!");
 			view=menusList(modelMap);
@@ -141,13 +155,16 @@ public class MenuController {
 	
 	@GetMapping(path="/delete/{menuId}")
 	public String deleteMenu(@PathVariable("menuId") int menuId, ModelMap modelMap) {
+		log.info("Deleting menu: " + menuId);
 		String view="menus/menusList";
 		Optional<Menu> menu = menuService.findMenuById(menuId);
 		if(menu.isPresent()) {
+			log.info("Menu found: deleting");
 			menuService.delete(menu.get());
 			modelMap.addAttribute("message", "Menu successfully deleted!");
 			view=menusList(modelMap);
 		}else {
+			log.warn("Menu not found in DB: " + menuId);
 			modelMap.addAttribute("message", "Menu not found!");
 			view=menusList(modelMap);
 		}
@@ -156,8 +173,8 @@ public class MenuController {
 
 	@GetMapping(value = "/{menuId}/edit")
 	public String initUpdateCasTbForm(@PathVariable("menuId") int menuId, ModelMap model) {
+		log.info("Loading update menu form");
 		Menu menu = menuService.findMenuById(menuId).get();
-		
 		model.put("menu", menu);
 		return "menus/updateMenu";
 	}
@@ -165,6 +182,7 @@ public class MenuController {
 	@PostMapping(value = "/{menuId}/edit")
 	public String processUpdateCasTbForm(@Valid Menu menu, BindingResult result,
 			@PathVariable("menuId") int menuId, ModelMap model) {
+		log.info("Updating menu: " + menuId);
 		menu.setId(menuId);
 		if (result.hasErrors()) {
 			model.put("menu", menu);
@@ -172,6 +190,7 @@ public class MenuController {
 		}
 		else {
 			if(menuValidator.getMenuwithIdDifferent(menu.getShift() ,menu.getDate(), menu.getId())) {
+				log.warn("Menu duplicated");
 				result.rejectValue("date", "date.duplicate", "Ya existe un menu para esa fecha y turno");
 				model.put("menu", menu);
 				return "menus/updateMenu";
@@ -189,8 +208,8 @@ public class MenuController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/new/loadDishesByShift/{id}", method = RequestMethod.GET)
-	public String loadFirstDishesByShift(@PathVariable("id")int id) {
-		//Gson gson = new Gson();
+	public String loadDishesByShift(@PathVariable("id")int id) {
+		log.info("Loading dishes by shift with id:  " + id);
 		String json = "[";
 		try {
 			List<Dish> first_dishes = new ArrayList<Dish>(menuService.findFirstDishesByShift(id));
@@ -246,11 +265,13 @@ public class MenuController {
 			}
 			if(desserts.size()==0) {
 				json = json.substring(0, json.length() - 1) + "]";
+				log.info("The json generated is:" + json);
 			}
 		}catch(Exception e) {
 			System.out.println(menuService.findFirstDishesByShift(id));
 		}
 		return json;
+		
 	}
 	
 	
