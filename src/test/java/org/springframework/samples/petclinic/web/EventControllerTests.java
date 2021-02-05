@@ -12,8 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +52,9 @@ public class EventControllerTests {
 	@MockBean
 	private StageService stageService;
 	
-/*
+	private Event event;
+	private Event event2;
+
 	@BeforeEach
 	void setup(){
 		//Enumerate: ShowType
@@ -86,19 +90,24 @@ public class EventControllerTests {
 		employee3.setDni("78345678a");
 		employee3.setName("Juan Alvarez");
 		employee3.setPhone_number("617789332");
-		List<Artist> artists = new ArrayList<Artist>();
-		artists.add(employee);artists.add(employee2);artists.add(employee3);
-		given(this.eventService.findArtists()).willReturn(artists);
+		List<Artist> artistsList = new ArrayList<Artist>();
+		artistsList.add(employee);artistsList.add(employee2);artistsList.add(employee3);
+		given(this.eventService.findArtists()).willReturn(artistsList);
 
-		Event event = new Event();
-		event.setArtist_id(employee);
+		event = new Event();
+		Set<Artist> artists = new HashSet<Artist>();
+		artists.add(employee);
+		event.setArtists(artists);
 		event.setDate(LocalDate.of(2020, 12, 31));
 		event.setId(1);
 		event.setName("Magic and Pasion");
 		event.setShowtype_id(showtype3);
 		
-		Event event2 = new Event();
-		event2.setArtist_id(employee2);
+		event2 = new Event();
+		artists = new HashSet<Artist>();
+		artists.add(employee2);
+		artists.add(employee3);
+		event.setArtists(artists);
 		event2.setDate(LocalDate.of(2019, 11, 23));
 		event2.setId(2);
 		event2.setName("Hamlet");
@@ -139,7 +148,6 @@ public class EventControllerTests {
 						.with(csrf())
 						.param("date", "2020/12/25")
 						.param("showtype_id", "Magic")
-						.param("artist_id", "45345678a")
 						.param("stage_id", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(view().name("events/listEvent"));
@@ -150,12 +158,11 @@ public class EventControllerTests {
     void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/events/save").param("name", "Magic and Ilusion")
 						.with(csrf())
-						.param("date", "2020/12/25")
 						.param("showtype_id", "Magic")
 						.param("stage_id", "1"))
 		.andExpect(status().is2xxSuccessful())
 		.andExpect(model().attributeHasErrors("event"))
-		.andExpect(model().attributeHasFieldErrors("event", "artist_id"))
+		.andExpect(model().attributeHasFieldErrors("event", "date"))
 		.andExpect(view().name("events/addEvent"));
 	}
 	@WithMockUser(value = "spring")
@@ -165,7 +172,6 @@ public class EventControllerTests {
 						.with(csrf())
 						.param("date", "2020/12/25")
 						.param("showtype_id", "Magic")
-						.param("artist_id", "45345678a")
 						.param("stage_id", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(model().attributeHasErrors("event"))
@@ -180,7 +186,7 @@ public class EventControllerTests {
 				.andExpect(model().attribute("event", hasProperty("name", is(eventService.findEventbyId(1).get().getName()))))
 				.andExpect(model().attribute("event", hasProperty("date", is(eventService.findEventbyId(1).get().getDate()))))
 				.andExpect(model().attribute("event", hasProperty("showtype_id", is(eventService.findShowTypes().toArray()[2]))))
-				.andExpect(model().attribute("event", hasProperty("artist_id", is(eventService.findArtists().toArray()[0]))))
+				.andExpect(model().attribute("event", hasProperty("artists", is(event.getArtists()))))
 				.andExpect(model().attribute("event", hasProperty("stage_id", is(eventService.findStages().toArray()[0]))))
 				.andExpect(view().name("events/updateEvent"));
 	}
@@ -190,8 +196,7 @@ public class EventControllerTests {
 		mockMvc.perform(post("/events/{eventId}/edit",1).param("name", "Magic and Pasion")
 				.with(csrf())
 				.param("date", "2020/12/27")
-				.param("showtype_id", "Magic")
-				.param("artist_id", "45345678a"))
+				.param("showtype_id", "Magic"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/events"));
 	}
@@ -201,14 +206,13 @@ public class EventControllerTests {
 		mockMvc.perform(post("/events/{eventId}/edit", 1).param("name", "")
 							.with(csrf())
 							.param("date", "2020/12/27")
-							.param("showtype_id", "Magic")
-							.param("artist_id", "45345678a"))
+							.param("showtype_id", "Magic"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("event"))
 				.andExpect(model().attributeHasFieldErrors("event", "name"))
 				.andExpect(view().name("events/updateEvent"));
 	}
-	*/
+	
 	
 	
 }
