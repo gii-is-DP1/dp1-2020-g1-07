@@ -198,6 +198,10 @@ public class EventController {
     public Collection<Artist> populateArtists() {
         return this.eventService.findArtists();
     }
+	@ModelAttribute("stages")
+	public Collection<Stage>populateStages(){
+		return this.eventService.findStages();
+	}
 	
 	
 }
