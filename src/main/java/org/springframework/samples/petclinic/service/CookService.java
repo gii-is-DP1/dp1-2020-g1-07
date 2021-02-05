@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cook;
+import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.repository.CookRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +42,15 @@ public class CookService {
 
 	public  void delete(Cook cook) { 
 		cookRep.delete(cook);
+	}
+	
+	public List<Dish> findPreparedDishes(int cookId) {
+		// TODO Auto-generated method stub
+		return cookRep.findPreparedDishes(cookId);
+	}
+	
+	public List<Dish> findDishes() {
+		// TODO Auto-generated method stub
+		return cookRep.findDishes();
 	}
 }
