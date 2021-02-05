@@ -15,26 +15,24 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/showress/"+"${showres.id}"+"/edit";
+           frm.action = "/showress/"+"${showres.id}"+"/edit/"+"${clientId}";
         }
 
    			 }
     	</script>
 			
-       <form:form modelAttribute="showres" class="form-horizontal" action="/showress/{showresId}/edit" onsubmit = "chgActionSh()" id = "id">
+       <form:form modelAttribute="showres" class="form-horizontal" action="/showress/{showresId}/edit/{clientId}" onsubmit = "chgActionSh()" id = "id">
             <div class="form-group has-feedback">
                 <div class="control-group">
-                 Event <select id="event" name="event">
-                	<c:forEach var="e" items="${events}">
-		            	<option value="${e.id}">${e.name}</option>
-		            </c:forEach>
-		        </select>
-		        <petclinic:inputField label="Seats" name="seats"/>
+                	<petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
                 </div>
+		        <petclinic:inputField label="Seats" name="seats"/>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
+                	<input type="hidden" name="showresId" value="${showres.id}"/>
+                	<input type="hidden" name="clientId" value="${clientId}"/>
                     <button class="btn btn-default" type="submit">Update Show Reservation</button>
                 </div>
             </div>

@@ -210,7 +210,7 @@ public class ClientGainControllerTests {
 		cg3.setDate(LocalDate.of(2020, 9, 8));
 		cg3.setClient(cl);
 		cg3.setGame(bjack);
-		given(this.cgainService.findClientByUsername(anyString())).willReturn("11111111A");
+		given(this.cgainService.findClientByUsername(anyString())).willReturn(cl);
 		given(this.cgainService.findClientGainsForWeek(any(Week.class), anyString())).willReturn(Lists.newArrayList(cg1, cg2, cg3));
 	}
 	
@@ -223,7 +223,7 @@ public class ClientGainControllerTests {
 	}
 	
 	void loadUserGainsNoGainsTestSetup() {
-		given(this.cgainService.findClientByUsername(anyString())).willReturn("11111111A");
+		given(this.cgainService.findClientByUsername(anyString())).willReturn(cl);
 		given(this.cgainService.findClientGainsForWeek(any(Week.class), anyString())).willReturn(Lists.newArrayList());
 	}
 	

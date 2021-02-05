@@ -24,9 +24,6 @@ public class User{
 	@NotBlank
 	private String password;
 	
-	@NotBlank
-	private String dni; //TEMPORAL
-	
 	@NotNull
 	private boolean enabled;
 	

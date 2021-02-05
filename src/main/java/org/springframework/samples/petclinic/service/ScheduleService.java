@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
@@ -51,10 +52,12 @@ public class ScheduleService {
 		// TODO Auto-generated method stub
 		return scheduleRep.findEmployees();
 	}
-	public Collection<User> findUsers() throws DataAccessException{
+	
+	public Employee findEmployeeByUsername(String username) throws DataAccessException{
 		// TODO Auto-generated method stub
-		return scheduleRep.findUsers();
+		return scheduleRep.findEmployeeByUsername(username);
 	}
+	
 	public  Collection<String> findScheduleByDni() throws DataAccessException{ 
 		return scheduleRep.findEmployeeDni();
 	}

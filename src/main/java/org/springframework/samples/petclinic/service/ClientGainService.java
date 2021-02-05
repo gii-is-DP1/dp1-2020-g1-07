@@ -58,16 +58,14 @@ public class ClientGainService {
 	
 	
 	@Transactional
-	public String findClientByUsername(String username) {
+	public Client findClientByUsername(String username) {
 		log.info("Loading client from DB with username: " + username);
-		return cgainRepo.findUsers().stream()
-				.filter(x -> x.getUsername().equals(username))
-				.findFirst().get().getDni();
+		return cgainRepo.findClientByUsername(username);
 	}
 
 	@Transactional
 	public SortedSet<Week> findWeeksForUser() {
-		String dni = this.findClientByUsername(UserUtils.getUser());
+		String dni = this.findClientByUsername(UserUtils.getUser()).getDni();
 		log.info("Loading weeks with cgains from DB for client: " + dni);
 		Collection<LocalDate> dates = cgainRepo.findDatesForClient(dni);
 		SortedSet<Week> weeks = new TreeSet<>();
