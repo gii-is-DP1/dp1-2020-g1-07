@@ -1,11 +1,16 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.Waiter;
+import org.springframework.samples.petclinic.service.RestaurantTableService;
 import org.springframework.samples.petclinic.service.WaiterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,9 +25,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/waiters")
 public class WaiterController {
+	
+	private List<RestaurantTable> servedTables;
+	private List<Integer> servedTablesId;
 
 	@Autowired
 	private WaiterService waiterService;
+	
+	@Autowired
+	private RestaurantTableService restaurantTableService;
 	
 	@Autowired
 	private WaiterValidator validator;
@@ -109,4 +120,85 @@ public class WaiterController {
             return "redirect:/waiters";
         }
     }
+    
+    //Parte de controlador para las mesas
+    
+    
+    @GetMapping(path="/serves/{waiterId}")
+	public String waiterServes(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+		String view="waiters/assignedTables";
+		Waiter waiter = waiterService.findWaiterById(waiterId).get();
+		modelMap.put("waiter",waiter);
+		servedTables = waiterService.findTablesServed(waiterId);
+		servedTablesId = ObtainTablesIds(servedTables);
+		modelMap.put("restaurantTables", servedTables);
+		return view;
+	}
+    
+    @GetMapping(path="/serves/{waiterId}/new")
+	public String createServe(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+		String view="waiters/addServe";
+		modelMap.put("restaurantTable", new RestaurantTable());
+		//HAY QUE HACER UN BUSCAR TODAS LAS MESAS Y ELIMINAR LAS MESAS QUE ESTAN ALMACENADAS EN SERVEDTABLES, A ESA LISTA SE LE HACE EL OBTAINIDS
+		List<RestaurantTable> restaurantTables = waiterService.findRestaurantTables();
+		List<Integer> notServed = new ArrayList<Integer>();
+		for(RestaurantTable restaurantTable:restaurantTables) {
+			if(!servedTablesId.contains(restaurantTable.getId())) {
+				notServed.add(restaurantTable.getId());
+			}
+		}
+		modelMap.put("restaurantTablesIds", notServed);
+		return view;
+	}
+	
+    public List<Integer> ObtainTablesIds(List<RestaurantTable> restaurantTables){
+    	List<Integer> res = new ArrayList<Integer>();
+    	for(RestaurantTable restaurantTable:restaurantTables) {
+    		res.add(restaurantTable.getId());
+    	}
+    	return res;
+    }
+    
+	@PostMapping(path="/serves/{waiterId}/save")
+	public String saveServe(@PathVariable("waiterId") int waiterId, RestaurantTable restaurantTable, BindingResult result, ModelMap modelMap) {
+		String view="waiters/assignedTables";
+		if(result.hasErrors() || restaurantTable.getId()==null || restaurantTable.getId()==0) {
+			modelMap.addAttribute("restaurantTable", restaurantTable);
+			modelMap.addAttribute("message", "There is no table to add!");
+			return "waiters/addServe";
+			
+		}else {
+			restaurantTable = restaurantTableService.findRestaurantTableId(restaurantTable.getId()).get();
+			Waiter waiter = waiterService.findWaiterById(waiterId).get();
+			Collection<RestaurantTable> served = waiter.getServes();
+			served.add(restaurantTable);
+			waiter.setServes(served);
+			waiterService.save(waiter);
+			modelMap.addAttribute("message", "The waiter will serve this table!");
+			view=waiterServes(waiterId,modelMap);
+		}
+		return view;
+	}
+	
+	@GetMapping(path="/serves/{waiterId}/delete/{restaurantTableId}")
+	public String deleteServe(@PathVariable("waiterId") int waiterId, @PathVariable("restaurantTableId") int restaurantTableId, ModelMap modelMap) {
+		String view="waiters/assignedTables";
+		Optional<Waiter> waiter = waiterService.findWaiterById(waiterId);
+		Optional<RestaurantTable> restaurantTable = restaurantTableService.findRestaurantTableId(restaurantTableId);
+		if(waiter.isPresent() && restaurantTable.isPresent()) {
+			Collection<RestaurantTable> served = waiter.get().getServes();
+			served.remove(restaurantTable.get());
+			waiter.get().setServes(served);
+			waiterService.save(waiter.get());
+			modelMap.addAttribute("message", "Serve successfully deleted!");
+			view=waiterServes(waiterId,modelMap);
+		}else {
+			modelMap.addAttribute("message", "Waiter or table not found!");
+			view=waiterServes(waiterId,modelMap);
+		}
+		return view;
+	}
+    
+    
+    
 }

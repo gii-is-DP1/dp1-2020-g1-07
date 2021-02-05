@@ -12,6 +12,8 @@ import org.springframework.samples.petclinic.repository.DishRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class DishService {
 	
@@ -49,11 +51,13 @@ public class DishService {
 
 	public Collection<DishCourse> findDishCourses() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading dish courses from DB");
 		return dishRepo.findDishCourses();
 	}
 	
 	public Collection<Shift> findShifts() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading shifts from DB");
 		return dishRepo.findShifts();
 	}
 }
