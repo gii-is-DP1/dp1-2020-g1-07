@@ -12,8 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
@@ -56,14 +58,17 @@ public class RestaurantReservationControllerTests {
 	
 	private RestaurantReservation reservation;
 	
-	/*@BeforeEach
+	@BeforeEach
 	void setup() {
 
 		//Preparamos una mesa
 		RestaurantTable restauranttable = new RestaurantTable();
 		restauranttable.setId(1);
 		restauranttable.setSize(8);
-		restauranttable.setWaiter(new Waiter());
+		Waiter waiter = new Waiter();
+		Set<Waiter> waiters = new HashSet<Waiter>();
+		waiters.add(waiter);
+		restauranttable.setWaiters(waiters);
 		List<RestaurantTable> restaurantTables = new ArrayList<RestaurantTable>();
 		restaurantTables.add(restauranttable);
 		given(this.reservationService.findRestaurantTables()).willReturn(restaurantTables);
@@ -80,7 +85,7 @@ public class RestaurantReservationControllerTests {
 		user.setDni("11122233A");
 		user.setEnabled(true);
 		user.setPassword("spring");
-		Authorities auth = new Authorities();
+		Authority auth = new Authority();
 		auth.setAuthority("client");
 		auth.setId(1);
 		auth.setUser(user);
@@ -188,7 +193,7 @@ public class RestaurantReservationControllerTests {
 				.andExpect(model().attributeHasErrors("restaurantReservation"))
 				.andExpect(model().attributeHasFieldErrors("restaurantReservation", "timeInterval"))
 				.andExpect(view().name("restaurantreservations/updateRestaurantReservation"));
-	}*/
+	}
 
 
 }
