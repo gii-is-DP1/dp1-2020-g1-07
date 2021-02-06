@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.Stage;
-import org.springframework.samples.petclinic.repository.DishRepository;
 import org.springframework.samples.petclinic.repository.StageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class StageService {
 	@Autowired
@@ -48,6 +49,7 @@ public class StageService {
 	}
 	public Collection<Event> findEvents() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading events from DB");
         return stgrepo.findEvents();
     }
 	

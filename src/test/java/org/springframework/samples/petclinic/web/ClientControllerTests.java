@@ -22,15 +22,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.SlotGain;
-import org.springframework.samples.petclinic.model.Slotgame;
+import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.service.ClientService;
-import org.springframework.samples.petclinic.service.SlotGainService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import org.springframework.samples.petclinic.model.Client;
 
 @WebMvcTest(controllers= ClientController.class,
 			includeFilters= @ComponentScan.Filter(value = ClientValidator.class, type = FilterType.ASSIGNABLE_TYPE ),

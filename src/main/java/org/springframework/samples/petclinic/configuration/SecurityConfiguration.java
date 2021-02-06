@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * @author japarejo
  */
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -35,7 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
-				.antMatchers("/users/new").permitAll()
+				.antMatchers("/users").hasAnyAuthority("admin")
+				.antMatchers("/users/**").permitAll()
 				.antMatchers("/casinotables").permitAll()
 				.antMatchers("/casinotables/**").hasAnyAuthority("admin")
 				.antMatchers("/slotgames").permitAll()
@@ -44,6 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/slotmachines/**").hasAnyAuthority("admin")
 				.antMatchers("/slotgains").permitAll()
 				.antMatchers("/slotgains/**").hasAnyAuthority("admin")
+				.antMatchers("/restauranttables").permitAll()
+                .antMatchers("/restauranttables/**").hasAnyAuthority("admin")
+                .antMatchers("/restaurantreservations").hasAnyAuthority("admin","client")
+                .antMatchers("/restaurantreservations/**").hasAnyAuthority("admin","client")
 				//.antMatchers("/employees").hasAnyAuthority("admin")
 				//.antMatchers("/employees/**").hasAnyAuthority("admin")
 				.antMatchers("/schedules").hasAnyAuthority("admin")
@@ -79,6 +84,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/cgains/user").hasAnyAuthority("client")
 				.antMatchers("/cgains/user/**").hasAnyAuthority("client")
 				.antMatchers("/cgains/**").hasAnyAuthority("employee", "admin")
+				.antMatchers("/showress").hasAnyAuthority("admin")
+				.antMatchers("/showress/user").hasAnyAuthority("client")
+				.antMatchers("/showress/user/**").hasAnyAuthority("client")
+				.antMatchers("/showress/**").hasAnyAuthority("client", "admin")
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
@@ -118,7 +127,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {	    
+	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
 	}

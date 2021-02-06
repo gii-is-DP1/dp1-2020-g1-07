@@ -7,47 +7,37 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="events">
+<petclinic:layout pageName="stages">
     <h2>Events</h2>
 
-    <table id="gamesTable" class="table table-striped">
+    <table id="stagesTable" class="table table-striped">
         <thead>
         <tr>
         	<th style="width: 150px;">Id</th>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Date</th>
-            <th style="width: 200px;">Show Type</th>
-            <th style="width: 200px;">Artist/Group</th>
+            <th style="width: 150px;">Capacity</th>
+            <th style="width: 200px;">Event</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${events}" var="game">
+        <c:forEach items="${stages}" var="stage">
             <tr>
             	<td>
-            		<c:out value="${event.id}"/>
+            		<c:out value="${stage.id}"/>
             	</td>
                 <td>
-                    <c:out value="${event.name}"/>
+                    <c:out value="${stage.capacity}"/>
                 </td>
-                <td>
-                    <c:out value="${event.date}"/>
-                </td>
-                <td>
-                    <c:out value="${game.showtype_id.name}"/>
-                </td>
-                <td>
-                    <c:out value="${game.artist_id.name}"/>
-                </td>
+             
             <td>
-                	<spring:url value="/events/delete/{eventId}" var="eventUrl">
-                        <spring:param name="eventId" value="${event.id}"/>
+                	<spring:url value="/stages/delete/{stageId}" var="eventUrl">
+                        <spring:param name="stageId" value="${stage.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(eventUrl)}">Delete</a>
                 </td> 
                 <td>
-                	<spring:url value="/events/{eventId}/edit" var="editUrl">
-                        <spring:param name="eventId" value="${event.id}"/>
+                	<spring:url value="/stages/{stageId}/edit" var="editUrl">
+                        <spring:param name="stageId" value="${stage.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td>
@@ -56,8 +46,8 @@
         </tbody>
     </table>
     <div class="form-group">
-    	<form method="get" action="/events/new">
-    		<button class="btn btn-default" type="submit">Add new event</button>
+    	<form method="get" action="/stages/new">
+    		<button class="btn btn-default" type="submit">Add new stage</button>
 		</form>
 	</div>
     

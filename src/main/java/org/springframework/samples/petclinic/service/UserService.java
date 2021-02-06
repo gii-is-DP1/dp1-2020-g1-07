@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.samples.petclinic.service;
 
 
@@ -21,46 +6,86 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Administrator;
 import org.springframework.samples.petclinic.model.Client;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Mostly used as a facade for all Petclinic controllers Also a placeholder
- * for @Transactional and @Cacheable annotations
- *
- * @author Michael Isvy
- */
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
+	private UserRepository userRepo;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public UserService(UserRepository userRepo) {
+		this.userRepo = userRepo;
 	}
 
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
+	public int userCount() {
+		return (int)userRepo.count();
+	}
+
+	@Transactional
+	public Iterable<User> findAll() {
+		return userRepo.findAll();
+	}
+	
+	@Transactional
+	public void save(User user) throws DataAccessException {
 		user.setEnabled(true);
-		userRepository.save(user);
+		user.setDni("17712013H"); //TEMPORAL
+		userRepo.save(user);
 	}
 	
-	public Optional<User> findUser(String username) {
-		return userRepository.findById(username);
+	@Transactional(readOnly=true)
+	public Optional<User> findUserById(String username) {
+		return userRepo.findById(username);
 	}
 	
-	public Collection<Employee> findEmployees() throws DataAccessException{
-		// TODO Auto-generated method stub
-		return userRepository.findEmployees();
+	public  void delete(User user) { 
+		userRepo.delete(user);
 	}
 	
 	public Collection<Client> findClients() throws DataAccessException{
-		// TODO Auto-generated method stub
-		return userRepository.findClients();
+		log.info("Loading clients from DB");
+		return userRepo.findClients();
 	}
+	
+	public Collection<Employee> findEmployees() throws DataAccessException{
+		log.info("Loading employees from DB");
+		return userRepo.findEmployees();
+	}
+	
+	public Collection<Administrator> findAdmins() throws DataAccessException{
+		log.info("Loading admins from DB");
+		return userRepo.findAdmins();
+	}
+	
+	public Collection<Client> findClientsWithAccount() throws DataAccessException{
+		log.info("Loading clients with account from DB");
+		return userRepo.findClientsWithAccount();
+	}
+	
+	public Collection<Employee> findEmployeesWithAccount() throws DataAccessException{
+		log.info("Loading employees with account from DB");
+		return userRepo.findEmployeesWithAccount();
+	}
+	
+	public Collection<Administrator> findAdminsWithAccount() throws DataAccessException{
+		log.info("Loading admins with account from DB");
+		return userRepo.findAdminsWithAccount();
+	}
+	
+	public Collection<Integer> findAuthorityId(String username) throws DataAccessException{
+		log.info("Looking for authorities from user: " + username);
+		return userRepo.findAuthoritiesId(username);
+	}
+	
 }

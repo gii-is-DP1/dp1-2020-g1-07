@@ -50,6 +50,7 @@ public class ClientGainController {
 	
 	@GetMapping()
 	public String listClientGains(ModelMap modelMap) {
+		log.info("Loading list of cgains view");
 		String view= "cgains/listClientGain";
 		Iterable<ClientGain> cgains=cgainService.findAll();
 		modelMap.addAttribute("cgains", cgains);
@@ -58,7 +59,7 @@ public class ClientGainController {
 	
 	@GetMapping(path="/user")
 	public String userGains(ModelMap modelMap) {
-		log.info("Loading cgains/user page");
+		log.info("Loading user cgains view");
 		String view= "cgains/myGains";
 		SortedSet<Week> weeks= cgainService.findWeeksForUser();
 		Iterable<Week> dates = weeks;
@@ -72,9 +73,8 @@ public class ClientGainController {
 	public String loadUserGains(@PathVariable("date")String datestr) {
 		log.info("Loading user gains for week starting at: " + datestr);
 		String username = UserUtils.getUser();
-		log.info("Searching dni for username " + username);
 		String dni = cgainService.findClientByUsername(username);
-		log.info("Searching data for user with dni: " + dni);
+		log.info("User found: " + username + " --- " + dni);
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -93,7 +93,7 @@ public class ClientGainController {
 			json += "]";
 			log.info("ClientGain JSON data: " + json);
 		}catch(Exception e) {
-			log.error(e.getMessage());
+			log.error("Error while parsing cgains data: " + e.getMessage());
 			e.printStackTrace();
 		}
 		return json;
@@ -111,6 +111,7 @@ public class ClientGainController {
 	
 	@GetMapping(path="/new")
 	public String createClientGain(ModelMap modelMap) {
+		log.info("Loading new cgain form");
 		String view="cgains/addClientGain";
 		modelMap.addAttribute("cgain", new ClientGain());
 		return view;
@@ -118,16 +119,16 @@ public class ClientGainController {
 	
 	@PostMapping(path="/save")
 	public String saveClientGain(@Valid ClientGain cgain, BindingResult result, ModelMap modelMap) {
+		log.info("Saving cgain: " + cgain.getId());
 		String view="cgains/listClientGain";
 		if(result.hasErrors()) {
-			log.error("Found errors on insertion: " + result.getAllErrors());
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("cgain", cgain);
 			return "cgains/addClientGain";
 			
 		}else {
-			
+			log.info("Cgain validated: saving into DB");
 			cgainService.save(cgain);
-			
 			modelMap.addAttribute("message", "ClientGain successfully saved!");
 			view=listClientGains(modelMap);
 		}
@@ -136,13 +137,16 @@ public class ClientGainController {
 	
 	@GetMapping(path="/delete/{cgainId}")
 	public String deleteClientGain(@PathVariable("cgainId") int cgainId, ModelMap modelMap) {
+		log.info("Deleting cgain: " + cgainId);
 		String view="cgains/listClientGain";
 		Optional<ClientGain> cgain = cgainService.findClientGainById(cgainId);
 		if(cgain.isPresent()) {
+			log.info("Cgain found: deleting");
 			cgainService.delete(cgain.get());
 			modelMap.addAttribute("message", "ClientGain successfully deleted!");
 			view=listClientGains(modelMap);
 		}else {
+			log.warn("Cgain not found in DB: " + cgainId);
 			modelMap.addAttribute("message", "ClientGain not found!");
 			view=listClientGains(modelMap);
 		}
@@ -151,6 +155,7 @@ public class ClientGainController {
 	
 	@GetMapping(value = "/{cgainId}/edit")
     public String initUpdateClientGainForm(@PathVariable("cgainId") int cgainId, ModelMap model) {
+		log.info("Loading update cgain form");
 		ClientGain cgain = cgainService.findClientGainById(cgainId).get();
         model.put("cgain", cgain);
         return "cgains/updateClientGain";
@@ -159,13 +164,15 @@ public class ClientGainController {
     @PostMapping(value = "/{cgainId}/edit")
     public String processUpdateClientGainForm(@Valid ClientGain clientgain, BindingResult result,
             @PathVariable("cgainId") int cgainId, ModelMap model) {
+    	log.info("Updating cgain: " + cgainId);
     	clientgain.setId(cgainId);
         if (result.hasErrors()) {
-        	log.error("Found errors on update: " + result.getAllErrors());
+        	log.warn("Found errors on update: " + result.getAllErrors());
             model.put("cgain", clientgain);
             return "cgains/updateClientGain";
         }
         else {
+        	log.info("Cgain validated: updating into DB");
             this.cgainService.save(clientgain);
             return "redirect:/cgains";
         }
