@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -51,5 +52,19 @@ public class SlotGainService {
 	public Collection<SlotMachine> findSlotMachines() {
 		log.info("Loading list of slot machines from DB");
 		return slotGainRepo.findSlotMachines();
+	}
+	@Transactional
+	public Collection<SlotGain> findSlotGainByDate(LocalDate date) {
+		log.info("Loading list of slot gains for a date:" + date);
+		return slotGainRepo.findSlotGainByDate(date);
+	}
+	@Transactional
+	public Collection<Integer> findGainsBySlotId(Integer id) {
+		log.info("Loading list of gains for a slot ID:" + id);
+        return slotGainRepo.findGainsBySlotId(id);
+    }
+	@Transactional
+	public Collection<LocalDate> findAllDates() {
+		return slotGainRepo.findAllDates();
 	}
 }
