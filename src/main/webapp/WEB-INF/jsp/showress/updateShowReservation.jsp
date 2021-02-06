@@ -15,13 +15,13 @@
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/showress/"+"${showres.id}"+"/edit/"+"${clientId}";
+           frm.action = "/showress/"+"${showReservation.id}"+"/edit/"+"${clientId}";
         }
 
    			 }
     	</script>
 			
-       <form:form modelAttribute="showres" class="form-horizontal" action="/showress/{showresId}/edit/{clientId}" onsubmit = "chgActionSh()" id = "id">
+       <form:form modelAttribute="showReservation" class="form-horizontal" action="/showress/{showresId}/edit/{clientId}" onsubmit = "chgActionSh()" id = "id">
             <div class="form-group has-feedback">
                 <div class="control-group">
                 	<petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                	<input type="hidden" name="showresId" value="${showres.id}"/>
+                	<input type="hidden" name="showresId" value="${showReservation.id}"/>
                 	<input type="hidden" name="clientId" value="${clientId}"/>
                     <button class="btn btn-default" type="submit">Update Show Reservation</button>
                 </div>

@@ -26,19 +26,19 @@ public class ShowReservationValidator implements Validator{
 		Collection<Event> bookable = showresService.findAvailableShows();
 		// event validation
 		if (event == null || !bookable.contains(event))  {
-			errors.rejectValue("event", REQUIRED + "must be a future show with enough seats",
-					REQUIRED + "must be a future show with enough seats");
+			errors.rejectValue("event", REQUIRED + " to be a future show with enough seats",
+					REQUIRED + " to be a future show with enough seats");
 		}
 		// seats validation
-		else if (seats == null || seats < 1) {
-			errors.rejectValue("seats", REQUIRED + "must be a number greater than zero",
-					REQUIRED + "must be a number greater than zero");
+		if (seats == null || seats < 1) {
+			errors.rejectValue("seats", REQUIRED + " to be a number greater than zero",
+					REQUIRED + " to be a number greater than zero");
 		}
-		else {
+		else if(!errors.hasFieldErrors("event")){
 			Integer max = showresService.findAvailableSeats(event.getId());
 			if (max < seats) {
-				errors.rejectValue("seats", REQUIRED + "can't be greater than the available seats: " + max,
-				REQUIRED + "can't be greater than the available seats: " + max);
+				errors.rejectValue("seats", REQUIRED + " to not be greater than the available seats: " + max,
+				REQUIRED + " to not be greater than the available seats: " + max);
 			}
 		}
 	}
