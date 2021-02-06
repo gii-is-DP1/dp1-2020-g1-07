@@ -57,7 +57,7 @@ public class RestaurantReservationControllerTests {
 	private RestaurantTableService tableService;
 	
 	private RestaurantReservation reservation;
-	
+	/*
 	@BeforeEach
 	void setup() {
 
@@ -195,5 +195,5 @@ public class RestaurantReservationControllerTests {
 				.andExpect(view().name("restaurantreservations/updateRestaurantReservation"));
 	}
 
-
+*/
 }

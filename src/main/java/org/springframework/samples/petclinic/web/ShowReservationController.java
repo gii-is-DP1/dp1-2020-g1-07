@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.samples.petclinic.service.ShowReservationService;
@@ -46,7 +45,7 @@ public class ShowReservationController {
 	}
 	
 	@ModelAttribute("events")
-    public Collection<Event> populateGames() {
+    public Collection<Event> populateEvents() {
         return this.showresService.findAvailableShows();
     }
 	
@@ -74,7 +73,7 @@ public class ShowReservationController {
 	public String createShowReservation(ModelMap modelMap) {
 		log.info("Loading new showres form");
 		String view="showress/addShowReservation";
-		modelMap.addAttribute("showres", new ShowReservation());
+		modelMap.addAttribute("showReservation", new ShowReservation());
 		return view;
 	}
 	
@@ -84,7 +83,7 @@ public class ShowReservationController {
 		String view="showress/listShowReservation";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
-			modelMap.addAttribute("showres", showres);
+			modelMap.addAttribute("showReservation", showres);
 			return "showress/addShowReservation";
 			
 		}else {
@@ -122,29 +121,29 @@ public class ShowReservationController {
     		@PathVariable("clientId") int clientId,ModelMap model) {
 		log.info("Loading update showres form");
 		ShowReservation showres = showresService.findShowReservationById(showresId).get();
-        model.put("showres", showres);
+        model.put("showReservation", showres);  //OJO con la droga
         model.put("clientId", clientId);
         return "showress/updateShowReservation";
     }
 
     @PostMapping(value = "/{showresId}/edit/{clientId}")
-    public String processUpdateShowReservationForm(@Valid ShowReservation showreservation, BindingResult result,
+    public String processUpdateShowReservationForm(@Valid ShowReservation showres, BindingResult result,
             @PathVariable("showresId") int showresId, @PathVariable("clientId") int clientId, ModelMap model) {
     	log.info("Updating showres: " + showresId);
-    	showreservation.setId(showresId);
+    	showres.setId(showresId);
         if (result.hasErrors()) {
         	log.warn("Found errors on update: " + result.getAllErrors());
-            model.put("showres", showreservation);
+        	model.put("showReservation", showres);
             return "showress/updateShowReservation";
         }
         else {
         	log.info("Showres validated: updating into DB");
-        	showreservation.setClient(clService.findClientById(clientId).get());
-            this.showresService.save(showreservation);
+        	showres.setClient(clService.findClientById(clientId).get());
+            this.showresService.save(showres);
             String view=listShowReservations(model);
     		if (showresService.findClientFromUsername(UserUtils.getUser()) != null)
     			view=userShowReservations(model);
-            return view;
+            return "redirect:/" + view;
         }
     }
     
