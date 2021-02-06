@@ -59,7 +59,7 @@ public class ClientGainService {
 	
 	@Transactional
 	public String findClientByUsername(String username) {
-		log.info("List of users: " + cgainRepo.findUsers());
+		log.info("Loading client from DB with username: " + username);
 		return cgainRepo.findUsers().stream()
 				.filter(x -> x.getUsername().equals(username))
 				.findFirst().get().getDni();
@@ -68,6 +68,7 @@ public class ClientGainService {
 	@Transactional
 	public SortedSet<Week> findWeeksForUser() {
 		String dni = this.findClientByUsername(UserUtils.getUser());
+		log.info("Loading weeks with cgains from DB for client: " + dni);
 		Collection<LocalDate> dates = cgainRepo.findDatesForClient(dni);
 		SortedSet<Week> weeks = new TreeSet<>();
 		for (LocalDate day : dates) {
@@ -78,19 +79,23 @@ public class ClientGainService {
 	}
 	
 	public List<ClientGain> findClientGainsForWeek(Week week, String dni) {
+		log.info("Loading cgains from DB for client: " + dni + " in week: " + week.getText());
 		return cgainRepo.findClientGainsForWeek(dni, 
 				week.getMonday(), week.getSunday());
 	}
 	
 	public Collection<User> findUsers() throws DataAccessException{
+		log.info("Loading users from DB");
 		return cgainRepo.findUsers();
 	}
 	
 	public Collection<Client> findClients() throws DataAccessException{
+		log.info("Loading users from DB");
 		return cgainRepo.findClients();
 	}
 	
 	public Collection<Game> findGames() throws DataAccessException{
+		log.info("Loading users from DB");
 		return cgainRepo.findGames();
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Artist;
+import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.model.Stage;
@@ -14,7 +15,6 @@ import org.springframework.samples.petclinic.repository.EventRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jdk.internal.jline.internal.Log;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
@@ -77,6 +77,11 @@ public class EventService {
 	public Collection<Stage> findStages(){
 		log.info("Loading stages from DB");
 		return eventRepo.findStages();
+	}
+	
+	public Optional<Event> findEventByName(String name) {
+		// TODO Auto-generated method stub
+		return eventRepo.findEventByName(name);
 	}
 
 

@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,7 +13,6 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

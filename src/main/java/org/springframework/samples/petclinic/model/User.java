@@ -1,32 +1,33 @@
 package org.springframework.samples.petclinic.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User{
 	
 	@Id
-	String username;
+	@NotBlank
+	private String username;
 	
-	String password;
+	@NotBlank
+	private String password;
 	
-	@JoinColumn(name = "dni")
-	String dni;
+	@NotBlank
+	private String dni; //TEMPORAL
 	
-	boolean enabled;
+	@NotNull
+	private boolean enabled;
 	
-	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	//private Set<Authorities> authorities;
 }

@@ -1,12 +1,19 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cook;
+import org.springframework.samples.petclinic.model.Dish;
+import org.springframework.samples.petclinic.model.RestaurantTable;
+import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.service.CookService;
+import org.springframework.samples.petclinic.service.DishService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,8 +28,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cooks")
 public class CookController {
 	
+	private List<Dish> preparedDishes;
+	private List<Integer> preparedDishesId;
+	
 	@Autowired
 	private CookService cookService;
+	
+	@Autowired
+	private DishService dishService;
 	
 	@Autowired
 	private CookValidator validator;
@@ -108,4 +121,81 @@ public class CookController {
             return "redirect:/cooks";
         }
     }
+    
+    //Parte de controlador para los platos
+    
+    
+    @GetMapping(path="/prepares/{cookId}")
+	public String cookPrepares(@PathVariable("cookId") int cookId, ModelMap modelMap) {
+		String view="cooks/assignedDishes";
+		Cook cook = cookService.findCookById(cookId).get();
+		modelMap.put("cook",cook);
+		preparedDishes = cookService.findPreparedDishes(cookId);
+		preparedDishesId = ObtainDishesIds(preparedDishes);
+		modelMap.put("preparedDishes", preparedDishes);
+		return view;
+	}
+    
+    @GetMapping(path="/prepares/{cookId}/new")
+	public String createServe(@PathVariable("cookId") int cookId, ModelMap modelMap) {
+		String view="cooks/addPrepare";
+		modelMap.put("dish", new Dish());
+		List<Dish> dishes = cookService.findDishes();
+		List<String> notPrepared = new ArrayList<String>();
+		for(Dish dish:dishes) {
+			if(!preparedDishesId.contains(dish.getId())) {
+				notPrepared.add(dish.getName());
+			}
+		}
+		modelMap.put("dishesNames", notPrepared);
+		return view;
+	}
+	
+    public List<Integer> ObtainDishesIds(List<Dish> dishes){
+    	List<Integer> res = new ArrayList<Integer>();
+    	for(Dish dish:dishes) {
+    		res.add(dish.getId());
+    	}
+    	return res;
+    }
+    
+	@PostMapping(path="/prepares/{cookId}/save")
+	public String saveServe(@PathVariable("cookId") int cookId, Dish dish, BindingResult result, ModelMap modelMap) {
+		String view="cooks/assignedTables";
+		if(result.hasErrors() || dish.getName()==null) {
+			modelMap.addAttribute("dish", dish);
+			modelMap.addAttribute("message", "There is no dish to add!");
+			return "cooks/addPrepare";
+			
+		}else {
+			dish = dishService.findDishByName(dish.getName()).get();
+			Cook cook = cookService.findCookById(cookId).get();
+			Collection<Dish> prepared = cook.getPrepares();
+			prepared.add(dish);
+			cook.setPrepares(prepared);
+			cookService.save(cook);
+			modelMap.addAttribute("message", "The cook will prepare this dish!");
+			view=cookPrepares(cookId,modelMap);
+		}
+		return view;
+	}
+	
+	@GetMapping(path="/prepares/{cookId}/delete/{dishId}")
+	public String deleteServe(@PathVariable("cookId") int cookId, @PathVariable("dishId") int dishId, ModelMap modelMap) {
+		String view="cooks/assignedDishes";
+		Optional<Cook> cook = cookService.findCookById(cookId);
+		Optional<Dish> dish = dishService.findDishById(dishId);
+		if(cook.isPresent() && dish.isPresent()) {
+			Collection<Dish> prepared = cook.get().getPrepares();
+			prepared.remove(dish.get());
+			cook.get().setPrepares(prepared);
+			cookService.save(cook.get());
+			modelMap.addAttribute("message", "Prepare successfully deleted!");
+			view=cookPrepares(cookId,modelMap);
+		}else {
+			modelMap.addAttribute("message", "Cook or dish not found!");
+			view=cookPrepares(cookId,modelMap);
+		}
+		return view;
+	}
 }

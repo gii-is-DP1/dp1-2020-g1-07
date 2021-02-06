@@ -6,9 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.service.StageService;
 import org.springframework.stereotype.Controller;

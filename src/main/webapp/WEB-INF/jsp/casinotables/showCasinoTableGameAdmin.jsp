@@ -23,6 +23,7 @@ $(document).ready(function(){
 					+ '<br> <b>Skill: </b> ' + result[i].skill
 					+ '<br> <b>Start Time: </b> ' + result[i].startTime
 					+ '<br> <b>Ending Time: </b> ' + result[i].endingTime
+					+ '<br> <b>Gains: </b> ' + result[i].gains
 					+ '<br> </div>';
 				}
 				$('#tableCasinoTables').html(s1);

@@ -27,9 +27,6 @@
                     <petclinic:selectField label="Show Type" name="showtype_id" names="${showtypes}" size="1"/>
                 </div>
                 <div class="control-group">
-                    <petclinic:selectField label="Artists" name="artist_id" names="${artists}" size="1"/>
-                </div>
-                <div class="control-group">
                     <petclinic:selectField label="Stage" name="stage_id" names="${stages}" size="1"/>
                 </div>
             </div>

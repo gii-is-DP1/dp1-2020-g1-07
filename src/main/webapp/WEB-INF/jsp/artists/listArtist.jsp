@@ -17,6 +17,8 @@
             <th style="width: 200px;">Name</th>
             <th style="width: 200px;">Phone Number</th>
             <th>Actions</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -42,6 +44,12 @@
                         <spring:param name="artistId" value="${artist.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
+                </td>
+                <td>
+                    <spring:url value="/artists/acts/{artistId}" var="actUrl">
+                        <spring:param name="artistId" value="${artist.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(actUrl)}">Acts</a>
                 </td>
             </tr>
         </c:forEach>

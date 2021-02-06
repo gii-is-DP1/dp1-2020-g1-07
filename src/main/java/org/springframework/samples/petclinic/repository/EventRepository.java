@@ -2,14 +2,15 @@ package org.springframework.samples.petclinic.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Artist;
+import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.model.Stage;
 
@@ -33,4 +34,7 @@ public interface EventRepository extends CrudRepository<Event, Integer>{
 	
 	@Query("SELECT stage FROM Stage stage ORDER BY stage.id")
 	List<Stage> findStages() throws DataAccessException;
+	
+	@Query("SELECT event FROM Event event WHERE event.name LIKE :name ORDER BY event.name")
+	Optional<Event> findEventByName(@Param("name")String name);
 }

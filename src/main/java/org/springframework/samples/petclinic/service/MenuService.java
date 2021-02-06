@@ -13,6 +13,8 @@ import org.springframework.samples.petclinic.repository.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class MenuService {
 	
@@ -54,41 +56,49 @@ public class MenuService {
 	
 	public Collection<Dish> findFirstDishesByShift(int id) throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading the first dishes by the shift with id: " + id);
 		return menuRepo.findFirstDishesByShift(id);
 	}
 	
 	public Collection<Dish> findSecondDishesByShift(int id) throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading the second dishes by the shift with id: " + id);
 		return menuRepo.findSecondDishesByShift(id);
 	}
 	
 	public Collection<Dish> findDessertsByShift(int id) throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading the desserts by the shift with id: " + id);
 		return menuRepo.findDessertsByShift(id);
 	}
 	
 	public Collection<Dish> findFirstDishes() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading first dishes from DB");
 		return menuRepo.findFirstDishes();
 	}
 	
 	public Collection<Dish> findSecondDishes() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading second dishes from DB");
 		return menuRepo.findSecondDishes();
 	}
 	
 	public Collection<Dish> findDesserts() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading desserts from DB");
 		return menuRepo.findDesserts();
 	}
 	
 	public Collection<Shift> findShifts() throws DataAccessException{
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub´
+		log.info("Loading shifts from DB");
 		return menuRepo.findShifts();
 	}
 
 	public Collection<Menu> findMenusByDate(LocalDate date) {
 		// TODO Auto-generated method stub
+		log.info("Loading menus by date: " + date);
 		return menuRepo.findMenusByDate(date);
 	}
 }

@@ -1,20 +1,5 @@
 package org.springframework.samples.petclinic.web;
 
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.SlotGain;
-import org.springframework.samples.petclinic.model.SlotMachine;
-import org.springframework.samples.petclinic.model.SlotMachine;
-import org.springframework.samples.petclinic.model.Slotgame;
-import org.springframework.samples.petclinic.model.Status;
-import org.springframework.samples.petclinic.service.SlotMachineService;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -33,6 +18,20 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.SlotGain;
+import org.springframework.samples.petclinic.model.SlotMachine;
+import org.springframework.samples.petclinic.model.Slotgame;
+import org.springframework.samples.petclinic.model.Status;
+import org.springframework.samples.petclinic.service.SlotGainService;
+import org.springframework.samples.petclinic.service.SlotMachineService;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers= SlotMachineController.class,
 includeFilters= {@ComponentScan.Filter(value = SlotgameFormatter.class, type = FilterType.ASSIGNABLE_TYPE ),
@@ -47,6 +46,9 @@ public class SlotMachineControllerTests {
 	
 	@MockBean
 	private SlotMachineService slotMachineService;
+	
+	@MockBean
+	private SlotGainService slotGainService;
 	
 	private SlotMachine slotMachine;
 

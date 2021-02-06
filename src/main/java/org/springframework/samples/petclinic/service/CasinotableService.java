@@ -9,8 +9,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
-import org.springframework.samples.petclinic.model.Menu;
-import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
 import org.springframework.samples.petclinic.repository.StageRepository;
@@ -18,7 +16,6 @@ import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNam
 import org.springframework.samples.petclinic.web.CasinotableController;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -86,4 +83,7 @@ public class CasinotableService {
 		log.info("Loading casinotables for a date:" + date);
 		return castabRepo.findCasinoTablesByDate(date);
 	}
+	public Collection<Integer> findGainsByTableId(Integer id) {
+        return castabRepo.findGainsByTableId(id);
+    }
 }

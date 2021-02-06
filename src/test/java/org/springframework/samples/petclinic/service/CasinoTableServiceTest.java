@@ -1,11 +1,9 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,20 +15,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Casinotable;
-import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
-import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.model.Skill;
-import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
-import org.springframework.samples.petclinic.repository.StageRepository;
-import org.springframework.samples.petclinic.util.EntityUtils;
-import org.springframework.stereotype.Service;
 
 @ExtendWith(MockitoExtension.class)
 public class CasinoTableServiceTest {

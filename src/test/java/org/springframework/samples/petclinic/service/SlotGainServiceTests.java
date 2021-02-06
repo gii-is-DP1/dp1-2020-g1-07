@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -15,7 +13,6 @@ import java.util.stream.StreamSupport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.SlotGain;
@@ -55,7 +52,7 @@ public class SlotGainServiceTests {
 		SlotMachine slotmachine = new SlotMachine();
 		slotmachine.setSlotgame(slotgame);
 		slotmachine.setStatus(status);
-		Integer slotmachineid = slotmachine.getId();
+		//Integer slotmachineid = slotmachine.getId();
 		new_gain.setSlotMachine(slotmachine);
 		
 		Collection<SlotGain> sampleSlotGains = new ArrayList<SlotGain>();

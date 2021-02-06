@@ -7,7 +7,6 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.service.StageService;
 import org.springframework.stereotype.Component;
 

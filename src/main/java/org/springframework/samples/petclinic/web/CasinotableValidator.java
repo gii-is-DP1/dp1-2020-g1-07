@@ -4,19 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
-import org.springframework.samples.petclinic.model.Schedule;
-import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.model.Skill;
-import org.springframework.samples.petclinic.service.CasinotableService;
-import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -47,10 +39,10 @@ public class CasinotableValidator implements Validator{
 		Skill skill = casinotable.getSkill();
 		String start = casinotable.getStartTime();
 		String end = casinotable.getEndingTime();
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");	
+		/*SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");	
 			Date startTimeFor = null;
 			LocalTime startTimeFormat;
-			LocalTime endingTimeFormat; 
+			LocalTime endingTimeFormat; */
 			if(!start.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) {
 				errors.rejectValue("startTime", NOTFORMAT, NOTFORMAT);
 			}else if (!end.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) {
@@ -72,4 +64,3 @@ public class CasinotableValidator implements Validator{
 		return Casinotable.class.isAssignableFrom(clazz);
 	}
 }
-	

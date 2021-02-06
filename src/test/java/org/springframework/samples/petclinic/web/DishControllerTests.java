@@ -24,8 +24,10 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
+import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.DishService;
+import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,6 +42,9 @@ public class DishControllerTests {
 		
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@MockBean
+	private MenuService menuService;
 	
 	@MockBean
 	private DishService dishService;
@@ -89,6 +94,9 @@ public class DishControllerTests {
 		List<Dish> dishes = new ArrayList<Dish>();
 		dishes.add(dish);
 		given(this.dishService.findAll()).willReturn(dishes);
+		
+		List<Menu> menus = new ArrayList<Menu>();
+		given(this.menuService.findAll()).willReturn(menus);
 	}
 	
 	@WithMockUser(value = "spring")
