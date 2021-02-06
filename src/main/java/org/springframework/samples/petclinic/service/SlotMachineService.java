@@ -12,6 +12,8 @@ import org.springframework.samples.petclinic.repository.SlotMachineRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class SlotMachineService {
 	
@@ -48,16 +50,19 @@ public class SlotMachineService {
 	
 	@Transactional
 	public Collection<Status> findStatus() {
+		log.info("Loading status from DB");
 		return slotMachineRepo.findStatus();
 	}
 	
 	@Transactional
 	public Collection<Slotgame> findSlotgames() {
+		log.info("Loading slot games from DB");
 		return slotMachineRepo.findSlotgames();
 	}
 	
 	@Transactional
 	public Collection<SlotGain> findGains() {
+		log.info("Loading gains from DB");
 		return slotMachineRepo.findGains();
 	}
 	
