@@ -14,6 +14,9 @@ import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.repository.RestaurantReservationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class RestaurantReservationService {
 	private  RestaurantReservationRepository restaurantReservationrepo; 
@@ -54,36 +57,43 @@ public class RestaurantReservationService {
 	
 	public Collection<TimeInterval> findTimeIntervals() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading time intervals from DB");
 		return restaurantReservationrepo.findTimeIntervals();
 	}
 	
 	@Transactional
 	public Collection<LocalDate> findAllDates() {
+		log.info("Loading all dates from DB");
 		return restaurantReservationrepo.findAllDates();
 	}
 	
 	public Collection<RestaurantReservation> findRestaurantReservationsByDate(LocalDate date) {
 		// TODO Auto-generated method stub
+		log.info("Loading restaurant reservations from DB with date: " + date);
 		return restaurantReservationrepo.findRestaurantReservationsByDate(date);
 	}
 	
 	@Transactional
 	public Collection<RestaurantTable> findRestaurantTables() {
+		log.info("Loading restaurant tables from DB");
 		return restaurantReservationrepo.findRestaurantTables();
 	}
 
 	public Client findClientFromUsername(String username) {
 		// TODO Auto-generated method stub
+		log.info("Loading client from DB with username: " + username);
 		return restaurantReservationrepo.findClientFromUsername(username);
 	}
 
 	public Collection<Client> findClients() {
 		// TODO Auto-generated method stub
+		log.info("Loading clients from DB");
 		return restaurantReservationrepo.findClients();
 	}
 
 	public Authority getAuthority(String username) {
 		// TODO Auto-generated method stub
+		log.info("Getting authority with the username:" + username);
 		return restaurantReservationrepo.getAuthority(username);
 	}
 }
