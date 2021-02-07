@@ -81,13 +81,13 @@ public class MenuValidator implements Validator {
 			errors.rejectValue("dessert", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
 		}
 		if(!knownDishes.contains(first_dish)) {
-			errors.rejectValue("first_dish", "No cooks knows this dish!","No cooks knows this dish!");
+			errors.rejectValue("first_dish", "No cooks knows the first dish!","No cooks knows the first dish!");
 		}
 		if(!knownDishes.contains(second_dish)) {
-			errors.rejectValue("second_dish","No cooks knows this dish!","No cooks knows this dish!");
+			errors.rejectValue("second_dish","No cooks knows the second dish!","No cooks knows the second dish!");
 		}
 		if(!knownDishes.contains(dessert)) {
-			errors.rejectValue("dessert","No cooks knows this dish!","No cooks knows this dish!");
+			errors.rejectValue("dessert","No cooks knows the dessert!","No cooks knows the dessert!");
 		}
 	}
 
