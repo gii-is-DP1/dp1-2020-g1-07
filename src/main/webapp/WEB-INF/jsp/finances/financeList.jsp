@@ -15,11 +15,27 @@ $(document).ready(function(){
 			url: '${pageContext.request.contextPath}/finance/' + valDate,
 			success: function(result){
 				var result = JSON.parse(result)
-				var s1= '';
-				for(var i = 0; i < result.length; i++){             
-					s1 += '<div> <br> <b><u>' + result[i].SlotId +'</u></b>'
-					+ '<br> <b>Gains: </b> ' + result[i].SlotGains
-					+ '<br> </div>';
+				var s1= '<h2> <br> <b> Slot Machines Data: </b> </h2>';
+				for(var i = 0; i < result.length; i++){ 
+					if(typeof result[i].SlotGains==="undefined"){
+						s1 += '<div> <b> No Data Found. </b>';
+						break;
+					}else{
+						s1 += '<div> <b> Slot Machine ID: </b>' + result[i].SlotId 
+						+ '<br> <b>Gains: </b> ' + result[i].SlotGains
+						+ '<br> </div>';
+					}
+				}
+				 s1+= '<h2> <br> <b> Casino Tables Data: </b> </h2>';
+				for(var i = 0; i < result.length; i++){      
+					if(typeof result[i].TableGains==="undefined"){
+						s1 += '<div> <b> No Data Found. </b>';
+						break;
+					}else{
+						s1 += '<div> <b> Casino Table ID: </b>' + result[i].TableId
+						+ '<br> <b>Gains: </b> ' + result[i].TableGains
+						+ '<br> </div>';
+					}
 				}
 				$('#finance').html(s1);
 			}
