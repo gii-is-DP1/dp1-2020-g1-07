@@ -15,6 +15,7 @@ $(document).ready(function(){
 			url: '${pageContext.request.contextPath}/finance/' + valDate,
 			success: function(result){
 				var result = JSON.parse(result)
+				var sum = parseInt(0);
 				var s1= '<h2> <br> <b> Slot Machines Data: </b> </h2>';
 				for(var i = 0; i < result.length; i++){ 
 					if(typeof result[i].SlotGains==="undefined"){
@@ -26,7 +27,8 @@ $(document).ready(function(){
 						+ '<br> </div>';
 					}
 				}
-				 s1+= '<h2> <br> <b> Casino Tables Data: </b> </h2>';
+			
+				s1+= '<h2> <br> <b> Casino Tables Data: </b> </h2>';
 				for(var i = 0; i < result.length; i++){      
 					if(typeof result[i].TableGains==="undefined"){
 						s1 += '<div> <b> No Data Found. </b>';
@@ -37,6 +39,19 @@ $(document).ready(function(){
 						+ '<br> </div>';
 					}
 				}
+				
+				for(var i = 0; i < result.length; i++){ 
+					if(typeof result[i].SlotId==="undefined"){
+						result[i].SlotGains=parseInt(0);
+						
+					}
+					if(typeof result[i].TableGains==="undefined"){
+						result[i].TableGains=parseInt(0);
+						
+					}
+					sum=sum+parseInt(result[i].SlotGains)+parseInt(result[i].TableGains);
+				}
+				s1+= '<h2> <br> <b> Total Balance: </b> </h2>'+sum;
 				$('#finance').html(s1);
 			}
 		});
@@ -57,7 +72,6 @@ $(document).ready(function(){
             </c:forEach>
             </select>
         </div>
-        
         <div id="finance"></div>    
     </jsp:body>
 

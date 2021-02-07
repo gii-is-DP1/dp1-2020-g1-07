@@ -57,7 +57,7 @@ public class FinanceController {
 	            for(int i = 0; i < casinoTablesGains.size(); i++){
 	                sum=sum+casinoTablesGains.get(i);
 	            }
-			
+	           
 	            json = json + "\"TableId\":" + casinoTable.getId() +","          
 						+ "\"TableGains\":\"" + -sum +"\"},{";
 
@@ -74,7 +74,9 @@ public class FinanceController {
 				Integer sumSM = 0;
 	            for(int i = 0; i < gainsById.size(); i++){
 	                sumSM=sumSM+gainsById.get(i);
+	               
 	            }
+	          
 				json = json + "{\"SlotId\":" + slotgain.getSlotMachine().getId() +","          
 						+ "\"SlotGains\":\"" + sumSM +"\"},";
 				
@@ -88,6 +90,7 @@ public class FinanceController {
 		}catch(Exception e) {
 			System.out.println(slotGainService.findSlotGainByDate(date));
 		}
+		
 		return json;
 	}
 }
