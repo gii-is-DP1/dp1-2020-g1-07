@@ -58,7 +58,7 @@ $(document).ready(function(){
     <jsp:body>
         <h2>Menu</h2>
 
-
+		<h1><c:out value="${error}"></c:out></h1>
         <form:form modelAttribute="menu" class="form-horizontal" action="/menus/save">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Date" name="date"/>

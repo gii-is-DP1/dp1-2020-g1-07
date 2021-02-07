@@ -71,6 +71,7 @@ $(document).ready(function(){
 
    			 }
     	</script>
+    	<c:out value="${error}"></c:out>
 		<form:form modelAttribute="menu" class="form-horizontal" action="/menus/{menuId}/edit" onsubmit = "chgAction()" id = "id">
         
             <div class="form-group has-feedback">

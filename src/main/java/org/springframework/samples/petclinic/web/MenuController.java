@@ -135,6 +135,9 @@ public class MenuController {
 		String view="menus/menusList";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
+			if(result.hasFieldErrors("first_dish")) modelMap.addAttribute("error", result.getFieldError("first_dish").getDefaultMessage());
+			else if(result.hasFieldErrors("second_dish")) modelMap.addAttribute("error", result.getFieldError("second_dish").getDefaultMessage());
+			else if(result.hasFieldErrors("desserts")) modelMap.addAttribute("error", result.getFieldError("dessert").getDefaultMessage());
 			modelMap.addAttribute("menu", menu);
 			return "menus/addMenu";
 			
@@ -185,6 +188,9 @@ public class MenuController {
 		log.info("Updating menu: " + menuId);
 		menu.setId(menuId);
 		if (result.hasErrors()) {
+			if(result.hasFieldErrors("first_dish")) model.addAttribute("error", result.getFieldError("first_dish").getDefaultMessage());
+			else if(result.hasFieldErrors("second_dish")) model.addAttribute("error", result.getFieldError("second_dish").getDefaultMessage());
+			else if(result.hasFieldErrors("desserts")) model.addAttribute("error", result.getFieldError("dessert").getDefaultMessage());
 			model.put("menu", menu);
 			return "menus/updateMenu";
 		}
