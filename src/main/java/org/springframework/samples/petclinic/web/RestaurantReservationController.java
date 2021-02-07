@@ -228,7 +228,7 @@ public class RestaurantReservationController {
 	}
 
 	@PostMapping(value = "/{restaurantReservationId}/edit")
-	public String processUpdateCasTbForm(@Valid RestaurantReservation restaurantreservation, BindingResult result,
+	public String processUpdateRsstaurantReservationForm(@Valid RestaurantReservation restaurantreservation, BindingResult result,
 			@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap model) {
 		log.info("Updating restaurant reservation: " + restaurantreservationId);
 		restaurantreservation.setId(restaurantreservationId);
@@ -267,7 +267,7 @@ public class RestaurantReservationController {
 		}catch(Exception e) {
 			System.out.println(TablesbyDateAndTimeInterval(date,id));
 		}
-		log.info("THe json of diners is: " + json);
+		log.info("The json of diners is: " + json);
 		return json;
 	}
 	
