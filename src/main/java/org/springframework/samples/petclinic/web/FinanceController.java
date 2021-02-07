@@ -1,14 +1,15 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.SlotGain;
 import org.springframework.samples.petclinic.service.CasinotableService;
 import org.springframework.samples.petclinic.service.SlotGainService;
@@ -17,7 +18,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -42,25 +42,44 @@ public class FinanceController {
 		return vista;
 	}
 	@ResponseBody
-	@RequestMapping(value = "/finance/{date}", method = RequestMethod.GET)
+	@GetMapping("/{date}")
 	public String financeByDate(@PathVariable("date")String datestr) {
 		String json = "[{";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
+		System.out.print(datestr);
 		try {
 			List<SlotGain> slotgains = new ArrayList<SlotGain>(slotGainService.findSlotGainByDate(date));
-			System.out.print(slotgains);
+			List<Casinotable> casinoTables = new ArrayList<Casinotable>(castableService.findCasinoTablesByDate(date));
+			for(Casinotable casinoTable:casinoTables) {
+				List<Integer> casinoTablesGains = new ArrayList<Integer>(castableService.findGainsByTableId(casinoTable.getId()));
+	            Integer sum=0;
+	            for(int i = 0; i < casinoTablesGains.size(); i++){
+	                sum=sum+casinoTablesGains.get(i);
+	            }
+			
+	            json = json + "\"TableId\":" + casinoTable.getId() +","          
+						+ "\"TableGains\":\"" + -sum +"\"},{";
+
+				if(casinoTables.indexOf(casinoTable)==casinoTables.size()-1) {
+					json = json.substring(0, json.length() - 2)+ "] ";
+				}
+			}
+			if(casinoTables.size()==0) {
+				json = json.substring(0, json.length()-1);
+			}
+			
 			for(SlotGain slotgain:slotgains) {
 				List<Integer> gainsById = new ArrayList<Integer>(slotGainService.findGainsBySlotId((slotgain.getSlotMachine().getId())));
-				Integer sum = 0;
+				Integer sumSM = 0;
 	            for(int i = 0; i < gainsById.size(); i++){
-	                sum=sum+gainsById.get(i);
+	                sumSM=sumSM+gainsById.get(i);
 	            }
-				json = json + "\"SlotId\":" + slotgain.getSlotMachine().getId() +","          
-						+ "\"SlotGains\":\"" + sum +"\"},{";
+				json = json + "{\"SlotId\":" + slotgain.getSlotMachine().getId() +","          
+						+ "\"SlotGains\":\"" + sumSM +"\"},";
 				
 				if(slotgains.indexOf(slotgain)==slotgains.size()-1) {
-					json = json.substring(0, json.length() - 2)+"]";
+					json = json.substring(0, json.length() - 2)+"}]";
 				}
 			}
 			if(slotgains.size()==0) {
