@@ -2,10 +2,12 @@ package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
@@ -100,5 +102,17 @@ public class MenuService {
 		// TODO Auto-generated method stub
 		log.info("Loading menus by date: " + date);
 		return menuRepo.findMenusByDate(date);
+	}
+
+	public List<String> findSchedulesDnisByShiftAndDate(Shift shift, LocalDate date) {
+		// TODO Auto-generated method stub
+		log.info("Loading Dnis by shift: " + shift + " and date: " + date);
+		return menuRepo.findSchedulesDnisByShiftAndDate(shift,date);
+	}
+
+	public List<Cook> findCooks() {
+		// TODO Auto-generated method stub
+		log.info("Loading cooks from DB");
+		return menuRepo.findCooks();
 	}
 }

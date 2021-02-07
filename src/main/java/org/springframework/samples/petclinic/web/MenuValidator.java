@@ -1,11 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
@@ -52,6 +55,17 @@ public class MenuValidator implements Validator {
 		Dish first_dish = menu.getFirst_dish();
 		Dish second_dish = menu.getSecond_dish();
 		Dish dessert = menu.getDessert();
+		
+		//Setup para comprobar RN1: todos los platos de un menu son conocidos por los camareros de ese turno
+		List<String> schedulesDnis = menuService.findSchedulesDnisByShiftAndDate(shift,date);
+		List<Cook> cooks = menuService.findCooks();
+		Set<Dish> knownDishes = new HashSet<Dish>();
+		for(Cook cook:cooks) {
+			if(schedulesDnis.contains(cook.getDni())) {
+				knownDishes.addAll(cook.getPrepares());
+			}
+		}
+		
 		// Date validation
 		if (date == null) {
 			errors.rejectValue("date", REQUIRED, REQUIRED);
@@ -65,6 +79,15 @@ public class MenuValidator implements Validator {
 		}
 		if(dessert==null || dessert.getName().trim().equals("") || shift.getId() != dessert.getShift().getId()) {
 			errors.rejectValue("dessert", REQUIRED + " that the dish is not in the selected shift", REQUIRED + " that the dish is not in the selected shift");
+		}
+		if(!knownDishes.contains(first_dish)) {
+			errors.rejectValue("first_dish", "No cooks knows this dish!","No cooks knows this dish!");
+		}
+		if(!knownDishes.contains(second_dish)) {
+			errors.rejectValue("second_dish","No cooks knows this dish!","No cooks knows this dish!");
+		}
+		if(!knownDishes.contains(dessert)) {
+			errors.rejectValue("dessert","No cooks knows this dish!","No cooks knows this dish!");
 		}
 	}
 
