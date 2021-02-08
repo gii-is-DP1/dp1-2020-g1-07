@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.service.EventService;
+import org.springframework.samples.petclinic.service.ShowReservationService;
 import org.springframework.samples.petclinic.service.StageService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -48,6 +50,9 @@ public class EventControllerTests {
 	
 	@MockBean
 	private EventService eventService;
+	
+	@MockBean
+	private ShowReservationService srService;
 	
 	@MockBean
 	private StageService stageService;
@@ -131,6 +136,7 @@ public class EventControllerTests {
 		events.add(event);events.add(event2);
 		given(this.eventService.findAll()).willReturn(events);
 		given(this.eventService.findEventbyId(1)).willReturn(Optional.of(event));
+		given(this.srService.findAll()).willReturn(Lists.emptyList());
 		
 	}
 	
