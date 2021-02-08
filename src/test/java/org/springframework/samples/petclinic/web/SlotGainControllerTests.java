@@ -150,12 +150,11 @@ public class SlotGainControllerTests {
 	void testProcessUpdateSlotGainFormHasErrors() throws Exception {
 		mockMvc.perform(post("/slotgains/{slotGainId}/edit", 1)
 							.with(csrf())
-							.param("date", "2020/12/20")
 							.param("amount", "-100")
 							.param("slotMachine", "1"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("slotGain"))
-				.andExpect(model().attributeHasFieldErrors("slotGain", "amount"))
+				.andExpect(model().attributeHasFieldErrors("slotGain", "date"))
 				.andExpect(view().name("slotgains/updateSlotGain"));
 	}
     
