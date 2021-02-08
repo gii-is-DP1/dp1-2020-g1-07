@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 
 @Controller
 @RequestMapping("/schedules")
@@ -43,6 +45,7 @@ public class ScheduleController {
 	
 	@GetMapping()
 	public String listSchedules(ModelMap modelMap) {
+		log.info("Loading list of croupiers");
 		String view= "schedules/listSchedule";
 		Iterable<Schedule> schedules=scheduleService.findAll();
 		modelMap.addAttribute("schedules", schedules);
@@ -51,6 +54,7 @@ public class ScheduleController {
 	
 	@GetMapping(path="/user")
 	public String listUserSchedules(ModelMap modelMap) {
+		log.info("Loading list of croupiers");
 		String view= "schedules/mySchedule";
 		String username = UserUtils.getUser();
 		Iterable<Schedule> schedules=scheduleService.findAll();

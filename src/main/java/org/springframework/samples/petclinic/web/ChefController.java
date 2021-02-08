@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/chefs")
 public class ChefController {
@@ -34,6 +36,7 @@ public class ChefController {
 	
 	@GetMapping()
 	public String listChefs(ModelMap modelMap) {
+		log.info("Loading list of chefs");
 		String view= "chefs/listChef";
 		Iterable<Chef> chefs=chefService.findAll();
 		modelMap.addAttribute("chefs", chefs);
@@ -42,6 +45,7 @@ public class ChefController {
 	
 	@GetMapping(path="/new")
 	public String createChef(ModelMap modelMap) {
+		log.info("Loading new chef form");
 		String view="chefs/addChef";
 		modelMap.addAttribute("chef", new Chef());
 		return view;
@@ -49,19 +53,23 @@ public class ChefController {
 	
 	@PostMapping(path="/save")
 	public String saveChef(@Valid Chef chef, BindingResult result, ModelMap modelMap) {
+		log.info("Saving chef:" + chef.getId());
 		String view="chefs/listChef";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("chef", chef);
 			return "chefs/addChef";
 			
 		}else {
 			if (validator.getChefwithIdDifferent(chef.getDni(), null)) {
+				log.warn("Chef with dni" + chef.getDni() + "already in database");
 				result.rejectValue("dni", "dni.duplicate", "Chef with dni" + chef.getDni() + "already in database");
 				modelMap.addAttribute("chef", chef);
 				return "chefs/addChef";
 			}
-			chefService.save(chef);
 			
+			log.info("Chef validated: saving into DB");
+			chefService.save(chef);
 			modelMap.addAttribute("message", "Chef successfully saved!");
 			view=listChefs(modelMap);
 		}
@@ -70,13 +78,16 @@ public class ChefController {
 	
 	@GetMapping(path="/delete/{chefId}")
 	public String deleteChef(@PathVariable("chefId") int chefId, ModelMap modelMap) {
+		log.info("Deleting chef:" + chefId);
 		String view="chefs/listChef";
 		Optional<Chef> chef = chefService.findChefById(chefId);
 		if(chef.isPresent()) {
+			log.info("Chef found: deleting");
 			chefService.delete(chef.get());
 			modelMap.addAttribute("message", "Chef successfully deleted!");
 			view=listChefs(modelMap);
 		}else {
+			log.warn("Chef not found in DB: "+ chefId);
 			modelMap.addAttribute("message", "Chef not found!");
 			view=listChefs(modelMap);
 		}
@@ -85,6 +96,7 @@ public class ChefController {
 	
 	@GetMapping(value = "/{chefId}/edit")
     public String initUpdateChefForm(@PathVariable("chefId") int chefId, ModelMap model) {
+		log.info("Loading update chef form: " + chefId);
 		Chef chef = chefService.findChefById(chefId).get();
         model.put("chef", chef);
         return "chefs/updateChef";
@@ -93,7 +105,7 @@ public class ChefController {
     @PostMapping(value = "/{chefId}/edit")
     public String processUpdateChefForm(@Valid Chef chef, BindingResult result,
             @PathVariable("chefId") int chefId, ModelMap model) {
-
+    	log.info("Updating chefId: " + chefId);
     	chef.setId(chefId);
         if (result.hasErrors()) {
             model.put("chef", chef);
@@ -101,6 +113,7 @@ public class ChefController {
         }
         else {
         	if (validator.getChefwithIdDifferent(chef.getDni(), chef.getId())) {
+        		log.warn("Chef duplicated");
 				result.rejectValue("dni", "dni.duplicate", "Chef with dni" + chef.getDni() + "already in database");
 				model.addAttribute("chef", chef);
 				return "chefs/updateChef";

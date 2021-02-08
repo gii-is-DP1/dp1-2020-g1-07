@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/waiters")
 public class WaiterController {
@@ -45,6 +47,7 @@ public class WaiterController {
 	
 	@GetMapping()
 	public String listWaiters(ModelMap modelMap) {
+		log.info("Loading list of waiters");
 		String view= "waiters/listWaiter";
 		Iterable<Waiter> waiters=waiterService.findAll();
 		modelMap.addAttribute("waiters", waiters);
@@ -53,6 +56,7 @@ public class WaiterController {
 	
 	@GetMapping(path="/new")
 	public String createWaiter(ModelMap modelMap) {
+		log.info("Loading new waiter form");
 		String view="waiters/addWaiter";
 		modelMap.addAttribute("waiter", new Waiter());
 		return view;
@@ -60,17 +64,21 @@ public class WaiterController {
 	
 	@PostMapping(path="/save")
 	public String saveWaiter(@Valid Waiter waiter, BindingResult result, ModelMap modelMap) {
+		log.info("Saving waiter:" + waiter.getId());
 		String view="waiters/listWaiter";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("waiter", waiter);
 			return "waiters/addWaiter";
 			
 		}else {
 			if (validator.getWaiterwithIdDifferent(waiter.getDni(), null)) {
+				log.warn("waiter with dni" + waiter.getDni() + "already in database");
 				result.rejectValue("dni", "dni.duplicate", "Waiter with dni" + waiter.getDni() + "already in database");
 				modelMap.addAttribute("waiter", waiter);
 				return "waiters/addWaiter";
 			}
+			log.info("waiter validated: saving into DB");
 			waiterService.save(waiter);
 			
 			modelMap.addAttribute("message", "Waiter successfully saved!");
@@ -81,13 +89,16 @@ public class WaiterController {
 	
 	@GetMapping(path="/delete/{waiterId}")
 	public String deleteWaiter(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+		log.info("Deleting waiter:" + waiterId);
 		String view="waiters/listWaiter";
 		Optional<Waiter> waiter = waiterService.findWaiterById(waiterId);
 		if(waiter.isPresent()) {
+			log.info("waiter found: deleting");
 			waiterService.delete(waiter.get());
 			modelMap.addAttribute("message", "Waiter successfully deleted!");
 			view=listWaiters(modelMap);
 		}else {
+			log.warn("waiter not found in DB: "+ waiterId);
 			modelMap.addAttribute("message", "Waiter not found!");
 			view=listWaiters(modelMap);
 		}
@@ -96,6 +107,7 @@ public class WaiterController {
 	
 	@GetMapping(value = "/{waiterId}/edit")
     public String initUpdateWaiterForm(@PathVariable("waiterId") int waiterId, ModelMap model) {
+		log.info("Loading update waiter form: " + waiterId);
 		Waiter waiter = waiterService.findWaiterById(waiterId).get();
         model.put("waiter", waiter);
         return "waiters/updateWaiter";
@@ -104,18 +116,21 @@ public class WaiterController {
     @PostMapping(value = "/{waiterId}/edit")
     public String processUpdateWaiterForm(@Valid Waiter waiter, BindingResult result,
             @PathVariable("waiterId") int waiterId, ModelMap model) {
+    	log.info("Updating waiter: " + waiterId);
     	waiter.setId(waiterId);
         if (result.hasErrors()) {
+        	log.warn("Found errors on update: " + result.getAllErrors());
             model.put("waiter", waiter);
             return "waiters/updateWaiter";
         }
         else {
         	if (validator.getWaiterwithIdDifferent(waiter.getDni(), waiter.getId())) {
+        		log.warn("waiter duplicated");
 				result.rejectValue("dni", "dni.duplicate", "Waiter with dni" + waiter.getDni() + "already in database");
 				model.addAttribute("waiter", waiter);
 				return "waiters/updateWaiter";
 			}
-        	
+        	log.info("waiter validated: updating into DB");
             this.waiterService.save(waiter);
             return "redirect:/waiters";
         }
@@ -126,6 +141,7 @@ public class WaiterController {
     
     @GetMapping(path="/serves/{waiterId}")
 	public String waiterServes(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+    	log.info("Waiter serves :" + waiterId);
 		String view="waiters/assignedTables";
 		Waiter waiter = waiterService.findWaiterById(waiterId).get();
 		modelMap.put("waiter",waiter);
@@ -137,6 +153,7 @@ public class WaiterController {
     
     @GetMapping(path="/serves/{waiterId}/new")
 	public String createServe(@PathVariable("waiterId") int waiterId, ModelMap modelMap) {
+    	log.info("Creating serve with waiter: " + waiterId);
 		String view="waiters/addServe";
 		modelMap.put("restaurantTable", new RestaurantTable());
 		List<RestaurantTable> restaurantTables = waiterService.findRestaurantTables();
@@ -151,6 +168,7 @@ public class WaiterController {
 	}
 	
     public List<Integer> ObtainTablesIds(List<RestaurantTable> restaurantTables){
+
     	List<Integer> res = new ArrayList<Integer>();
     	for(RestaurantTable restaurantTable:restaurantTables) {
     		res.add(restaurantTable.getId());
@@ -160,13 +178,16 @@ public class WaiterController {
     
 	@PostMapping(path="/serves/{waiterId}/save")
 	public String saveServe(@PathVariable("waiterId") int waiterId, RestaurantTable restaurantTable, BindingResult result, ModelMap modelMap) {
+		log.info("Waiter" + waiterId + "serves the table"+ restaurantTable.getId() +"... saving");
 		String view="waiters/assignedTables";
 		if(result.hasErrors() || restaurantTable.getId()==null || restaurantTable.getId()==0) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("restaurantTable", restaurantTable);
 			modelMap.addAttribute("message", "There is no table to add!");
 			return "waiters/addServe";
 			
 		}else {
+			log.info("Serve validated: saving into DB");
 			restaurantTable = restaurantTableService.findRestaurantTableId(restaurantTable.getId()).get();
 			Waiter waiter = waiterService.findWaiterById(waiterId).get();
 			Collection<RestaurantTable> served = waiter.getServes();
@@ -181,10 +202,12 @@ public class WaiterController {
 	
 	@GetMapping(path="/serves/{waiterId}/delete/{restaurantTableId}")
 	public String deleteServe(@PathVariable("waiterId") int waiterId, @PathVariable("restaurantTableId") int restaurantTableId, ModelMap modelMap) {
+		log.info("Deleting serves with waiter id:" + waiterId +"and restaurant table id:" + restaurantTableId);
 		String view="waiters/assignedTables";
 		Optional<Waiter> waiter = waiterService.findWaiterById(waiterId);
 		Optional<RestaurantTable> restaurantTable = restaurantTableService.findRestaurantTableId(restaurantTableId);
 		if(waiter.isPresent() && restaurantTable.isPresent()) {
+			log.info("Serve found: deleting");
 			Collection<RestaurantTable> served = waiter.get().getServes();
 			served.remove(restaurantTable.get());
 			waiter.get().setServes(served);
@@ -192,6 +215,7 @@ public class WaiterController {
 			modelMap.addAttribute("message", "Serve successfully deleted!");
 			view=waiterServes(waiterId,modelMap);
 		}else {
+			log.warn("Serve not found in DB: "+ waiterId + restaurantTableId);
 			modelMap.addAttribute("message", "Waiter or table not found!");
 			view=waiterServes(waiterId,modelMap);
 		}
