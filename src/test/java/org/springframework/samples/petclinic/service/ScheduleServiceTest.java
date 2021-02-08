@@ -16,6 +16,6 @@ public class ScheduleServiceTest {
 	@Test
 	public void testCountWithInitialData() {
 		int count= schService.scheduleCount();
-		assertEquals(count,3);
+		assertEquals(count,4);
 	}
 }
