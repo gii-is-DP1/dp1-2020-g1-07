@@ -18,7 +18,7 @@ This project uses Java 11
 ## Documents 
 
 - [Document of System Design](https://github.com/gii-is-DP1/dp1-2020-g1-07/blob/master/documents/DP1-G1-7%20-%20Document%20of%20System%20Design.docx)
-- [Document of Requirements and System Analysis] (https://github.com/gii-is-DP1/dp1-2020-g1-07/blob/master/documents/DP1-G1-7-Document%20of%20Requirements%20and%20System%20Analysis.docx)
+- [Document of Requirements and System Analysis](https://github.com/gii-is-DP1/dp1-2020-g1-07/blob/master/documents/DP1-G1-7-Document%20of%20Requirements%20and%20System%20Analysis.docx)
 
 ## In case you find a bug/suggested improvement for Tuvi's Casino project
 Our issue tracker is available here: https://github.com/gii-is-DP1/dp1-2020-g1-07/issues
