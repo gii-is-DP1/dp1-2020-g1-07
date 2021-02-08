@@ -15,3 +15,5 @@ You can then access to our webpage here: http://localhost:8090/
 
 ## In case you find a bug/suggested improvement for Tuvi's Casino project
 Our issue tracker is available here: https://github.com/gii-is-DP1/dp1-2020-g1-07/issues
+
+This project uses Java 11
