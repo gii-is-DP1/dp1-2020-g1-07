@@ -88,12 +88,12 @@ public class ClientGainService {
 	}
 	
 	public Collection<Client> findClients() throws DataAccessException{
-		log.info("Loading users from DB");
+		log.info("Loading clients from DB");
 		return cgainRepo.findClients();
 	}
 	
 	public Collection<Game> findGames() throws DataAccessException{
-		log.info("Loading users from DB");
+		log.info("Loading games from DB");
 		return cgainRepo.findGames();
 	}
 }
