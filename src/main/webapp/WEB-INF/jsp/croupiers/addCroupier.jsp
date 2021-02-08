@@ -12,6 +12,9 @@
                 <petclinic:inputField label="Dni" name="dni"/>
                 <petclinic:inputField label="Name" name="name"/>
                 <petclinic:inputField label="Phone Number" name="phone_number"/>  
+                <div class="control-group">
+                	<petclinic:selectField label="Casino table" name="casinotable" names="${casinotables}" size="1"/>
+                </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

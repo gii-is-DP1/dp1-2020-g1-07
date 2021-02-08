@@ -46,6 +46,7 @@ public class CasinoTableServiceTest {
 		game.setMaxPlayers(6);
 		new_ct.setGame(game);
 		new_ct.setGametype(gametype);
+		new_ct.setName("Mesa 1");
 		Skill skill = new Skill();
 		skill.setName("Amateur");
 		new_ct.setSkill(skill);

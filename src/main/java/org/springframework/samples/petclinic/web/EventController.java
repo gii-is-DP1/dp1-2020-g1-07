@@ -59,45 +59,40 @@ public class EventController {
 		return vista;
 	}
 	
-	/*@ResponseBody
+	@ResponseBody
 	@RequestMapping(value = "/byDay/{date}", method = RequestMethod.GET)
 	public String loadEventsByDate(@PathVariable("date")String datestr) {
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
-		Stage scenario = null;
 		try {
 			List<Event> events = new ArrayList<Event>(eventService.findEventsByDate(date));
 			for(Event event:events) {
-				scenario = eventService.findStageForEvent(event.getId());
 				json = json + "{\"id\":" + event.getId() +","
 						+ "\"name\":\"" + event.getName() +"\","
 						+ "\"showtype_id\":{"
 								+ "\"id\":" + event.getShowtype_id().getId() + ","
 								+ "\"name\":\"" + event.getShowtype_id().getName() + "\"},"
-						+ "\"artist_id\":{"
-								+ "\"id\":" + event.getArtist_id().getId() + ","
-								+ "\"name\":\"" + event.getArtist_id().getName() + "\"},"
 						+ "\"stage_id\":{"
-								+ "\"id\":" + scenario.getId() + "},"
+								+ "\"id\":" + event.getStage_id().getId() + "},"
 						+ "\"date\":\"" + event.getDate() +"\"},";
 				if(events.indexOf(event)==events.size()-1) {
 					json = json.substring(0, json.length() - 1) + "]";
 				}
 			}
 			if(events.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]";
+				json = json + "]";
 			}
 		
 		//Event evento = null;
 		//String nombre = evento.getName();
 		}catch(Exception e) {
 			System.out.println(json);
-			System.out.println(scenario);
+
 			System.out.println(e);
 		}
 		return json;
-	}*/
+	}
 
 	@GetMapping(path="/new")
 	public String createEvent(ModelMap modelMap) {
