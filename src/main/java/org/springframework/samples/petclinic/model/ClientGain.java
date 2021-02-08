@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +21,6 @@ import lombok.Setter;
 public class ClientGain extends BaseEntity{
 
 	@NotNull
-	@Min(value = 5)
 	private Integer amount;
 	
 	@NotNull
