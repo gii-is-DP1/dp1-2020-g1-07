@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,7 +24,6 @@ public class SlotGain extends NamedEntity{
     private LocalDate date;
 	
 	@NotNull
-	@Min(value = 1)
 	private Integer amount;
 	
 	@ManyToOne

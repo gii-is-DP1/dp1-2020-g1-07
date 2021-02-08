@@ -57,8 +57,8 @@ public class SlotGainValidator implements Validator{
 		if (date == null) {
 			errors.rejectValue("date", REQUIRED, REQUIRED);
 		}
-		if(amount == null || amount<=0) {
-			errors.rejectValue("amount", REQUIRED + "No puede ser nulo ni negativo", REQUIRED + "No puede ser nulo ni negativo");
+		if(amount == null) {
+			errors.rejectValue("amount", "No puede ser nulo", "No puede ser nulo");
 		}
 		if(slotM == null) {
 			errors.rejectValue("slotMachine", REQUIRED, REQUIRED);
