@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/restaurantreservations")
 public class RestaurantReservationController {
@@ -63,13 +65,16 @@ public class RestaurantReservationController {
 		Authority autority = RestaurantReservationService.getAuthority(username);
 		List<LocalDate> list= new ArrayList<LocalDate>(RestaurantReservationService.findAllDates());
 		List<RestaurantReservation> restaurantreservations= StreamSupport.stream(RestaurantReservationService.findAll().spliterator(), false).collect(Collectors.toList());
+		log.info("Loading list of restaurant reservations: "+ restaurantreservations +" | with username: " + username + "");
 		if(autority.getAuthority().equals("client")) {
+			log.info("The user is a client");
 			Client client = RestaurantReservationService.findClientFromUsername(username);
 			clientreservations = new ArrayList<RestaurantReservation>();
 			clientreservationsId = new ArrayList<Integer>();
 			list.clear();
 			for(RestaurantReservation restaurantreservation:restaurantreservations) {
-				if(restaurantreservation.getClient().getDni().equals(client.getDni()) && !list.contains(restaurantreservation.getDate())) list.add(restaurantreservation.getDate());
+				if(restaurantreservation.getClient().getDni().equals(client.getDni()) 
+						&& !list.contains(restaurantreservation.getDate())) list.add(restaurantreservation.getDate());
 				if(restaurantreservation.getClient().getDni().equals(client.getDni())) {
 					clientreservations.add(restaurantreservation);
 					clientreservationsId.add(restaurantreservation.getId());
@@ -77,6 +82,7 @@ public class RestaurantReservationController {
 			}
 			restaurantreservations = new ArrayList<RestaurantReservation>(clientreservations);
 		}else {
+			log.info("The user isn't a client");
 			clientreservationsId = new ArrayList<Integer>();
 			for(RestaurantReservation restaurantreservation:restaurantreservations) {
 				clientreservationsId.add(restaurantreservation.getId());
@@ -92,6 +98,7 @@ public class RestaurantReservationController {
 	@ResponseBody
 	@RequestMapping(value = "/{date}", method = RequestMethod.GET)
 	public String loadRestaurantReservationsByDate(@PathVariable("date")String datestr) {
+		log.info("Loading restaurant reservations for the date: " + datestr);
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -120,11 +127,13 @@ public class RestaurantReservationController {
 		}catch(Exception e) {
 			System.out.println(RestaurantReservationService.findRestaurantReservationsByDate(date));
 		}
+		log.info("The json of restaurant reservations is:" + json);
 		return json;
 	}
 	
 	@GetMapping(path="/new")
 	public String createRestaurantReservation(ModelMap modelMap) {
+		log.info("Loading new restaurant reservation form");
 		String view="restaurantreservations/addRestaurantReservation";
 		modelMap.addAttribute("restaurantReservation", new RestaurantReservation() );
 		return view;
@@ -133,6 +142,7 @@ public class RestaurantReservationController {
 	@ResponseBody
 	@RequestMapping(value = "/new/loadDinersByTimeInterval/{id}/{date}", method = RequestMethod.GET)
 	public String loadDinersByTimeInterval(@PathVariable("date")String datestr, @PathVariable("id")int id) {
+		log.info("Loading diners for the time interval " + datestr + "and the id " + id );
 		String json = "[";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -151,10 +161,12 @@ public class RestaurantReservationController {
 		}catch(Exception e) {
 			System.out.println(TablesbyDateAndTimeInterval(date,id));
 		}
+		log.info("THe json of diners is: " + json);
 		return json;
 	}
 	
 	private List<RestaurantTable> TablesbyDateAndTimeInterval(LocalDate date, int id) {
+		log.info("Loading the tables with the date " + date + "and the id" + id);
 		List<RestaurantTable> tables = StreamSupport.stream(restaurantTableService.findAll().spliterator(), false).collect(Collectors.toList());
 		List<RestaurantTable> result = new ArrayList<RestaurantTable>();
 		List<RestaurantReservation> reservations = new ArrayList<RestaurantReservation>(RestaurantReservationService.findRestaurantReservationsByDate(date));
@@ -172,11 +184,14 @@ public class RestaurantReservationController {
 
 	@PostMapping(path="/save")
 	public String saveRestaurantReservation(@Valid RestaurantReservation restaurantreservation, BindingResult result, ModelMap modelMap) {
+		log.info("Saving restaurant reservation: " + restaurantreservation.getId());
 		String view="restaurantreservations/restaurantreservationsList";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("restaurantReservation", restaurantreservation);
 			return "restaurantreservations/addRestaurantReservation";
 		}else {
+			log.info("Restaurant reservation validated: saving into DB");
 			RestaurantReservationService.save(restaurantreservation);
 			modelMap.addAttribute("message", "RestaurantReservation successfully saved!");
 			view=restaurantreservationsList(modelMap);
@@ -186,13 +201,16 @@ public class RestaurantReservationController {
 	
 	@GetMapping(path="/delete/{restaurantReservationId}")
 	public String deleteRestaurantReservation(@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap modelMap) {
+		log.info("Deleting restaurant reservation: " + restaurantreservationId);
 		String view="restaurantreservations/restaurantreservationsList";
 		Optional<RestaurantReservation> restaurantreservation = RestaurantReservationService.findRestaurantReservationId(restaurantreservationId);
 		if(restaurantreservation.isPresent()) {
+				log.info("Restaurant reservation found: deleting");
 				RestaurantReservationService.delete(restaurantreservation.get());
 				modelMap.addAttribute("message", "RestaurantReservation successfully deleted!");
 				view=restaurantreservationsList(modelMap);
 		}else {
+			log.warn("Restaurant reservation not found in DB: " + restaurantreservationId);
 			modelMap.addAttribute("message", "RestaurantReservation not found!");
 			view=restaurantreservationsList(modelMap);
 		}
@@ -200,7 +218,8 @@ public class RestaurantReservationController {
 	}
 	
 	@GetMapping(value = "/{restaurantReservationId}/edit")
-	public String initUpdateCasTbForm(@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap model) {
+	public String initUpdateRestaurantReservationForm(@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap model) {
+		log.info("Loading update restaurant reservation form");
 		RestaurantReservation restaurantreservation = RestaurantReservationService.findRestaurantReservationId(restaurantreservationId).get();
 		editedClient = restaurantreservation.getClient();
 		model.put("client", editedClient);
@@ -209,15 +228,18 @@ public class RestaurantReservationController {
 	}
 
 	@PostMapping(value = "/{restaurantReservationId}/edit")
-	public String processUpdateCasTbForm(@Valid RestaurantReservation restaurantreservation, BindingResult result,
+	public String processUpdateRsstaurantReservationForm(@Valid RestaurantReservation restaurantreservation, BindingResult result,
 			@PathVariable("restaurantReservationId") int restaurantreservationId, ModelMap model) {
+		log.info("Updating restaurant reservation: " + restaurantreservationId);
 		restaurantreservation.setId(restaurantreservationId);
 		restaurantreservation.setClient(editedClient);
 		if (result.hasErrors()) {
+			log.warn("Found errors on update: " + result.getAllErrors());
 			model.put("restaurantReservation", restaurantreservation);
 			return "restaurantreservations/updateRestaurantReservation";
 		}
 		else {
+			log.info("Restaurant reservation validated: updating into DB");
 			this.RestaurantReservationService.save(restaurantreservation);
 			return "redirect:/restaurantreservations";
 		}
@@ -226,6 +248,7 @@ public class RestaurantReservationController {
 	@ResponseBody
 	@RequestMapping(value = "/{restaurantReservationId}/edit/loadDinersByTimeInterval/{id}/{date}", method = RequestMethod.GET)
 	public String loadDinersByTimeInterval(@PathVariable("date")String datestr, @PathVariable("id")int id, @PathVariable("restaurantReservationId")int reservationId ) {
+		log.info("Loading the tables with the date " + datestr + ", the id" + id +" and the restaurant reservation " + reservationId );
 		String json = "[";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
@@ -244,6 +267,7 @@ public class RestaurantReservationController {
 		}catch(Exception e) {
 			System.out.println(TablesbyDateAndTimeInterval(date,id));
 		}
+		log.info("The json of diners is: " + json);
 		return json;
 	}
 	

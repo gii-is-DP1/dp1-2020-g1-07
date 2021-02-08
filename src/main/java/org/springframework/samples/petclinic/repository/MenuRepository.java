@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Menu;
 import org.springframework.samples.petclinic.model.Shift;
@@ -41,6 +42,12 @@ public interface MenuRepository extends CrudRepository<Menu, Integer>{
 
 	@Query("SELECT menu FROM Menu menu where menu.date = :date ORDER BY menu.shift.id")
 	public List<Menu> findMenusByDate(@Param("date") LocalDate date);
+
+	@Query("SELECT schedule.emp.dni FROM Schedule schedule WHERE schedule.shift = :shift AND schedule.date = :date ORDER BY schedule.emp.id")
+	public List<String> findSchedulesDnisByShiftAndDate(@Param("shift")Shift shift, @Param("date") LocalDate date) throws DataAccessException;
+
+	@Query("SELECT cook FROM Cook cook ORDER BY cook.id")
+	public List<Cook> findCooks() throws DataAccessException;
 
 
 }

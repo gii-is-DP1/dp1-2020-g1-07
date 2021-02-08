@@ -142,6 +142,17 @@ INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Ensalada Cesar',1
 INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (2,'Serranito',2, 2);
 INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (3,'Flan Potax',3, 2);
 
+INSERT INTO prepares(cook_id,dish_id) VALUES(10,1);
+INSERT INTO prepares(cook_id,dish_id) VALUES(10,2);
+INSERT INTO prepares(cook_id,dish_id) VALUES(10,3);
+INSERT INTO prepares(cook_id,dish_id) VALUES(11,1);
+INSERT INTO prepares(cook_id,dish_id) VALUES(11,2);
+INSERT INTO prepares(cook_id,dish_id) VALUES(11,3);
+INSERT INTO prepares(cook_id,dish_id) VALUES(12,1);
+INSERT INTO prepares(cook_id,dish_id) VALUES(12,2);
+INSERT INTO prepares(cook_id,dish_id) VALUES(12,3);
+
+
 INSERT INTO menu VALUES (1, 'Random','2010-09-07', 3, 1, 2, 2);
 
 INSERT INTO timeintervals VALUES(1, '13:00 - 14:00');
@@ -159,6 +170,7 @@ INSERT INTO serves VALUES(20,2);
 INSERT INTO serves VALUES(21,1);
 INSERT INTO serves VALUES(21,2);
 
+
 INSERT INTO restaurantreservations VALUES(1, '2021-02-05', 1, 1, 1);
 INSERT INTO restaurantreservations VALUES(2, '2021-02-05', 2, 1, 2);
 INSERT INTO restaurantreservations VALUES(3, '2021-02-06', 3, 1, 3);
@@ -167,4 +179,5 @@ INSERT INTO restaurantreservations VALUES(4, '2021-02-07', 1, 1, 4);
 
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (1, '2010-09-07', 3);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (9, '2010-09-09', 2);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (10, '2021-02-15', 2);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (16, '2010-09-06', 1);

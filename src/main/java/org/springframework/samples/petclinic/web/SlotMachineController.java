@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/slotmachines")
 public class SlotMachineController {
@@ -45,6 +47,7 @@ public class SlotMachineController {
 	
 	@GetMapping()
 	public String slotMachinesList(ModelMap modelMap) {
+		log.info("Loading list of slot machines view");
 		String view= "slotmachines/slotmachinesList";
 		Iterable<SlotMachine> slotMachines=slotMachineService.findAll();
 		modelMap.addAttribute("slotMachines", slotMachines);
@@ -53,6 +56,7 @@ public class SlotMachineController {
 	
 	@GetMapping(path="/new")
 	public String createSlotMachine(ModelMap modelMap) {
+		log.info("Loading new slot machine form");
 		String view="slotmachines/addSlotMachine";
 		modelMap.addAttribute("slotMachine", new SlotMachine());
 		return view;
@@ -60,12 +64,15 @@ public class SlotMachineController {
 	
 	@PostMapping(path="/save")
 	public String saveSlotMachine(@Valid SlotMachine slotMachine, BindingResult result, ModelMap modelMap) {
+		log.info("Saving slotMachine: " + slotMachine.getId());
 		String view="slotmachines/slotmachinesList";
 		if(result.hasErrors()) {
+			log.warn("Found errors on insertion: " + result.getAllErrors());
 			modelMap.addAttribute("slotMachine", slotMachine);
 			return "slotmachines/addSlotMachine";
 			
 		}else {
+			log.info("Slot machine validated: saving into DB");
 			slotMachineService.save(slotMachine);
 			modelMap.addAttribute("message", "Slot Machine successfully saved!");
 			view=slotMachinesList(modelMap);
@@ -75,20 +82,25 @@ public class SlotMachineController {
 	
 	@GetMapping(path="/delete/{slotMachineId}")
 	public String deleteSlotMachine(@PathVariable("slotMachineId") int slotMachineId, ModelMap modelMap) {
+		log.info("Deleting slot machine: " + slotMachineId);
 		String view="slotmachines/slotmachinesList";
 		Optional<SlotMachine> slotMachine = slotMachineService.findSlotMachineById(slotMachineId);
 		if(slotMachine.isPresent()) {
 			//Primero hay que borrar los registros asociados a la slotMachine
 			List<SlotGain> slotgains = new ArrayList<SlotGain>(slotMachineService.findGains());
+			log.info("First we must delete the slot gains associated with slot machine:" + slotgains);
 			for(SlotGain slotgain:slotgains) {
 				if(slotgain.getSlotMachine().getId()==slotMachineId) {
 					slotGainService.delete(slotgain);
 				}
 			}
+			log.info("Slot games deleted");
 			slotMachineService.delete(slotMachine.get());
+			log.info("Slot machine deleted");
 			modelMap.addAttribute("message", "Slot Machine successfully deleted!");
 			view=slotMachinesList(modelMap);
 		}else {
+			log.warn("Slot machine not found in DB: " + slotMachineId);
 			modelMap.addAttribute("message", "Slot Machine not found!");
 			view=slotMachinesList(modelMap);
 		}
@@ -96,7 +108,8 @@ public class SlotMachineController {
 	}
 	
 	@GetMapping(value = "/{slotMachineId}/edit")
-	public String initUpdateCasTbForm(@PathVariable("slotMachineId") int slotMachineId, ModelMap model) {
+	public String initUpdateSlotMachineForm(@PathVariable("slotMachineId") int slotMachineId, ModelMap model) {
+		log.info("Loading update slot machine form");
 		SlotMachine slotMachine = slotMachineService.findSlotMachineById(slotMachineId).get();
 		
 		model.put("slotMachine", slotMachine);
@@ -104,14 +117,17 @@ public class SlotMachineController {
 	}
 
 	@PostMapping(value = "/{slotMachineId}/edit")
-	public String processUpdateCasTbForm(@Valid SlotMachine slotMachine, BindingResult result,
+	public String processUpdateSlotMachineForm(@Valid SlotMachine slotMachine, BindingResult result,
 			@PathVariable("slotMachineId") int slotMachineId, ModelMap model) {
+		log.info("Updating slot machine: " + slotMachineId);
 		slotMachine.setId(slotMachineId);
 		if (result.hasErrors()) {
+			log.warn("Found errors on update: " + result.getAllErrors());
 			model.put("slotMachine", slotMachine);
 			return "slotmachines/updateSlotMachine";
 		}
 		else {
+			log.info("Slot machine validated: updating into DB");
 			this.slotMachineService.save(slotMachine);
 			return "redirect:/slotmachines";
 		}
