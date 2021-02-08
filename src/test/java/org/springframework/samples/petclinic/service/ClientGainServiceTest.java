@@ -1,13 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 import java.time.LocalDate;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
 import org.assertj.core.util.Lists;
@@ -56,13 +54,13 @@ public class ClientGainServiceTest {
 		
 		User us = new User();
 		us.setUsername("client1");
-		us.setDni(TEST_DNI_1);
+		cl.setUser(us);
 		User us2 = new User();
 		us2.setUsername("client2");
-		us2.setDni(TEST_DNI_2);
+		cl2.setUser(us2);
 		User us3 = new User();
 		us3.setUsername("client3");
-		us3.setDni(TEST_DNI_3);
+		cl3.setUser(us3);
 		
 		Game poker = new Game();
 		poker.setName("Poker");
@@ -106,6 +104,9 @@ public class ClientGainServiceTest {
 		given(this.cgainRepo.findUsers()).willReturn(Lists.list(us, us2, us3));
 		given(this.cgainRepo.findDatesForClient(anyString())).willReturn(Lists.emptyList());
 		given(this.cgainRepo.findDatesForClient("client1")).willReturn(Lists.list(date1, date2, date3));
+		given(this.cgainRepo.findClientByUsername("client1")).willReturn(cl);
+		given(this.cgainRepo.findClientByUsername("client2")).willReturn(cl2);
+		given(this.cgainRepo.findClientByUsername("client3")).willReturn(cl3);
 		cgainService = new ClientGainService(cgainRepo);
     }
 	
@@ -127,9 +128,8 @@ public class ClientGainServiceTest {
 	
 	@Test
 	void findClientByUsernameTest() {
-		assertThat(this.cgainService.findClientByUsername("client1").equals(TEST_DNI_1));
-		assertThat(this.cgainService.findClientByUsername("client3").equals(TEST_DNI_3));
-		assertThrows(NoSuchElementException.class,() -> this.cgainService.findClientByUsername("another_client"));
+		assertThat(this.cgainService.findClientByUsername("client1").getDni().equals(TEST_DNI_1));
+		assertThat(this.cgainService.findClientByUsername("client3").getDni().equals(TEST_DNI_3));
 	}
 	
 	@WithMockUser(value = "client1")

@@ -126,7 +126,7 @@ public class SlotGainController {
 			return "redirect:/slotgains";
 		}
 	}
-	
+
 	@ModelAttribute("slotMachines")
 	public Collection<SlotMachine> populateSlotMachines() {
 		return this.slotGainService.findSlotMachines();

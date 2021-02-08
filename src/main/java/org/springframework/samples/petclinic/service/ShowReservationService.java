@@ -18,9 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ShowReservationService {
-private  ShowReservationRepository showresRepo;
 	
 	@Autowired
+	private  ShowReservationRepository showresRepo;
+	
 	public ShowReservationService(ShowReservationRepository showresRepo) {
 		this.showresRepo = showresRepo;
 	}

@@ -10,22 +10,17 @@
     
         <h2>Add Show Reservation</h2>
 
-        <form:form modelAttribute="showres" class="form-horizontal" action="/showress/save">
+        <form:form modelAttribute="showReservation" class="form-horizontal" action="/showress/save">
             <div class="form-group has-feedback">
-                <div class="control-group">
-                 Event <select id="event" name="event">
-                	<c:forEach var="e" items="${events}">
-		            	<option value="${e.id}">${e.name}</option>
-		            </c:forEach>
-		        </select>
-		        <petclinic:inputField label="Seats" name="seats"/>
+               	<div class="control-group">
+                	<petclinic:selectField label="Event" name="event" names="${events}" size="1"/>
                 </div>
+		        <petclinic:inputField label="Seats" name="seats"/>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                	<input type="hidden" name="client" value="${showres.client}"/>
-                    <input type="hidden" name="showresId" value="${showres.id}"/>
+                    <input type="hidden" name="showresId" value="${showReservation.id}"/>
                     <button class="btn btn-default" type="submit">Add Reservation</button>
                 </div>
             </div>

@@ -3,7 +3,6 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.service.ShowReservationService;
@@ -24,21 +23,23 @@ public class ShowReservationValidator implements Validator{
 		ShowReservation showres = (ShowReservation) obj;
 		Integer seats = showres.getSeats();
 		Event event = showres.getEvent();
-		Client client = showres.getClient();
 		Collection<Event> bookable = showresService.findAvailableShows();
+		// event validation
+		if (event == null || !bookable.contains(event))  {
+			errors.rejectValue("event", REQUIRED + " to be a future show with enough seats",
+					REQUIRED + " to be a future show with enough seats");
+		}
 		// seats validation
 		if (seats == null || seats < 1) {
-			errors.rejectValue("seats", REQUIRED + "must be a number greater than zero",
-					REQUIRED + "must be a number greater than zero");
+			errors.rejectValue("seats", REQUIRED + " to be a number greater than zero",
+					REQUIRED + " to be a number greater than zero");
 		}
-		// event validation
-		if (event == null || bookable.contains(event) || showresService.findAvailableSeats(event.getId()) < seats) {
-			errors.rejectValue("event", REQUIRED + "must be a future show with enough seats",
-					REQUIRED + "must be a future show with enough seats");
-		}
-		// client validation
-		if (client == null) {
-			errors.rejectValue("client", REQUIRED, REQUIRED);
+		else if(!errors.hasFieldErrors("event")){
+			Integer max = showresService.findAvailableSeats(event.getId());
+			if (max < seats) {
+				errors.rejectValue("seats", REQUIRED + " to not be greater than the available seats: " + max,
+				REQUIRED + " to not be greater than the available seats: " + max);
+			}
 		}
 	}
 

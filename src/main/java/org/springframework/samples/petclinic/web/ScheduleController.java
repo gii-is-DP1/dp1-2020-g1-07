@@ -12,6 +12,7 @@ import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.ScheduleService;
+import org.springframework.samples.petclinic.util.UserUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -51,16 +52,10 @@ public class ScheduleController {
 	@GetMapping(path="/user")
 	public String listUserSchedules(ModelMap modelMap) {
 		String view= "schedules/mySchedule";
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		if (principal instanceof UserDetails)
-			username = ((UserDetails)principal).getUsername();
-		else
-			username = principal.toString();
+		String username = UserUtils.getUser();
 		Iterable<Schedule> schedules=scheduleService.findAll();
 		List<Schedule> userSchedules = new ArrayList<Schedule>();
-		String dni = scheduleService.findUsers().stream()
-				.filter(x -> x.getUsername().equals(username)).findFirst().get().getDni();
+		String dni = scheduleService.findEmployeeByUsername(username).getDni();
 		for (Schedule sch : schedules)
 			if (sch.getEmp().getDni().equals(dni))
 				userSchedules.add(sch);

@@ -1,13 +1,13 @@
 -- ADMIN: admin1|4dm1n
-INSERT INTO users(username,password,dni,enabled) VALUES ('admin1','4dm1n','12345678A',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(1,'admin1','admin');
 
 -- EMPLOYEE: artist1|artist1
-INSERT INTO users(username,password,dni,enabled) VALUES ('artist1','artist1','98765431Z',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('artist1','artist1',TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(2,'artist1','employee');
 
 -- CLIENT: client1|client1
-INSERT INTO users(username,password,dni,enabled) VALUES ('client1','client1','11111111A',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('client1','client1',TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(3,'client1','client');
 
 INSERT INTO GAMETYPES VALUES(1,'Roulette');
@@ -65,12 +65,18 @@ INSERT INTO employees(id,dni,name,phone_number) VALUES (6,'30987455M','Luis Mart
 INSERT INTO artists(id) VALUES (4);
 INSERT INTO artists(id) VALUES (5);
 INSERT INTO artists(id) VALUES (6);
+
 INSERT INTO STAGE (id, capacity ) VALUES(1,40);
 INSERT INTO STAGE(id, capacity) VALUES(2,40);
-INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(1,'Magic and Pasion','2019-12-21',3,1);
-INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(2,'Hamlet','2020-02-17',2,2);
+INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(1,'Magic and Pasion','2021-12-21',3,1);
+INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(2,'Hamlet','2021-05-17',2,2);
+INSERT INTO EVENTS (id,name,date,showtype_id,stage_id)VALUES(3,'DJ Kikei','2021-09-25',1,2);
 
-INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Ofelia Rodriguez','987654319');
+INSERT INTO ACTS VALUES (4,1);
+INSERT INTO ACTS VALUES (6,3);
+INSERT INTO ACTS VALUES (5,2);
+
+INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Oscar Rodriguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (9,'30987454M','Maria Martin','567891232');
 INSERT INTO administrators(id) VALUES (7);
@@ -118,6 +124,10 @@ INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (3,100
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (4,-200,'2020-09-21',4,1,1);
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (5,-100,'2020-09-21',1,1,1);
 INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (6,150,'2020-09-21',1,1,1);
+
+INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (1, 5, 1, 1);
+INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (2, 2, 1, 2);
+INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (3, 1, 1, 3);
 
 INSERT INTO dish_courses VALUES (1, 'First');
 INSERT INTO dish_courses VALUES (2, 'Second');

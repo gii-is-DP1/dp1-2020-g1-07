@@ -1,19 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
-import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,8 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -143,10 +136,16 @@ public class EventController {
 		String view="events/listEvent";
 		Optional<Event> event = eventService.findEventbyId(eventId);
 		if(event.isPresent()) {
-			log.info("Event found: deleting");
-			eventService.delete(event.get());
-			modelMap.addAttribute("message", "Event not found!");
-			view=eventsList(modelMap);
+			if(eventValidator.isUsedInShowReservation(event)) {
+				log.warn("Couldn't delete event: it has reservations");
+				modelMap.addAttribute("message", "This event can't be deleted, it has reservations!");
+				view=eventsList(modelMap);
+			}else{
+				log.info("Event found: deleting");
+				eventService.delete(event.get());
+				modelMap.addAttribute("message", "Event not found!");
+				view=eventsList(modelMap);
+			}
 		}else {
 			log.warn("Event not found in DB: " + eventId);
 			modelMap.addAttribute("message", "Event not found!");
