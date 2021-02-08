@@ -9,15 +9,6 @@ Tuvi’s Casino is a gambling games center which has among their facilities serv
 The goal of our Project is to develop a website with which the admins of Tuvi’s Casino will be able to successfully manage their business. 
 This website is going to contain features such login for each different type of user (admin, employee, and client). Depending on the kind of user that is logged on the website, it will able him to manage different things. 
 
-
-
-```
-git clone https://github.com/gii-is-DP1/spring-petclinic.git
-cd spring-petclinic
-./mvnw package
-java -jar target/*.jar
-```
-
 You can then access to our webpage here: http://localhost:8090/
 
 <img width="1042" alt="petclinic-screenshot" src="unknown.png">
