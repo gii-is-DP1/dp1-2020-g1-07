@@ -10,6 +10,9 @@ import org.springframework.samples.petclinic.repository.ArtistRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jdk.internal.jline.internal.Log;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class ArtistService {
 
@@ -45,12 +48,14 @@ public class ArtistService {
 	}
 	
 	public List<Event> findActedEvents(int artistId) {
+		log.info("Loading acted events from DB with the artist id: " + artistId);
 		// TODO Auto-generated method stub
 		return artistRep.findActedEvents(artistId);
 	}
 	
 	public List<Event> findEvents() {
 		// TODO Auto-generated method stub
+		log.info("Loading events from DB");
 		return artistRep.findEvents();
 	}
 }

@@ -77,7 +77,7 @@ public class CasinotableController {
 				modelMap.addAttribute("casinotable", casinotable);
 				return "casinotables/addCasinotable";
 			}
-			log.info("Game validated: saving into DB");
+			log.info("Casinotable validated: saving into DB");
 			castableService.save(casinotable);
 			modelMap.addAttribute("message", "Casinotable successfully saved!");
 			view=casinotablesListed(modelMap);

@@ -10,6 +10,8 @@ import org.springframework.samples.petclinic.repository.CookRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class CookService {
 	
@@ -46,11 +48,13 @@ public class CookService {
 	
 	public List<Dish> findPreparedDishes(int cookId) {
 		// TODO Auto-generated method stub
+		log.info("Loading prepared dishes from DB with the cook id: " + cookId);
 		return cookRep.findPreparedDishes(cookId);
 	}
 	
 	public List<Dish> findDishes() {
 		// TODO Auto-generated method stub
+		log.info("Loading dishes from DB");
 		return cookRep.findDishes();
 	}
 }

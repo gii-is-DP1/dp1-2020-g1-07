@@ -14,6 +14,8 @@ import org.springframework.samples.petclinic.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class ScheduleService {
 	
@@ -46,19 +48,23 @@ public class ScheduleService {
 	
 	public Collection<Shift> findShifts() throws DataAccessException{
         // TODO Auto-generated method stub
+		log.info("Loading shifts from DB");
         return scheduleRep.findShifts();
     }
 	public Collection<Employee> findEmployees() throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading employees from DB");
 		return scheduleRep.findEmployees();
 	}
 	
 	public Employee findEmployeeByUsername(String username) throws DataAccessException{
 		// TODO Auto-generated method stub
+		log.info("Loading a employee for a username: "+ username);
 		return scheduleRep.findEmployeeByUsername(username);
 	}
 	
 	public  Collection<String> findScheduleByDni() throws DataAccessException{ 
+		log.info("Loading schedule for a dni from DB");
 		return scheduleRep.findEmployeeDni();
 	}
 
