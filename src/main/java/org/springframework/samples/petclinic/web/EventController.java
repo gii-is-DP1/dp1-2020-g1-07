@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
+import org.springframework.samples.petclinic.model.Stage;
 import org.springframework.samples.petclinic.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -184,7 +185,10 @@ public class EventController {
 		}
 	}
 	
-
+	@ModelAttribute("stages")
+    public Collection<Stage> populateStages() {
+        return this.eventService.findStages();
+    }
 
 	@ModelAttribute("showtypes")
     public Collection<ShowType> populateShowtypes() {

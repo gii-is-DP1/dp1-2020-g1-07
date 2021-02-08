@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Stage extends NamedEntity{
+public class Stage extends BaseEntity{
 	
 	@NotNull
 	@Min(value = 1)

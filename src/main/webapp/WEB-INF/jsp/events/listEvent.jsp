@@ -17,7 +17,6 @@
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">Date</th>
             <th style="width: 200px;">Show Type</th>
-            <th style="width: 200px;">Artist/Group</th>
             <th style= "width: 200px;">Stage</th>
         </tr>
         </thead>
@@ -36,9 +35,7 @@
                 <td>
                     <c:out value="${event.showtype_id.name}"/>
                 </td>
-                <td>
-                    <c:out value="${event.artist_id.name}"/>
-                </td>
+                
                 <td>
                     <c:out value="${event.stage_id.id}"/>
                 </td>
