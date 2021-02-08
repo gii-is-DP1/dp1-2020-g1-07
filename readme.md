@@ -1,6 +1,6 @@
 # Tuvi's Casino
 
-This is the project of the group number 01-07
+This is the project of the group 01-07
 
 ## About the casino
 Tuvi’s Casino is a gambling games center which has among their facilities services such as a restaurant, where visitors can have whatever meal they desire in the moment, some show scenarios, where artists perform their shows on a daily basis, and a lot of gaming tables and slot machines
