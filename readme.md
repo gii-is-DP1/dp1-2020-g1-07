@@ -1,14 +1,17 @@
-# Spring PetClinic Sample Application 
+# Tuvi's Casino
 
-This is a fork of https://github.com/spring-projects/spring-petclinic to be used for the DP1 course. The main changes that have been performed were:
+This is the project of the group number 01-07
+
 - Trimming several parts of the application to keep the example low
 - Reorganize some parts of the code according to best practices introduced in the course
 
-## Understanding the Spring Petclinic application with a few diagrams
-<a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
+## About the casino
+Tuvi’s Casino is a gambling games center which has among their facilities services such as a restaurant, where visitors can have whatever meal they desire in the moment, some show scenarios, where artists perform their shows on a daily basis, and a lot of gaming tables and slot machines
 
-## Running petclinic locally
-Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
+## The goal of our project
+The goal of our Project is to develop a website with which the admins of Tuvi’s Casino will be able to successfully manage their business. 
+This website is going to contain features such login for each different type of user (admin, employee, and client). Depending on the kind of user that is logged on the website, it will able him to manage different things. 
+
 
 
 ```
