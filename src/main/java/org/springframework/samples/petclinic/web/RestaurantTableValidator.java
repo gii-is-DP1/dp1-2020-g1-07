@@ -9,8 +9,6 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
-import org.springframework.samples.petclinic.model.SlotMachine;
-import org.springframework.samples.petclinic.model.Slotgame;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
 import org.springframework.samples.petclinic.service.RestaurantTableService;
 import org.springframework.stereotype.Component;
@@ -50,10 +48,13 @@ public class RestaurantTableValidator implements Validator{
 	
 	public boolean isUsedInRestaurantReservation(Optional<RestaurantTable> restauranttable) {
 		boolean result = false;
+		LocalDate today = LocalDate.now();
 		RestaurantTable RT = restauranttable.get();
 		List<RestaurantReservation> restaurantreservations = StreamSupport.stream(this.restaurantReservationService.findAll().spliterator(), false).collect(Collectors.toList());
 		for(RestaurantReservation restaurantreservation: restaurantreservations) {
-			if(restaurantreservation.getRestauranttable().getId().equals(RT.getId())) result = true;
+			if(restaurantreservation.getRestauranttable().getId().equals(RT.getId()) &&
+					restaurantreservation.getDate().isBefore(today))
+				result = true;
 		}
 		return result;
 	}
