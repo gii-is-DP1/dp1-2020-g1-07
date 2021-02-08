@@ -13,14 +13,14 @@
     	function chgAction()
     		{
 
-        var frm = document.getElementById('joseluis') || null;
+        var frm = document.getElementById('gameId') || null;
         if(frm) {
            frm.action = "/games/"+"${game.id}"+"/edit";
         }
 		}
     	</script>
 			
-        <form:form modelAttribute="game" class="form-horizontal" action="/games/{gameId}/edit" onsubmit = "chgAction()" id = "joseluis">
+        <form:form modelAttribute="game" class="form-horizontal" action="/games/{gameId}/edit" onsubmit = "chgAction()" id = "gameId">
        
            <div class="form-group has-feedback">
                 <petclinic:inputField label="Name" name="name"/>
