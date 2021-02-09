@@ -121,6 +121,7 @@ public class UserController {
 		String view="users/addUser";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
+			modelMap.addAttribute("error", result.getFieldError().getDefaultMessage());
 			modelMap.addAttribute("employee", employee);
 			return view;
 			
@@ -206,6 +207,7 @@ public class UserController {
         String view="users/addClientUser";
         if(result.hasErrors()) {
             log.warn("Found errors on insertion: " + result.getAllErrors());
+            modelMap.addAttribute("error", result.getFieldError().getDefaultMessage());
             modelMap.addAttribute("client", client);
             return view;
 

@@ -7,6 +7,7 @@
 <petclinic:layout pageName="users">
     <jsp:body>
         <h2>New User</h2>
+        <c:out value="${error}"></c:out>
         <form:form modelAttribute="employee" class="form-horizontal" action="/users/save">
             <div class="form-group has-feedback">
              	Employee <select name="dni">

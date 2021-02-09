@@ -7,6 +7,7 @@
 <petclinic:layout pageName="users">
     <jsp:body>
         <h2>New User</h2>
+        <c:out value="${error}"></c:out>
         <form:form modelAttribute="client" class="form-horizontal" action="/users/saveclient">
             <div class="form-group has-feedback">
              	<petclinic:inputField label="Dni" name="dni"/>
