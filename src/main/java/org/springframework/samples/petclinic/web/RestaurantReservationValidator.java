@@ -23,8 +23,8 @@ public class RestaurantReservationValidator implements Validator{
 		if (client == null) {
 			errors.rejectValue("client", "Value is required", "Value is required");
 		}
-		if (date == null) {
-			errors.rejectValue("date", "Value is required", "Value is required");
+		if (date == null || date.isBefore(LocalDate.now())) {
+			errors.rejectValue("date", "Value is required or is before today", "Value is required or is before today");
 		}
 		if (interval == null) {
 			errors.rejectValue("timeInterval", "Value is required", "Value is required");
