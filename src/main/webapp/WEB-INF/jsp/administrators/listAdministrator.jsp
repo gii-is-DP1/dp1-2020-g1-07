@@ -48,122 +48,139 @@
         </c:forEach>
         </tbody>
     </table>
-    <div class="form-group">
-    	<form method="get" action="/casinotables">
-    		<button class="btn btn-default" type="submit">Casino Tables</button>
-		</form>
+    <div class="content" style=" display: flex; flex-direction: column;"> 
+        <h3>Managing Casino Tables and Games</h3>
+    
+	    <div class="caselement">
+	    	<div class="form-group">
+	    	<form method="get" action="/croupiers">
+	    		<button class="btn btn-default" type="submit">Croupiers</button>
+			</form>
+		</div>
+	    <div class="form-group">
+	    	<form method="get" action="/slotgains">
+	    		<button class="btn btn-default" type="submit">Slot Gains</button>
+			</form>
+		</div>
+		<div class="form-group">
+	    	<form method="get" action="/slotgames">
+	    		<button class="btn btn-default" type="submit">Slot Games</button>
+			</form>
+		</div>
+		<div class="form-group">
+	    	<form method="get" action="/slotmachines">
+	    		<button class="btn btn-default" type="submit">Slot Machines</button>
+			</form>
+		</div>
+	    <div class="form-group">
+	    	<form method="get" action="/casinotables">
+	    		<button class="btn btn-default" type="submit">Casino Tables</button>
+			</form>
+		</div>
+	    <div class="form-group">
+	    	<form method="get" action="/games">
+	    		<button class="btn btn-default" type="submit">Games</button>
+			</form>
+		</div>
+		</div>
+		<h3>Managing the restaurant</h3>
+		
+		<div class="caselement">
+			<div class="form-group">
+		    	<form method="get" action="/dishes">
+		    		<button class="btn btn-default" type="submit">Dishes</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/menus">
+		    		<button class="btn btn-default" type="submit">Menus</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/restaurantreservations">
+		    		<button class="btn btn-default" type="submit">Restaurant Reservation</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/restaurantTables">
+		    		<button class="btn btn-default" type="submit">Restaurant Tables</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/cooks">
+		    		<button class="btn btn-default" type="submit">Cooks</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/chefs">
+		    		<button class="btn btn-default" type="submit">Chefs</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/waiters">
+		    		<button class="btn btn-default" type="submit">Waiters</button>
+				</form>
+			</div>
+		</div>
+		<h3>Managing events</h3>
+		
+		<div class="caselement"> 
+			<div class="form-group">
+		    	<form method="get" action="/artists">
+		    		<button class="btn btn-default" type="submit">Artists</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/showress">
+		    		<button class="btn btn-default" type="submit">Show Reservation</button>
+				</form>
+			</div>
+		
+			<div class="form-group">
+		    	<form method="get" action="/stages">
+		    		<button class="btn btn-default" type="submit">Stages</button>
+				</form>
+			</div>
+			
+			<div class="form-group">
+		    	<form method="get" action="/events">
+		    		<button class="btn btn-default" type="submit">Events</button>
+				</form>
+			</div>
+		</div>
+		<h3>Managing employees and finances</h3>
+		<div class="caselement">
+		    <div class="form-group">
+		    	<form method="get" action="/clients">
+		    		<button class="btn btn-default" type="submit">Clients</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/employees">
+		    		<button class="btn btn-default" type="submit">Employees</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/finance">
+		    		<button class="btn btn-default" type="submit">Finance</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/maintenanceWorkers">
+		    		<button class="btn btn-default" type="submit">Maintenance</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/schedules">
+		    		<button class="btn btn-default" type="submit">Schedules</button>
+				</form>
+			</div>
+			<div class="form-group">
+		    	<form method="get" action="/users">
+		    		<button class="btn btn-default" type="submit">Users</button>
+				</form>
+			</div>
+		</div>
 	</div>
-    <div class="form-group">
-    	<form method="get" action="/games">
-    		<button class="btn btn-default" type="submit">Games</button>
-		</form>
-	</div>
-    <div class="form-group">
-    	<form method="get" action="/artists">
-    		<button class="btn btn-default" type="submit">Artists</button>
-		</form>
-	</div>
-    <div class="form-group">
-    	<form method="get" action="/chefs">
-    		<button class="btn btn-default" type="submit">Chefs</button>
-		</form>
-	</div>
-    <div class="form-group">
-    	<form method="get" action="/clients">
-    		<button class="btn btn-default" type="submit">Clients</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/cooks">
-    		<button class="btn btn-default" type="submit">Cooks</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/croupiers">
-    		<button class="btn btn-default" type="submit">Croupiers</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/dishes">
-    		<button class="btn btn-default" type="submit">Dishes</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/employees">
-    		<button class="btn btn-default" type="submit">Employees</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/events">
-    		<button class="btn btn-default" type="submit">Events</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/finance">
-    		<button class="btn btn-default" type="submit">Finance</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/maintenanceWorkers">
-    		<button class="btn btn-default" type="submit">Maintenance</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/menus">
-    		<button class="btn btn-default" type="submit">Menus</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/restaurantreservations">
-    		<button class="btn btn-default" type="submit">Restaurant Reservation</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/restaurantTables">
-    		<button class="btn btn-default" type="submit">Restaurant Tables</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/schedules">
-    		<button class="btn btn-default" type="submit">Schedules</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/showress">
-    		<button class="btn btn-default" type="submit">Show Reservation</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/slotgains">
-    		<button class="btn btn-default" type="submit">Slot Gains</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/slotgames">
-    		<button class="btn btn-default" type="submit">Slot Games</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/slotmachines">
-    		<button class="btn btn-default" type="submit">Slot Machines</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/stages">
-    		<button class="btn btn-default" type="submit">Stages</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/users">
-    		<button class="btn btn-default" type="submit">Users</button>
-		</form>
-	</div>
-	<div class="form-group">
-    	<form method="get" action="/waiters">
-    		<button class="btn btn-default" type="submit">Waiters</button>
-		</form>
-	</div>
-	
-	
 	
 </petclinic:layout>
