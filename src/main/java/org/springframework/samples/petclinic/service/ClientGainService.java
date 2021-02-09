@@ -76,6 +76,11 @@ public class ClientGainService {
 		return weeks;
 	}
 	
+	public List<ClientGain> findClientGainsForClient(String dni) {
+		log.info("Loading cgains from DB for client: " + dni);
+		return cgainRepo.findClientGainsForClient(dni);
+	}
+	
 	public List<ClientGain> findClientGainsForWeek(Week week, String dni) {
 		log.info("Loading cgains from DB for client: " + dni + " in week: " + week.getText());
 		return cgainRepo.findClientGainsForWeek(dni, 
@@ -96,4 +101,5 @@ public class ClientGainService {
 		log.info("Loading games from DB");
 		return cgainRepo.findGames();
 	}
+	
 }

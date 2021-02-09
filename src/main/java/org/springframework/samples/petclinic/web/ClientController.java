@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,9 @@ public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired
+	private ClientGainService cgainService;
 	
 	@Autowired
 	private ClientValidator clientValidator;
@@ -72,7 +76,9 @@ public class ClientController {
 		String view="clients/clientsList";
 		Optional<Client> client = clientService.findClientById(clientId);
 		if(client.isPresent()) {
-			clientService.delete(client.get());
+			Client cl = client.get();
+			cgainService.findClientGainsForClient(cl.getDni()).forEach(x -> cgainService.delete(x));
+			clientService.delete(cl);
 			modelMap.addAttribute("message", "Client successfully deleted!");
 			view=clientsList(modelMap);
 		}else {

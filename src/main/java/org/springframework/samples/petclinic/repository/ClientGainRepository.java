@@ -19,6 +19,9 @@ public interface ClientGainRepository extends CrudRepository<ClientGain,Integer>
 	@Query("SELECT DISTINCT date FROM ClientGain cgain WHERE cgain.client.dni LIKE :dni% ORDER BY cgain.date")
 	List<LocalDate> findDatesForClient(@Param("dni") String dni) throws DataAccessException;
 	
+	@Query("SELECT DISTINCT cgain FROM ClientGain cgain WHERE cgain.client.dni = :dni ORDER BY cgain.date")
+	List<ClientGain> findClientGainsForClient(@Param("dni") String dni) throws DataAccessException;
+	
 	@Query("SELECT DISTINCT cgain FROM ClientGain cgain WHERE cgain.date >= :start and "
 			+ "cgain.date <= :end and cgain.client.dni = :dni ORDER BY cgain.date")
 	List<ClientGain> findClientGainsForWeek(@Param("dni") String dni, @Param("start") LocalDate monday,
@@ -35,4 +38,6 @@ public interface ClientGainRepository extends CrudRepository<ClientGain,Integer>
 	
 	@Query("SELECT game FROM Game game ORDER BY game.name")
 	List<Game> findGames() throws DataAccessException;
+	
+	
 }
