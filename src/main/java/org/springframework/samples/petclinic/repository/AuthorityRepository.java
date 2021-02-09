@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository("authorityRepository")
 public interface AuthorityRepository extends CrudRepository<Authority, Integer>{
-
+		
 }

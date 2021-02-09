@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.TimeInterval;
@@ -40,4 +41,8 @@ public interface RestaurantReservationRepository extends CrudRepository<Restaura
 	
 	@Query("SELECT  auth FROM Authority auth WHERE auth.user.username LIKE :username")
 	public Authority getAuthority(@Param("username")String username) throws DataAccessException;
+	
+	@Query("SELECT DISTINCT rreservation FROM RestaurantReservation rreservation WHERE rreservation.client.dni = :dni ORDER BY rreservation.date")
+	List<RestaurantReservation> findRestaurantReservationForClient(@Param("dni") String dni) throws DataAccessException;
+	
 }

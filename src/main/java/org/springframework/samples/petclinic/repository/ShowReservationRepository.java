@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
+import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.stereotype.Repository;
 
@@ -29,4 +30,7 @@ public interface ShowReservationRepository extends CrudRepository<ShowReservatio
 	
 	@Query("SELECT e.stage_id.capacity FROM Event e WHERE e.id LIKE :id")
 	Integer findTotalSeats(@Param("id") Integer id) throws DataAccessException;
+	
+	@Query("SELECT DISTINCT sreservation FROM ShowReservation sreservation WHERE sreservation.client.dni = :dni")
+	List<ShowReservation> findShowReservationForClient(@Param("dni") String dni) throws DataAccessException;
 }

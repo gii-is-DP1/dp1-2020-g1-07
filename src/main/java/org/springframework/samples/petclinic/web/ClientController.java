@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.samples.petclinic.service.ClientService;
+import org.springframework.samples.petclinic.service.RestaurantReservationService;
+import org.springframework.samples.petclinic.service.ShowReservationService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -27,6 +30,15 @@ public class ClientController {
 	
 	@Autowired
 	private ClientGainService cgainService;
+	
+	@Autowired
+	private RestaurantReservationService restReserService;
+	
+	@Autowired
+	private ShowReservationService showResService;
+	
+	@Autowired
+	private UserService uservice;
 	
 	@Autowired
 	private ClientValidator clientValidator;
@@ -78,6 +90,9 @@ public class ClientController {
 		if(client.isPresent()) {
 			Client cl = client.get();
 			cgainService.findClientGainsForClient(cl.getDni()).forEach(x -> cgainService.delete(x));
+			restReserService.findRestaurantReservationForClient(cl.getDni()).forEach(x -> restReserService.delete(x));
+			showResService.findShowReservationForClient(cl.getDni()).forEach(x -> showResService.delete(x));
+			uservice.delete(cl.getUser());
 			clientService.delete(cl);
 			modelMap.addAttribute("message", "Client successfully deleted!");
 			view=clientsList(modelMap);

@@ -47,4 +47,6 @@ public interface UserRepository extends CrudRepository<User, String>{
 	
 	@Query("SELECT e FROM Employee e WHERE e.user.username LIKE :username")
 	Employee findEmployeeForUsername(@Param("username") String username) throws DataAccessException;
+	
+	
 }

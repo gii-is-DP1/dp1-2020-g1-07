@@ -2,12 +2,14 @@ package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.TimeInterval;
@@ -96,4 +98,9 @@ public class RestaurantReservationService {
 		log.info("Getting authority with the username:" + username);
 		return restaurantReservationrepo.getAuthority(username);
 	}
+	public List<RestaurantReservation> findRestaurantReservationForClient(String dni) {
+		log.info("Loading restaurant reservation from DB for client: " + dni);
+		return restaurantReservationrepo.findRestaurantReservationForClient(dni);
+	}
+	
 }
