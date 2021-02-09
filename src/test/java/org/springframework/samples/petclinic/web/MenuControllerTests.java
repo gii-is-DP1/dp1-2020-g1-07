@@ -210,7 +210,7 @@ public class MenuControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateMenuForm() throws Exception {
-		mockMvc.perform(get("/menus/{menuId}/edit", 1)).andExpect(status().isOk())
+		mockMvc.perform(get("/menus/edit/{menuId}", 1)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("menu"))
 				.andExpect(model().attribute("menu", hasProperty("date", is(LocalDate.of(2020, 12, 24)))))
 				.andExpect(model().attribute("menu", hasProperty("shift", is(menuService.findShifts().toArray()[0]))))
@@ -223,7 +223,7 @@ public class MenuControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateMenuFormSuccess() throws Exception {
-		mockMvc.perform(post("/menus/{menuId}/edit", 1)
+		mockMvc.perform(post("/menus/edit/{menuId}", 1)
 							.with(csrf())
 							.param("date", "2020/12/10")
 							.param("first_dish", "Ensalada")
@@ -237,7 +237,7 @@ public class MenuControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateMenuFormHasErrors() throws Exception {
-		mockMvc.perform(post("/menus/{menuId}/edit", 1)
+		mockMvc.perform(post("/menus/edit/{menuId}", 1)
 							.with(csrf())
 							.param("shift", "Day")
 							.param("first_dish", "Ensalada")
