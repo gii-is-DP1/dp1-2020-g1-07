@@ -25,8 +25,8 @@
 
 				<petclinic:menuItem active="${name eq 'menus'}" url="/menus/byDay"
 					title="find games">
-					<span class="glyphicon glyphicon-apple" aria-hidden="true"></span>
-					<span>Menus</span>
+					<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+					<span> Restaurant</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'events'}" url="/events/byDay"
@@ -34,17 +34,11 @@
 					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
 					<span>Events</span>
 				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'showress'}" url="/showress"
-					title="reservation">
-					<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
-					<span>Restaurant</span>
-				</petclinic:menuItem>
 				
-				<petclinic:menuItem active="${name eq 'showCasinoTableGame'}" url="/casinotables/showCasinoTableGame"
+				<petclinic:menuItem active="${name eq 'showCasinoTableGame'}" url="/casinotables/index"
 					title="Tables in LIVE">
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					<span>Casino Tables</span>
+					<span class="glyphicon glyphicon-tower" aria-hidden="true"></span>
+					<span>Play!</span>
 				</petclinic:menuItem>
 				
 				<petclinic:menuItem active="${name eq 'administrators'}" url="/administrators"
@@ -53,7 +47,11 @@
 					<span>Admin</span>
 				</petclinic:menuItem>
 				
-
+				<petclinic:menuItem active="${name eq 'events'}" url="/events/byDay"
+					title="events">
+					<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+					<span>Workers</span>
+				</petclinic:menuItem>
 
 			</ul>
 

@@ -53,6 +53,13 @@ public class CasinotableController {
 		return view;
 	}
 	
+	@GetMapping(path="/index")
+	public String indexCasinotable(ModelMap modelMap) {
+		log.info("Loading index");
+		String view="casinotables/indexCasinotable";
+		return view;
+	}
+	
 	
 	@GetMapping(path="/new")
 	public String createCasinotable(ModelMap modelMap) {

@@ -39,5 +39,10 @@ $(document).ready(function(){
 	            </c:forEach>
             </select>
         </div>
-    <div id="tableGains"></div>    
+    <div id="tableGains"></div> 
+    <div class="form-group">
+    	<form method="get" action="/casinotables/index">
+    		<button class="btn btn-default" type="submit">Return to index</button>
+		</form>
+	</div>
 </petclinic:layout>
