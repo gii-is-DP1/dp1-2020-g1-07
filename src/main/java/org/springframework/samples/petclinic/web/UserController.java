@@ -24,6 +24,7 @@ import org.springframework.samples.petclinic.service.ChefService;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.samples.petclinic.service.CookService;
 import org.springframework.samples.petclinic.service.CroupierService;
+import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.samples.petclinic.service.MaintenanceWorkerService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.WaiterService;
@@ -37,7 +38,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,6 +51,9 @@ public class UserController {
 	
 	@Autowired
 	private AuthorityService authService;
+	
+	@Autowired
+	private EmployeeService employeeService;
 	
 	@Autowired
 	private AdministratorService adminService;
@@ -108,29 +111,29 @@ public class UserController {
 	public String createUser(ModelMap modelMap) {
 		log.info("Loading new user form");
 		String view="users/addUser";
-		modelMap.addAttribute("user", new User());
+		modelMap.addAttribute("employee", new Employee());
 		return view;
 	}
 	
 	@PostMapping(path="/save")
-	public String saveUser(@Valid User user, BindingResult result, ModelMap modelMap,
-			@RequestParam("employee") Employee emp) {
-		log.info("Saving user: " + user.getUsername());	
+	public String saveUser(@Valid Employee employee, BindingResult result, ModelMap modelMap) {
+		log.info("Saving user for employee: " + employee.getDni());	
 		String view="users/addUser";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
-			modelMap.addAttribute("user", user);
+			modelMap.addAttribute("employee", employee);
 			return view;
 			
 		}else {
+			User user = employee.getUser();
 			if (validator.getUserwithIdDifferent(user.getUsername())) {
 				log.warn("Couldn't create user, username " + user.getUsername() + " is taken");
 				result.rejectValue("username", "username.duplicate", "Username " + user.getUsername() + " is taken");
-				modelMap.addAttribute("user", user);
+				modelMap.addAttribute("employee", employee);
 				return view;
 			}
 			log.info("User validated: saving into DB");
-			userService.save(user);
+			Employee emp = employeeService.findEmployeeForDni(employee.getDni());
 			String role = "employee";
 			
 			if (chefService.findChefById(emp.getId()).isPresent()) {
@@ -177,7 +180,6 @@ public class UserController {
 				waiterService.save(waiter);
 			}
 			
-
 			Authority auth = new Authority();
 			auth.setAuthority(role);
 			authService.save(auth);
@@ -216,13 +218,12 @@ public class UserController {
                 return view;
             }
             log.info("User validated: saving into DB");
-            //userService.save(user);
             clientService.save(client);
             Authority auth = new Authority();
             auth.setAuthority("client");
             authService.save(auth);
             modelMap.addAttribute("message", "User successfully saved!");
-            view=listUsers(modelMap);
+            view="redirect:/";
         }
         return view;
     }
@@ -233,10 +234,21 @@ public class UserController {
 		String view="users/listUser";
 		Optional<User> user = userService.findUserById(userId);
 		if(user.isPresent()) {
+			User us = user.get();
 			log.info("User found: deleting");
-			Collection<Integer> authids = userService.findAuthorityId(userId);
-			userService.delete(user.get());
-			authids.forEach(id -> authService.delete(authService.findAuthorityById(id).get()));
+			Collection<Authority> auths = userService.findAuthoritiesForUser(userId);
+			auths.forEach(x -> authService.delete(x));
+			if(auths.parallelStream().filter(x -> x.getAuthority().equals("client")).findAny().isPresent()) {
+				Client cl = userService.findClientForUsername(us.getUsername());
+				cl.setUser(null);
+				clientService.save(cl);
+			}
+			else {
+				Employee emp = userService.findEmployeeForUsername(us.getUsername());
+				emp.setUser(null);
+				employeeService.save(emp);
+			}
+			userService.delete(us);
 			modelMap.addAttribute("message", "User successfully deleted!");
 			view=listUsers(modelMap);
 		}else {
