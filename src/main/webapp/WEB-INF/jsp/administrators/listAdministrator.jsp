@@ -54,6 +54,15 @@
 		</form>
 	</div>
     <div class="content" style=" display: flex; flex-direction: column;"> 
+        
+        <div class="caselement"> 
+        	<div class="form-group">
+		    	<form method="get" action="/users">
+		    		<button class="btn btn-default" type="submit"> View registered users in the system</button>
+				</form>
+			</div>
+        </div>
+    
         <h3>Managing Casino Tables and Games</h3>
     
 	    <div class="caselement">
