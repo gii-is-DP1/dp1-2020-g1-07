@@ -177,7 +177,10 @@ public class RestaurantReservationController {
 		}
 		Set<Integer> sizes = new HashSet<Integer>();
 		for(RestaurantTable table:tables) {
-			if(!sizes.contains(table.getSize())) result.add(table);
+			if(!sizes.contains(table.getSize())) {
+				sizes.add(table.getSize());
+				result.add(table);
+			}
 		}
 		return result;
 	}

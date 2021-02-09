@@ -15,21 +15,7 @@ $(document).ready(function(){
 	
 	$('#comboboxTimeInterval').change(function(){
 		var date = $("#date").val();
-		var timeIntervalId = null;
-		var timeIntervaName = $(this).val();
-		if(timeIntervaName=="13:00 - 14:00"){
-			timeIntervalId=1;
-		}else if(timeIntervaName=="14:00 - 15:00"){
-			timeIntervalId=2;
-		}else if(timeIntervaName=="15:00 - 16:00"){
-			timeIntervalId=3;
-		}else if(timeIntervaName=="21:00 - 22:00"){
-			timeIntervalId=4;
-		}else if(timeIntervaName=="22:00 - 23:00"){
-			timeIntervalId=5;
-		}else{
-			timeIntervalId=6;
-		}
+		var timeIntervalId = $(this).val();
 		$.ajax({
 			type: 'GET',
 			url: '${pageContext.request.contextPath}/restaurantreservations/new/loadDinersByTimeInterval/' + timeIntervalId + '/' + date,
