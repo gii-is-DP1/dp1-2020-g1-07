@@ -8,8 +8,25 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="casinotables">
+	<body class="gambling">
+    <div style="
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;"> 
+    <div style="
+    background-color: #f2dfdc;
+    padding: 30px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    ">
+    
     <h2>Where do you want to go?</h2>
-
+	<div style="display: flex;">
+	
+	<div style="display: flex; flex-direction: center; justify-content: space-around; width:470px; margin-top: 7px">
     <div class="form-group">
     	<form method="get" action="/games">
     		<button class="btn btn-default" type="submit">View table games</button>
@@ -27,5 +44,9 @@
     		<button class="btn btn-default" type="submit">View your gains</button>
 		</form>
 	</div>
-    
+	</div>
+	</div>
+    </div>
+    </div>
+    </body>
 </petclinic:layout>
