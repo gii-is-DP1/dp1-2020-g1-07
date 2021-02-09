@@ -5,11 +5,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
-import org.springframework.samples.petclinic.model.User;
 
 public interface ScheduleRepository extends CrudRepository<Schedule, Integer>{
 

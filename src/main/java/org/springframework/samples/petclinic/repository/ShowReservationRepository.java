@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.RestaurantReservation;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.stereotype.Repository;
 

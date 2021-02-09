@@ -7,7 +7,6 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.RestaurantTable;
-import org.springframework.samples.petclinic.model.TimeInterval;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
 import org.springframework.stereotype.Component;
 
