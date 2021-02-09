@@ -44,6 +44,18 @@ $(document).ready(function(){
         </div>
         
         <div id="tableEvents"></div>    
+        
+        <div class="form-group">
+		    	<form method="get" action="/showress/user">
+		    		<button class="btn btn-default" type="submit">My show reservations</button>
+				</form>
+		</div>
+		
+		<div class="form-group">
+	    	<form method="get" action="/showress/new">
+	    		<button class="btn btn-default" type="submit">Book tickets for a show</button>
+			</form>
+		</div>
     </jsp:body>
 
 </petclinic:layout>

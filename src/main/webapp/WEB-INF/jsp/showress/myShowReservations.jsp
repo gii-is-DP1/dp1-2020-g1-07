@@ -49,5 +49,10 @@
     		<button class="btn btn-default" type="submit">Add new show reservation</button>
 		</form>
 	</div>
+	    <div class="form-group">
+		    	<form method="get" action="/events/byDay">
+		    		<button class="btn btn-default" type="submit">Event list</button>
+				</form>
+		</div>
     
 </petclinic:layout>
