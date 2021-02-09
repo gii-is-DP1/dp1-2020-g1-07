@@ -10,6 +10,7 @@ import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.repository.DishRepository;
 import org.springframework.samples.petclinic.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,11 @@ public class ScheduleService {
 	
 	@Autowired
 	private  ScheduleRepository scheduleRep; 
+	
+	@Autowired
+	public ScheduleService(ScheduleRepository scheduleRep) {
+		this.scheduleRep = scheduleRep;
+	}	
 	
 	@Transactional
 	public int scheduleCount() {
