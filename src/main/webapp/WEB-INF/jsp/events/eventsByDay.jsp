@@ -31,6 +31,14 @@ $(document).ready(function(){
 
 <petclinic:layout pageName="eventsByDay">
     <jsp:body>
+    <div class="event" style="padding: 100;"> 
+    <div style="
+    background-color: #fcd5ca;
+    padding: 30px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    ">
         <h2>Events</h2>
         
         <div class="control-group">
@@ -55,6 +63,8 @@ $(document).ready(function(){
 	    	<form method="get" action="/showress/new">
 	    		<button class="btn btn-default" type="submit">Book tickets for a show</button>
 			</form>
+		</div>
+		</div>
 		</div>
     </jsp:body>
 
