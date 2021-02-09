@@ -14,7 +14,9 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;"> 
+    align-items: center;
+    margin-top: 25%;"> 
+    
     <div style="
     background-color: #f2dfdc;
     padding: 30px;
