@@ -6,6 +6,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 
 <petclinic:layout pageName="slotgames">
     <h2>Slot Games</h2>
@@ -15,8 +17,11 @@
         <tr>
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">Jackpot</th>
+            
+            <security:authorize access="hasAuthority('admin')">
             <th>Actions</th>
-            <th></th>
+            </security:authorize>
+            
         </tr>
         </thead>
         <tbody>
@@ -28,6 +33,8 @@
                 <td>
                     <c:out value="${slotgame.jackpot}"/>
                 </td>
+           	<security:authorize access="hasAuthority('admin')">
+                
             <td>
                 	<spring:url value="/slotgames/delete/{slotgameId}" var="slotgameUrl">
                         <spring:param name="slotgameId" value="${slotgame.id}"/>
@@ -41,6 +48,8 @@
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td> 
+                	</security:authorize>
+                
             </tr>
         </c:forEach>
         </tbody>
@@ -50,10 +59,13 @@
     		<button class="btn btn-default" type="submit">Return to index</button>
 		</form>
 	</div>
+	
+	<security:authorize access="hasAuthority('admin')">
         <div class="form-group">
     	<form method="get" action="/slotgames/new">
     		<button class="btn btn-default" type="submit">Add new slot game</button>
 		</form>
 	</div>
+	</security:authorize>
     
 </petclinic:layout>
