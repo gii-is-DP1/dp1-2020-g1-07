@@ -18,6 +18,8 @@
             <th style="width: 200px;">Date</th>
             <th style="width: 200px;">Show Type</th>
             <th style= "width: 200px;">Stage</th>
+            <th style= "width: 200px;">Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
@@ -34,6 +35,8 @@ public class CasinotableValidator implements Validator{
 	@Override
 	public void validate(Object obj, Errors errors) {
 		Casinotable casinotable = (Casinotable) obj;
+		String name = casinotable.getName();
+		LocalDate date = casinotable.getDate();
 		Game game = casinotable.getGame();
 		GameType gametype = casinotable.getGametype();
 		Skill skill = casinotable.getSkill();
@@ -43,11 +46,17 @@ public class CasinotableValidator implements Validator{
 			Date startTimeFor = null;
 			LocalTime startTimeFormat;
 			LocalTime endingTimeFormat; */
-			if(!start.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) {
-				errors.rejectValue("startTime", NOTFORMAT, NOTFORMAT);
-			}else if (!end.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) {
-				errors.rejectValue("endingTime", NOTFORMAT, NOTFORMAT);
-			}
+		if (name == null || name.trim().equals("")) {
+			errors.rejectValue("name", REQUIRED, REQUIRED);
+		}
+		if (date == null) {
+			errors.rejectValue("date", REQUIRED, REQUIRED);
+		}
+		if(!start.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) {
+			errors.rejectValue("startTime", NOTFORMAT, NOTFORMAT);
+		}else if (!end.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) {
+			errors.rejectValue("endingTime", NOTFORMAT, NOTFORMAT);
+		}
 		if (game == null || game.getName().trim().equals("")) {
 			errors.rejectValue("game", REQUIRED, REQUIRED);
 		}
