@@ -48,7 +48,7 @@
                 </td> 
                 
                 <td>
-                	<spring:url value="/menus/{menuId}/edit" var="editUrl">
+                	<spring:url value="/menus/edit/{menuId}" var="editUrl">
                         <spring:param name="menuId" value="${menu.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>

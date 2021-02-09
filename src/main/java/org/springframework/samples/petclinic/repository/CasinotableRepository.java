@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Skill;
@@ -38,4 +39,7 @@ public interface CasinotableRepository extends CrudRepository<Casinotable, Integ
 
 	@Query(value="SELECT CLIENT_GAINS.AMOUNT FROM CASINOTABLE JOIN CLIENT_GAINS ON CASINOTABLE.ID=CLIENT_GAINS.TABLEID WHERE CLIENT_GAINS.TABLEID=:tableId",nativeQuery = true)
     public List<Integer> findGainsByTableId(@Param("tableId") Integer tableId);
+	
+	@Query("SELECT clientGain FROM ClientGain clientGain ORDER BY clientGain.id")
+	List<ClientGain> findGains() throws DataAccessException;
 }

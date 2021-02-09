@@ -7,13 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.repository.CasinotableRepository;
-import org.springframework.samples.petclinic.repository.StageRepository;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
-import org.springframework.samples.petclinic.web.CasinotableController;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,19 +69,29 @@ public class CasinotableService {
 		log.info("Loading games from DB");
 		return castabRepo.findGames();
 	}
+	
 	public Collection<Game> findGamesByGameType(int id) throws DataAccessException {
         log.info("Loading games from DB for a gametype id:" + id);
 		return castabRepo.findGamesByGameType(id);
     }
+	
 	public Collection<Casinotable> findCasinoTables(){
 		log.info("Loading casinotables from DB");
         return castabRepo.findCasinoTables();
     }
+	
 	public Collection<Casinotable> findCasinoTablesByDate(LocalDate date) {
 		log.info("Loading casinotables for a date:" + date);
 		return castabRepo.findCasinoTablesByDate(date);
 	}
+	
 	public Collection<Integer> findGainsByTableId(Integer id) {
         return castabRepo.findGainsByTableId(id);
     }
+	
+	@Transactional
+	public Collection<ClientGain> findGains() {
+		log.info("Loading gains from DB");
+		return castabRepo.findGains();
+	}
 }

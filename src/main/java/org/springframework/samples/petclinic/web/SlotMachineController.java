@@ -164,6 +164,7 @@ public class SlotMachineController {
 		}catch(Exception e) {
 			System.out.println(slotMachineService.findGains());
 		}
-		return json;	}
+		return json;	
+	}
 
 }

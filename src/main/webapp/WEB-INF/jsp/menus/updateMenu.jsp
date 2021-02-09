@@ -66,13 +66,13 @@ $(document).ready(function(){
         
         var frm = document.getElementById('id') || null;
         if(frm) {
-           frm.action = "/menus/"+"${menu.id}"+"/edit";
+           frm.action = "/menus/edit/"+"${menu.id}";
         }
 
    			 }
     	</script>
     	<c:out value="${error}"></c:out>
-		<form:form modelAttribute="menu" class="form-horizontal" action="/menus/{menuId}/edit" onsubmit = "chgAction()" id = "id">
+		<form:form modelAttribute="menu" class="form-horizontal" action="/menus/edit/{menuId}" onsubmit = "chgAction()" id = "id">
         
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Date" name="date"/>

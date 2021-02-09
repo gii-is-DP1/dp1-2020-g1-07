@@ -174,7 +174,7 @@ public class MenuController {
 		return view;
 	}
 
-	@GetMapping(value = "/{menuId}/edit")
+	@GetMapping(value = "/edit/{menuId}")
 	public String initUpdateCasTbForm(@PathVariable("menuId") int menuId, ModelMap model) {
 		log.info("Loading update menu form");
 		Menu menu = menuService.findMenuById(menuId).get();
@@ -182,7 +182,7 @@ public class MenuController {
 		return "menus/updateMenu";
 	}
 
-	@PostMapping(value = "/{menuId}/edit")
+	@PostMapping(value = "/edit/{menuId}")
 	public String processUpdateCasTbForm(@Valid Menu menu, BindingResult result,
 			@PathVariable("menuId") int menuId, ModelMap model) {
 		log.info("Updating menu: " + menuId);
