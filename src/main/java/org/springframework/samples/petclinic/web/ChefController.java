@@ -1,12 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Chef;
 import org.springframework.samples.petclinic.service.ChefService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,9 @@ public class ChefController {
 	
 	@Autowired
 	private ChefService chefService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private ChefValidator validator;
@@ -83,6 +88,9 @@ public class ChefController {
 		Optional<Chef> chef = chefService.findChefById(chefId);
 		if(chef.isPresent()) {
 			log.info("Chef found: deleting");
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+			.filter(x -> x.getEmp().equals(chef.get()))
+			.forEach(x -> scheService.delete(x));
 			chefService.delete(chef.get());
 			modelMap.addAttribute("message", "Chef successfully deleted!");
 			view=listChefs(modelMap);

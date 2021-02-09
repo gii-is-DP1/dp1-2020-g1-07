@@ -2,14 +2,15 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Croupier;
-import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.service.CroupierService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,9 @@ public class CroupierController {
 	
 	@Autowired
 	private CroupierService croupierService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private CroupierValidator validator;
@@ -86,6 +90,9 @@ public class CroupierController {
 		Optional<Croupier> croupier = croupierService.findCroupierById(croupierId);
 		if(croupier.isPresent()) {
 			log.info("Croupier found: deleting");
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+			.filter(x -> x.getEmp().equals(croupier.get()))
+			.forEach(x -> scheService.delete(x));
 			croupierService.delete(croupier.get());
 			modelMap.addAttribute("message", "Croupier successfully deleted!");
 			view=listCroupiers(modelMap);

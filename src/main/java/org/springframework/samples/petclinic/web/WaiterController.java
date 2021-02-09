@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RestaurantTable;
 import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.service.RestaurantTableService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.samples.petclinic.service.WaiterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +35,9 @@ public class WaiterController {
 
 	@Autowired
 	private WaiterService waiterService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private RestaurantTableService restaurantTableService;
@@ -94,6 +99,9 @@ public class WaiterController {
 		Optional<Waiter> waiter = waiterService.findWaiterById(waiterId);
 		if(waiter.isPresent()) {
 			log.info("waiter found: deleting");
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+			.filter(x -> x.getEmp().equals(waiter.get()))
+			.forEach(x -> scheService.delete(x));
 			waiterService.delete(waiter.get());
 			modelMap.addAttribute("message", "Waiter successfully deleted!");
 			view=listWaiters(modelMap);

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.model.Dish;
-import org.springframework.samples.petclinic.model.RestaurantTable;
-import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.service.CookService;
 import org.springframework.samples.petclinic.service.DishService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,6 +33,9 @@ public class CookController {
 	
 	@Autowired
 	private CookService cookService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private DishService dishService;
@@ -86,6 +89,9 @@ public class CookController {
 		String view="cooks/listCook";
 		Optional<Cook> cook = cookService.findCookById(cookId);
 		if(cook.isPresent()) {
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+			.filter(x -> x.getEmp().equals(cook.get()))
+			.forEach(x -> scheService.delete(x));
 			cookService.delete(cook.get());
 			modelMap.addAttribute("message", "Cook successfully deleted!");
 			view=listCooks(modelMap);

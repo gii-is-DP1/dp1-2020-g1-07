@@ -1,12 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.MaintenanceWorker;
 import org.springframework.samples.petclinic.service.MaintenanceWorkerService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,9 @@ public class MaintenanceWorkerController {
 	
 	@Autowired
 	private MaintenanceWorkerService mworkerService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private MaintenanceWorkerValidator validator;
@@ -83,6 +88,9 @@ public class MaintenanceWorkerController {
 		Optional<MaintenanceWorker> maintenanceWorker = mworkerService.findMaintenanceWorkerById(maintenanceWorkerId);
 		if(maintenanceWorker.isPresent()) {
 			log.info("Maintenance Worker found: deleting");
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+				.filter(x -> x.getEmp().equals(maintenanceWorker.get()))
+				.forEach(x -> scheService.delete(x));
 			mworkerService.delete(maintenanceWorker.get());
 			modelMap.addAttribute("message", "MaintenanceWorker successfully deleted!");
 			view=listMaintenanceWorkers(modelMap);

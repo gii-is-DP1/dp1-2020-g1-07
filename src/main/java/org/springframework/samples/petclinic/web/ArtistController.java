@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Artist;
-import org.springframework.samples.petclinic.model.Cook;
-import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.service.ArtistService;
 import org.springframework.samples.petclinic.service.EventService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -35,6 +35,9 @@ public class ArtistController {
 	
 	@Autowired
 	private ArtistService artistService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private EventService eventService;
@@ -95,6 +98,9 @@ public class ArtistController {
 		Optional<Artist> artist = artistService.findArtistById(artistId);
 		if(artist.isPresent()) {
 			log.info("Artist found: deleting");
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+			.filter(x -> x.getEmp().equals(artist.get()))
+			.forEach(x -> scheService.delete(x));
 			artistService.delete(artist.get());
 			modelMap.addAttribute("message", "Artist successfully deleted!");
 			view=listArtists(modelMap);

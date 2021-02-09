@@ -1,12 +1,14 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Administrator;
 import org.springframework.samples.petclinic.service.AdministratorService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,9 @@ public class AdministratorController {
 	
 	@Autowired
 	private AdministratorService administratorService;
+	
+	@Autowired
+	private ScheduleService scheService;
 	
 	@Autowired
 	private AdministratorValidator validator;
@@ -82,6 +87,9 @@ public class AdministratorController {
 		Optional<Administrator> administrator = administratorService.findAdministratorById(administratorId);
 		if(administrator.isPresent()) {
 			log.info("Administrator found: deleting");
+			StreamSupport.stream(scheService.findAll().spliterator(), false)
+			.filter(x -> x.getEmp().equals(administrator.get()))
+			.forEach(x -> scheService.delete(x));
 			administratorService.delete(administrator.get());
 			modelMap.addAttribute("message", "Administrator successfully deleted!");
 			view=listAdministrators(modelMap);
