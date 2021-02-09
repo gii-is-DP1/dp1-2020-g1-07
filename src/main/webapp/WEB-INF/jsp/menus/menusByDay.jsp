@@ -33,8 +33,15 @@ $(document).ready(function(){
 <petclinic:layout pageName="menusByDay">
 
 	<body class="restaurant">
-    <div class="menus-content" style="
-    background-color: #fff5f2;
+	
+ <div style="
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;"> 
+    <div style="
+    background-color: #fcd5ca;
     padding: 30px;
     border-radius: 30px;
     display: flex;
@@ -53,17 +60,18 @@ $(document).ready(function(){
         
         <div id="tableMenus" ></div>    
         
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 20px;">
 		    	<form method="get" action="/restaurantreservations/new">
 		    		<button class="btn btn-default" type="submit">Book a table</button>
 				</form>
 		</div>
 		
-		<div class="form-group">
+		<div class="form-group" style="margin-top: -5px;">
 		    	<form method="get" action="/restaurantreservations">
 		    		<button class="btn btn-default" type="submit">My reservations </button>
 				</form>
 		</div>
+	</div>
 	</div>
 	</body>
 </petclinic:layout>
