@@ -75,6 +75,7 @@ public class CasinotableController {
 		String view="casinotables/listCasinotable";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
+			if(result.getFieldError("gametype")!=null) modelMap.addAttribute("error",result.getFieldError("gametype").getDefaultMessage());
 			modelMap.addAttribute("casinotable", casinotable);
 			return "casinotables/addCasinotable";
 		}else {
@@ -125,6 +126,7 @@ public class CasinotableController {
 		casinotable.setId(casinotableId);
 		if (result.hasErrors()) {
 			log.warn("Found errors on update: " + result.getAllErrors());
+			if(result.getFieldError("gametype")!=null) model.addAttribute("error",result.getFieldError("gametype").getDefaultMessage());
 			model.put("casinotable", casinotable);
 			return "casinotables/updateCasinotable";
 		}

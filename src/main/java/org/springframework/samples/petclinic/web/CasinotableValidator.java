@@ -61,7 +61,7 @@ public class CasinotableValidator implements Validator{
 			errors.rejectValue("game", REQUIRED, REQUIRED);
 		}
 		if (gametype == null ||gametype.getName() == null || gametype.getName().trim().equals("")) {
-			errors.rejectValue("gametype", REQUIRED, REQUIRED);
+			errors.rejectValue("gametype", "Gametype cant be unselected", "Gametype cant be unselected");
 		}
 		if (skill == null||skill.getName() == null || skill.getName().trim().equals("")  ) {
 			errors.rejectValue("skill", REQUIRED, REQUIRED);
