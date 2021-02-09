@@ -31,6 +31,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Casinotable;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Game;
@@ -76,6 +77,8 @@ public class ClientGainControllerTests {
 		this.bjack = new Game();
 		bjack.setId(2);
 		bjack.setName("BlackJack");
+		Casinotable casinoTable = new Casinotable();
+		casinoTable.setId(1);
 		
 		this.cg1 = new ClientGain();
 		cg1.setId(1);
@@ -83,6 +86,7 @@ public class ClientGainControllerTests {
 		cg1.setDate(LocalDate.of(2020, 9, 7));
 		cg1.setClient(cl);
 		cg1.setGame(poker);
+		cg1.setTableId(1);
 		
 		given(this.cgainService.findClients()).willReturn(Lists.list(cl));
 		given(this.cgainService.findGames()).willReturn(Lists.list(poker, bjack));
@@ -103,7 +107,8 @@ public class ClientGainControllerTests {
 						.param("amount", "250")
 						.param("date", "2020/11/24")
 						.param("client", cl.getDni())
-						.param("game", "Poker"))
+						.param("game", "Poker")
+						.param("tableId", "1"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(view().name("cgains/listClientGain"));
 	}
@@ -115,7 +120,8 @@ public class ClientGainControllerTests {
 						.with(csrf())
 						.param("amount", "222")
 						.param("date", "2020/11/24")
-						.param("client", cl.getDni()))
+						.param("client", cl.getDni())
+						.param("tableId", "1"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("clientGain"))
 			.andExpect(model().attributeHasFieldErrors("clientGain", "amount"))
@@ -134,6 +140,7 @@ public class ClientGainControllerTests {
 				.andExpect(model().attribute("cgain", hasProperty("date", equalTo(LocalDate.of(2020, 9, 7)))))
 				.andExpect(model().attribute("cgain", hasProperty("client", equalTo(cl))))
 				.andExpect(model().attribute("cgain", hasProperty("game", equalTo(poker))))
+				.andExpect(model().attribute("cgain", hasProperty("tableId", equalTo(1))))
 				.andExpect(view().name("cgains/updateClientGain"));
 	}
 
@@ -145,7 +152,8 @@ public class ClientGainControllerTests {
 						.param("amount", "250")
 						.param("date", "2020/11/24")
 						.param("client", cl.getDni())
-						.param("game", "Poker"))
+						.param("game", "Poker")
+    					.param("tableId", "1"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/cgains"));
 	}
@@ -157,7 +165,8 @@ public class ClientGainControllerTests {
 				.with(csrf())
 				.param("amount", "222")
 				.param("date", "2020/11/24")
-				.param("client", cl.getDni()))
+				.param("client", cl.getDni())
+    			.param("tableId", "1"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("clientGain"))
 				.andExpect(model().attributeHasFieldErrors("clientGain", "amount"))
