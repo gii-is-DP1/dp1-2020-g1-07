@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="games">
@@ -17,8 +19,11 @@
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">MaxPlayers</th>
             <th style="width: 200px;">GameType</th>
+            <security:authorize access="hasAuthority('admin')">
             <th>Actions</th>
-            <th></th>
+            </security:authorize>
+            
+     
         </tr>
         </thead>
         <tbody>
@@ -36,7 +41,10 @@
                 <td>
                     <c:out value="${game.gametype.name}"/>
                 </td>
-            <td>
+           
+            	<security:authorize access="hasAuthority('admin')">
+            
+           		<td>
                 	<spring:url value="/games/delete/{gameId}" var="gameUrl">
                         <spring:param name="gameId" value="${game.id}"/>
                     </spring:url>
@@ -48,6 +56,9 @@
                     </spring:url>
                     <a href="${fn:escapeXml(editUrl)}">Update</a>
                 </td>
+                
+               	</security:authorize>
+                
             </tr>
         </c:forEach>
         </tbody>
@@ -57,10 +68,14 @@
     		<button class="btn btn-default" type="submit">Return to index</button>
 		</form>
 	</div>
+	
+	<security:authorize access="hasAuthority('admin')">
+	
     <div class="form-group">
     	<form method="get" action="/games/new">
     		<button class="btn btn-default" type="submit">Add new game</button>
 		</form>
 	</div>
+    </security:authorize>
     
 </petclinic:layout>
