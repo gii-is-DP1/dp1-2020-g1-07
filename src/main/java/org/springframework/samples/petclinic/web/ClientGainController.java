@@ -123,6 +123,7 @@ public class ClientGainController {
 		String view="cgains/listClientGain";
 		if(result.hasErrors()) {
 			log.warn("Found errors on insertion: " + result.getAllErrors());
+			modelMap.addAttribute("error", result.getFieldError().getDefaultMessage());
 			modelMap.addAttribute("cgain", cgain);
 			return "cgains/addClientGain";
 			
@@ -168,6 +169,7 @@ public class ClientGainController {
     	clientgain.setId(cgainId);
         if (result.hasErrors()) {
         	log.warn("Found errors on update: " + result.getAllErrors());
+        	model.addAttribute("error", result.getFieldError().getDefaultMessage());
             model.put("cgain", clientgain);
             return "cgains/updateClientGain";
         }

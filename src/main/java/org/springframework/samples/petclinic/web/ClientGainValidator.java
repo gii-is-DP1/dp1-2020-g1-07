@@ -31,27 +31,27 @@ public class ClientGainValidator implements Validator{
 		Integer table = cgain.getTableId();
 		//Amount validation
 		if (amount == null || amount%5!=0) {
-			errors.rejectValue("amount", REQUIRED + " to be a multiple of 5", REQUIRED + " to be a multiple of 5");
+			errors.rejectValue("amount", "Amount can not be empty and must be a multiple of 5", "Amount can not be empty and must be a multiple of 5");
 		}
 		
 		//Date validation
 		if (date == null) {
-			errors.rejectValue("date", REQUIRED, REQUIRED);
+			errors.rejectValue("date", "Date can not be null", "Date can not be null");
 		}
 		
 		//Client validation
 		if (client == null) {
-			errors.rejectValue("client", REQUIRED, REQUIRED);
+			errors.rejectValue("client", "Client can not be null", "Client can not be null");
 		}
 		
 		//Game validation
 		if (game == null) {
-			errors.rejectValue("game", REQUIRED, REQUIRED);
+			errors.rejectValue("game", "Game can not be null", "Game can not be null");
 		}
 		
 		//Table validation
 		if (table == null) {
-			errors.rejectValue("game", REQUIRED, REQUIRED);
+			errors.rejectValue("tableId", "Table can not be null", "Table can not be null");
 		}
 		
 	}
