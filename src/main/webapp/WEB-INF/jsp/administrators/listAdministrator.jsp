@@ -55,10 +55,12 @@
 	</div>
     <div class="content" style=" display: flex; flex-direction: column;"> 
         
+        <h3>Database users</h3>
+        
         <div class="caselement"> 
         	<div class="form-group">
 		    	<form method="get" action="/users">
-		    		<button class="btn btn-default" type="submit"> View registered users in the system</button>
+		    		<button class="btn btn-default" type="submit"> View registered users in the system </button>
 				</form>
 			</div>
         </div>
