@@ -19,7 +19,7 @@
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">MaxPlayers</th>
             <th style="width: 200px;">GameType</th>
-            <security:authorize access="hasAuthority('admin')">
+            <security:authorize access="hasAnyAuthority('admin, employee')">
             <th>Actions</th>
             </security:authorize>
             
@@ -42,7 +42,7 @@
                     <c:out value="${game.gametype.name}"/>
                 </td>
            
-            	<security:authorize access="hasAuthority('admin')">
+            	<security:authorize access="hasAnyAuthority('admin, employee')">
             
            		<td>
                 	<spring:url value="/games/delete/{gameId}" var="gameUrl">
@@ -69,7 +69,7 @@
 		</form>
 	</div>
 	
-	<security:authorize access="hasAuthority('admin')">
+	<security:authorize access="hasAnyAuthority('admin, employee')">
 	
     <div class="form-group">
     	<form method="get" action="/games/new">
