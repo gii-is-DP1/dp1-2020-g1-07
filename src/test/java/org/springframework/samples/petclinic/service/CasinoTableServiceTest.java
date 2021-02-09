@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,11 +34,7 @@ public class CasinoTableServiceTest {
     void setup() {
 		casinotableService = new CasinotableService(casinotableRepo);
     }
-	@Test
-	public void testCountWithInitialData() {
-		int count= casinotableService.casinoTableCount();
-		assertEquals(count,0);
-	}
+	
 	@Test
 	void testAddingCasTab() {
 		Casinotable new_ct = new Casinotable();
@@ -49,9 +46,13 @@ public class CasinoTableServiceTest {
 		game.setMaxPlayers(6);
 		new_ct.setGame(game);
 		new_ct.setGametype(gametype);
+		new_ct.setName("Mesa 1");
 		Skill skill = new Skill();
 		skill.setName("Amateur");
 		new_ct.setSkill(skill);
+		new_ct.setDate(LocalDate.of(2020, 1, 30));
+		new_ct.setEndingTime("20:00:00");
+		new_ct.setStartTime("19:00:00");
 		Collection<Casinotable> sampleCasinotables = new ArrayList<Casinotable>();
 		sampleCasinotables.add(new_ct);
         when(casinotableRepo.findAll()).thenReturn(sampleCasinotables);
@@ -66,6 +67,7 @@ public class CasinoTableServiceTest {
 		&& saved_ct.getGametype().getName().equals(saved_ct.getGame().getGametype().getName()));
 		assertTrue(saved_ct.getSkill().getName().equals("Amateur"));
 		assertTrue(saved_ct.getGame().getMaxPlayers() == 6);
+		assertTrue(saved_ct.getEndingTime().equals("20:00:00") && saved_ct.getStartTime().equals("19:00:00"));
 		
 	}
 }

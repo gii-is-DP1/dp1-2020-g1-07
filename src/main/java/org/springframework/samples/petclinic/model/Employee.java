@@ -7,7 +7,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import lombok.Getter;
@@ -21,14 +21,14 @@ import lombok.Setter;
 
 public class Employee extends NamedEntity{
 
-	@NotEmpty
+	@NotBlank
 	@Pattern(regexp="^[0-9]{8}[A-Z]$",message="DNI must contain 8 digits and a single capital letter")  
 	private String dni;
 	
-	@NotEmpty
+	@NotBlank
 	private String name;
 	
-	@NotEmpty
+	@NotBlank
 	@Pattern(regexp="^[0-9]{9}$",message="phone number must contain 9 digits")  
 	@Column(name = "phone_number")
 	private String phone_number;

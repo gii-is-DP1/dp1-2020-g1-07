@@ -23,9 +23,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.model.Dish;
 import org.springframework.samples.petclinic.model.DishCourse;
 import org.springframework.samples.petclinic.model.Menu;
+import org.springframework.samples.petclinic.model.Schedule;
 import org.springframework.samples.petclinic.model.Shift;
 import org.springframework.samples.petclinic.service.MenuService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -80,7 +82,7 @@ public class MenuControllerTests {
 		DishCourse dishCourse3 = new DishCourse();
 		dishCourse3.setName("Dessert");
 		dishCourse3.setId(3);
-		
+
 		first_dish = new Dish();
 		first_dish.setId(1);
 		first_dish.setName("Ensalada");
@@ -108,6 +110,28 @@ public class MenuControllerTests {
 		desserts.add(dessert);
 		given(this.menuService.findDesserts()).willReturn(desserts);
 		given(this.menuService.findDessertsByShift(1)).willReturn(desserts);
+		
+		//Preparacion de cocinero
+		Cook cook = new Cook();
+		List<Dish> prepares = new ArrayList<Dish>();
+		prepares.add(first_dish); prepares.add(second_dish); prepares.add(dessert);
+		cook.setPrepares(prepares);
+		cook.setDni("11122233A");
+		Schedule schedule1 = new Schedule();
+		schedule1.setDate(LocalDate.of(2020, 12, 10));
+		schedule1.setShift(shift1);
+		schedule1.setEmp(cook);
+		Schedule schedule2 = new Schedule();
+		schedule2.setDate(LocalDate.of(2020, 12, 24));
+		schedule2.setShift(shift1);
+		schedule2.setEmp(cook);
+		List<String> dnis = new ArrayList<String>();
+		dnis.add("11122233A");
+		List<Cook> cooks = new ArrayList<Cook>();
+		cooks.add(cook);
+		given(this.menuService.findSchedulesDnisByShiftAndDate(shift1,LocalDate.of(2020, 12, 10))).willReturn(dnis);
+		given(this.menuService.findSchedulesDnisByShiftAndDate(shift1,LocalDate.of(2020, 12, 24))).willReturn(dnis);
+		given(this.menuService.findCooks()).willReturn(cooks);
 		
 		//Preparacion del menu
 		menu = new Menu();

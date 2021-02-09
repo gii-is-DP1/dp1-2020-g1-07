@@ -20,7 +20,6 @@ $(document).ready(function(){
 					s1 += '<div> <br> <b>' + result[i].name
 					+ '</b> <br> Showtype: ' + result[i].showtype_id.name
 					+ '<br> Stage number: ' + result[i].stage_id.id
-					+ '<br> Artist/Group: ' + result[i].artist_id.name
 					+ '<br> </div>';
 				}
 				$('#tableEvents').html(s1);

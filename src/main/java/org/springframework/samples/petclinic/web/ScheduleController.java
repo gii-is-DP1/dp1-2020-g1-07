@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 
 @Controller
 @RequestMapping("/schedules")
@@ -43,6 +45,7 @@ public class ScheduleController {
 	
 	@GetMapping()
 	public String listSchedules(ModelMap modelMap) {
+		log.info("Loading list of croupiers");
 		String view= "schedules/listSchedule";
 		Iterable<Schedule> schedules=scheduleService.findAll();
 		modelMap.addAttribute("schedules", schedules);
@@ -51,6 +54,7 @@ public class ScheduleController {
 	
 	@GetMapping(path="/user")
 	public String listUserSchedules(ModelMap modelMap) {
+		log.info("Loading list of croupiers");
 		String view= "schedules/mySchedule";
 		String username = UserUtils.getUser();
 		Iterable<Schedule> schedules=scheduleService.findAll();
@@ -117,13 +121,17 @@ public class ScheduleController {
 	@PostMapping(value = "/{scheduleId}/edit")
 	public String processUpdateCasTbForm(@Valid Schedule schedule, BindingResult result,
 			@PathVariable("scheduleId") int scheduleId, ModelMap model) {
-		
+		schedule.setId(scheduleId);
 		if (result.hasErrors()) {
 			model.put("schedule", schedule);
 			return "schedules/updateSchedule";
 		}
 		else {
-			schedule.setId(scheduleId);
+			if(scheduleValidator.getSchedulewithIdDifferent(schedule.getEmp().getDni(),schedule.getDate(),schedule.getId()) != null){
+				result.rejectValue("date", "date.duplicate", "User schedule already exist.");
+				model.addAttribute("schedule", schedule);
+				return "schedules/updateSchedule";
+			}
 			this.scheduleService.save(schedule);
 			return "redirect:/schedules";
 		}

@@ -31,6 +31,17 @@ public class ScheduleValidator implements Validator{
 		}
 		return empty_schedule;
 	}
+	
+	public Schedule getSchedulewithIdDifferent(String dni, LocalDate date, Integer id) {
+		Schedule empty_schedule = null;
+		List<Schedule> schedules = StreamSupport.stream(this.scheduleService.findAll().spliterator(), false).collect(Collectors.toList());
+		for (Schedule schedule : schedules) {
+			if (schedule.getEmp().getDni().equals(dni) && schedule.getDate().isEqual(date) && schedule.getId()!=id) {
+				return schedule;
+			}
+		}
+		return empty_schedule;
+	}
 	@Override
 	public void validate(Object obj, Errors errors) {
 		Schedule sch = (Schedule) obj;

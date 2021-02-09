@@ -9,18 +9,13 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.time.LocalDate;
 import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.assertj.core.util.Lists;
-import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +25,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Client;
-import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Event;
-import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.ShowReservation;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.samples.petclinic.service.ShowReservationService;
-import org.springframework.samples.petclinic.util.Week;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -125,6 +117,21 @@ public class ShowReservationControllerTest {
 	}
 	
 	@WithMockUser(value = "spring")
+    @Test
+    void testNoAvailableSeats() throws Exception {
+		given(this.showresServ.findAvailableSeats(anyInt())).willReturn(0);
+		
+		mockMvc.perform(post("/showress/save")
+				.with(csrf())
+				.param("event", "Magician Harambe")
+				.param("seats", "10"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeHasErrors("showReservation"))
+			.andExpect(model().attributeHasFieldErrors("showReservation", "seats"))
+			.andExpect(view().name("showress/addShowReservation"));
+	}
+	
+	@WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateShowReservationForm() throws Exception {
 		given(this.showresServ.findShowReservationById(anyInt())).willReturn(Optional.of(sr));
@@ -173,7 +180,7 @@ public class ShowReservationControllerTest {
 	
 	@WithMockUser(value = "spring")
     @Test
-    void userGainsEmptySetTest() throws Exception {
+    void userReservationsEmptySetTest() throws Exception {
 		given(this.showresServ.findReservationsForUser(any(Client.class))).willReturn(Lists.emptyList());
 		mockMvc.perform(get("/showress/user"))
 			.andExpect(status().isOk())

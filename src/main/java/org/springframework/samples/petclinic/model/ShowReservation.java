@@ -16,6 +16,7 @@ import lombok.Setter;
 @Table(name = "showreservations")
 public class ShowReservation extends BaseEntity{
 
+	@NotNull
 	@Min(value = 1)
 	private Integer seats;
 	

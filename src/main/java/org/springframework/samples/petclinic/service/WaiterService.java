@@ -10,6 +10,8 @@ import org.springframework.samples.petclinic.repository.WaiterRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class WaiterService {
 	
@@ -46,11 +48,13 @@ public class WaiterService {
 
 	public List<RestaurantTable> findTablesServed(int waiterId) {
 		// TODO Auto-generated method stub
+		log.info("Loading served tables from DB with the waiter id: " + waiterId);
 		return waiterRep.findTablesServed(waiterId);
 	}
 	
 	public List<RestaurantTable> findRestaurantTables() {
 		// TODO Auto-generated method stub
+		log.info("Loading restaurant tables from DB");
 		return waiterRep.findRestaurantTables();
 	}
 }

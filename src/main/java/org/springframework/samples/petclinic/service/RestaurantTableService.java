@@ -9,6 +9,9 @@ import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class RestaurantTableService {
 private  RestaurantTableRepository restaurantTablerepo; 
@@ -44,11 +47,13 @@ private  RestaurantTableRepository restaurantTablerepo;
 	
 	@Transactional
 	public Collection<RestaurantTable> findRestaurantTables() {
+		log.info("Loading restaurante tables from DB");
 		return restaurantTablerepo.findRestaurantTables();
 	}
 	
 	@Transactional
 	public Collection<Waiter> findWaiters() {
+		log.info("Loading waiters from DB");
 		return restaurantTablerepo.findWaiters();
 	}
 }

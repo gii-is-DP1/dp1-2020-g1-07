@@ -68,7 +68,7 @@ public class GameValidator implements Validator  {
 		if (name == null || name.trim().equals("")) {
 			errors.rejectValue("name", REQUIRED, REQUIRED);
 		}
-		if( maxPlayers == null  || maxPlayers == 0) {
+		if( maxPlayers == null  || maxPlayers < 1) {
 			errors.rejectValue("maxPlayers", REQUIRED, REQUIRED);
 		}
 	}

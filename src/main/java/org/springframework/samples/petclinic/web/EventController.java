@@ -10,7 +10,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Artist;
 import org.springframework.samples.petclinic.model.Event;
 import org.springframework.samples.petclinic.model.ShowType;
 import org.springframework.samples.petclinic.model.Stage;
@@ -65,45 +64,40 @@ public class EventController {
 		return vista;
 	}
 	
-	/*@ResponseBody
+	@ResponseBody
 	@RequestMapping(value = "/byDay/{date}", method = RequestMethod.GET)
 	public String loadEventsByDate(@PathVariable("date")String datestr) {
 		String json = "[";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		LocalDate date = LocalDate.parse(datestr, formatter);
-		Stage scenario = null;
 		try {
 			List<Event> events = new ArrayList<Event>(eventService.findEventsByDate(date));
 			for(Event event:events) {
-				scenario = eventService.findStageForEvent(event.getId());
 				json = json + "{\"id\":" + event.getId() +","
 						+ "\"name\":\"" + event.getName() +"\","
 						+ "\"showtype_id\":{"
 								+ "\"id\":" + event.getShowtype_id().getId() + ","
 								+ "\"name\":\"" + event.getShowtype_id().getName() + "\"},"
-						+ "\"artist_id\":{"
-								+ "\"id\":" + event.getArtist_id().getId() + ","
-								+ "\"name\":\"" + event.getArtist_id().getName() + "\"},"
 						+ "\"stage_id\":{"
-								+ "\"id\":" + scenario.getId() + "},"
+								+ "\"id\":" + event.getStage_id().getId() + "},"
 						+ "\"date\":\"" + event.getDate() +"\"},";
 				if(events.indexOf(event)==events.size()-1) {
 					json = json.substring(0, json.length() - 1) + "]";
 				}
 			}
 			if(events.size()==0) {
-				json = json.substring(0, json.length() - 1) + "]";
+				json = json + "]";
 			}
 		
 		//Event evento = null;
 		//String nombre = evento.getName();
 		}catch(Exception e) {
 			System.out.println(json);
-			System.out.println(scenario);
+
 			System.out.println(e);
 		}
 		return json;
-	}*/
+	}
 
 	@GetMapping(path="/new")
 	public String createEvent(ModelMap modelMap) {
@@ -143,10 +137,16 @@ public class EventController {
 		String view="events/listEvent";
 		Optional<Event> event = eventService.findEventbyId(eventId);
 		if(event.isPresent()) {
-			log.info("Event found: deleting");
-			eventService.delete(event.get());
-			modelMap.addAttribute("message", "Event not found!");
-			view=eventsList(modelMap);
+			if(eventValidator.isUsedInShowReservation(event)) {
+				log.warn("Couldn't delete event: it has reservations");
+				modelMap.addAttribute("message", "This event can't be deleted, it has reservations!");
+				view=eventsList(modelMap);
+			}else{
+				log.info("Event found: deleting");
+				eventService.delete(event.get());
+				modelMap.addAttribute("message", "Event not found!");
+				view=eventsList(modelMap);
+			}
 		}else {
 			log.warn("Event not found in DB: " + eventId);
 			modelMap.addAttribute("message", "Event not found!");
@@ -185,7 +185,10 @@ public class EventController {
 		}
 	}
 	
-
+	@ModelAttribute("stages")
+    public Collection<Stage> populateStages() {
+        return this.eventService.findStages();
+    }
 
 	@ModelAttribute("showtypes")
     public Collection<ShowType> populateShowtypes() {

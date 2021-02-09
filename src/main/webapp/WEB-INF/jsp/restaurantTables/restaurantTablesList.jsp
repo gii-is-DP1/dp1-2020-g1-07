@@ -24,7 +24,11 @@
         <c:forEach items="${restaurantTables}" var="restaurantTable">
             <tr>
                 <td>
-                    <c:out value="${restaurantTable.waiter.name}"/>
+                	<c:forEach items="${restaurantTable.waiters}" var ="waiter">
+                		<div>
+                    	<c:out value="${waiter.name}"/>
+                    	</div>
+                    </c:forEach>
                 </td>
                 <td>
                     <c:out value="${restaurantTable.size}"/>

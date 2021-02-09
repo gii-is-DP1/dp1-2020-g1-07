@@ -6,9 +6,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<!-- La primera funcion es para seleccionar los dates del selector en cada fila-->
+<script type="text/javascript">
+
+function getDates(idCT){
+	var s1= '<option value=""> Seleccione fecha </option>';
+	var clientgains = JSON.parse('${clientgains}');
+	for(var clientgain of clientgains){
+		if(clientgain.tableId==idCT) s1 += '<option value="' + clientgain.amount + '">' + clientgain.date + '</option>';
+	}
+	$('#comboboxDate'+idCT.toString()).html(s1);
+}
+
+
+$(document).ready(function(){
+});
+</script>
 
 <petclinic:layout pageName="casinotables">
-    <h2>Casinotables</h2>
+    <h2>Casino Tables</h2>
 
     <table id="casinotablesTable" class="table table-striped">
         <thead>
@@ -21,6 +39,8 @@
             <th style="width: 200px;">Date</th>
             <th style="width: 200px;"> Start Time</th>
             <th style="width: 200px;"> Ending Time</th>
+            <th style="width: 200px;">Gain Date</th>
+            <th style="width: 200px;">Amount</th>
             <th>Actions</th>
             <th></th>
         </tr>
@@ -51,6 +71,23 @@
                 </td>
                 <td>
                     <c:out value="${casinotable.endingTime}"/>
+                </td>
+                <td>
+                    <select id="comboboxDate${casinotable.id}" name="date">
+                    </select>
+                    <script>
+                    	getDates(${casinotable.id});
+                    	var select = document.getElementById("comboboxDate${casinotable.id}");
+                    	select.addEventListener("change", function(){
+                    		var valAmount = $(this).val().toString();
+                    		var s1 = '';
+                    		s1 += '<p>' + valAmount + '</p>';
+                    		$('#amount${casinotable.id}').html(s1);
+                    	});
+                    </script>
+                </td>
+                <td id="amount${casinotable.id}">
+                    <!-- <c:out value="${slotMachine.status}"/> -->
                 </td>
                 <td>
                 	<spring:url value="/casinotables/delete/{casinotableId}" var="deleteUrl">
