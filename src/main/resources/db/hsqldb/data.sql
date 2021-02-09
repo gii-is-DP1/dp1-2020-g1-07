@@ -142,6 +142,12 @@ INSERT INTO shifts VALUES (4, 'Free');
 INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (1,'Ensalada Cesar',1, 2);
 INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (2,'Serranito',2, 2);
 INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (3,'Flan Potax',3, 2);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (4,'Patatas Bravas',1, 1);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (5,'Kebab',2, 1);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (6,'Brownie',3, 1);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (7,'Nachos con guacamole',1, 3);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (8,'Tortellini a la carbonara',2, 3);
+INSERT INTO dishes(id,name,dish_course_id,shift_id) VALUES (9,'Crepe de chocolate',3, 3);
 
 INSERT INTO prepares(cook_id,dish_id) VALUES(10,1);
 INSERT INTO prepares(cook_id,dish_id) VALUES(10,2);
@@ -154,7 +160,10 @@ INSERT INTO prepares(cook_id,dish_id) VALUES(12,2);
 INSERT INTO prepares(cook_id,dish_id) VALUES(12,3);
 
 
-INSERT INTO menu VALUES (1, 'Random','2010-09-07', 3, 1, 2, 2);
+INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (1, 'Random','2021-02-15', 1, 2, 3, 1);
+INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (2, 'Random','2021-02-15', 4, 5, 6, 2);
+INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (3, 'Random','2021-02-16', 7, 8, 9, 3);
+INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (4, 'Random','2021-02-17', 7, 8, 9, 3);
 
 INSERT INTO timeintervals VALUES(1, '13:00 - 14:00');
 INSERT INTO timeintervals VALUES(2, '14:00 - 15:00');
@@ -165,9 +174,13 @@ INSERT INTO timeintervals VALUES(6, '23:00 - 00:00');
 
 INSERT INTO restaurantTables VALUES(1, 4);
 INSERT INTO restaurantTables VALUES(2, 5);
+INSERT INTO restaurantTables VALUES(3, 2);
+INSERT INTO restaurantTables VALUES(4, 8);
 
 INSERT INTO serves VALUES(19,1);
+INSERT INTO serves VALUES(19,3);
 INSERT INTO serves VALUES(20,2);
+INSERT INTO serves VALUES(20,4);
 INSERT INTO serves VALUES(21,1);
 INSERT INTO serves VALUES(21,2);
 
@@ -180,5 +193,13 @@ INSERT INTO restaurantreservations VALUES(4, '2021-02-07', 1, 1, 4);
 
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (1, '2010-09-07', 3);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (9, '2010-09-09', 2);
-INSERT INTO schedules(employees_id, date, shift_id) VALUES (10, '2021-02-15', 2);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (10, '2021-02-15', 1);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (11, '2021-02-15', 2);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (12, '2021-02-15', 3);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (10, '2021-02-16', 1);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (11, '2021-02-16', 2);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (12, '2021-02-16', 3);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (10, '2021-02-17', 1);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (11, '2021-02-17', 2);
+INSERT INTO schedules(employees_id, date, shift_id) VALUES (12, '2021-02-17', 3);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (16, '2010-09-06', 1);
