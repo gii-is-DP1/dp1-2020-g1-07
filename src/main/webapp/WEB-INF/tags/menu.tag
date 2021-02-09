@@ -38,7 +38,7 @@
 				<petclinic:menuItem active="${name eq 'showress'}" url="/showress"
 					title="reservation">
 					<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
-					<span>Restaurant Reservation</span>
+					<span>Restaurant</span>
 				</petclinic:menuItem>
 				
 				<petclinic:menuItem active="${name eq 'showCasinoTableGame'}" url="/casinotables/showCasinoTableGame"

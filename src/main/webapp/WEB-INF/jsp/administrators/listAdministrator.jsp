@@ -52,11 +52,7 @@
         <h3>Managing Casino Tables and Games</h3>
     
 	    <div class="caselement">
-	    	<div class="form-group">
-	    	<form method="get" action="/croupiers">
-	    		<button class="btn btn-default" type="submit">Croupiers</button>
-			</form>
-		</div>
+	    	
 	    <div class="form-group">
 	    	<form method="get" action="/slotgains">
 	    		<button class="btn btn-default" type="submit">Slot Gains</button>
@@ -150,14 +146,14 @@
 		</div>
 		<h3>Managing employees and finances</h3>
 		<div class="caselement">
+			<div class="form-group">
+		    	<form method="get" action="/croupiers">
+		    		<button class="btn btn-default" type="submit">Croupiers</button>
+				</form>
+			</div>
 		    <div class="form-group">
 		    	<form method="get" action="/clients">
 		    		<button class="btn btn-default" type="submit">Clients</button>
-				</form>
-			</div>
-			<div class="form-group">
-		    	<form method="get" action="/employees">
-		    		<button class="btn btn-default" type="submit">Employees</button>
 				</form>
 			</div>
 			<div class="form-group">
