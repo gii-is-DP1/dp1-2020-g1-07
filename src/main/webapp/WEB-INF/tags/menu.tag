@@ -52,8 +52,8 @@
 				</security:authorize>
 				
 				<security:authorize access="hasAnyAuthority('admin, employee')">
-				<petclinic:menuItem active="${name eq 'events'}" url="/events/byDay"
-					title="events">
+				<petclinic:menuItem active="${name eq 'events'}" url="/workers"
+					title="workers">
 					<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
 					<span>Workers</span>
 				</petclinic:menuItem>
