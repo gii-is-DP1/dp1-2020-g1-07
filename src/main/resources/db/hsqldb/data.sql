@@ -119,12 +119,12 @@ INSERT INTO clients(id,dni,name,phone_number, user_username) VALUES (1,'11111111
 INSERT INTO clients(id,dni,name,phone_number) VALUES (2,'22222222B', 'Federico Gonzalez','555555555');
 INSERT INTO clients(id,dni,name,phone_number) VALUES (3,'33333333C', 'Aurelio Pino','666666666');
 
-INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (1,350,'2020-09-07',2,1,1);
-INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (2,500,'2020-09-08',3,1,1);
-INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (3,100,'2020-09-08',2,1,2);
-INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (4,-200,'2020-09-21',4,1,1);
-INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (5,-100,'2020-09-21',1,1,1);
-INSERT INTO client_gains(id,amount,date,tableid,client_id,game_id) VALUES (6,150,'2020-09-21',1,1,1);
+INSERT INTO clientgains(id,amount,date,tableid,client_id,game_id) VALUES (1,350,'2020-09-07',2,1,1);
+INSERT INTO clientgains(id,amount,date,tableid,client_id,game_id) VALUES (2,500,'2020-09-08',3,1,1);
+INSERT INTO clientgains(id,amount,date,tableid,client_id,game_id) VALUES (3,100,'2020-09-08',2,1,2);
+INSERT INTO clientgains(id,amount,date,tableid,client_id,game_id) VALUES (4,-200,'2020-09-21',4,1,1);
+INSERT INTO clientgains(id,amount,date,tableid,client_id,game_id) VALUES (5,-100,'2020-09-21',1,1,1);
+INSERT INTO clientgains(id,amount,date,tableid,client_id,game_id) VALUES (6,150,'2020-09-21',1,1,1);
 
 INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (1, 5, 1, 1);
 INSERT INTO showreservations(id, seats, client_id, event_id) VALUES (2, 2, 1, 2);

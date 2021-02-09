@@ -56,5 +56,9 @@
         </c:forEach>
         </tbody>
     </table>
-    
+    <div class="form-group">
+    	<form method="get" action="/cooks/new">
+    		<button class="btn btn-default" type="submit">Add new cook</button>
+		</form>
+	</div>
 </petclinic:layout>

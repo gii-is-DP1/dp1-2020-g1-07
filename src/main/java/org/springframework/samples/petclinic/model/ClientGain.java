@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "client_gains")
+@Table(name = "clientgains")
 public class ClientGain extends BaseEntity{
 
 	@NotNull

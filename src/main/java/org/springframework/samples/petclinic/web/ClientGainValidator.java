@@ -28,7 +28,7 @@ public class ClientGainValidator implements Validator{
 		LocalDate date = cgain.getDate();
 		Client client = cgain.getClient();
 		Game game = cgain.getGame();
-		
+		Integer table = cgain.getTableId();
 		//Amount validation
 		if (amount == null || amount%5!=0) {
 			errors.rejectValue("amount", REQUIRED + " to be a multiple of 5", REQUIRED + " to be a multiple of 5");
@@ -46,6 +46,11 @@ public class ClientGainValidator implements Validator{
 		
 		//Game validation
 		if (game == null) {
+			errors.rejectValue("game", REQUIRED, REQUIRED);
+		}
+		
+		//Table validation
+		if (table == null) {
 			errors.rejectValue("game", REQUIRED, REQUIRED);
 		}
 		
