@@ -21,6 +21,12 @@ INSERT INTO games VALUES (3,'Texas Hold em',8,2);
 INSERT INTO games VALUES (4,'Crazy Dices',4,3);
 INSERT INTO games VALUES (5,'Fortune Roulette',6,1);
 
+-- NUEVO
+INSERT INTO games VALUES (6,'Spanish Roulette',6,1);
+INSERT INTO games VALUES (7,'Mouse',5,2);
+INSERT INTO games VALUES (8,'Normal Dices',4,3);
+-- NUEVO
+
 INSERT INTO statuses VALUES(1,'OK');
 INSERT INTO statuses VALUES(2,'COLLECT');
 INSERT INTO statuses VALUES(3,'REPAIR');
@@ -29,9 +35,22 @@ INSERT INTO slotgames VALUES (1,'Phoenix Fury',100);
 INSERT INTO slotgames VALUES (2,'The Atlantis Treasure',0);
 INSERT INTO slotgames VALUES (3,'Amazon Adventure',58);
 
+-- NUEVO
+INSERT INTO slotgames VALUES (4,'Dragon Game',58);
+INSERT INTO slotgames VALUES (5,'Train Travel ',878);
+INSERT INTO slotgames VALUES (6,'AliExpress Adventure',78);
+-- NUEVO
+
 INSERT INTO slotmachines VALUES (1,1,1);
 INSERT INTO slotmachines VALUES (2,2,2);
 INSERT INTO slotmachines VALUES (3,3,3);
+
+-- NUEVO
+INSERT INTO slotmachines VALUES (4,4,1);
+INSERT INTO slotmachines VALUES (5,5,2);
+INSERT INTO slotmachines VALUES (6,6,3);
+-- NUEVO
+
 
 INSERT INTO slotgains VALUES (1,'1',100,'2010-09-07',1);
 INSERT INTO slotgains VALUES (2,'2',300,'2010-09-08',1);
@@ -43,6 +62,14 @@ INSERT INTO slotgains VALUES (7,'7',700,'2010-09-11',3);
 INSERT INTO slotgains VALUES (8,'8',900,'2010-09-12',3);
 INSERT INTO slotgains VALUES (9,'9',800,'2010-09-13',3);
 
+-- NUEVO
+INSERT INTO slotgains VALUES (10,'10',300,'2010-09-13',1);
+INSERT INTO slotgains VALUES (11,'11',200,'2011-09-13',3);
+INSERT INTO slotgains VALUES (12,'12',600,'2016-02-13',5);
+INSERT INTO slotgains VALUES (13,'13',100,'2010-09-13',4);
+INSERT INTO slotgains VALUES (14,'14',800,'2010-09-13',6);
+-- NUEVO
+
 INSERT INTO SHOWTYPES VALUES(1, 'Music');
 INSERT INTO SHOWTYPES VALUES(2, 'Theater');
 INSERT INTO SHOWTYPES VALUES(3, 'Magic');
@@ -52,6 +79,13 @@ INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametyp
 INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id) VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,2,1);
 INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
 INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(4, 'Mesa 4','2020-01-04','04:40:00','23:30:00',1,2,1);
+
+-- NUEVO
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(5, 'Mesa 5','2020-01-04','04:40:00','23:30:00',6,1,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(6, 'Mesa 6','2020-01-04','04:40:00','23:30:00',7,2,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(7, 'Mesa 7','2020-01-04','04:40:00','23:30:00',1,2,1);
+INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(8, 'Mesa 8','2020-01-04','04:40:00','23:30:00',1,2,1);
+-- NUEVO
 
 INSERT INTO employees(id,dni,name,phone_number, user_username) VALUES (1,'12345678A','Manuel Rodriguez','987654321', 'admin1');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (2,'98765432Z','Rosa Garcia','123456789');
