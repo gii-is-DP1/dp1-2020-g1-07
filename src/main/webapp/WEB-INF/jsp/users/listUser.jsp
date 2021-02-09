@@ -8,7 +8,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="users">
-    <h2>User</h2>
+    <h2>Users</h2>
 
     <table id="usersTable" class="table table-striped">
         <thead>
@@ -38,12 +38,6 @@
 	                    
 	                    <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
 	                </td>
-	                <td>
-	                    <spring:url value="/users/{userId}/edit" var="editUrl">
-	                        <spring:param name="userId" value="${admin.user.username}"/>
-	                    </spring:url>
-	                    <a href="${fn:escapeXml(editUrl)}">Update</a>
-	                </td>
 	            </tr>
                 </c:forEach>
                 
@@ -64,12 +58,6 @@
 	                    </spring:url>
 	                    
 	                    <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
-	                </td>
-	                <td>
-	                    <spring:url value="/users/{userId}/edit" var="editUrl">
-	                        <spring:param name="userId" value="${emp.user.username}"/>
-	                    </spring:url>
-	                    <a href="${fn:escapeXml(editUrl)}">Update</a>
 	                </td>
 	            </tr>
                 </c:forEach>
@@ -92,15 +80,12 @@
 	                    
 	                    <a href="${fn:escapeXml(deleteUrl)}">Delete</a>
 	                </td>
-	                <td>
-	                    <spring:url value="/users/{userId}/edit" var="editUrl">
-	                        <spring:param name="userId" value="${client.user.username}"/>
-	                    </spring:url>
-	                    <a href="${fn:escapeXml(editUrl)}">Update</a>
-	                </td>
 	            </tr>
                 </c:forEach>
         </tbody>
     </table>
+    <form method="get" action="/users/new">
+   		<button class="btn btn-default" type="submit">Add new employee account</button>
+	</form>
     
 </petclinic:layout>

@@ -3,10 +3,12 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Administrator;
+import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
@@ -82,9 +84,25 @@ public class UserService {
 		return userRepo.findAdminsWithAccount();
 	}
 	
-	public Collection<Integer> findAuthorityId(String username) throws DataAccessException{
+	public Collection<Authority> findAuthoritiesForUser(String username) throws DataAccessException{
 		log.info("Looking for authorities from user: " + username);
-		return userRepo.findAuthoritiesId(username);
+		return userRepo.findAuthoritiesForUser(username);
 	}
 	
+	public Collection<Employee> findEmployeesWithoutAccount() throws DataAccessException{
+		log.info("Loading employees without account from DB");
+		Collection<Employee> todos = userRepo.findEmployees();
+		Collection<Employee> conUser = userRepo.findEmployeesWithAccount();
+		return todos.parallelStream().filter(x -> !conUser.contains(x)).collect(Collectors.toList());
+	}
+	
+	public Client findClientForUsername(String username) {
+		log.info("Loading client with username: " + username);
+		return userRepo.findClientForUsername(username);
+	}
+	
+	public Employee findEmployeeForUsername(String username) {
+		log.info("Loading employee with username: " + username);
+		return userRepo.findEmployeeForUsername(username);
+	}
 }
