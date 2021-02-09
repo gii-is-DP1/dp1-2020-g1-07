@@ -74,7 +74,6 @@ INSERT INTO SHOWTYPES VALUES(1, 'Music');
 INSERT INTO SHOWTYPES VALUES(2, 'Theater');
 INSERT INTO SHOWTYPES VALUES(3, 'Magic');
 
-
 INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id) VALUES(1, 'Mesa 1','2020-01-04','11:30:00','09:30:00',1,2,1);
 INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id) VALUES(2, 'Mesa 2','2020-01-04','13:30:00','12:30:00',1,2,1);
 INSERT INTO CASINOTABLES(id, name, date, endingTime, startTime, game_id, gametype_id, skill_id)VALUES(3, 'Mesa 3','2020-01-04','23:30:00','18:30:00',1,2,1);
@@ -118,7 +117,6 @@ INSERT INTO ACTS VALUES (5,2);
 INSERT INTO ACTS VALUES (5,4);
 INSERT INTO ACTS VALUES (6,3);
 INSERT INTO ACTS VALUES (6,5);
-
 
 INSERT INTO employees(id,dni,name,phone_number) VALUES (7,'12345676A','Oscar Rodriguez','987654319');
 INSERT INTO employees(id,dni,name,phone_number) VALUES (8,'98765430Z','Raul Garcia','123456787');
@@ -202,7 +200,6 @@ INSERT INTO prepares(cook_id,dish_id) VALUES(12,1);
 INSERT INTO prepares(cook_id,dish_id) VALUES(12,2);
 INSERT INTO prepares(cook_id,dish_id) VALUES(12,3);
 
-
 INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (1, 'Random','2021-02-15', 1, 2, 3, 1);
 INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (2, 'Random','2021-02-15', 4, 5, 6, 2);
 INSERT INTO menu(id,name,date,first_dish_id,second_dish_id,dessert_id,shift_id) VALUES (3, 'Random','2021-02-16', 7, 8, 9, 3);
@@ -227,12 +224,10 @@ INSERT INTO serves VALUES(20,4);
 INSERT INTO serves VALUES(21,1);
 INSERT INTO serves VALUES(21,2);
 
-
 INSERT INTO restaurantreservations VALUES(1, '2021-02-05', 1, 1, 1);
 INSERT INTO restaurantreservations VALUES(2, '2021-02-05', 2, 1, 2);
 INSERT INTO restaurantreservations VALUES(3, '2021-02-06', 3, 1, 3);
 INSERT INTO restaurantreservations VALUES(4, '2021-02-07', 1, 1, 4);
-
 
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (1, '2010-09-07', 3);
 INSERT INTO schedules(employees_id, date, shift_id) VALUES (9, '2010-09-09', 2);
