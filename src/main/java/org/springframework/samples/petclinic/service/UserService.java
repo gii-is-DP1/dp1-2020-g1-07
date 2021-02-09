@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -85,6 +86,13 @@ public class UserService {
 	public Collection<Integer> findAuthorityId(String username) throws DataAccessException{
 		log.info("Looking for authorities from user: " + username);
 		return userRepo.findAuthoritiesId(username);
+	}
+	
+	public Collection<Employee> findEmployeesWithoutAccount() throws DataAccessException{
+		log.info("Loading employees without account from DB");
+		Collection<Employee> todos = findEmployees();
+		Collection<Employee> conUser = findEmployeesWithAccount();
+		return todos.parallelStream().filter(x -> conUser.contains(x)).collect(Collectors.toList());
 	}
 	
 }

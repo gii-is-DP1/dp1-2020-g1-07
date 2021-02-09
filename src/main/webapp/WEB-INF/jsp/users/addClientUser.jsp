@@ -14,8 +14,6 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                	<input type="hidden" name="role" value="client"/>
-                	<input type="hidden" name="origin" value="client"/>
                     <input type="hidden" name="userId" value="${user.username}"/>
                     <button class="btn btn-default" type="submit">Register</button>
                 </div>
