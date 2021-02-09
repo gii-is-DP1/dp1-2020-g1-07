@@ -54,7 +54,6 @@ $(document).ready(function(){
             	
             	<option value="${date}">${date}</option>
             </c:forEach>
-             <div > &nbsp;  </div>
             </select>
         </div>
         
