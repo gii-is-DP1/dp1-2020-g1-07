@@ -1,15 +1,20 @@
 package org.springframework.samples.petclinic.web;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.samples.petclinic.model.Casinotable;
+import org.springframework.samples.petclinic.model.ClientGain;
 import org.springframework.samples.petclinic.model.Game;
 import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Skill;
@@ -196,4 +201,54 @@ public class CasinotableController {
         return this.castableService.findGames();
     }
 
+	@ModelAttribute("clientgains")
+	public String populateClientGain() {
+		String json = "[";
+		try {
+			List<ClientGain> clientGainsRaw = new ArrayList<ClientGain>(castableService.findGains());
+			List<ClientGain> clientGains = SumUpGainsByDate(clientGainsRaw);
+			for(ClientGain clientGain:clientGains) {
+				json = json + "{\"id\":" + clientGain.getId() +","
+						+ "\"date\":\"" + clientGain.getDate() +"\","
+						+ "\"amount\":" + clientGain.getAmount() +","
+						+ "\"tableId\":" + clientGain.getTableId() +"},";
+				if(clientGains.indexOf(clientGain)==clientGains.size()-1) {
+					json = json.substring(0, json.length() - 1) + "]";
+				}
+			}
+			if(clientGains.size()==0) {
+				json = json + "]";
+			}
+		}catch(Exception e) {
+			System.out.println(castableService.findGains());
+		}
+		return json;	
+	}
+
+	private List<ClientGain> SumUpGainsByDate(List<ClientGain> clientGainsRaw) {
+		// TODO Auto-generated method stub
+		List<ClientGain> res = new ArrayList<ClientGain>();
+		Map<Pair<LocalDate,Integer>,Integer> dicc= new HashMap<Pair<LocalDate,Integer>, Integer>();
+		for(ClientGain clientGain: clientGainsRaw) {
+			Pair<LocalDate,Integer> key = Pair.of(clientGain.getDate(),clientGain.getTableId());
+			if (dicc.containsKey(key)) {
+				Integer value = clientGain.getAmount() + dicc.get(key);
+				dicc.put(key, value);				
+			}else {
+				dicc.put(key, clientGain.getAmount());
+			}
+		}
+		Integer i = 1;
+		for(Pair<LocalDate,Integer> key: dicc.keySet()) {
+			ClientGain cg = new ClientGain();
+			cg.setId(i);
+			cg.setDate(key.getFirst());
+			cg.setTableId(key.getSecond());
+			cg.setAmount(dicc.get(key));
+			res.add(cg);
+			i++;
+		}
+		return res;
+	}
+	
 }
