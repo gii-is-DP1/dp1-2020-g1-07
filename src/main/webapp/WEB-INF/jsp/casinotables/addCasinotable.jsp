@@ -67,6 +67,7 @@ $(document).ready(function(){
 	</jsp:attribute>
     <jsp:body>
         <h2>New table</h2>
+        <c:out value="${error}"></c:out>
         <form:form modelAttribute="casinotable" class="form-horizontal" action="/casinotables/save">
             <div class="form-group has-feedback">
            	    <petclinic:inputField label="Name" name="name"/>

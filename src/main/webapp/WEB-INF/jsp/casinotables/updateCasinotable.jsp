@@ -48,6 +48,7 @@ $(document).ready(function(){
 	</jsp:attribute>
     <jsp:body>
         <h2>New table</h2>
+        <c:out value="${error}"></c:out>
 		<script>
     	function chgAction()
     		{
