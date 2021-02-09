@@ -47,5 +47,9 @@
         </c:forEach>
         </tbody>
     </table>
-    
+    <div class="form-group">
+    	<form method="get" action="/chefs/new">
+    		<button class="btn btn-default" type="submit">Add new chef</button>
+		</form>
+	</div>
 </petclinic:layout>

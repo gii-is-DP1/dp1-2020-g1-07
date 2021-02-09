@@ -17,6 +17,7 @@
             <th style="width: 150px;">Amount</th>
             <th style="width: 200px;">Date</th>
             <th style="width: 200px;">Game</th>
+            <th style="width: 200px;">Table</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -34,6 +35,9 @@
                 </td>
                 <td>
                     <c:out value="${cgain.game.name}"/>
+                </td>
+                <td>
+                    <c:out value="${cgain.tableId}"/>
                 </td>
                 <td>
                 	<spring:url value="/cgains/delete/{cgainId}" var="deleteUrl">

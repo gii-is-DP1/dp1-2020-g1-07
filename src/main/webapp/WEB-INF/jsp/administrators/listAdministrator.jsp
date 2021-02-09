@@ -48,6 +48,11 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="form-group">
+    	<form method="get" action="/administrators/new">
+    		<button class="btn btn-default" type="submit">Add new admin</button>
+		</form>
+	</div>
     <div class="content" style=" display: flex; flex-direction: column;"> 
         <h3>Managing Casino Tables and Games</h3>
     
