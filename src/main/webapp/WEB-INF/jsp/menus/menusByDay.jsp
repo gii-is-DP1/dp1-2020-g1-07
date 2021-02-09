@@ -44,6 +44,18 @@ $(document).ready(function(){
         </div>
         
         <div id="tableMenus"></div>    
+        
+        <div class="form-group">
+		    	<form method="get" action="/restaurantreservations/new">
+		    		<button class="btn btn-default" type="submit">Book a table</button>
+				</form>
+		</div>
+		
+		<div class="form-group">
+		    	<form method="get" action="/restaurantreservations">
+		    		<button class="btn btn-default" type="submit">My reservations </button>
+				</form>
+		</div>
     </jsp:body>
 
 </petclinic:layout>
