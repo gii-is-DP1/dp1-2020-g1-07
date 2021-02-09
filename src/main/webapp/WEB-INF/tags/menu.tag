@@ -1,7 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sec"
+
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
@@ -41,17 +43,21 @@
 					<span>Play!</span>
 				</petclinic:menuItem>
 				
+				<security:authorize access="hasAuthority('admin')">
 				<petclinic:menuItem active="${name eq 'administrators'}" url="/administrators"
 					title="admins">
 					<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
 					<span>Admin</span>
 				</petclinic:menuItem>
+				</security:authorize>
 				
+				<security:authorize access="hasAnyAuthority('admin, employee')">
 				<petclinic:menuItem active="${name eq 'events'}" url="/events/byDay"
 					title="events">
 					<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
 					<span>Workers</span>
 				</petclinic:menuItem>
+				</security:authorize>
 
 			</ul>
 
