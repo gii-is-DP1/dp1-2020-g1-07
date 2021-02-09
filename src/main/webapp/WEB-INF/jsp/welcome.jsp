@@ -4,17 +4,9 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
-<petclinic:layout pageName="home">
-	<div class="fullpage"> 
-    <div class="row">
-        <div class="col-md-12">
-        </div>
-        
-    </div>
-    <div class = "row">
-    	<h1 class="tuvis"> Tuvi's casino </h1>
-    	<a style="font-size:50px;" class = "enlace" href = "/casinotables" > Delete table Link</a><br>
-   		<a style="font-size:50px;" class = "enlace" href = "/casinotables/new" > Add table link</a>
-    </div>
-    </div>
+<petclinic:layout pageName="home" >
+	<body class="welcome">
+	<div class="fullpage"></div>
+    </body>
+   	
 </petclinic:layout>

@@ -15,8 +15,9 @@
 
 @spring-red:      	#c5324f;
 @spring-dark-green: #ff5368;
-@spring-brown:      #34302D;
+@spring-brown:      #210F05;
 @spring-grey:       #838789;
+@spring-back:       #252525;
 @spring-light-grey: #f1f1f1;
 
 @body-bg:                           @spring-light-grey;
@@ -60,7 +61,7 @@
 }
 
 .nav > li > a {
-  color: @spring-grey;
+  color: @spring-light-grey;
 }
 
 .btn-default {
@@ -234,22 +235,44 @@ hr {
   border-top: 1px dotted @spring-brown;
 }
 
-.fullpage{
-	background: url("../images/wallpaperindex.png");
-	  -webkit-background-size: cover;
-}
+
 
 #tableMenus{
 	display: flex;
 	flex-direction: row;
 	
 }
+.welcome{
+  background-image: url("../images/wallpaperindex.png");
 
-.tuvis{
-	font-size: 50px;
-	color: white;
+  background-position: center center;
+
+  background-repeat: no-repeat;
+
+  background-attachment: fixed;
+
+  background-size: cover;
 }
-
+.tuvis{
+	position:relative;
+	text-align:center;
+	font-size: 150px;
+	color:@spring-back;
+	top:280px;
+	border: 18px solid @spring-back;
+	padding: 70px;
+	 -webkit-text-stroke: 1px white;
+}
+.fullpage{
+  z-index: 1;
+  height:700px;
+  background-image: url("../images/logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  position:relative;
+  text-decoration: none;
+  padding: 0;
+}
 @import "typography.less";
 @import "header.less";
 @import "responsive.less";

@@ -22,29 +22,38 @@
 		<div class="navbar-collapse collapse" id="main-navbar">
 			<ul class="nav navbar-nav">
 
-				<petclinic:menuItem active="${name eq 'Index'}" url="/"
-					title="Index">
-					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					<span>Index</span>
-				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'games'}" url="/owners/find"
+				<petclinic:menuItem active="${name eq 'menus'}" url="/menus/byDay"
 					title="find games">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find games</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'dishes'}" url="/dishes"
-					title="dishes">
 					<span class="glyphicon glyphicon-apple" aria-hidden="true"></span>
-					<span>Our dishes</span>
+					<span>Menus</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-					<span>Management</span>
+				<petclinic:menuItem active="${name eq 'events'}" url="/events/byDay"
+					title="events">
+					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+					<span>Events</span>
 				</petclinic:menuItem>
+
+				<petclinic:menuItem active="${name eq 'showress'}" url="/showress"
+					title="reservation">
+					<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+					<span>Restaurant Reservation</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'showCasinoTableGame'}" url="/casinotables/showCasinoTableGame"
+					title="Tables in LIVE">
+					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+					<span>Casino Tables</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'administrators'}" url="/administrators"
+					title="admins">
+					<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+					<span>Admin</span>
+				</petclinic:menuItem>
+				
+
 
 			</ul>
 
@@ -77,6 +86,10 @@
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
+													class="btn btn-primary btn-block btn-sm">Logout</a>
+											</p>
+											<p class="text-left">
+												<a href="<c:url value="/users" />"
 													class="btn btn-primary btn-block btn-sm">Logout</a>
 											</p>
 										</div>
