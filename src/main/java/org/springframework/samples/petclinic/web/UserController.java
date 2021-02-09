@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.function.Function;
 
 import javax.validation.Valid;
 
@@ -189,42 +188,44 @@ public class UserController {
 	}
 	
 	@GetMapping(path="/register")
-	public String createClientUser(ModelMap modelMap) {
-		log.info("Loading new user form for clients");
-		String view="users/addClientUser";
-		modelMap.addAttribute("user", new User());
-		return view;
-	}
+    public String createClientUser(ModelMap modelMap) {
+        log.info("Loading new user form for clients");
+        String view="users/addClientUser";
+        User user = new User();
+        Client cl = new Client();
+        cl.setUser(user);
+        modelMap.addAttribute("client", cl);
+        return view;
+    }
 	
-	@PostMapping(path="/save")
-	public String saveClientAndUser(@Valid User user, BindingResult result, ModelMap modelMap,
-			@RequestParam("client") Client client) {
-		log.info("Saving user: " + user.getUsername());	
-		String view="users/addClientUser";
-		if(result.hasErrors()) {
-			log.warn("Found errors on insertion: " + result.getAllErrors());
-			modelMap.addAttribute("user", user);
-			return view;
-			
-		}else {
-			if (validator.getUserwithIdDifferent(user.getUsername())) {
-				log.warn("Couldn't create user, username " + user.getUsername() + " is taken");
-				result.rejectValue("username", "username.duplicate", "Username " + user.getUsername() + " is taken");
-				modelMap.addAttribute("user", user);
-				return view;
-			}
-			log.info("User validated: saving into DB");
-			userService.save(user);
-			client.setUser(user);
-			clientService.save(client);
-			Authority auth = new Authority();
-			auth.setAuthority("client");
-			authService.save(auth);
-			modelMap.addAttribute("message", "User successfully saved!");
-			view=listUsers(modelMap);
-		}
-		return view;
-	}
+	@PostMapping(path="/saveclient")
+    public String saveClientAndUser(@Valid Client client, BindingResult result, ModelMap modelMap) {
+        log.info("Saving client and user: " + client.getDni());
+        String view="users/addClientUser";
+        if(result.hasErrors()) {
+            log.warn("Found errors on insertion: " + result.getAllErrors());
+            modelMap.addAttribute("client", client);
+            return view;
+
+        }else {
+            User user = client.getUser();
+            if (validator.getUserwithIdDifferent(user.getUsername())) {
+                log.warn("Couldn't create user, username " + user.getUsername() + " is taken");
+                result.rejectValue("username", "username.duplicate", "Username " + user.getUsername() + " is taken");
+                modelMap.addAttribute("user", user);
+                return view;
+            }
+            log.info("User validated: saving into DB");
+            //userService.save(user);
+            clientService.save(client);
+            Authority auth = new Authority();
+            auth.setAuthority("client");
+            authService.save(auth);
+            modelMap.addAttribute("message", "User successfully saved!");
+            view=listUsers(modelMap);
+        }
+        return view;
+    }
 	
 	@GetMapping(path="/delete/{userId}")
 	public String deleteUser(@PathVariable("userId") String userId, ModelMap modelMap) {
