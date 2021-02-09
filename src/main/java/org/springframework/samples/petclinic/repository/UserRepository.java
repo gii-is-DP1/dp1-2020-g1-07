@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
@@ -40,7 +42,7 @@ public interface UserRepository extends CrudRepository<User, String>{
 	List<Client> findClientsWithAccount() throws DataAccessException;
 	
 	@Query("SELECT DISTINCT a FROM Authority a WHERE a.user.username LIKE :username ORDER BY a.id")
-	List<Authority> findAuthoritiesForUser(@Param("username") String username) throws DataAccessException;
+	Optional<Collection<Authority>> findAuthoritiesForUser(@Param("username") String username) throws DataAccessException;
 	
 	@Query("SELECT c FROM Client c WHERE c.user.username LIKE :username")
 	Client findClientForUsername(@Param("username") String username) throws DataAccessException;

@@ -84,7 +84,7 @@ public class UserService {
 		return userRepo.findAdminsWithAccount();
 	}
 	
-	public Collection<Authority> findAuthoritiesForUser(String username) throws DataAccessException{
+	public Optional<Collection<Authority>> findAuthoritiesForUser(String username) throws DataAccessException{
 		log.info("Looking for authorities from user: " + username);
 		return userRepo.findAuthoritiesForUser(username);
 	}

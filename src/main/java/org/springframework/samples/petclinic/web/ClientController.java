@@ -1,11 +1,15 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Authority;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.service.AuthorityService;
 import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.samples.petclinic.service.ClientService;
 import org.springframework.samples.petclinic.service.RestaurantReservationService;
@@ -41,6 +45,9 @@ public class ClientController {
 	
 	@Autowired
 	private UserService uservice;
+	
+	@Autowired
+	private AuthorityService authoritiesService;
 	
 	@Autowired
 	private ClientValidator clientValidator;
@@ -103,8 +110,17 @@ public class ClientController {
 			cgainService.findClientGainsForClient(cl.getDni()).forEach(x -> cgainService.delete(x));
 			restReserService.findRestaurantReservationForClient(cl.getDni()).forEach(x -> restReserService.delete(x));
 			showResService.findShowReservationForClient(cl.getDni()).forEach(x -> showResService.delete(x));
-			uservice.delete(cl.getUser());
+			if(cl.getUser()!=null) {
+				Optional<Collection<Authority>> auths = uservice.findAuthoritiesForUser(cl.getUser().getUsername());
+				if(auths.isPresent()) {
+				for(Authority auth:auths.get()) {
+					authoritiesService.delete(auth);
+				}
+			}
+			}
+			User user = cl.getUser();
 			clientService.delete(cl);
+			if(user!=null) uservice.delete(user);
 			modelMap.addAttribute("message", "Client successfully deleted!");
 			view=clientsList(modelMap);
 		}else {

@@ -238,7 +238,7 @@ public class UserController {
 		if(user.isPresent()) {
 			User us = user.get();
 			log.info("User found: deleting");
-			Collection<Authority> auths = userService.findAuthoritiesForUser(userId);
+			Collection<Authority> auths = userService.findAuthoritiesForUser(userId).get();
 			auths.forEach(x -> authService.delete(x));
 			if(auths.parallelStream().filter(x -> x.getAuthority().equals("client")).findAny().isPresent()) {
 				Client cl = userService.findClientForUsername(us.getUsername());
