@@ -121,13 +121,17 @@ public class ScheduleController {
 	@PostMapping(value = "/{scheduleId}/edit")
 	public String processUpdateCasTbForm(@Valid Schedule schedule, BindingResult result,
 			@PathVariable("scheduleId") int scheduleId, ModelMap model) {
-		
+		schedule.setId(scheduleId);
 		if (result.hasErrors()) {
 			model.put("schedule", schedule);
 			return "schedules/updateSchedule";
 		}
 		else {
-			schedule.setId(scheduleId);
+			if(scheduleValidator.getSchedulewithIdDifferent(schedule.getEmp().getDni(),schedule.getDate(),schedule.getId()) != null){
+				result.rejectValue("date", "date.duplicate", "User schedule already exist.");
+				model.addAttribute("schedule", schedule);
+				return "schedules/updateSchedule";
+			}
 			this.scheduleService.save(schedule);
 			return "redirect:/schedules";
 		}
