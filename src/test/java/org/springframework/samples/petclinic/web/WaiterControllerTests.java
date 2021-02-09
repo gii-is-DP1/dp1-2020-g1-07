@@ -24,6 +24,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Waiter;
 import org.springframework.samples.petclinic.service.RestaurantTableService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.samples.petclinic.service.WaiterService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -42,6 +43,9 @@ public class WaiterControllerTests {
 	
 	@MockBean
 	private RestaurantTableService restaurantTableService;
+	
+	@MockBean
+	private ScheduleService scheService;
 	
 	@Autowired
 	private MockMvc mockMvc;

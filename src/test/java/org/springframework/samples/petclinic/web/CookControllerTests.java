@@ -25,6 +25,7 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Cook;
 import org.springframework.samples.petclinic.service.CookService;
 import org.springframework.samples.petclinic.service.DishService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,6 +40,9 @@ public class CookControllerTests {
 	
 	@MockBean
 	private CookService cookService;
+	
+	@MockBean
+	private ScheduleService scheService;
 	
 	@MockBean
 	private DishService dishService;

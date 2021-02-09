@@ -24,6 +24,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Administrator;
 import org.springframework.samples.petclinic.service.AdministratorService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,6 +39,9 @@ public class AdministratorControllerTests {
 	
 	@MockBean
 	private AdministratorService administratorService;
+	
+	@MockBean
+	private ScheduleService scheService;
 	
 	@Autowired
 	private MockMvc mockMvc;

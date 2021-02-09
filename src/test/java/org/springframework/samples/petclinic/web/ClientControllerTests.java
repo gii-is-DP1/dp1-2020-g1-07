@@ -23,7 +23,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Client;
+import org.springframework.samples.petclinic.service.AuthorityService;
+import org.springframework.samples.petclinic.service.ClientGainService;
 import org.springframework.samples.petclinic.service.ClientService;
+import org.springframework.samples.petclinic.service.RestaurantReservationService;
+import org.springframework.samples.petclinic.service.ShowReservationService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,6 +44,21 @@ public class ClientControllerTests {
 	
 	@MockBean
 	private ClientService clientService;
+	
+	@MockBean
+	private ClientGainService cgainService;
+	
+	@MockBean
+	private RestaurantReservationService restReserService;
+	
+	@MockBean
+	private ShowReservationService showResService;
+	
+	@MockBean
+	private UserService uservice;
+	
+	@MockBean
+	private AuthorityService authoritiesService;
 	
 	private Client client;
 	

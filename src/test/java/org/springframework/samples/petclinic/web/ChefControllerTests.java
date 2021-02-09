@@ -24,6 +24,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Chef;
 import org.springframework.samples.petclinic.service.ChefService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,6 +39,9 @@ public class ChefControllerTests {
 	
 	@MockBean
 	private ChefService chefService;
+	
+	@MockBean
+	private ScheduleService scheService;
 	
 	@Autowired
 	private MockMvc mockMvc;

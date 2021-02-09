@@ -32,6 +32,7 @@ import org.springframework.samples.petclinic.model.GameType;
 import org.springframework.samples.petclinic.model.Skill;
 import org.springframework.samples.petclinic.service.CasinotableService;
 import org.springframework.samples.petclinic.service.CroupierService;
+import org.springframework.samples.petclinic.service.ScheduleService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -48,6 +49,9 @@ public class CroupierControllerTests {
 	
 	@MockBean
 	private CroupierService croupierService;
+	
+	@MockBean
+	private ScheduleService scheService;
 	
 	@Autowired
 	private MockMvc mockMvc;
