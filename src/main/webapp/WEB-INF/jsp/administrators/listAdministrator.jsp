@@ -17,6 +17,7 @@
             <th style="width: 200px;">Name</th>
             <th style="width: 200px;">Phone Number</th>
             <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
