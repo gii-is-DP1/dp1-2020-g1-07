@@ -57,7 +57,7 @@ public class RestaurantReservationControllerTests {
 	private RestaurantTableService tableService;
 	
 	private RestaurantReservation reservation;
-	/*
+	
 	@BeforeEach
 	void setup() {
 
@@ -82,7 +82,6 @@ public class RestaurantReservationControllerTests {
 		client.setPhone_number("123456789");
 		User user = new User();
 		user.setUsername("spring");
-		user.setDni("11122233A");
 		user.setEnabled(true);
 		user.setPassword("spring");
 		Authority auth = new Authority();
@@ -195,5 +194,5 @@ public class RestaurantReservationControllerTests {
 				.andExpect(view().name("restaurantreservations/updateRestaurantReservation"));
 	}
 
-*/
+
 }
