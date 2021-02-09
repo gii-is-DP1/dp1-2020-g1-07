@@ -31,11 +31,10 @@ $(document).ready(function(){
 </script>
 
 <petclinic:layout pageName="menusByDay">
-    <jsp:body>
-    
-    <div class="restaurant" style="padding: 100;"> 
+
+	<body class="restaurant">
     <div class="menus-content" style="
-    background-color: #fce6ca;
+    background-color: #fff5f2;
     padding: 30px;
     border-radius: 30px;
     display: flex;
@@ -66,7 +65,5 @@ $(document).ready(function(){
 				</form>
 		</div>
 	</div>
-	</div>
-    </jsp:body>
-
+	</body>
 </petclinic:layout>

@@ -30,8 +30,14 @@ $(document).ready(function(){
 </script>
 
 <petclinic:layout pageName="eventsByDay">
-    <jsp:body>
-    <div class="event" style="padding: 100;"> 
+    	<body class="event">
+
+    <div style="
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;"> 
     <div style="
     background-color: #fcd5ca;
     padding: 30px;
@@ -48,12 +54,13 @@ $(document).ready(function(){
             	
             	<option value="${date}">${date}</option>
             </c:forEach>
+             <div > &nbsp;  </div>
             </select>
         </div>
         
         <div id="tableEvents"></div>    
         
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 20px;">
 		    	<form method="get" action="/showress/user">
 		    		<button class="btn btn-default" type="submit">My show reservations</button>
 				</form>
@@ -66,6 +73,6 @@ $(document).ready(function(){
 		</div>
 		</div>
 		</div>
-    </jsp:body>
+    </body>
 
 </petclinic:layout>
