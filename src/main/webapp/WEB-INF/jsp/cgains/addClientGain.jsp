@@ -16,7 +16,7 @@
     <jsp:body>
     
         <h2>Add Client Gain</h2>
-
+		<c:out value="${error}"></c:out>
         <form:form modelAttribute="cgain" class="form-horizontal" action="/cgains/save">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Table Id" name="tableId"/>
