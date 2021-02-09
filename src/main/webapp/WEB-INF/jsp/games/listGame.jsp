@@ -53,6 +53,11 @@
         </tbody>
     </table>
     <div class="form-group">
+    	<form method="get" action="/casinotables/index">
+    		<button class="btn btn-default" type="submit">Return to index</button>
+		</form>
+	</div>
+    <div class="form-group">
     	<form method="get" action="/games/new">
     		<button class="btn btn-default" type="submit">Add new game</button>
 		</form>
